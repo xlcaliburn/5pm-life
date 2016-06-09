@@ -28,13 +28,36 @@
 }
 
 /**
- * App-wide Styles
- */
+ App-wide Styles
+ =================================
+ Add global styles here.
 
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+    FivePM Colour references
+    ===========================
+    Teal:               #46adae (logo colour)
+    Purple:             #765f94
+    Dark grey:          #434343 (for text)
+    Middle upper grey:  #7f7f7f
+    Middle grey:        #b8b8b8
+    Light grey:         #cfcfcf
+    BG color:           #f1f1f1
+    Blue:               #4864a8
+    Baby blue:          #429fd9
+    Pink/Red:           #ff5d5d
+    Yellow:             #fffd76
+    White:              #ffffff
+
+*/
+
+* {
+    box-sizing: border-box;
 }
 
+html, body {
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    color: #434343;
+}

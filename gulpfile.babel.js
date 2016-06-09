@@ -30,8 +30,11 @@ const paths = {
             `${clientPath}/**/!(*.spec|*.mock).js`,
             `!${clientPath}/bower_components/**/*`
         ],
-        styles: [`${clientPath}/{app,components}/**/*.css`],
-        mainStyle: `${clientPath}/app/app.css`,
+        styles: [
+            `${clientPath}/{app,components}/**/*.css`,
+            `${clientPath}/{app,components}/main/*.css`
+        ],
+        mainStyle: `${clientPath}/app/index.css`,
         views: `${clientPath}/{app,components}/**/*.html`,
         mainView: `${clientPath}/index.html`,
         test: [`${clientPath}/{app,components}/**/*.{spec,mock}.js`],
@@ -508,7 +511,7 @@ gulp.task('constant', function() {
     constants: { appConfig: sharedConfig }
   })
     .pipe(plugins.rename({
-      basename: 'app.constant'
+      basename: 'index.constant'
     }))
     .pipe(gulp.dest(`${clientPath}/app/`))
 });
