@@ -5,15 +5,16 @@ angular.module('fivepmApp.admin')
 		$stateProvider
 			.state('admin', {
 				url: '/admin',
-				templateUrl: 'app/admin/admin.html',
+				templateUrl: 'app/admin/admin.html'
 				// controller: 'AdminController',
 				// controllerAs: 'admin'
-				authenticate: 'admin'
+				// authenticate: 'admin'
 			})
 			.state('admin.tags', {
 				url: '/admin/tags',
 				templateUrl: 'app/admin/views/manage_tags.html',
-				authenticate: 'admin'
+				controller: "tagController"
+				// authenticate: 'admin'
 			})
 			.state('admin.venues', {
 				url: '/admin/venues',

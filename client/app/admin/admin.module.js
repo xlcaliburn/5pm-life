@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('fivepmApp.admin', ['fivepmApp.auth', 'ui.router']);
+angular.module('fivepmApp.admin', ['fivepmApp.auth', 'ui.router', 'tagCtrl', 'apiService']);
