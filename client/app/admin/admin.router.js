@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('5pmApp.admin')
+angular.module('fivepmApp.admin')
   .config(function($stateProvider) {
     $stateProvider.state('admin', {
       url: '/admin',

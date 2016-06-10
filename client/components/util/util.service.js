@@ -57,6 +57,6 @@
     return Util;
   }
 
-  angular.module('5pmApp.util')
+  angular.module('fivepmApp.util')
     .factory('Util', UtilService);
 })();

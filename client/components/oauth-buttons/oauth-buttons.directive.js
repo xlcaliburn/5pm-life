@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('5pmApp')
+angular.module('fivepmApp')
   .directive('oauthButtons', function() {
     return {
       templateUrl: 'components/oauth-buttons/oauth-buttons.html',

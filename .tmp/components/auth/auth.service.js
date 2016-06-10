@@ -186,6 +186,6 @@
     return Auth;
   }
 
-  angular.module('5pmApp.auth').factory('Auth', AuthService);
+  angular.module('fivepmApp.auth').factory('Auth', AuthService);
 })();
 //# sourceMappingURL=auth.service.js.map

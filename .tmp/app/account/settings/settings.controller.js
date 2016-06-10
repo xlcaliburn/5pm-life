@@ -33,5 +33,5 @@ var SettingsController = function () {
   return SettingsController;
 }();
 
-angular.module('5pmApp').controller('SettingsController', SettingsController);
+angular.module('fivepmApp').controller('SettingsController', SettingsController);
 //# sourceMappingURL=settings.controller.js.map

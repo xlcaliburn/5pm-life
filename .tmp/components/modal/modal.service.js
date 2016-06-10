@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('5pmApp').factory('Modal', function ($rootScope, $uibModal) {
+angular.module('fivepmApp').factory('Modal', function ($rootScope, $uibModal) {
   /**
    * Opens a modal
    * @param  {Object} scope      - an object to be merged with modal's scope

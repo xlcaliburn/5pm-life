@@ -4,7 +4,7 @@
  * Removes server error when user updates input
  */
 
-angular.module('5pmApp')
+angular.module('fivepmApp')
   .directive('mongooseError', function() {
     return {
       restrict: 'A',

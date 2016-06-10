@@ -2,7 +2,7 @@
   'use strict';
 
     angular
-    .module('5pmApp')
+    .module('fivepmApp')
     .run(runBlock);
 
     /** @ngInject */

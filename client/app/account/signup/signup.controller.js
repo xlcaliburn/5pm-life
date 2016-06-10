@@ -21,7 +21,7 @@ class SignupController {
         })
         .then(() => {
           // Account created, redirect to home
-          this.$state.go('main');
+          this.$state.go('home');
         })
         .catch(err => {
           err = err.data;
@@ -37,5 +37,5 @@ class SignupController {
   }
 }
 
-angular.module('5pmApp')
+angular.module('fivepmApp')
   .controller('SignupController', SignupController);

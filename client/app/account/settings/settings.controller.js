@@ -23,5 +23,5 @@ class SettingsController {
   }
 }
 
-angular.module('5pmApp')
+angular.module('fivepmApp')
   .controller('SettingsController', SettingsController);

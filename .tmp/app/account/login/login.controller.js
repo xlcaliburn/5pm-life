@@ -29,7 +29,7 @@ var LoginController = function () {
           password: this.user.password
         }).then(function () {
           // Logged in, redirect to home
-          _this.$state.go('main');
+          _this.$state.go('home');
         }).catch(function (err) {
           _this.errors.other = err.message;
         });
@@ -40,5 +40,5 @@ var LoginController = function () {
   return LoginController;
 }();
 
-angular.module('5pmApp').controller('LoginController', LoginController);
+angular.module('fivepmApp').controller('LoginController', LoginController);
 //# sourceMappingURL=login.controller.js.map

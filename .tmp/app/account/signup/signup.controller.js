@@ -29,7 +29,7 @@ var SignupController = function () {
           password: this.user.password
         }).then(function () {
           // Account created, redirect to home
-          _this.$state.go('main');
+          _this.$state.go('home');
         }).catch(function (err) {
           err = err.data;
           _this.errors = {};
@@ -47,5 +47,5 @@ var SignupController = function () {
   return SignupController;
 }();
 
-angular.module('5pmApp').controller('SignupController', SignupController);
+angular.module('fivepmApp').controller('SignupController', SignupController);
 //# sourceMappingURL=signup.controller.js.map

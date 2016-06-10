@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('5pmApp.admin', ['5pmApp.auth', 'ui.router']);
+angular.module('fivepmApp.admin', ['fivepmApp.auth', 'ui.router']);
 //# sourceMappingURL=admin.module.js.map

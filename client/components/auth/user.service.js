@@ -21,6 +21,6 @@
     });
   }
 
-  angular.module('5pmApp.auth')
+  angular.module('fivepmApp.auth')
     .factory('User', UserResource);
 })();

@@ -21,6 +21,6 @@
     });
   }
 
-  angular.module('5pmApp.auth').factory('User', UserResource);
+  angular.module('fivepmApp.auth').factory('User', UserResource);
 })();
 //# sourceMappingURL=user.service.js.map

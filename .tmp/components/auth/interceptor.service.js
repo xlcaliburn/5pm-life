@@ -28,6 +28,6 @@
     };
   }
 
-  angular.module('5pmApp.auth').factory('authInterceptor', authInterceptor);
+  angular.module('fivepmApp.auth').factory('authInterceptor', authInterceptor);
 })();
 //# sourceMappingURL=interceptor.service.js.map

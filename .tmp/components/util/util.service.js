@@ -60,6 +60,6 @@
     return Util;
   }
 
-  angular.module('5pmApp.util').factory('Util', UtilService);
+  angular.module('fivepmApp.util').factory('Util', UtilService);
 })();
 //# sourceMappingURL=util.service.js.map

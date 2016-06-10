@@ -2,7 +2,7 @@
 
 (function() {
     angular
-    .module('5pmApp')
+    .module('fivepmApp')
     .controller('HomeController', HomeController);
 
     /** @ngInject */

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('5pmApp').config(function ($stateProvider) {
+angular.module('fivepmApp').config(function ($stateProvider) {
   $stateProvider.state('login', {
     url: '/login',
     templateUrl: 'app/account/login/login.html',

@@ -14,6 +14,6 @@
     }
   }
 
-  angular.module('5pmApp.admin')
+  angular.module('fivepmApp.admin')
     .controller('AdminController', AdminController);
 })();

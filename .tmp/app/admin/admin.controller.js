@@ -24,6 +24,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     return AdminController;
   }();
 
-  angular.module('5pmApp.admin').controller('AdminController', AdminController);
+  angular.module('fivepmApp.admin').controller('AdminController', AdminController);
 })();
 //# sourceMappingURL=admin.controller.js.map

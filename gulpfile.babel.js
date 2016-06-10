@@ -1,4 +1,4 @@
-// Generated on 2016-05-16 using generator-angular-fullstack 3.7.2
+// Generated on 2016-06-09 using generator-angular-fullstack 3.7.2
 'use strict';
 
 import _ from 'lodash';
@@ -30,11 +30,8 @@ const paths = {
             `${clientPath}/**/!(*.spec|*.mock).js`,
             `!${clientPath}/bower_components/**/*`
         ],
-        styles: [
-            `${clientPath}/{app,components}/**/*.css`,
-            `${clientPath}/{app,components}/main/*.css`
-        ],
-        mainStyle: `${clientPath}/app/index.css`,
+        styles: [`${clientPath}/{app,components}/**/*.less`],
+        mainStyle: `${clientPath}/app/index.less`,
         views: `${clientPath}/{app,components}/**/*.html`,
         mainView: `${clientPath}/index.html`,
         test: [`${clientPath}/{app,components}/**/*.{spec,mock}.js`],
@@ -129,7 +126,8 @@ let lintServerTestScripts = lazypipe()
 
 let styles = lazypipe()
     .pipe(plugins.sourcemaps.init)
-    .pipe(plugins.cleanCss, {processImportFrom: ['!fonts.googleapis.com']})
+    .pipe(plugins.less)
+
     .pipe(plugins.autoprefixer, {browsers: ['last 1 version']})
     .pipe(plugins.sourcemaps.write, '.');
 
@@ -203,7 +201,7 @@ gulp.task('env:prod', () => {
  ********************/
 
 gulp.task('inject', cb => {
-    runSequence(['inject:js', 'inject:css'], cb);
+    runSequence(['inject:js', 'inject:css', 'inject:less'], cb);
 });
 
 gulp.task('inject:js', () => {
@@ -232,8 +230,26 @@ gulp.task('inject:css', () => {
         .pipe(gulp.dest(clientPath));
 });
 
+gulp.task('inject:less', () => {
+    return gulp.src(paths.client.mainStyle)
+        .pipe(plugins.inject(
+            gulp.src(_.union(paths.client.styles, ['!' + paths.client.mainStyle]), {read: false})
+                .pipe(plugins.sort()),
+            {
+                transform: (filepath) => {
+                    let newPath = filepath
+                        .replace(`/${clientPath}/app/`, '')
+                        .replace(`/${clientPath}/components/`, '../components/')
+                        .replace(/_(.*).less/, (match, p1, offset, string) => p1)
+                        .replace('.less', '');
+                    return `@import '${newPath}';`;
+                }
+            }))
+        .pipe(gulp.dest(`${clientPath}/app`));
+});
+
 gulp.task('styles', () => {
-    return gulp.src(paths.client.styles)
+    return gulp.src(paths.client.mainStyle)
         .pipe(styles())
         .pipe(gulp.dest('.tmp/app'));
 });
@@ -322,7 +338,7 @@ gulp.task('watch', () => {
 
     plugins.livereload.listen();
 
-    plugins.watch(paths.client.styles, () => {  //['inject:css']
+    plugins.watch(paths.client.styles, () => {  //['inject:less']
         gulp.src(paths.client.mainStyle)
             .pipe(plugins.plumber())
             .pipe(styles())
@@ -416,7 +432,10 @@ gulp.task('wiredep:client', () => {
             exclude: [
                 /bootstrap.js/,
                 '/json3/',
-                '/es5-shim/'
+                '/es5-shim/',
+                /font-awesome\.css/,
+                /bootstrap\.css/,
+                /bootstrap-social\.css/
             ],
             ignorePath: clientPath
         }))
@@ -429,7 +448,10 @@ gulp.task('wiredep:test', () => {
             exclude: [
                 /bootstrap.js/,
                 '/json3/',
-                '/es5-shim/'
+                '/es5-shim/',
+                /font-awesome\.css/,
+                /bootstrap\.css/,
+                /bootstrap-social\.css/
             ],
             devDependencies: true
         }))
@@ -496,7 +518,7 @@ gulp.task('build:client', ['transpile:client', 'styles', 'html', 'constant', 'bu
 gulp.task('html', function() {
     return gulp.src(`${clientPath}/{app,components}/**/*.html`)
         .pipe(plugins.angularTemplatecache({
-            module: '5pmApp'
+            module: 'fivepmApp'
         }))
         .pipe(gulp.dest('.tmp'));
 });
@@ -504,14 +526,14 @@ gulp.task('html', function() {
 gulp.task('constant', function() {
   let sharedConfig = require(`./${serverPath}/config/environment/shared`);
   return plugins.ngConstant({
-    name: '5pmApp.constants',
+    name: 'fivepmApp.constants',
     deps: [],
     wrap: true,
     stream: true,
     constants: { appConfig: sharedConfig }
   })
     .pipe(plugins.rename({
-      basename: 'index.constant'
+      basename: 'app.constant'
     }))
     .pipe(gulp.dest(`${clientPath}/app/`))
 });

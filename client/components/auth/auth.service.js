@@ -185,6 +185,6 @@
     return Auth;
   }
 
-  angular.module('5pmApp.auth')
+  angular.module('fivepmApp.auth')
     .factory('Auth', AuthService);
 })();

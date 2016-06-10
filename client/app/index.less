@@ -1,0 +1,53 @@
+
+/**
+ * Bootstrap and Font Awesome Fonts
+ */
+
+ @import '../bower_components/bootstrap/less/bootstrap.less';
+ @import '../bower_components/bootstrap-social/bootstrap-social.less';
+ @import '../bower_components/font-awesome/less/font-awesome.less';
+
+ @icon-font-path: '../bower_components/bootstrap/fonts/';
+ @fa-font-path: '../bower_components/font-awesome/fonts';
+
+
+/**
+App-wide Styles
+=================================
+Add global styles here.
+
+FivePM Colour references
+=========================== */
+@teal:          #46adae; //(logo colour)
+@purple:        #765f94;
+@darkgrey:      #434343; //(for text)
+@uppergrey:     #7f7f7f;
+@middlegrey:    #b8b8b8;
+@lightgrey:     #cfcfcf;
+@BGcolor:       #f1f1f1;
+@blue:          #4864a8;
+@babyblue:      #429fd9;
+@pinkred:       #ff5d5d;
+@yellow:        #fffd76;
+@white:         #ffffff;
+
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background-color: @BGcolor;
+    color: @darkgrey;
+}
+
+/* inject:less */
+@import 'admin/admin';
+@import 'main/home/home';
+@import '../components/modal/modal';
+@import '../components/oauth-buttons/oauth-buttons';
+/* endinject */
