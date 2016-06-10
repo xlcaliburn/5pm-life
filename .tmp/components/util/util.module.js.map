@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/util/util.module.js"],"names":[],"mappings":"AAAA;;AAEA,QAAQ,MAAR,CAAe,gBAAf,EAAiC,EAAjC","file":"components/util/util.module.js","sourcesContent":["'use strict';\n\nangular.module('fivepmApp.util', []);\n"],"sourceRoot":"/source/"}
