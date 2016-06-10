@@ -13,7 +13,7 @@
             title: "Welcome to 5pm.life",
             templateUrl: 'app/main/home/home.html',
             controller: 'HomeController',
-            controllerAs: 'main'
+            controllerAs: 'home'
         })
         ;
 

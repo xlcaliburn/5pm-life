@@ -3,16 +3,36 @@
     <div class="container">
         <div class="center-middle">
             <div class="row">
+
                 <!-- Logo and login -->
-                <div class="col-md-5 login-left">
-                    <img src="assets/images/logo.png" width="50%" height="auto">
+                <div class="col-md-4 login-left">
+                    <img class="login-logo" src="assets/images/logo.png">
+                    <form name="home.form" ng-submit="home.submit()" novalidate>
+                        <section class="login-section light">
+                            <p>Sign up for our BETA</p>
+                            <input type="email" ng-model="home.email">
+                            <button ng-disabled="home.loading" class="submit-button">Notify Me</button>
+                        </section>
+                    </form>
+                    <div class="login-status light"></div>
                 </div>
 
                 <!-- Description -->
-                <div class="col-md-7 login-right">
-                    This is the right side
+                <div class="col-md-8 login-right">
+                    <div class="login-large purple">
+                        Meet the<br />
+                        right people<br />
+                        at the right events
+                    </div>
+
+                    <div class="login-medium light">
+                        <p>Connect with <span class="bold purple">like-minded people</span></p>
+                        <p>Make <span class="bold purple">new friends</span></p>
+                        <p>Enjoy <span class="bold purple">new events</span> in your area</p>
+                    </div>
                 </div>
             </div>
+
             <div class="clear"></div>
         </div>
     </div>

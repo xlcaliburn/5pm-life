@@ -8706,6 +8706,60 @@ Add global styles here.
 
 FivePM Colour references
 =========================== */
+.teal {
+  color: #46adae;
+}
+.purple {
+  color: #765f94;
+}
+.darkgrey {
+  color: #434343;
+}
+.uppergrey {
+  color: #7f7f7f;
+}
+.middlegrey {
+  color: #b8b8b8;
+}
+.lightgrey {
+  color: #cfcfcf;
+}
+.bgcolor {
+  color: #f1f1f1;
+}
+.blue {
+  color: #4864a8;
+}
+.babyblue {
+  color: #429fd9;
+}
+.pinkred {
+  color: #ff5d5d;
+}
+.yellow {
+  color: #fffd76;
+}
+.white {
+  color: #ffffff;
+}
+.xlight {
+  font-weight: 200;
+}
+.light {
+  font-weight: 300;
+}
+.normal {
+  font-weight: 400;
+}
+.medium {
+  font-weight: 500;
+}
+.bold {
+  font-weight: 700;
+}
+.xbold {
+  font-weight: 900;
+}
 * {
   box-sizing: border-box;
 }
@@ -8748,9 +8802,21 @@ body {
   align-items: center;
   text-decoration: none;
 }
+/* Global home styles
+=============================== */
 .home,
 .home > .container {
   height: 100%;
+}
+/* Left Side
+================================ */
+.login-left {
+  padding: 2%;
+}
+.login-logo {
+  width: 70%;
+  height: auto;
+  padding: 5%;
 }
 .center-middle {
   position: relative;
@@ -8760,10 +8826,93 @@ body {
 .login-left {
   text-align: center;
 }
+.home section {
+  margin: 5% 0;
+  font-size: 18px;
+}
+.home input {
+  width: 100%;
+  border: 2px solid #cfcfcf;
+  padding: 8px 15px;
+  border-radius: 2px;
+  transition: border 0.5s ease-out;
+}
+.home input:focus {
+  border: 2px solid #46adae;
+}
+.login-section {
+  height: 160px;
+  overflow: hidden;
+  opacity: 1;
+  transition: height 0.5s ease-out, opacity 0.35s ease-out;
+}
+.home button,
+.home button:active {
+  margin: 5%;
+  width: 50%;
+  background-color: #765f94;
+  opacity: 0.9;
+  color: #ffffff;
+  border-radius: 3px;
+  border: none;
+  padding: 12px 15px 10px;
+  outline: none;
+  transition: color 0.35s ease-out;
+}
+.home button:hover {
+  opacity: 1;
+}
+.loading {
+  background-image: url('../assets/images/loading.svg');
+  background-repeat: no-repeat;
+  background-size: auto 50%;
+  background-position: center;
+  color: rgba(255, 255, 255, 0) !important;
+  transition: color 0s !important;
+}
+.status-ok {
+  height: 0 !important;
+  opacity: 0 !important;
+}
+.home input[type='email'] {
+  outline: none;
+}
+.login-status {
+  font-size: 18px;
+}
+/* Right Side
+================================ */
 .login-right {
+  padding: 3% 5%;
   border-left: 2px solid #cfcfcf;
   background-image: url('../assets/images/login-right-bg.png');
-  height: 600px;
+  background-size: cover;
+}
+.login-status.invalid {
+  color: #ff5d5d;
+}
+.login-large {
+  font-size: 60px;
+  margin-bottom: 25px;
+}
+.login-medium {
+  font-size: 24px;
+}
+/* Mobile
+================================ */
+@media screen and (max-width: 992px) {
+  .login-logo {
+    width: 50%;
+    height: auto;
+    padding: 5%;
+  }
+  .login-right {
+    border: none;
+    border-top: 2px solid #cfcfcf;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 5%;
+  }
 }
 .modal-primary .modal-header,
 .modal-info .modal-header,
