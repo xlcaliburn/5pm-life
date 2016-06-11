@@ -20,7 +20,7 @@ router.get('/', function(req,res) {
 
 router.post('/', function(req, res) {
 		Venue.create({
-			activity : req.body.activity,
+			tags : req.body.tags,
 			venue_name : req.body.venue_name,
 			address: {
 				street: req.body.street,
@@ -40,7 +40,7 @@ router.post('/', function(req, res) {
 		});
 	});
 
-router.delete('/:tag_id', function(req, res) {
+router.delete('/:venue_id', function(req, res) {
 		Venue.remove({
 			_id : req.params.venue_id
 		}, function(err, data) {

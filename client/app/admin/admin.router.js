@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('fivepmApp.admin')
-	.config(function($stateProvider) {
+	.config(function($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.otherwise('/admin');
+		
 		$stateProvider
 			.state('admin', {
 				url: '/admin',
@@ -18,7 +20,8 @@ angular.module('fivepmApp.admin')
 			})
 			.state('admin.venues', {
 				url: '/venues',
-				templateUrl: 'app/admin/views/manage_venues.html'
+				templateUrl: 'app/admin/views/manage_venues.html',
+				controller: "venueController"
 			})
 		;
 	});
