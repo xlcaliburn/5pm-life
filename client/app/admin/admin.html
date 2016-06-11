@@ -1,12 +1,12 @@
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav">
 		<li class="sidebar-brand" style="margin: 20px 0px 20px">
-			<a href="#">
+			<a ui-sref=".">
 					Admin Dashboard
 			</a>
 		</li>
 		<li>
-			<a href="#">User Management</a>
+			<a ui-sref=".">User Management</a>
 		</li>         
 		<li>
 			<a ui-sref=".tags">Manage Tags</a>
@@ -17,6 +17,8 @@
 	</ul>
 </div>
 
-<div class="admin">
-	<div ui-view></div>
+<div id="page-content-wrapper">
+	<div ui-view>
+		Admin Home
+	</div>
 </div>

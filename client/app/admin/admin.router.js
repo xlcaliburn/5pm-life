@@ -11,13 +11,13 @@ angular.module('fivepmApp.admin')
 				// authenticate: 'admin'
 			})
 			.state('admin.tags', {
-				url: '/admin/tags',
+				url: '/tags',
 				templateUrl: 'app/admin/views/manage_tags.html',
 				controller: "tagController"
 				// authenticate: 'admin'
 			})
 			.state('admin.venues', {
-				url: '/admin/venues',
+				url: '/venues',
 				templateUrl: 'app/admin/views/manage_venues.html'
 			})
 		;
