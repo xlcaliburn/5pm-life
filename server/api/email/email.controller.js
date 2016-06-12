@@ -1,25 +1,34 @@
 'use strict';
 
 import Email from './email.model';
-var email = require("emailjs/email");
+var nodemailer = require("nodemailer");
+var smtp_transport = require('nodemailer-smtp-transport');
 
 function sendEmail(email_address) {
     console.log('Attempting to send email to', email_address);
-    var mailserver  = email.server.connect({
-        user:    "omglalamail@gmail.com",
-        password:"chankl123",
-        host:    "smtp.gmail.com",
-        ssl: true
-    });
 
-    // send the message and get a callback with an error or details of the message that was sent
-    mailserver.send({
-        text:    "Thank you for signing up for our BETA. You will hear back from us very soon!",
-        from:    "5PM.life <omglalamail@gmail.com>",
-        to:      email_address,
-        subject: "Thank you for signing up!"
-    }, function(err, message) {
-        console.log(err || "Message sent");
+    // trying nodemailer
+    var transporter = nodemailer.createTransport(smtp_transport({
+        service: 'gmail',
+        auth: {
+            user: 'omglalamail@gmail.com', // my mail
+            pass: 'chankl123'
+        }
+    }));
+
+    var mailOptions = {
+        from: '5PM.life <omglalamail@gmail.com>', // sender address
+        to: email_address, // the same mail = want to send it to myself
+        subject: 'Thank you for signing up!', // Subject line
+        text: 'Thank you for signing up for our BETA. You will hear back from us very soon!', // plaintext body
+        html: '<b>Hello world ✔</b>' // html body
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent to : ' + email_address + ' with ' + info.response);
     });
 }
 

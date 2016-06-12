@@ -8,19 +8,19 @@ import errors from './components/errors';
 import path from 'path';
 
 export default function(app) {
-<<<<<<< HEAD
+
   // Insert routes below
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/email', require('./api/email'));
-=======
+
 	var mongoose = require('mongoose');
-	var models = require('./api/model.js')(mongoose);  
-	
+	var models = require('./api/model.js')(mongoose);
+
 	// Insert routes below
 	app.use('/api/things', require('./api/thing')); // to delete
 	app.use('/api/users', require('./api/user'));
->>>>>>> b21fa03c443d94574c522a607608f109f459135a
+
 
 	app.use('/api/tags', require('./api/tags/routes.js'));
 	app.use('/api/venues', require('./api/venues/routes.js'));
