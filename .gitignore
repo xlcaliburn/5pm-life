@@ -1,12 +1,11 @@
-#.gitignore
 #node_modules
 #public
-.tmp
+#coverage
 #.idea
 #client/bower_components
 #dist
 #/server/config/local.env.js
-#server/config/environment/development.js
+.gitignore
+.tmp
 npm-debug.log
-#coverage
-#server/config/environment/development.js
+server/config/environment/development.js
