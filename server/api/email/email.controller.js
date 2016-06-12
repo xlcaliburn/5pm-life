@@ -11,13 +11,13 @@ function sendEmail(email_address) {
     var transporter = nodemailer.createTransport(smtp_transport({
         service: 'gmail',
         auth: {
-            user: 'omglalamail@gmail.com', // my mail
-            pass: 'chankl123'
+            user: 'fivepm.life@gmail.com', // my mail
+            pass: 'fivepm4life'
         }
     }));
 
     var mailOptions = {
-        from: '5PM.life <omglalamail@gmail.com>', // sender address
+        from: '5PM.life <fivepm.life@gmail.com>', // sender address
         to: email_address, // the same mail = want to send it to myself
         subject: 'Thank you for signing up!', // Subject line
         text: 'Thank you for signing up for our BETA. You will hear back from us very soon!', // plaintext body
