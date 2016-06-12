@@ -21,7 +21,7 @@ function sendEmail(email_address) {
         to: email_address, // the same mail = want to send it to myself
         subject: 'Thank you for signing up!', // Subject line
         text: 'Thank you for signing up for our BETA. You will hear back from us very soon!', // plaintext body
-        html: '<b>Hello world ✔</b>' // html body
+        html: '<b>Thank you</b><p>Thank you for signing up for our BETA. You will hear back from us very soon!</p><p>Sincerely,<br>5PM Team</p>' // html body
     };
 
     transporter.sendMail(mailOptions, function(error, info){
