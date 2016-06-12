@@ -6,7 +6,7 @@
     .controller('HomeController', HomeController);
 
     /** @ngInject */
-    function HomeController($http, $timeout) {
+    function HomeController($http, $timeout, EmailService) {
         var self = this;
 
         // global variables
@@ -43,16 +43,26 @@
         // save email address in db
         function submit_email() {
 
+            // create email object
+            var email = {
+                email_address: self.email
+            }
+
             // do $http request to save email
+            EmailService.sendEmail(email).then(function(res) {
+                console.log(res);
+                // update front end
+                $timeout(function() {
+                    self.section_container.addClass("status-ok");
+                    self.status.addClass("teal");
+                    self.status.html('Thank you for signing up. We\'ll notify you when the BETA is ready!');
+                    self.loading = false;
+                }, 1000);
+            }, function (error) {
+                console.log(error);
+            });
 
-            // update front end
 
-            $timeout(function() {
-                self.section_container.addClass("status-ok");
-                self.status.addClass("teal");
-                self.status.html('Thank you for signing up. We\'ll notify you when the BETA is ready!');
-                self.loading = false;
-            }, 1000);
         }
 
         // notify errors on invalid email

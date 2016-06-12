@@ -28,7 +28,8 @@
     "socket.io": "^1.3.5",
     "socket.io-client": "^1.3.5",
     "socketio-jwt": "^4.2.0",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+	"emailjs": "latest"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.0",
