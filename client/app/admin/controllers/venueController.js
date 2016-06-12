@@ -1,12 +1,23 @@
 angular.module('venueCtrl', [])
-	.controller('venueController', function($scope, $http, Venues) {
+	.controller('venueController', function($scope, $http, Venues, Tags) {
 		$scope.formData = {};
+		$scope.validTags = [];
+		var newTags;
 
-        var newTags = $('#venue_tags').tags({
-            tagData:["boilerplate", "tags"],
-            suggestions:["basic", "suggestions"],
-            restrictTo:["basic"]
-        });
+		Tags.get()
+			.success(function(data) {
+				for(var tag in data) {
+					$scope.validTags.push(data[tag].enum_name);
+				}
+				newTags = $('#venue_tags').tags({
+		            suggestions: $scope.validTags,
+		            restrictTo: $scope.validTags,
+		            suggestOnClick: true
+		        });
+			})
+			.error(function(data) {
+				console.log('Error: ' + data);
+			});
 
 		Venues.get()
 			.success(function(data) {
@@ -23,7 +34,13 @@ angular.module('venueCtrl', [])
 					.success(function(data) {
 						$scope.formData = {};
 						$scope.venues = data;
-											});
+						
+						var len = $('#venue_tags').tags().getTags().length;
+						for(var i=0; i<len; i++){
+							// console.log( $('#venue_tags').tags().getTags());
+							$('#venue_tags').tags().removeLastTag();
+						}
+				});
 			}
 		};
 
