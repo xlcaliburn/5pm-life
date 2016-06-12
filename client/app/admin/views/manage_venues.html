@@ -7,7 +7,7 @@
 		<thead>
 			<tr>
 				<th>Venue Name</th>
-				<th>Venue Activity</th>
+				<th>Venue Tags</th>
 				<th>Street</th>
 				<th>City</th>
 				<th>Actions</th>
@@ -16,7 +16,7 @@
 		<tbody>
 			<tr ng-repeat="venue in venues">
 				<td>{{ venue.venue_name }}</td>
-				<td>{{ venue.activity }}</td>
+				<td>{{ venue.tags }}</td>
 				<td>{{ venue.address.street }}</td>
 				<td>{{ venue.address.city }}</td>
 				<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="deleteVenue(venue._id)"></td>
@@ -24,8 +24,7 @@
 		</tbody>
 	</table>
 </div>
-
-<div id="todo-form" class="row">
+<div id="add-venue" class="row" class="form-control">
 	<div class="panel panel-blue margin-bottom-40">
 		<div class="panel-heading">
 			<h3><i class="fa fa-tasks"></i> Add New Venue</h3>
@@ -34,23 +33,24 @@
 			<form>
 				<div class="form-group">
 					<label>Venue Name</label>
-					<input type="text" class="form-control" ng-model="formData.venue_name">
+					<input type="text" class="form-control" ng-model="formData.venue_name" required>
 				</div>
 				<div class="form-group">
-					<label>Activity</label>
-					<input type="text" class="form-control" ng-model="formData.activity">
+					<label>Tags</label>
+					<div id="venue_tags" class="tag-list" ></div>
 				</div>
+
 				<div class="form-group">
 					<label>Street</label>
-					<input type="text" class="form-control" ng-model="formData.street">
+					<input type="text" class="form-control" ng-model="formData.street" required>
 				</div>
 				<div class="form-group">
 					<label>City</label>
-					<input type="text" class="form-control" ng-model="formData.city">
+					<input type="text" class="form-control" ng-model="formData.city" required>
 				</div>
 				<div class="form-group">
 					<label>Province/State</label>
-					<input type="text" class="form-control" ng-model="formData.province">
+					<input type="text" class="form-control" ng-model="formData.province" required>
 				</div>
 				<div class="form-group">
 					<label>Postal Code</label>
