@@ -3,10 +3,10 @@
 (function() {
     angular
     .module('fivepmApp')
-    .controller('HomeController', HomeController);
+    .controller('EventController', EventController);
 
     /** @ngInject */
-    function HomeController($http, $timeout, EmailService) {
+    function EventController($http, $timeout, EmailService) {
         var self = this;
 
 
