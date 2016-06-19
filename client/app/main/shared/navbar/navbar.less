@@ -1,0 +1,142 @@
+@nav-height: 90px;
+
+nav {
+    height: @nav-height;
+    line-height: @nav-height;
+}
+
+.navbar-default {
+    background-color: @white;
+}
+
+nav>.container {
+    height: 100%;
+}
+
+.navbar-brand {
+    padding: 0;
+    margin: 0;
+    height: @nav-height;
+    line-height: inherit;
+}
+
+.navbar-brand>img {
+    height: 70%;
+    width: auto;
+    display: inline;
+}
+
+.nav.navbar-nav {
+    display: inline-block;
+    float: none;
+    vertical-align: middle;
+}
+
+.collapse.navbar-collapse {
+    text-align: center;
+}
+
+a#go:link, a#go:visited {
+    background-color: @pinkred;
+    color: @white;
+    font-size: 20px;
+    border-radius: 20px;
+    padding: 15px 50px 12px;
+    transition: background 0.25s ease-out;
+}
+
+a#go:hover {
+    background-color: @purple;
+}
+
+a#go:active {
+    background-color: @pinkred;
+    transition: none;
+}
+
+.nav.nav-links {
+    float: right;
+    display: inline-block;
+    vertical-align: middle;
+    height: @nav-height;
+}
+
+.nav.nav-links>li {
+    height: @nav-height;
+}
+
+.nav.nav-links img {
+    height: 70%;
+    width: auto;
+}
+
+.nav > li.dropdown > a {
+    height: @nav-height;
+    padding: 0 15px;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: @white;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu:hover {
+    display: block;
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+    border: none;
+    background-color: #ffffff;
+    border-radius: 0;
+    padding: 25px 0px;
+    box-shadow: none;
+    border: 1px solid #e7e7e7;
+    border-top: none;
+    top: 98%;
+    margin: 0;
+}
+
+.menu-caret {
+    display: inline-block;
+    position: absolute;
+    top: 60%;
+    right: 10%;
+    background-color: #2ab9bb;
+    width: 20px;
+    color: #ffffff;
+    height: 20px;
+    font-size: 10px;
+    border-radius: 50%;
+    line-height: 20px;
+}
+
+.dropdown-name {
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: 300;
+    padding-left: 35px;
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 15px 35px;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+.dropdown-menu > li > a {
+    font-weight: 300;
+    color: @uppergrey;
+    padding: 15px 0 10px 40px;
+    min-width: 275px;
+}
+
+.dropdown-settings .glyphicons {
+    margin-right: 20px;
+}

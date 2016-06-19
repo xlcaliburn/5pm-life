@@ -9,7 +9,11 @@
     function NavbarController() {
         var self = this;
 
+        self.navbarCollapsed = false;
 
+        self.go = function() {
+            return false;
+        }
     }
 
 })();

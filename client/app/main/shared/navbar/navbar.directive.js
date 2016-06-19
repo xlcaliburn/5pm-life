@@ -8,7 +8,7 @@
     function NavbarDirective() {
         return {
             restrict: 'E',
-            templateUrl: 'app/shared/navbar/navbar.html',
+            templateUrl: 'app/main/shared/navbar/navbar.html',
             scope: true,
             transclude : false,
             controller: 'NavbarController',
