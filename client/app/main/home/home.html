@@ -1,1 +1,18 @@
 <navbar></navbar>
+
+<div class="queue container">
+    <!-- Left Side -->
+    <div class="home-left col-md-8">
+        <div class="home-title">
+            <span ng-click="home.next_stage()" class="glyphicon glyphicon-chevron-left left"></span>
+            <span class="home-instructions">{{ home.current_instructions }}</span>
+            <span ng-click="home.prev_stage()" class="glyphicon glyphicon-chevron-right right"></span>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Right -->
+    <div class="home-right col-md-4">
+
+    </div>
+</div>

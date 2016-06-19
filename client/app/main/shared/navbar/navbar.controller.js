@@ -10,6 +10,7 @@
         var self = this;
 
         self.navbarCollapsed = false;
+        self.full_name = "Michael Wong";
 
         self.go = function() {
             return false;
