@@ -2,7 +2,7 @@
 #public
 #coverage
 #.idea
-client/bower_components
+#client/bower_components
 #dist
 #/server/config/local.env.js
 .gitignore
