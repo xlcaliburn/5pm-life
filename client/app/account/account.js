@@ -24,13 +24,13 @@ angular.module('fivepmApp')
         controller: 'SignupController',
         controllerAs: 'vm'
       })
-      .state('settings', {
-        url: '/settings',
-        templateUrl: 'app/account/settings/settings.html',
-        controller: 'SettingsController',
-        controllerAs: 'vm',
-        authenticate: true
-      });
+      // .state('settings', {
+      //   url: '/settings',
+      //   templateUrl: 'app/account/settings/settings.html',
+      //   controller: 'SettingsController',
+      //   controllerAs: 'vm',
+      //   authenticate: true
+      // });
   })
   .run(function($rootScope) {
     $rootScope.$on('$stateChangeStart', function(event, next, nextParams, current) {
