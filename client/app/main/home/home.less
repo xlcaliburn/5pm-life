@@ -30,3 +30,79 @@
 .home-instructions {
 
 }
+
+/* Date Picker CSS */
+._720kb-datepicker-calendar-body, ._720kb-datepicker-calendar-days-header, ._720kb-datepicker-calendar-header, ._720kb-datepicker-calendar-years-pagination-pages, .datepicker, [datepicker], datepicker {
+    font-family: 'Roboto', sans-serif;
+}
+
+._720kb-datepicker-calendar {
+    position: inherit;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: none;
+    color: @uppergrey;
+}
+
+._720kb-datepicker-calendar-month,
+a._720kb-datepicker-calendar-month-button {
+    color: @teal;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+._720kb-datepicker-calendar-header {
+    background-color: transparent !important;
+}
+
+._720kb-datepicker-calendar-days-header {
+    background: none;
+    border: none;
+    text-align: center;
+    clear: both;
+}
+
+._720kb-datepicker-calendar-days-header div {
+    color: @pinkred;
+    width: 12%;
+    float: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+._720kb-datepicker-calendar-body {
+    width: 95%;
+    float: none;
+    padding: 0 6%;
+    text-align: center;
+    clear: both;
+}
+
+._720kb-datepicker-calendar-day {
+    float: none;
+    display: inline-block;
+    padding: 0 0 10% 0;
+    width: 10%;
+    font-size: 16px;
+    margin: 2%;
+    height: 0;
+    line-height: 60px;
+    border-radius: 50%;
+}
+
+._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
+    background-color: transparent;
+}
+
+._720kb-datepicker-calendar-day._720kb-datepicker-active {
+    background-color: @babyblue;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+._720kb-datepicker-calendar-day._720kb-datepicker-today {
+    color: @teal;
+    font-weight: 700;
+}

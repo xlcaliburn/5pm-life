@@ -16,7 +16,8 @@
     "angular-socket-io": "~0.7.0",
     "angular-ui-router": "~0.2.15",
     "angular-validation-match": "~1.5.2",
-    "bootstrap-tags": "^1.1.6"
+    "bootstrap-tags": "^1.1.6",
+    "angularjs-datepicker": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"

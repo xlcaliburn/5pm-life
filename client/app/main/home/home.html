@@ -9,6 +9,9 @@
             <span ng-click="home.prev_stage()" class="glyphicon glyphicon-chevron-right right"></span>
         </div>
         <div class="clear"></div>
+        <datepicker datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
+            <input ng-model="home.date" type="text" ng-change="home.set_date();" class="hidden">
+        </datepicker>
     </div>
 
     <!-- Right -->
