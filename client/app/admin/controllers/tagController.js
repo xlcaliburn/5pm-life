@@ -1,3 +1,5 @@
+"use strict";
+
 angular.module('tagCtrl', [])
 	.controller('tagController', function($scope, $http, Tags) {
 		$scope.formData = {};

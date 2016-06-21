@@ -1,3 +1,5 @@
+"use strict";
+
 angular.module('apiService', [])
 	.factory('Venues', function($http) {
 		return {
