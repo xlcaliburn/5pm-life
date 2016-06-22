@@ -1,22 +1,23 @@
 <navbar></navbar>
-
-<div class="queue container">
-    <!-- Left Side -->
-    <div class="home-left col-md-8">
-        <div class="home-title">
-            <span ng-click="home.next_stage()" class="glyphicon glyphicon-chevron-left left"></span>
-            <span class="home-instructions">{{ home.current_instructions }}</span>
-            <span ng-click="home.prev_stage()" class="glyphicon glyphicon-chevron-right right"></span>
+<div ui-view>
+    <div class="queue container">
+        <!-- Left Side -->
+        <div class="home-left col-md-8">
+            <div class="home-title">
+                <span ng-click="home.next_stage()" class="glyphicon glyphicon-chevron-left left"></span>
+                <span class="home-instructions">{{ home.current_instructions }}</span>
+                <span ng-click="home.prev_stage()" class="glyphicon glyphicon-chevron-right right"></span>
+            </div>
+            <div class="clear"></div>
+            <datepicker datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
+                <input ng-model="home.date" type="text" ng-change="home.set_date();" class="hidden">
+            </datepicker>
         </div>
-        <div class="clear"></div>
-        <datepicker datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
-            <input ng-model="home.date" type="text" ng-change="home.set_date();" class="hidden">
-        </datepicker>
+
+    	<!-- Right -->
+    	<div class="home-right col-md-4">
+
+    	</div>
+
     </div>
-
-	<!-- Right -->
-	<div class="home-right col-md-4">
-
-	</div>
-    
 </div>
