@@ -9,14 +9,44 @@
                 <span ng-click="home.prev_stage()" class="glyphicon glyphicon-chevron-right right"></span>
             </div>
             <div class="clear"></div>
-            <datepicker datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
+            <datepicker date-min-limit="{{ home.today }}" datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
                 <input ng-model="home.date" type="text" ng-change="home.set_date();" class="hidden">
             </datepicker>
+            <div class="clear"></div>
         </div>
-
     	<!-- Right -->
     	<div class="home-right col-md-4">
+            <div class="queue-title">QUEUE FOR EVENT</div>
 
+            <!-- Date & Time -->
+            <div class="queue-date-time">
+                <div class="queue-date-time-title">DATE AND TIME</div>
+                <!-- Date -->
+                <div class="queue-input">
+                    <span class="queue-label">DATE</span>
+                    <span class="queue-date">{{ home.formatted_date }}</span>
+                </div>
+                <!-- Time -->
+                <div class="queue-input">
+                    <span class="queue-label">TIME</span>
+                    <span class="queue-time">{{ home.formatted_time }}</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Activity Types -->
+            <div class="activity-types queue-disabled">
+                <div class="queue-date-time-title">ACTIVITY TYPES</div>
+
+            </div>
+
+            <hr>
+
+            <!-- Location -->
+            <div class="queue-location queue-disabled">
+                <div class="queue-date-time-title">EVENT LOCATION</div>
+            </div>
     	</div>
 
     </div>

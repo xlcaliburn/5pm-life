@@ -33,6 +33,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 
 		.state('home.settings', {
+			title: '5pm Settings',
 			url: 'settings',
 			templateUrl: 'app/main/settings/settings.html'
 		})

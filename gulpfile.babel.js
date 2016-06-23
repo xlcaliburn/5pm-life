@@ -533,7 +533,7 @@ gulp.task('constant', function() {
     constants: { appConfig: sharedConfig }
   })
     .pipe(plugins.rename({
-      basename: 'app.constant'
+      basename: 'index.constant'
     }))
     .pipe(gulp.dest(`${clientPath}/app/`))
 });

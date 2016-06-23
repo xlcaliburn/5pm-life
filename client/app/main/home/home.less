@@ -15,6 +15,8 @@
     border-top-right-radius: @home-border-radius;
     border-bottom-right-radius: @home-border-radius;
     height: 500px;
+    padding: 20px 50px;
+    color: @white;
 }
 
 .home-title {
@@ -94,11 +96,6 @@ a._720kb-datepicker-calendar-month-button {
 
 ._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
     background-color: transparent;
-}
-
-._720kb-datepicker-calendar-day._720kb-datepicker-active {
-    background-color: @babyblue;
-    color: #ffffff;
     text-decoration: none;
 }
 
@@ -107,6 +104,17 @@ a._720kb-datepicker-calendar-month-button {
     font-weight: 700;
 }
 
+._720kb-datepicker-calendar-day._720kb-datepicker-active {
+    background-color: @babyblue;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+._720kb-datepicker-calendar-header a:hover {
+    color: @babyblue;
+    font-size: 20px;
+    font-weight: 700;
+}
 
 
 /* DELETE THIS CRAP
@@ -223,6 +231,43 @@ a._720kb-datepicker-calendar-month-button {
 .banner-social-buttons {
     float: right;
     margin-top: 0;
+}
+
+.queue-title {
+    border-bottom: 3px solid @white;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10% 0 3%;
+}
+
+.queue-date-time {
+    padding: 20px 0 0;
+}
+
+.queue-date-time-title {
+    font-weight: 700;
+    font-size: 18px;
+    padding: 5px 0;
+}
+
+.queue-date, .queue-time {
+    font-weight: 300;
+    font-size: 15px;
+    display: inline-block;
+    color: @yellow;
+}
+
+.queue-label {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 15px;
+    width: 50px;
+}
+
+.queue-disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 @media(max-width:1199px) {
