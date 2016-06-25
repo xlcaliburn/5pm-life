@@ -1,53 +1,96 @@
 <navbar></navbar>
 <div ui-view>
     <div class="queue container">
-        <!-- Left Side -->
-        <div class="home-left col-md-8">
-            <div class="home-title">
-                <span ng-click="home.next_stage()" class="glyphicon glyphicon-chevron-left left"></span>
-                <span class="home-instructions">{{ home.current_instructions }}</span>
-                <span ng-click="home.prev_stage()" class="glyphicon glyphicon-chevron-right right"></span>
+        <div class="row">
+            <!-- Left Side -->
+            <div class="home-left col-md-8">
+                <div class="home-title">
+                    <span ng-bind-html="home.stages[home.current_stage].instructions" class="home-instructions"></span>
+                </div>
+                <div class="clear"></div>
+
+                <!-- Date Time -->
+                <div ng-show="home.current_stage == 0" class="datetime-container">
+                    <datepicker  date-min-limit="{{ home.today }}" datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
+                        <input ng-model="home.date" type="text" ng-change="home.set_date();" class="hidden">
+                    </datepicker>
+                    <div class="clear"></div>
+
+                    <div class="time-section">
+                        I AM AVAILABLE FROM
+                        <input class="time-input" type="time" ng-model="home.time_1" ng-change="home.set_time()"> TO
+                        <input class="time-input" type="time" ng-model="home.time_2" ng-change="home.set_time()">
+                    </div>
+                </div>
+
+                <!-- Activity Type -->
+                <div ng-show="home.current_stage == 1" class="activity-container row">
+
+                    <!-- Active card -->
+                    <div class="col-md-3 col-md-offset-2 active-card" ng-class="{ 'card-selected': home.active }" ng-click="home.active = !home.active; home.toggle_activity('active')">
+                        Active
+                    </div>
+
+                    <!-- Social card -->
+                    <div class="col-md-3 col-md-offset-2 social-card" ng-class="{ 'card-selected': home.social }" ng-click="home.social = !home.social; home.toggle_activity('social')">
+                        Social
+                    </div>
+                </div>
+
+                <div class="next-previous-buttons" ng-show="home.prev_button || home.next_button">
+                    <button ng-click="home.prev_stage()" class="prev-stage-button" ng-show="home.prev_button">Previous: Select Time and Date</button>
+                    <button ng-click="home.next_stage()" class="next-stage-button" ng-show="home.next_button">Next: Select Activity Type</button>
+                    <div class="clear"></div>
+                </div>
             </div>
-            <div class="clear"></div>
-            <datepicker date-min-limit="{{ home.today }}" datepicker-show="{{ home.show_calendar }}" button-prev="<span class='glyphicon glyphicon-chevron-left'></span>" button-next="<span class='glyphicon glyphicon-chevron-right'></span>" date-format="yyyy-MM-dd">
-                <input ng-model="home.date" type="text" ng-change="home.set_date();" class="hidden">
-            </datepicker>
-            <div class="clear"></div>
+        	<!-- Right -->
+        	<div class="home-right col-md-4">
+                <div class="queue-title">QUEUE FOR EVENT</div>
+
+                <!-- Date & Time -->
+                <div class="queue-date-time" ng-click="home.current_stage = 0">
+                    <div class="queue-date-time-title">AVAILABLE DATE AND TIME</div>
+                    <!-- Date -->
+                    <div class="queue-input">
+                        <span class="queue-label">DATE</span>
+                        <span class="queue-date">{{ home.formatted_date || 'Please select a date' }}</span>
+                    </div>
+                    <!-- Time -->
+                    <div class="queue-input">
+                        <span class="queue-label">TIME</span>
+                        <span class="queue-time">{{ home.formatted_time_1 || 'Please select a time' }}</span>
+                        <span class="queue-time" ng-show="home.formatted_time_2"> to {{ home.formatted_time_2 }}</span>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Activity Types -->
+                <div class="activity-types">
+                    <div ng-class="{'queue-activity-title':true, 'queue-disabled': home.current_stage != 1}">ACTIVITY TYPES</div>
+
+                    <div class="activity-checkboxes" ng-show="home.current_stage == 1">
+                        <!-- Active checkbox -->
+                        <div class="active-checkbox">
+                            <input type="checkbox" ng-change="home.toggle_activity('active')" ng-model="home.active">
+                            <label>Active</label>
+                        </div>
+
+                        <!-- Social checkbox -->
+                        <div class="social-checkbox">
+                            <input type="checkbox" ng-change="home.toggle_activity('social')" ng-model="home.social">
+                            <label>Social</label>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Location -->
+                <div class="queue-location queue-disabled">
+                    <div class="queue-event-title">EVENT LOCATION</div>
+                </div>
+        	</div>
         </div>
-    	<!-- Right -->
-    	<div class="home-right col-md-4">
-            <div class="queue-title">QUEUE FOR EVENT</div>
-
-            <!-- Date & Time -->
-            <div class="queue-date-time">
-                <div class="queue-date-time-title">DATE AND TIME</div>
-                <!-- Date -->
-                <div class="queue-input">
-                    <span class="queue-label">DATE</span>
-                    <span class="queue-date">{{ home.formatted_date }}</span>
-                </div>
-                <!-- Time -->
-                <div class="queue-input">
-                    <span class="queue-label">TIME</span>
-                    <span class="queue-time">{{ home.formatted_time }}</span>
-                </div>
-            </div>
-
-            <hr>
-
-            <!-- Activity Types -->
-            <div class="activity-types queue-disabled">
-                <div class="queue-date-time-title">ACTIVITY TYPES</div>
-
-            </div>
-
-            <hr>
-
-            <!-- Location -->
-            <div class="queue-location queue-disabled">
-                <div class="queue-date-time-title">EVENT LOCATION</div>
-            </div>
-    	</div>
-
     </div>
 </div>

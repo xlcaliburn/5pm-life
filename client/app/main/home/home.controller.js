@@ -10,16 +10,43 @@
         var self = this;
 
         // model
-
+        // should definitely get this from the db
+        self.stages = [
+            {
+                stage: "datetime",
+                instructions: "Select a <span class='babyblue bold'>date</span> and <span class='babyblue bold'>time range</span> that you are available"
+            },
+            {
+                stage: "activity",
+                instructions: "Select an <span class='babyblue bold'>activity card</span> you would like your event to be"
+            }
+        ];
+        self.activity_cards = [
+            {
+                activity_type: "active",
+                color: "#ff5d5d"
+            },
+            {
+                type: "social",
+                color: "#429fd9"
+            }
+        ]
 
         // variables
-        self.current_instructions = "Select a date and time range that you are available";
+        self.current_stage = 0;
         self.show_calendar = true;
         self.today = get_todays_date();
         self.date;
-        self.time;
-        self.formatted_date = "Please select a date";
-        self.formatted_time = "Please select a time";
+        self.time_1;
+        self.time_2
+        self.formatted_date;
+        self.formatted_time_1;
+        self.formatted_time_2;
+        self.selected_activity_types = [];
+        self.active = false;
+        self.social = false;
+        self.next_button = false;
+        self.prev_button = false;
 
         /* class functions
         =====================================================*/
@@ -39,23 +66,62 @@
             });
         }
 
-        self.prev_stage = function() {
-
-        }
-
-        self.next_stage = function() {
-
-        }
-
         self.set_date = function() {
             var unformatted_date = moment(self.date);
             self.formatted_date = unformatted_date.format("ddd, MMMM Do, YYYY");
-            console.log(self.date, self.today);
+
+            if (self.formatted_time_1 && self.formatted_time_2)
+                self.next_button = true;
         }
 
-        self.reset_date = function() {
-            self.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-            angular.element('datepicker').attr('date-set')
+        self.set_time = function() {
+            if (!self.time_1 || !self.time_2) return;
+            if (self.time_1 > self.time_2) return;
+
+            // format times
+            self.formatted_time_1 = new moment(self.time_1).format("h:mmA");
+            self.formatted_time_2 = new moment(self.time_2).format("h:mmA");
+
+            if (self.formatted_date)
+                self.next_button = true;
+        }
+
+        self.toggle_activity = function(type) {
+            console.log(self.active, self.social);
+            if (self.selected_activity_types.indexOf(type) > -1) {
+                // it exists in array
+                var index = self.selected_activity_types.indexOf(type);
+                self.selected_activity_types = self.selected_activity_types.splice(index, 1);
+            } else {
+                // add to array
+                self.selected_activity_types.push(type);
+            }
+
+            // show queue button
+            if (self.selected_activity_types.length > 0)
+                self.show_ready();
+        }
+
+        self.show_ready = function() {
+
+        }
+
+        self.prev_stage = function() {
+            if (self.current_stage - 1 < 0) return;
+
+            self.next_button = !self.next_button;
+            self.prev_button = !self.prev_button;
+
+            self.current_stage--;
+        }
+
+        self.next_stage = function() {
+            if (self.current_stage + 1 >= self.stages.length) return;
+
+            self.next_button = !self.next_button;
+            self.prev_button = !self.prev_button;
+
+            self.current_stage++;
         }
 
         /* Helper functions
@@ -67,6 +133,8 @@
 
             return local_time;
         }
+
+
 
         self.init();
     }

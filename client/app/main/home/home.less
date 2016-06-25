@@ -23,6 +23,7 @@
     text-align: center;
     padding: 20px 30px;
     font-size: 16px;
+    margin: 3% 0;
 }
 
 .home-title .glyphicon {
@@ -30,7 +31,7 @@
 }
 
 .home-instructions {
-
+    font-size: 18px;
 }
 
 /* Date Picker CSS */
@@ -114,6 +115,30 @@ a._720kb-datepicker-calendar-month-button {
     color: @babyblue;
     font-size: 20px;
     font-weight: 700;
+}
+
+.time-section {
+    padding-bottom: 30px;
+    text-align: center;
+    color: @teal;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.time-input {
+    border: none;
+    border-bottom: 1px solid @lightgrey;
+    margin: 0 15px;
+    outline: none;
+    color: @babyblue;
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 
@@ -243,9 +268,19 @@ a._720kb-datepicker-calendar-month-button {
 
 .queue-date-time {
     padding: 20px 0 0;
+    cursor: pointer;
 }
 
-.queue-date-time-title {
+.activity-types,
+.queue-location {
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.25s ease-out;
+}
+
+.queue-date-time-title,
+.queue-activity-title,
+.queue-event-title {
     font-weight: 700;
     font-size: 18px;
     padding: 5px 0;
@@ -268,6 +303,127 @@ a._720kb-datepicker-calendar-month-button {
 .queue-disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+.next-stage-button,
+.prev-stage-button {
+    border: 3px solid @pinkred;
+    background-color: @white;
+    color: @pinkred;
+    font-size: 16px;
+    padding: 6px 20px;
+    outline: none;
+    transition: all 0.2s ease-out;
+}
+
+.next-stage-button:hover,
+.prev-stage-button:hover {
+    background-color: @pinkred;
+    color: @white;
+}
+
+.next-stage-button:active,
+.prev-stage-button:active {
+    background-color: @white;
+    color: @pinkred;
+}
+
+.next-previous-buttons {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.activity-checkboxes {
+    margin: 10px 0;
+}
+
+.active-checkbox,
+.social-checkbox {
+    position: relative;
+    margin: 5px 0;
+}
+
+.active-checkbox label,
+.social-checkbox label {
+    display: inline-block;
+    position: relative;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0 0 0 40px;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: color 0.3s ease-out;
+}
+
+.active-checkbox input[type='checkbox'],
+.social-checkbox input[type='checkbox'],
+.active-checkbox label::before,
+.social-checkbox label::before {
+    width: 25px;
+	height: 25px;
+	top: 50%;
+	left: 0;
+	margin-top: -12.5px;
+	position: absolute;
+	cursor: pointer;
+}
+
+.active-checkbox input[type='checkbox'],
+.social-checkbox input[type='checkbox'] {
+    opacity: 0;
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 100;
+}
+
+.active-checkbox label::before,
+.social-checkbox label::before {
+    content: '';
+    border: 3px solid @white;
+    transition: opacity 0.3s ease-out;
+}
+
+.active-checkbox input[type="checkbox"]:checked + label::before,
+.social-checkbox input[type="checkbox"]:checked + label::before {
+	content: '✔';
+    color: @white;
+    padding-left: 3px;
+}
+
+.activity-container {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.active-card, .social-card {
+    cursor: pointer;
+    text-align: center;
+    padding: 20px 40px;
+    transition: all 0.25s ease-out;
+}
+
+.active-card:hover, .social-card:hover {
+    font-weight: 700;
+}
+
+.active-card {
+    color: @pinkred;
+    border: 3px solid @pinkred;
+}
+
+.social-card {
+    color: @babyblue;
+    border: 3px solid @babyblue;
+}
+
+.active-card.card-selected {
+    background-color: @pinkred;
+    color: @white;
+}
+
+.social-card.card-selected {
+    background-color: @babyblue;
+    color: @white;
 }
 
 @media(max-width:1199px) {
