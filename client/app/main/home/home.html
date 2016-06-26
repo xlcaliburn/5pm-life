@@ -1,7 +1,7 @@
 <navbar></navbar>
 <div ui-view>
     <div class="queue container">
-        <div class="row">
+        <div class="row bg-teal">
             <!-- Left Side -->
             <div class="home-left col-md-8">
                 <div class="home-title">
@@ -28,18 +28,25 @@
 
                     <!-- Active card -->
                     <div class="col-md-3 col-md-offset-2 active-card" ng-class="{ 'card-selected': home.active }" ng-click="home.active = !home.active; home.toggle_activity('active')">
-                        Active
+                        <h3>Active</h3>
+                        <p>
+                            Not quite sure what to write here to describe a social card
+                        </p>
                     </div>
 
                     <!-- Social card -->
                     <div class="col-md-3 col-md-offset-2 social-card" ng-class="{ 'card-selected': home.social }" ng-click="home.social = !home.social; home.toggle_activity('social')">
-                        Social
+                        <h3>Social</h3>
+                        <p>
+                            Not quite sure what to write here to describe an active card
+                        </p>
                     </div>
                 </div>
 
                 <div class="next-previous-buttons" ng-show="home.prev_button || home.next_button">
                     <button ng-click="home.prev_stage()" class="prev-stage-button" ng-show="home.prev_button">Previous: Select Time and Date</button>
                     <button ng-click="home.next_stage()" class="next-stage-button" ng-show="home.next_button">Next: Select Activity Type</button>
+                    <button ng-show="home.formatted_time_1 && home.formatted_time_2 && home.formatted_date && home.selected_activity_types.length > 0 && home.current_stage == 1" class="queue-up-button">Queue for Event!</button>
                     <div class="clear"></div>
                 </div>
             </div>
@@ -48,7 +55,7 @@
                 <div class="queue-title">QUEUE FOR EVENT</div>
 
                 <!-- Date & Time -->
-                <div class="queue-date-time" ng-click="home.current_stage = 0">
+                <div class="queue-date-time" ng-click="home.prev_stage()">
                     <div class="queue-date-time-title">AVAILABLE DATE AND TIME</div>
                     <!-- Date -->
                     <div class="queue-input">
@@ -73,13 +80,13 @@
                         <!-- Active checkbox -->
                         <div class="active-checkbox">
                             <input type="checkbox" ng-change="home.toggle_activity('active')" ng-model="home.active">
-                            <label>Active</label>
+                            <label ng-click="home.active = !home.active; home.toggle_activity('active')">Active</label>
                         </div>
 
                         <!-- Social checkbox -->
                         <div class="social-checkbox">
                             <input type="checkbox" ng-change="home.toggle_activity('social')" ng-model="home.social">
-                            <label>Social</label>
+                            <label ng-click="home.social = !home.social; home.toggle_activity('social')">Social</label>
                         </div>
                     </div>
                 </div>

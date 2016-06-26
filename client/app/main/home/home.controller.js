@@ -87,11 +87,11 @@
         }
 
         self.toggle_activity = function(type) {
-            console.log(self.active, self.social);
             if (self.selected_activity_types.indexOf(type) > -1) {
                 // it exists in array
                 var index = self.selected_activity_types.indexOf(type);
-                self.selected_activity_types = self.selected_activity_types.splice(index, 1);
+                self.selected_activity_types.splice(index, 1);
+
             } else {
                 // add to array
                 self.selected_activity_types.push(type);

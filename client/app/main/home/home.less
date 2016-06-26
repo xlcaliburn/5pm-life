@@ -8,6 +8,7 @@
     background-color: @white;
     border-top-left-radius: @home-border-radius;
     border-bottom-left-radius: @home-border-radius;
+    min-height: 500px;
 }
 
 .home-right {
@@ -305,8 +306,18 @@ input::-webkit-inner-spin-button {
     cursor: not-allowed;
 }
 
-.next-stage-button,
 .prev-stage-button {
+    float: left;
+}
+
+.next-stage-button,
+.queue-up-button {
+    float: right;
+}
+
+.next-stage-button,
+.prev-stage-button
+ {
     border: 3px solid @pinkred;
     background-color: @white;
     color: @pinkred;
@@ -330,7 +341,27 @@ input::-webkit-inner-spin-button {
 
 .next-previous-buttons {
     text-align: center;
-    padding-bottom: 30px;
+    padding: 0 30px 30px;
+}
+
+.queue-up-button {
+    border: 3px solid @babyblue;
+    background-color: @white;
+    color: @babyblue;
+    font-size: 16px;
+    padding: 6px 20px;
+    outline: none;
+    transition: all 0.2s ease-out;
+}
+
+.queue-up-button:hover {
+    background-color: @babyblue;
+    color: @white;
+}
+
+.queue-up-button:active {
+    background-color: @white;
+    color: @babyblue;
 }
 
 .activity-checkboxes {
@@ -353,6 +384,7 @@ input::-webkit-inner-spin-button {
     vertical-align: middle;
     cursor: pointer;
     transition: color 0.3s ease-out;
+    .user-select-none;
 }
 
 .active-checkbox input[type='checkbox'],
@@ -361,7 +393,7 @@ input::-webkit-inner-spin-button {
 .social-checkbox label::before {
     width: 25px;
 	height: 25px;
-	top: 50%;
+	top: 40%;
 	left: 0;
 	margin-top: -12.5px;
 	position: absolute;
@@ -393,6 +425,7 @@ input::-webkit-inner-spin-button {
 .activity-container {
     text-align: center;
     margin: 30px 0;
+    min-height: 300px;
 }
 
 .active-card, .social-card {
@@ -400,10 +433,7 @@ input::-webkit-inner-spin-button {
     text-align: center;
     padding: 20px 40px;
     transition: all 0.25s ease-out;
-}
-
-.active-card:hover, .social-card:hover {
-    font-weight: 700;
+    .user-select-none;
 }
 
 .active-card {
@@ -416,20 +446,46 @@ input::-webkit-inner-spin-button {
     border: 3px solid @babyblue;
 }
 
-.active-card.card-selected {
+.active-card:hover {
     background-color: @pinkred;
     color: @white;
+    opacity: 0.6;
 }
 
-.social-card.card-selected {
+.social-card:hover {
     background-color: @babyblue;
     color: @white;
+    opacity: 0.6;
+}
+
+.active-card.card-selected,
+.active-card.card-selected:hover {
+    background-color: @pinkred;
+    color: @white;
+    opacity: 1;
+}
+
+.social-card.card-selected,
+.social-card.card-selected:hover {
+    background-color: @babyblue;
+    color: @white;
+    opacity: 1;
 }
 
 @media(max-width:1199px) {
     ul.banner-social-buttons {
         float: left;
         margin-top: 15px;
+    }
+
+    ._720kb-datepicker-calendar-day {
+        line-height: 50px;
+    }
+}
+
+@media(max-width: 991px) {
+    ._720kb-datepicker-calendar-day {
+        line-height: 60px;
     }
 }
 
@@ -448,6 +504,23 @@ input::-webkit-inner-spin-button {
 
     ul.banner-social-buttons > li:last-child {
         margin-bottom: 0;
+    }
+
+    ._720kb-datepicker-calendar-day {
+        line-height: 60px;
+    }
+
+    .prev-stage-button,
+    .next-stage-button,
+    .queue-up-button {
+        float: none;
+    }
+}
+
+@media(max-width: 600px) {
+    ._720kb-datepicker-calendar-day {
+        font-size: 16px;
+        line-height: 30px;
     }
 }
 
