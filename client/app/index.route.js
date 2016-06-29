@@ -9,7 +9,7 @@
 function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider
 		.state('welcome', {
-			url: '/welcome',
+			url: '/',
 			title: 'Welcome to 5pm.life',
 			templateUrl: 'app/main/welcome/welcome.html',
 			controller: 'WelcomeController',
