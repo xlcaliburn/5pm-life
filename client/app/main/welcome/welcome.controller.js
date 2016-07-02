@@ -9,28 +9,66 @@
     function WelcomeController($http, $timeout, EmailService) {
         var self = this;
 
-        // global variables
-        self.email;
+        // variables
+        self.no_input = true;
+        self.nav_open = false;
+        self.email_address;
         self.form;
-        self.loading;
-        self.status = angular.element('.login-status');
-        self.submit_button = angular.element('.submit-button');
-        self.section_container = angular.element('.login-section');
 
-        // submit email for verification
-        self.submit = function() {
+        // menu
+        self.menu_items = [
+            {
+                name: 'ABOUT',
+                link: '#about'
+            },
+            {
+                name: 'CONTACT',
+                link: '#contact'
+            },
+            {
+                name: 'FOLLOW',
+                link: '#follow'
+            }
+        ];
+
+        self.submit_email = function() {
+            if (self.no_input) {
+                angular.element('.no-input').removeClass("no-input");
+                $timeout(function() {
+                    angular.element('.welcome-subscribe>input').focus();
+                }, 250);
+                self.no_input = false;
+                return;
+            }
+
+            // submit their email here
             clear_errors();
+            var email_valid = validate_email();
+            var subscribe_button = angular.element('.subscribe-button');
+            subscribe_button.prop('disabled', true);
+            subscribe_button.addClass('loading');
+            $timeout(function() {
+                console.log(email_valid);
+                if (email_valid) {
+                    angular.element('.welcome-subscribe').addClass('fading-out');
+                    $timeout(function() {
+                        submit_email();
+                        var subscribe_container = angular.element('.welcome-subscribe.fading-out');
+                        subscribe_container.html('Thank you for signing up. We\'ll notify you when the BETA is ready!');
+                        subscribe_container.removeClass('fading-out');
+                    }, 550);
+                } else {
+                    angular.element('.welcome-errors').addClass('error');
+                    subscribe_button.removeClass('loading');
+                    subscribe_button.prop('disabled', false);
+                }
+            }, 1000);
+        }
 
-            // update front end
-            self.submit_button.addClass("loading");
-            self.loading = true;
-
-            var legit_email = validate_email();
-
-            if (legit_email)
-                submit_email();
-            else
-                notify_error();
+        self.go_to_section = function(section) {
+            angular.element('html, body').animate({
+                scrollTop: angular.element(section).offset().top
+            }, 500);
         }
 
         // validate email address
@@ -45,41 +83,58 @@
 
             // create email object
             var email = {
-                email_address: self.email
+                email_address: self.email_address
             }
 
             // do $http request to save email
             EmailService.sendEmail(email).then(function(res) {
                 console.log(res);
                 // update front end
-                $timeout(function() {
-                    self.section_container.addClass("status-ok");
-                    self.status.addClass("teal");
-                    self.status.html('Thank you for signing up. We\'ll notify you when the BETA is ready!');
-                    self.loading = false;
-                }, 1000);
             }, function (error) {
                 console.log(error);
             });
 
-
         }
 
-        // notify errors on invalid email
-        function notify_error() {
-            $timeout(function() {
-                self.submit_button.removeClass("loading");
-                self.status.addClass("invalid");
-                self.status.html('Please enter a valid email address.');
-                self.loading = false;
-            }, 1000);
+        // validate email address
+        function validate_email() {
+            if (!self.form.$valid || self.form.$pristine || !self.email_address)
+                return false;
+            return true;
         }
 
         // clear errors on submit
         function clear_errors() {
-            self.status.removeClass("invalid");
-            self.status.html('');
+            angular.element('.welcome-errors').removeClass('error');
         }
+
+
+        /*================ BACK TO TOP CONTAINER ================================ */
+        var offset = 300,
+    		//browser window scroll (in pixels) after which the "back to top" link opacity is reduced
+    		offset_opacity = 1200,
+    		//duration of the top scrolling animation (in ms)
+    		scroll_top_duration = 700,
+    		//grab the "back to top" link
+    		$back_to_top = $('.cd-top');
+
+    	//hide or show the "back to top" link
+    	$(window).scroll(function(){
+    		( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
+    		if( $(this).scrollTop() > offset_opacity ) {
+    			$back_to_top.addClass('cd-fade-out');
+    		}
+    	});
+
+    	//smooth scroll to top
+    	$back_to_top.on('click', function(event){
+    		event.preventDefault();
+    		$('body,html').animate({
+    			scrollTop: 0 ,
+    		 	}, scroll_top_duration
+    		);
+    	});
+        /*===================================================*/
 
     }
 

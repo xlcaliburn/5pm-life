@@ -1,39 +1,41 @@
 <!-- Welcome page -->
-<div class="welcome">
-	<div class="container">
-		<div class="center-middle">
-			<div class="row">
+<a href="#0" class="cd-top"><span class="glyphicon glyphicon-chevron-up" style='top: 50%;
+    transform: translateY(-50%); margin-left:3px'></span></a>
+<div class="welcome-section">
+	<div class="welcome-nav">
+		<div class="container">
+			<div class="col-md-3 logo-container">
+				<a class="logo" href="#"><img src="assets/images/logo.png" height="100%" width="auto"></a>
 
-				<!-- Logo and login -->
-				<div class="col-md-4 login-left">
-					<img class="login-logo" src="assets/images/logo.png">
-					<form name="welcome.form" ng-submit="welcome.submit()" novalidate>
-						<section class="login-section light">
-							<p>Sign up for our BETA</p>
-							<input type="email" ng-model="welcome.email">
-							<button ng-disabled="welcome.loading" class="submit-button">Sign Up</button>
-						</section>
-					</form>
-					<div class="login-status light"></div>
-				</div>
-
-				<!-- Description -->
-				<div class="col-md-8 login-right">
-					<div class="login-large purple">
-						Meet the<br />
-						right people<br />
-						at the right events
-					</div>
-
-					<div class="login-medium light">
-						<p>Connect with <span class="bold purple">like-minded people</span></p>
-						<p>Make <span class="bold purple">new friends</span></p>
-						<p>Enjoy <span class="bold purple">new events</span> in your area</p>
-					</div>
+				<!-- Toggle menu button -->
+				<div class="welcome-menu-button" ng-click="welcome.nav_open = !welcome.nav_open">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</div>
 			</div>
+			<div class="col-md-9 nav-links">
+				<a class="welcome-link" ng-repeat="item in welcome.menu_items" href="{{item.link}}" onclick="return false;" ng-click="welcome.go_to_section(item.link)">{{item.name}}</a>
+			</div>
+		</div>
+		<div class="mobile-nav" ng-class="{true: 'nav-open'}[welcome.nav_open]">
+			<a ng-click="welcome.nav_open = !welcome.nav_open" onclick="return false;" ng-click="" ng-repeat="item in welcome.menu_items" href="{{item.link}}">{{item.name}}</a>
+		</div>
+	</div>
 
-			<div class="clear"></div>
+	<div class="welcome-body">
+		<div class="welcome-container">
+			<div class="welcome-content">
+				Meeting the right people<br />
+				at the right events
+			</div>
+			<div class="welcome-subscribe no-input">
+				<div class="welcome-errors">Please enter a valid email address</div>
+				<form name="welcome.form" ng-submit="welcome.submit_email()" novalidate>
+					<input ng-model="welcome.email_address" type="email" placeholder="Enter your email address">
+					<button class="subscribe-button">SUBSCRIBE</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -42,6 +44,9 @@
 
 <!-- DELETE CRAP LATER -->
 <a name="services"></a>
+<a id="about"></a>
+<a id="contact"></a>
+<a id="follow"></a>
 <div class="content-section-a">
 
 	<div class="container">

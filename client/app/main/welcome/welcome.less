@@ -1,137 +1,290 @@
-/* Global welcome styles
-=============================== */
-
-.welcome,
-.welcome>.container {
-    height: 100%;
+.welcome-section {
+    background-image: url('../assets/images/home-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
 }
 
-/* Left Side
-================================ */
-
-.login-left {
-    padding: 2%;
+.logo-container {
+    height: 70px;
 }
 
-.login-logo {
-    width: 70%;
-    height: auto;
-    padding: 5%;
+.logo {
+    opacity: 0.85;
+    transition: opacity 0.2s ease-out;
 }
 
-.center-middle {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+.logo:hover {
+    opacity: 1;
 }
 
-.login-left {
+.welcome-nav {
+    padding: 15px 0;
+}
+
+.nav-links {
+    text-align: right;
+    height: 70px;
+    padding: 25px 0;
+    letter-spacing: 2px;
+}
+
+a.welcome-link:link,
+a.welcome-link:visited,
+a.welcome-link:active {
+    display: inline-block;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    opacity: 0.7;
+    margin-right: 75px;
+    text-decoration: none;
+    transition: opacity 0.2s ease-out;
+}
+
+a.welcome-link:hover {
+    opacity: 1;
+}
+
+.welcome-body {
+    height: 80%;
     text-align: center;
 }
 
-.welcome section {
-    margin: 5% 0;
+.welcome-container {
+    text-align: center;
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.welcome-content {
+    color: #ffffff;
+    font-size: 55px;
+    font-weight: 100;
+}
+
+.welcome-errors {
+    height: 30px;
+    color: transparent;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+.welcome-errors.error {
+    color: #ffeca9 !important;
+}
+
+.welcome-subscribe {
+    margin-top: 60px;
+    opacity: 1;
+    color: #ffffff;
     font-size: 18px;
+    font-weight: 300;
+    transition: all 0.5s ease-out;
 }
 
-.welcome input {
-    width: 100%;
-    border: 2px solid @lightgrey;
-    padding: 8px 15px;
-    border-radius: 2px;
-    transition: border 0.5s ease-out;
-}
-
-.welcome input:focus {
-    border: 2px solid @teal;
-}
-
-.login-section {
-    height: 160px;
-    overflow: hidden;
-    opacity: 1;
-    transition: height 0.5s ease-out, opacity 0.35s ease-out;
-}
-
-.welcome button,
-.welcome button:active {
-    margin: 5%;
-    width: 50%;
-    background-color: @purple;
-    opacity: 0.9;
-    color: @white;
-    border-radius: 3px;
+.welcome-subscribe input {
+    width: 20%;
+    background-color: transparent;
     border: none;
-    padding: 12px 15px 10px;
+    border-bottom: 2px solid #ffffff;
+    padding: 8px 5px;
     outline: none;
-    transition: color 0.35s ease-out;
+    color: #ffffff;
+    font-weight: 300;
+    font-size: 18px;
+    transition: all 0.5s ease-out;
 }
 
-.welcome button:hover {
-    opacity: 1;
+.welcome-subscribe input:focus {
+    border-bottom: 2px solid #ffeca9;
+}
+
+.welcome-subscribe input::-webkit-input-placeholder { color: rgba(255, 255, 255, 0.8); }
+.welcome-subscribe input:-moz-placeholder { color: rgba(255, 255, 255, 0.8); }
+.welcome-subscribe input::-moz-placeholder { color: rgba(255, 255, 255, 0.8); }
+.welcome-subscribe input:-ms-input-placeholder { color: rgba(255, 255, 255, 0.8); }
+
+.subscribe-button {
+    margin-left: 20px;
+    border: 5px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1.25px;
+    padding: 8px 30px 6px;
+    outline: none;
+    transition: all 0.2s ease-out;
+}
+
+.subscribe-button:hover {
+    background-color: #ffffff;
+    color: rgba(0,0,0,0.6);
+}
+
+.subscribe-button:active {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.welcome-subscribe.no-input input {
+    width: 0;
+    border: none;
+}
+
+.welcome-subscribe.no-input>.subscribe-button {
+    margin-left: 0;
+}
+
+.mobile-nav {
+    display: none;
+    width: 100%;
+    background-color: #ffffff;
+    color: #434343;
+}
+
+.welcome-menu-button {
+    display: none;
+    float: right;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.icon-bar {
+    display: block;
+    border: 2px solid #ffffff;
+    width: 35px;
+    margin: 7px 0;
+}
+
+.mobile-nav {
+    border: none;
+    padding: 0;
+    text-align: center;
+    height: 0px;
+    overflow: hidden;
+    float: left;
+    transition: height 0.3s ease-out;
+}
+
+.mobile-nav.nav-open {
+    border: 2px solid #ffffff;
+    padding: 6px 10px;
+    height: 166px;
+}
+
+.mobile-nav>a:link,
+.mobile-nav>a:visited,
+.mobile-nav>a:active {
+    display: block;
+    margin: 20px 0;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
 }
 
 .loading {
     background-image: url('../assets/images/loading.svg');
     background-repeat: no-repeat;
-    background-size: auto 50%;
+    background-size: auto 70%;
     background-position: center;
-    color: @invisible !important;
+    color: transparent !important;
+    background-color: transparent !important;
     transition: color 0s !important;
 }
 
-.status-ok {
-    height: 0 !important;
-    opacity: 0 !important;
+.fading-out {
+    opacity: 0;
 }
 
-.welcome input[type='email'] {
-    outline: none;
+/* back to top */
+.cd-top {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  border-radius: 15px;
+  bottom: 40px;
+  right: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  /* image replacement properties */
+  overflow: hidden;
+  text-align: center;
+  color: #ffffff !important;
+  white-space: nowrap;
+  background: rgba(232, 98, 86, 0.8) url(../img/cd-top-arrow.svg) no-repeat center 50%;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+  -moz-transition: opacity .3s 0s, visibility 0s .3s;
+  transition: opacity .3s 0s, visibility 0s .3s;
+  z-index: 999;
 }
-
-.login-status {
-    font-size: 18px;
+.cd-top.cd-is-visible, .cd-top.cd-fade-out, .no-touch .cd-top:hover {
+  -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+  -moz-transition: opacity .3s 0s, visibility 0s 0s;
+  transition: opacity .3s 0s, visibility 0s 0s;
 }
-
-/* Right Side
-================================ */
-
-.login-right {
-    padding: 3% 5%;
-    border-left: 2px solid @lightgrey;
-    background-image: url('../assets/images/login-right-bg.png');
-    background-size: cover;
+.cd-top.cd-is-visible {
+  /* the button becomes visible */
+  visibility: visible;
+  opacity: 1;
 }
-
-.login-status.invalid {
-    color: @pinkred;
-}
-
-.login-large {
-    font-size: 60px;
-    margin-bottom: 25px;
-}
-
-.login-medium {
-    font-size: 24px;
+.cd-top.cd-fade-out {
+  /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
+  opacity: .5;
 }
 
 /* Mobile
 ================================ */
+@media screen and (max-width: 1200px) {
+    .welcome-subscribe input {
+        width: 40%;
+    }
+}
+
 @media screen and (max-width: 992px) {
 
-    .login-logo {
-        width: 50%;
-        height: auto;
-        padding: 5%;
+    .welcome-content {
+        font-size: 40px;
     }
 
-    .login-right {
-        border: none;
-        border-top: 2px solid @lightgrey;
-        padding-left: 0;
-        padding-right: 0;
-        margin: 0 5%;
+    .logo {
+        float: left;
+    }
+
+    a.welcome-link,
+    .nav-links {
+        display: none !important;
+    }
+
+    .welcome-menu-button {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .welcome-subscribe input {
+        display: block;
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    .subscribe-button {
+        margin: 30px auto;
     }
 
 }
