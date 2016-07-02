@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="mobile-nav" ng-class="{true: 'nav-open'}[welcome.nav_open]">
-			<a ng-click="welcome.nav_open = !welcome.nav_open" onclick="return false;" ng-click="" ng-repeat="item in welcome.menu_items" href="{{item.link}}">{{item.name}}</a>
+			<a ng-click="welcome.nav_open = !welcome.nav_open; welcome.go_to_section(item.link)" onclick="return false;"ng-repeat="item in welcome.menu_items" href="{{item.link}}">{{item.name}}</a>
 		</div>
 	</div>
 

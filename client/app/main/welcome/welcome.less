@@ -170,25 +170,25 @@ a.welcome-link:hover {
 }
 
 .mobile-nav {
-    border: none;
+    position: absolute;
+    top: 120px;
+    left: 0;
     padding: 0;
-    text-align: center;
-    height: 0px;
+    height: 0;
     overflow: hidden;
-    float: left;
-    transition: height 0.3s ease-out;
+    z-index: 999;
+    transition: height .3s ease-out;
 }
 
 .mobile-nav.nav-open {
-    border: 2px solid #ffffff;
-    padding: 6px 10px;
-    height: 166px;
+    height: 146px;
 }
 
 .mobile-nav>a:link,
 .mobile-nav>a:visited,
 .mobile-nav>a:active {
     display: block;
+    text-align: center;
     margin: 20px 0;
     font-size: 16px;
     text-decoration: none;
@@ -276,6 +276,7 @@ a.welcome-link:hover {
 
     .welcome-content {
         font-size: 40px;
+        margin-top: 50px;
     }
 
     .logo {
@@ -295,7 +296,7 @@ a.welcome-link:hover {
     .welcome-subscribe input {
         display: block;
         width: 70%;
-        margin: 0 auto;
+        margin: 0 auto 20px;
     }
 
     .mobile-nav {
@@ -303,7 +304,7 @@ a.welcome-link:hover {
     }
 
     .subscribe-button {
-        margin: 30px auto;
+        margin: 0px auto;
     }
 
 }
