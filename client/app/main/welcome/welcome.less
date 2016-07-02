@@ -94,6 +94,7 @@ a.welcome-link:hover {
 
 .welcome-subscribe input {
     width: 20%;
+    margin-right: 20px;
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #ffffff;
@@ -115,7 +116,6 @@ a.welcome-link:hover {
 .welcome-subscribe input:-ms-input-placeholder { color: rgba(255, 255, 255, 0.8); }
 
 .subscribe-button {
-    margin-left: 20px;
     border: 5px solid #ffffff;
     background-color: transparent;
     color: #ffffff;
@@ -140,6 +140,8 @@ a.welcome-link:hover {
 .welcome-subscribe.no-input input {
     width: 0;
     border: none;
+    padding: 0;
+    margin: 0;
 }
 
 .welcome-subscribe.no-input>.subscribe-button {
@@ -205,6 +207,23 @@ a.welcome-link:hover {
 
 .fading-out {
     opacity: 0;
+}
+
+.welcome-scroll-bottom {
+    text-align: center;
+    color: #ffffff;
+}
+
+.scroll-bottom-arrow {
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-out;
+}
+
+.scroll-bottom-arrow:hover {
+    opacity: 1;
 }
 
 /* back to top */
