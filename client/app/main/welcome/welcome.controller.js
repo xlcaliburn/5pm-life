@@ -35,7 +35,7 @@
             if (self.no_input) {
                 angular.element('.no-input').removeClass("no-input");
                 $timeout(function() {
-                    angular.element('.welcome-subscribe>input').focus();
+                    angular.element('.welcome-subscribe input').focus();
                 }, 250);
                 self.no_input = false;
                 return;
@@ -61,6 +61,9 @@
                     angular.element('.welcome-errors').addClass('error');
                     subscribe_button.removeClass('loading');
                     subscribe_button.prop('disabled', false);
+                    $timeout(function() {
+                        angular.element('.welcome-subscribe input').focus();
+                    });
                 }
             }, 1000);
         }
