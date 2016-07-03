@@ -114,6 +114,7 @@
 
         /*================ BACK TO TOP CONTAINER ================================ */
         var offset = 300,
+            nav_offset = 100,
     		//browser window scroll (in pixels) after which the "back to top" link opacity is reduced
     		offset_opacity = 1200,
     		//duration of the top scrolling animation (in ms)
@@ -127,6 +128,12 @@
     		if( $(this).scrollTop() > offset_opacity ) {
     			$back_to_top.addClass('cd-fade-out');
     		}
+
+            if ($(this).scrollTop() > nav_offset) {
+                angular.element('.welcome-nav').addClass('sticky-nav');
+            } else {
+                angular.element('.welcome-nav').removeClass('sticky-nav');
+            }
     	});
 
     	//smooth scroll to top

@@ -20,8 +20,29 @@
     opacity: 1;
 }
 
+.logo img {
+    height: 100%;
+    width: auto;
+    transition: height 0.3s ease-out;
+}
+
 .welcome-nav {
+    position: fixed;
     padding: 15px 0;
+    width: 100%;
+    z-index: 999;
+    transition: all 0.35s ease-out;
+}
+
+.welcome-nav.sticky-nav {
+    height: 65px;
+    padding: 8px 0;
+    background-color: #126486;
+}
+
+.welcome-nav.sticky-nav .logo img {
+    height: 50px;
+    width: auto;
 }
 
 .nav-links {
@@ -29,6 +50,11 @@
     height: 70px;
     padding: 25px 0;
     letter-spacing: 2px;
+    transition: padding 0.3s ease-out;
+}
+
+.welcome-nav.sticky-nav .nav-links {
+    padding: 15px 0;
 }
 
 a.welcome-link:link,
@@ -56,7 +82,7 @@ a.welcome-link:hover {
 .welcome-container {
     text-align: center;
     position: relative;
-    top: 40%;
+    top: 60%;
     transform: translateY(-50%);
 }
 
@@ -117,7 +143,7 @@ a.welcome-link:hover {
 .welcome-subscribe input:-ms-input-placeholder { color: rgba(255, 255, 255, 0.8); }
 
 .subscribe-button {
-    border: 5px solid #ffffff;
+    border: 2px solid #ffffff;
     background-color: transparent;
     color: #ffffff;
     font-size: 14px;
@@ -149,17 +175,10 @@ a.welcome-link:hover {
     margin-left: 0;
 }
 
-.mobile-nav {
-    display: none;
-    width: 100%;
-    background-color: #ffffff;
-    color: #434343;
-}
-
 .welcome-menu-button {
     display: none;
     float: right;
-    margin-top: 25px;
+    margin-top: 5px;
     cursor: pointer;
 }
 
@@ -171,26 +190,35 @@ a.welcome-link:hover {
 }
 
 .mobile-nav {
+    display: none;
+    width: 100%;
+    color: #434343;
     position: absolute;
     top: 120px;
     left: 0;
     padding: 0;
-    height: 0;
+    height: 186px;
     overflow: hidden;
     z-index: 999;
-    transition: height .3s ease-out;
 }
 
-.mobile-nav.nav-open {
-    height: 146px;
+.mobile-nav.nav-open .nav-link-container {
+    transform: translate3d(0, 0, 0);
 }
 
-.mobile-nav>a:link,
-.mobile-nav>a:visited,
-.mobile-nav>a:active {
+.nav-link-container {
+    background-color: @white;
+    -webkit-transform: translate3d(0, -250px, 0); /* Safari */
+    transform: translate3d(0, -250px, 0);
+    transition: transform 0.35s ease-out;
+}
+
+.mobile-nav a:link,
+.mobile-nav a:visited,
+.mobile-nav a:active {
     display: block;
     text-align: center;
-    margin: 20px 0;
+    padding: 20px 0;
     font-size: 16px;
     text-decoration: none;
     font-weight: 500;
@@ -213,6 +241,9 @@ a.welcome-link:hover {
 .welcome-scroll-bottom {
     text-align: center;
     color: #ffffff;
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
 }
 
 .scroll-bottom-arrow {
@@ -277,11 +308,22 @@ a.welcome-link:hover {
 
     .welcome-content {
         font-size: 40px;
-        margin-top: 50px;
+    }
+
+    .welcome-container {
+        top: 60%;
     }
 
     .logo {
         float: left;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .welcome-nav {
+        height: 80px;
     }
 
     a.welcome-link,
@@ -302,6 +344,7 @@ a.welcome-link:hover {
 
     .mobile-nav {
         display: block;
+        top: 65px;
     }
 
     .subscribe-button {
