@@ -5,7 +5,7 @@
 	<div class="welcome-nav">
 		<div class="container">
 			<div class="col-md-3 logo-container">
-				<a class="logo" href="#"><img src="assets/images/logo.png"></a>
+				<a class="logo" href="/" target="_self"><img src="assets/images/logo.png"></a>
 
 				<!-- Toggle menu button -->
 				<div class="welcome-menu-button" ng-click="welcome.nav_open = !welcome.nav_open">
@@ -19,6 +19,7 @@
 			</div>
 		</div>
 		<div class="mobile-nav" ng-class="{true: 'nav-open'}[welcome.nav_open]">
+            <div class="close-button-container"><span ng-click="welcome.nav_open = !welcome.nav_open" class="glyphicon glyphicon-remove"></span></div>
             <div class="nav-link-container">
     			<a ng-click="welcome.nav_open = !welcome.nav_open; welcome.go_to_section(item.link)" onclick="return false;"ng-repeat="item in welcome.menu_items" href="{{item.link}}">{{item.name}}</a>
             </div>
