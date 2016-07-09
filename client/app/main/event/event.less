@@ -1,0 +1,302 @@
+#event-container {
+    margin-top: 30px;
+}
+
+.image-list-container::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+	border-radius: 20px !important;
+	background-color: #f5f5f5 !important;
+}
+
+.image-list-container::-webkit-scrollbar {
+    height: 6px !important;
+	background-color: #F5F5F5 !important;
+}
+
+.image-list-container::-webkit-scrollbar-thumb {
+	border-radius: 20px !important;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1) !important;
+	background-color: #7f7f7f !important;
+}
+
+.current-image {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
+    .user-select-none;
+    transition: background-image 0.3s ease-out;
+}
+
+.image-list-container {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.image-list {
+    list-style: none;
+}
+
+.image-list>li {
+    display: inline-block;
+}
+
+.image-item {
+    width: 145px;
+    height: 100px;
+    margin-right: 15px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: all 0.2s ease-out;
+}
+
+.image-item.image-selected {
+    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
+}
+
+.event-detail-card {
+    background-color: @white;
+    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
+    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
+}
+
+.event-card-header {
+    position: relative;
+    padding: 25px 25px 15px 35px;
+    border-bottom: 1px solid @BGcolor;
+}
+
+a.event-options {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+a.event-options:hover {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+a.event-options>i {
+    color: @lightgrey !important;
+    transition: color 0.2s ease-out;
+}
+
+a.event-options:hover>i {
+    color: @uppergrey !important;
+}
+
+.event-title {
+    font-size: 25px;
+    font-weight: 300;
+}
+
+.event-venue {
+    font-weight: 300;
+    font-size: 18px;
+    color: @pink;
+}
+
+.event-card-body {
+    padding: 15px 25px 15px 35px;
+}
+
+.event-card-body td {
+    padding: 10px 0;
+    color: @uppergrey;
+    font-size: 16px;
+    vertical-align: top;
+}
+
+.event-icons>i {
+    color: @middlegrey;
+    font-size: 1.5em;
+}
+
+a.event-status {
+    font-size: 10px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 1em;
+}
+
+a.event-status.attend { background-color: @green; }
+a.event-status.maybe { background-color: @babyblue; }
+a.event-status.not-attend { background-color: @pink; }
+
+a.event-status:visited,
+a.event-status:hover,
+a.event-status:active {
+    color: @white;
+    text-decoration: none !important;
+}
+
+.dropdown-content>li {
+    min-height: 40px;
+}
+
+.dropdown-content>li a {
+    font-size: 14px;
+    color: #26a69a;
+    line-height: 32px;
+    padding: 5px 16px;
+}
+
+.dropdown-content.active {
+    opacity: 1;
+    display: block;
+}
+
+#event-map {
+    width: 100%;
+    height: 175px;
+}
+
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+
+.event-card-footer {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.event-card-footer>a {
+    font-size: 12px;
+    background-color: @pink;
+    color: @white;
+}
+
+.event-card-footer>a:hover {
+    background-color: @green;
+    color: @white;
+}
+
+.attendees-chat-section {
+    background: @navyblue;
+    background: -moz-linear-gradient(left,  @navyblue 68%, @white 32%);
+    background: -webkit-linear-gradient(left,  @navyblue 68%, @white 32%);
+    background: linear-gradient(to right,  @navyblue 68%, @white 32%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@navyblue', endColorstr='@white',GradientType=1 );
+}
+
+.attendees-chat-section>.container>.row {
+    margin-bottom: 0;
+}
+
+#event-attendees {
+    background-color: @navyblue;
+}
+
+#event-chat {
+    background-color: @white;
+}
+
+.attendees-title {
+    padding: 30px 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: @white;
+}
+
+.attendee-card {
+    margin-bottom: 10px;
+}
+
+.attendee-name {
+    color: @white;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+}
+
+.attendee-props {
+    color: @green;
+}
+
+.chat-title {
+    padding: 20px 30px;
+    color: @pink;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+#chat-box {
+    height: 430px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.chat-textarea {
+    border-top: 1px solid @lightgrey;
+    height: 100px;
+    margin: 15px;
+    margin-bottom: 0;
+    padding-left: 5px;
+    background-color: @white;
+}
+
+.send-button {
+    background-color: @pink;
+    border-radius: 50%;
+    padding: 10px 13px;
+    color: @white;
+}
+
+.send-button:hover {
+    color: @white;
+}
+
+.send-button>i {
+    font-size: 14px;
+}
+
+.message-name {
+    font-weight: 500;
+}
+
+#chat-box::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+	border-radius: 20px !important;
+	background-color: #f5f5f5 !important;
+}
+
+#chat-box::-webkit-scrollbar {
+    width: 5px !important;
+	background-color: #F5F5F5 !important;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+	border-radius: 20px !important;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1) !important;
+	background-color: #7f7f7f !important;
+}
+
+@media screen and (max-width: 991px) {
+    // use mobile here
+    // at < 992px, mobile will show up
+}
