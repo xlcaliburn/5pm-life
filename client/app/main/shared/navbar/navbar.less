@@ -1,147 +1,129 @@
-@nav-height: 90px;
-
-nav {
-    height: @nav-height;
-    line-height: @nav-height;
-}
-
-.navbar-default {
-    background-color: @white;
-}
-
-nav>.container {
-    height: 100%;
-}
-
-.navbar-brand {
-    padding: 0;
+.navbar {
+    background-color: #ffffff;
+    padding: 20px 0;
+    border: none;
     margin: 0;
-    height: @nav-height;
-    line-height: inherit;
+    border-radius: 0;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
 }
 
-.navbar-brand>img {
-    height: 60%;
-    width: auto;
-    display: inline;
+.navbar .row {
+    margin-bottom: 0;
 }
 
-.nav.navbar-nav {
-    display: inline-block;
-    float: none;
-    vertical-align: middle;
+.nav-left {
+    text-align: left;
 }
 
-.collapse.navbar-collapse {
+.nav-logo {
+    opacity: 1;
+    outline: none;
+    transition: opacity 0.25s ease-out;
+}
+
+.nav-logo:hover { opacity: 0.7; }
+
+.nav-center {
     text-align: center;
 }
 
-a#go:link, a#go:visited {
-    background-color: @pinkred;
-    color: @white;
-    font-size: 20px;
-    border-radius: 20px;
-    padding: 15px 50px 12px;
-    transition: background 0.25s ease-out;
-}
-
-a#go:hover {
-    background-color: @purple;
-}
-
-a#go:active {
-    background-color: @pinkred;
-    transition: none;
-}
-
-.nav.nav-links {
-    float: right;
-    display: inline-block;
-    vertical-align: middle;
-    height: @nav-height;
-}
-
-.nav.nav-links>li {
-    height: @nav-height;
-}
-
-.nav.nav-links img {
-    height: 70%;
-    width: auto;
-}
-
-.nav > li.dropdown > a {
-    height: @nav-height;
-    padding: 0 15px;
-}
-
-.nav > li > a:hover, .nav > li > a:focus {
-    text-decoration: none;
-    background-color: @white;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu:hover {
-    display: block;
-}
-
-.dropdown-menu {
-    right: 0;
-    left: auto;
+#explore-button {
+    height: auto;
+    padding: 6px 30px 4px;
+    background-color: @pink;
     border: none;
-    background-color: #ffffff;
-    border-radius: 0;
-    padding: 25px 0px;
-    box-shadow: none;
-    border: 1px solid #e7e7e7;
-    border-top: none;
-    top: 98%;
-    margin: 0;
+    border-radius: 30px;
+    color: @white;
+    font-weight: 300;
+    margin-top: 2px;
+    text-decoration: none;
+    transition: all 0.25s ease-out;
 }
 
-.menu-caret {
+#explore-button:hover {
+    background-color: @green;
+}
+
+#explore-button i {
+    vertical-align: middle;
+    transform: translate(15px, -1px);
+}
+
+.nav-right {
+    text-align: right;
+}
+
+.nav-dropdown-container {
+    position: relative;
     display: inline-block;
-    position: absolute;
-    top: 60%;
-    right: 10%;
-    background-color: #2ab9bb;
-    width: 20px;
-    color: #ffffff;
-    height: 20px;
-    font-size: 10px;
+    padding-left: 30px;
+    overflow: visible;
+    .user-select-none;
+}
+
+.nav-menu {
+    cursor: pointer;
+}
+
+.profile-image {
+    max-height: 50px;
     border-radius: 50%;
-    line-height: 20px;
+}
+
+.drop-indicator {
+    background-color: #26a69a;
+    border-radius: 50%;
+    color: #ffffff;
+    padding: 2px;
+    float: right;
+    transform: translate(-10px, 30px);
+}
+
+.nav-dropdown {
+    position: absolute;
+    background-color: @white;
+    text-align: left;
+    top: -999px;
+    right: 0;
+    padding: 30px;
+    width: 280px;
+    opacity: 0;
+    transform: translate3d(-30px,0,0);
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out, top 0s linear 0.25s;
+}
+
+.nav-dropdown-container:hover .nav-dropdown {
+    top: 50px;
+    opacity: 1;
+    transform: translate3d(0,0,0);
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
 }
 
 .dropdown-name {
-    line-height: 30px;
-    font-size: 20px;
+    font-size: 24px;
+    color: @darkgrey;
     font-weight: 300;
-    padding-left: 35px;
 }
 
-.dropdown-menu .divider {
-    height: 1px;
-    margin: 15px 35px;
-    overflow: hidden;
-    background-color: #e5e5e5;
-}
-
-.dropdown-menu > li > a {
-    font-weight: 300;
+.dropdown-li>a:link,
+.dropdown-li>a:visited,
+.dropdown-li>a:active {
     color: @uppergrey;
-    padding: 15px 0 10px 40px;
-    min-width: 275px;
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.25s ease-out;
 }
 
-.dropdown-menu > li > a:focus {
-    background-color: inherit;
-    color: @uppergrey;
+.dropdown-li>a:hover {
+    color: @green;
 }
 
-.dropdown-settings .glyphicons {
-    margin-right: 20px;
+.nav-link-text {
+    margin-left: 10px;
+    vertical-align: middle;
+    transform: translateY(2px);
 }

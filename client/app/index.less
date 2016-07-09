@@ -19,6 +19,7 @@ Add global styles here.
 FivePM Colour references
 =========================== */
 @teal:          #46adae; //(logo colour)
+@green:         #26a69a;
 @purple:        #765f94;
 @darkgrey:      #434343; //(for text)
 @uppergrey:     #7f7f7f;
@@ -26,13 +27,15 @@ FivePM Colour references
 @lightgrey:     #cfcfcf;
 @BGcolor:       #f1f1f1;
 @blue:          #4864a8;
-@babyblue:      #429fd9;
+@babyblue:      #2ebffb;
 @pinkred:       #ff5d5d;
+@pink:          #e43c5c;
 @yellow:        #fffd76;
 @white:         #ffffff;
 @invisible:     rgba(255,255,255,0);
 
 .teal { color: @teal; }
+.green { color: @green; }
 .purple { color: @purple; }
 .darkgrey { color: @darkgrey; }
 .uppergrey { color: @uppergrey; }
@@ -40,6 +43,7 @@ FivePM Colour references
 .lightgrey { color: @lightgrey; }
 .bgcolor { color: @BGcolor; }
 .blue { color: @blue; }
+.pink { color: @pink; }
 .babyblue { color: @babyblue; }
 .pinkred { color: @pinkred; }
 .yellow { color: @yellow; }
@@ -90,6 +94,10 @@ html, body {
 
 .right {
     float: right;
+}
+
+i {
+    vertical-align: middle;
 }
 
 /* inject:less */

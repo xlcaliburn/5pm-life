@@ -6,7 +6,7 @@
     .controller('EventController', EventController);
 
     /** @ngInject */
-    function EventController($http, $timeout, EmailService) {
+    function EventController() {
         var self = this;
 
 

@@ -1,52 +1,56 @@
-<nav class="navbar navbar-default" role="navigation">
+<div class="navbar">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" ng-click="navbar.navbarCollapsed = !navbar.navbarCollapsed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/home">
-                <img src="/assets/images/logo.png">
-            </a>
-        </div>
+        <div class="row">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" collapse="navbar.navbarCollapsed">
+            <!-- Logo -->
+            <div class="nav-left col m4 s4">
+                <a href="/" target="_self">
+                    <img class="nav-logo" src="assets/images/logo-web.png">
+                </a>
+            </div>
 
-            <!-- Go -->
-            <ul class="nav navbar-nav">
-                <li><a id="go" href="#go" ng-click="navbar.go">Go</a></li>
-            </ul>
+            <!-- Explore button -->
+            <div class="nav-center col m4 s4">
+                <a id="explore-button" class="btn waves-light waves-effect">
+                    Explore <i class="tiny material-icons">arrow_forward</i>
+                </a>
+            </div>
 
-            <!-- Links -->
-            <ul class="nav nav-links">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="/assets/images/profile.png">
-                        <span class="menu-caret glyphicon glyphicon-menu-down"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-name">{{ navbar.full_name }}</li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-settings">
-                            <a ui-sref=".settings">
-                                <span class="glyphicon glyphicon-cog"></span> User Settings
-                            </a>
-                        </li>
-                        <li class="dropdown-settings">
-                            <a href="#">
-                                <span class="glyphicon glyphicon-log-out"></span> Logout
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
+            <!-- Dropdown menu -->
+            <div class="nav-right col m4 s4">
+                <div class="nav-dropdown-container">
+                    <div class="nav-menu">
+                        <img class="profile-image" src="assets/images/profile.png">
+                        <i class="tiny material-icons drop-indicator">expand_more</i>
+                    </div>
+                    <!-- Dropdown menu -->
+                    <div class="nav-dropdown">
+                        <div class="dropdown-name">Michael Wong</div>
+                        <hr class="dropdown-hr">
+                        <ul class="dropdown-ul">
+                            <li class="dropdown-li">
+                                <a href="#">
+                                    <i class="material-icons tiny">person</i>
+                                    <span class="nav-link-text">Profile</span>
+                                </a>
+                            </li>
+                            <li class="dropdown-li">
+                                <a href="#">
+                                    <i class="material-icons tiny">settings</i>
+                                    <span class="nav-link-text">User Preferences</span>
+                                </a>
+                            </li>
+                            <li class="dropdown-li">
+                                <a href="#">
+                                    <i class="material-icons tiny">exit_to_app</i>
+                                    <span class="nav-link-text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-                </li>
-            </ul>
         </div>
     </div>
-</nav>
+</div>
