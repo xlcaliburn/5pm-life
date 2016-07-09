@@ -3,21 +3,53 @@
         <div class="row">
 
             <!-- Logo -->
-            <div class="nav-left col m4 s4">
+            <div class="nav-left col l4 m4 s6">
                 <a href="/" target="_self">
                     <img class="nav-logo" src="assets/images/logo-web.png">
                 </a>
             </div>
 
             <!-- Explore button -->
-            <div class="nav-center col m4 s4">
+            <div class="nav-center col m4 s6">
                 <a id="explore-button" class="btn waves-light waves-effect">
                     Explore <i class="tiny material-icons">arrow_forward</i>
                 </a>
+
+                <div id="mobile-nav" ng-click="navbar.nav_open = !navbar.nav_open" ng-class="{true:'nav-open'}[navbar.nav_open]">
+                    <div class="nav-menu">
+                        <img class="profile-image" src="assets/images/profile.png">
+                        <i class="tiny material-icons drop-indicator">expand_more</i>
+                    </div>
+
+                    <div class="mobile-menu">
+                        <div class="dropdown-name">Michael Wong</div>
+                        <hr class="dropdown-hr">
+                        <ul class="dropdown-ul">
+                            <li class="dropdown-li">
+                                <a href="#">
+                                    <i class="material-icons tiny">person</i>
+                                    <span class="nav-link-text">Profile</span>
+                                </a>
+                            </li>
+                            <li class="dropdown-li">
+                                <a href="#">
+                                    <i class="material-icons tiny">settings</i>
+                                    <span class="nav-link-text">User Preferences</span>
+                                </a>
+                            </li>
+                            <li class="dropdown-li">
+                                <a href="#">
+                                    <i class="material-icons tiny">exit_to_app</i>
+                                    <span class="nav-link-text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <!-- Dropdown menu -->
-            <div class="nav-right col m4 s4">
+            <div class="nav-right col m4">
                 <div class="nav-dropdown-container">
                     <div class="nav-menu">
                         <img class="profile-image" src="assets/images/profile.png">

@@ -9,12 +9,8 @@
     function NavbarController() {
         var self = this;
 
-        self.navbarCollapsed = false;
-        self.full_name = "Michael Wong";
+        self.nav_open = false;
 
-        self.go = function() {
-            return false;
-        }
     }
 
 })();

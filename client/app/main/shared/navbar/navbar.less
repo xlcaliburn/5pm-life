@@ -127,3 +127,49 @@
     vertical-align: middle;
     transform: translateY(2px);
 }
+
+#mobile-nav {
+    display: none;
+    text-align: right;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .navbar>.container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #explore-button {
+        display: none;
+    }
+
+    #mobile-nav {
+        display: block;
+    }
+
+    .nav-right {
+        display: none;
+    }
+
+    .nav-menu {
+        text-align: right;
+    }
+
+    #mobile-nav.nav-open .mobile-menu {
+        display: block;
+    }
+
+    .mobile-menu {
+        position: absolute;
+        text-align: center;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background-color: @white;
+    }
+}
