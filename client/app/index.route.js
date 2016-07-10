@@ -17,7 +17,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 
 		.state('home', {
-			url: '/',
+			url: '/home',
 			title: '5pm.life Home',
 			templateUrl: 'app/main/home/home.html',
 			controller: 'HomeController',

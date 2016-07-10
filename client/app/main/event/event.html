@@ -32,22 +32,11 @@
                             <tbody><tr>
                                 <td class="event-icons"><i class="material-icons">person</i></td>
                                 <td>
-                                    <a class="waves-effect waves-light btn event-status" href='#' ng-click="event.toggle_dropdown()" ng-class="{attend: 'attend', maybe: 'maybe', 'not-attend': 'not-attend'}[event.status]" onclick="return false;">
+                                    <a class="waves-effect waves-light btn event-status" href='#' ng-class="{attend: 'attend', maybe: 'maybe', 'not-attend': 'not-attend'}[event.status]" onclick="return false;">
                                         <span ng-show="event.status == 'attend'">
-                                            <i class="material-icons tiny">done_all</i> GOING
-                                        </span>
-                                        <span ng-show="event.status == 'maybe'">
-                                            <i class="material-icons tiny">hourglass_empty</i> MAYBE GOING
-                                        </span>
-                                        <span ng-show="event.status == 'not-attend'">
-                                            <i class="material-icons tiny">block</i> not going
+                                            <i class="material-icons tiny">done_all</i> Confirmed
                                         </span>
                                     </a>
-                                    <ul id="status-dropdown" class="dropdown-content">
-                                        <li><a ng-click="event.select_status('attend')" href="#!">Going</a></li>
-                                        <li><a ng-click="event.select_status('maybe')" href="#!">Maybe Attending</a></li>
-                                        <li><a ng-click="event.select_status('not-attend')" href="#!">Not Going</a></li>
-                                    </ul>
                                 </td>
                             </tr>
                             <tr>
@@ -82,7 +71,7 @@
                     <div class="attendees-title">Attendees</div>
                     <div class="attendees-list">
                         <div class="row">
-                            <div class="col s6 attendee-card" ng-repeat="person in event.attendees">
+                            <div class="col s5 attendee-card" ng-repeat="person in event.attendees">
                                 <div class="row valign-wrapper">
                                     <div class="col s3"><img class="responsive-img circle" src="{{person.thumb}}"></div>
                                     <div class="col s9">
@@ -128,7 +117,7 @@
                     <div class="chat-textarea">
                         <div class="row valign-wrapper">
                             <div class="col s10">
-                                <textarea placeholder="Enter your message..." id="textarea1" class="materialize-textarea"></textarea>
+                                <textarea placeholder="Enter your message..." id="chatarea" class="materialize-textarea"></textarea>
                             </div>
                             <div class="col s2 align-right">
                                 <a class="btn-small waves-effect waves-light send-button">

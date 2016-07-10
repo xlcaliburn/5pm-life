@@ -85,7 +85,7 @@
                 text: "ooo sounds great guys!"
             },
         ]
-
+        self.status = 'attend';
 
         // views
         self.image_container = angular.element('.current-image');
@@ -94,7 +94,6 @@
         self.chatbox = angular.element('#chat-box');
 
         // variables
-        self.status = 'attend';
         self.lat;
         self.lng;
 
