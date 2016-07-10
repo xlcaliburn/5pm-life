@@ -6,21 +6,23 @@
 				<p>Computer Scientist, Realist, Racist</p>
 			</div>
 			<ul class="nav nav-tabs">
-				<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
-				<li><a data-toggle="tab" href="#account">Account</a></li>
+				<li class="active"><a data-toggle="tab" href="#profile">General</a></li>
 				<li><a data-toggle="tab" href="#matching">Matching Preferences</a></li>
 				<li><a data-toggle="tab">Activity Preferences</a></li>
 			</ul>
+			<form role="form">
 			<div class="tab-content">
 				<div id="profile" class="tab-pane fade in active">
-					<h2>Overview</h2>
-					<form role="form">
+					<h2>General</h2>
+					
 						<div class="form-group">
 							<label for"gender">Gender</label>
+							<div class="form-inline">
 							  <select class="form-control" id="gender">
 								<option>Male</option>
 								<option>Female</option>
 							</select>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for"shortbio">Short Bio:</label>
@@ -38,39 +40,43 @@
 						<!-- Three words to describe yourself 
 						Ethnicity
 						Language-->
-
-					</form>
-				</div>
-				<div id="account" class="tab-pane fade">
 					<div class="form-group">
 						<label for"address">Email</label>
-						<input type="password" class="form-control" id="email">
+						<input type="email" class="form-control" id="email">
 					</div>
 					<div class="form-group">
-						<label for"address">Birthday</label>
-						<select class="form-control" id="dob_month">
-							<option>January</option>
-							<option>February</option>
-							<option>March</option>
-							<option>April</option>
-							<option>May</option>
-							<option>June</option>
-							<option>July</option>
-							<option>August</option>
-							<option>September</option>
-							<option>October</option>
-							<option>November</option>
-							<option>December</option>
-						</select>
-						<input type="password" class="form-control" id="email">
-						<input type="password" class="form-control" id="email">
-					</div>						
+					    <label for="birthday">Birthday</label>
+					    <div>
+					        <div class="form-inline">
+							    <select class="form-control" id="dob_month">
+									<option>January</option>
+									<option>February</option>
+									<option>March</option>
+									<option>April</option>
+									<option>May</option>
+									<option>June</option>
+									<option>July</option>
+									<option>August</option>
+									<option>September</option>
+									<option>October</option>
+									<option>November</option>
+									<option>December</option>
+								</select>
+					            <div class="form-group">
+					                <input type="text" class="form-control" placeholder="day"/>
+					            </div>
+					            <div class="form-group">
+					                <input type="text" class="form-control" placeholder="year"/>
+					            </div>
+					        </div>
+					    </div>
+					</div>
 				</div>
-
 				<div id="matching" class="tab-pane fade">
 					<h2>Matching Preferences</h2>
 				</div>
 			</div> <!-- End tab content -->
+			</form>
 			<button class="btn btn-lg btn-primary pull-right" type="submit">Save</button>
 		</div> <!-- End col-sm-12 -->
 	</div> <!-- End row -->
