@@ -10,9 +10,73 @@
     height: 100%;
     padding: 5% 0;
     overflow-y: auto;
-    z-index: 9999;
+    opacity: 0;
+    z-index: 999;
     text-align: center;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(68, 68, 68, 0.9);
+    -webkit-animation: close-modal 0.3s ease-out;
+    -moz-animation: close-modal 0.3s ease-out;
+    -o-animation: close-modal 0.3s ease-out;
+    animation: close-modal 0.3s ease-out;
+}
+
+#queue-modal.queue-modal-open {
+    display: block;
+    opacity: 1;
+    -webkit-animation: show-modal 0.3s ease-out;
+    -moz-animation: show-modal 0.3s ease-out;
+    -o-animation: show-modal 0.3s ease-out;
+    animation: show-modal 0.3s ease-out;
+}
+
+// Queue open modal animation
+@-webkit-keyframes show-modal {
+    0% { opacity: 0; display: none; }
+    1% { opacity: 0; display: block; }
+    100% { opacity: 1; display: block; }
+}
+
+@-moz-keyframes show-modal {
+    0% { opacity: 0; display: none; }
+    1% { opacity: 0; display: block; }
+    100% { opacity: 1; display: block; }
+}
+
+@-o-keyframes show-modal {
+    0% { opacity: 0; display: none; }
+    1% { opacity: 0; display: block; }
+    100% { opacity: 1; display: block; }
+}
+
+@keyframes show-modal {
+    0% { opacity: 0; display: none; }
+    1% { opacity: 0; display: block; }
+    100% { opacity: 1; display: block; }
+}
+
+// Queue close modal animation
+@-webkit-keyframes close-modal {
+    0% { opacity: 1; display: block; }
+    99% { opacity: 0; display: block; }
+    100% { opacity: 0; display: none; }
+}
+
+@-moz-keyframes close-modal {
+    0% { opacity: 1; display: block; }
+    99% { opacity: 0; display: block; }
+    100% { opacity: 0; display: none; }
+}
+
+@-o-keyframes close-modal {
+    0% { opacity: 1; display: block; }
+    99% { opacity: 0; display: block; }
+    100% { opacity: 0; display: none; }
+}
+
+@keyframes close-modal {
+    0% { opacity: 1; display: block; }
+    99% { opacity: 0; display: block; }
+    100% { opacity: 0; display: none; }
 }
 
 .queue-modal-overlay {
@@ -28,8 +92,12 @@
     display: inline-block;
     text-align: left;
     width: 500px;
-    height: 1000px;
-    background-color: @white;
+    transform: translate3d(0,-50px,0);
+    transition: all 0.3s ease-out;
+}
+
+#queue-modal.queue-modal-open .queue-modal {
+    transform: translate3d(0,0,0);
 }
 
 .queue-modal-header {
@@ -48,7 +116,15 @@
 }
 
 .queue-modal-body {
-    padding: 25px 30px 25px 50px;
+    padding: 35px 30px;
+    background-color: @white;
+    -webkit-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
+}
+
+.queue-modal-body hr {
+    margin: 40px 0;
 }
 
 .queue-modal-title {
@@ -64,18 +140,114 @@
 }
 
 .queue-icons {
+    color: @middlegrey;
+    margin-right: 20px;
+}
 
+.tooltip-icon {
+    cursor: pointer;
+    color: @middlegrey;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-bottom: 2px;
+}
+
+.datetime-input-container,
+.activity-stage {
+    margin: 25px 0;
 }
 
 .date-input {
     display: inline-block;
     width: 200px;
-    margin: 20px 0 20px 20px;
+    margin: 0;
 }
 
-.date-input>input {
+.date-input #datepicker,
+.times-input #start_timepicker,
+.times-input #end_timepicker {
     margin: 0;
+    cursor: default;
     height: auto;
+    border-bottom: 1px solid @middlegrey;
+}
+
+.times-input {
+    display: inline-block;
+    width: 100px;
+    margin: 0 15px;
+}
+
+.start-timepicker, .end-timepicker {
+    border: none;
+}
+
+.time-text {
+    color: @turq;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.activity-stage .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+label.active-cb-label {
+    color: @pinkred;
+    font-size: 16px;
+}
+
+.filled-in:checked + label.active-cb-label:after {
+    background-color: @pinkred;
+    border: 2px solid @pinkred;
+}
+
+label.social-cb-label {
+    color: @blue;
+    font-size: 16px;
+}
+
+.filled-in:checked + label.social-cb-label:after  {
+    background-color: @blue;
+    border: 2px solid @blue;
+}
+
+label.both-cb-label {
+    color: @green;
+    font-size: 16px;
+}
+
+.queue-confirm-container {
+    text-align: center;
+}
+
+.queue-confirm-button {
+    background-color: @pink;
+    transform: translateY(-50%);
+}
+
+.queue-confirm-button:hover {
+    background-color: @pinkred;
+}
+
+@media screen and (max-width: 991px) {
+    #queue-modal {
+        padding: 0;
+    }
+
+    .queue-modal {
+        width: 100%;
+    }
+}
+
+.location-stage {
+    margin: 20px 0;
+}
+
+select.location-select {
+    width: 60%;
+    display: inline-block;
 }
 
 /*==================================

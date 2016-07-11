@@ -13,10 +13,30 @@
         self.steps = [
             {
                 order: 1,
-                stage: 'datetime',
+                stage: "datetime",
                 title: "date and time",
-                subtitle: "Select a date and time of when you are available",
-                tooltip: "Enter tooltip here"
+                subtitle: "Select a date and time of when you are available.",
+                tooltip: "Enter date and time tooltip here"
+            },
+            {
+                order: 2,
+                stage: "activity_type",
+                title: "activity type",
+                subtitle: "Select one or more <span style='color: #429fd9'>activity types</span> that you would like your event to be.",
+                tooltip: "Enter activity preference tooltip here"
+            },
+            {
+                order: 3,
+                stage: "location_pref",
+                title: "location preference",
+                subtitle: "Select your preferred event location.",
+                tooltip: "Enter location preference tooltip here",
+                locations: [
+                    {
+                        id: 12345,
+                        city: "Richmond Hill"
+                    }
+                ]
             }
         ];
 
@@ -32,6 +52,10 @@
         self.queue_date;
         self.queue_start_time;
         self.queue_end_time;
+        self.active = false;
+        self.social = false;
+        self.both = false;
+        self.location;
 
         /*======================================
             Functions
@@ -39,6 +63,15 @@
         self.init = function() {
             // init datetime picker
             self.init_datetimepicker();
+            self.init_tooltips();
+        }
+
+        // initialiaze tooltips
+        self.init_tooltips = function() {
+            $timeout(function() {
+                var tooltips = angular.element('.queue-tooltip');
+                tooltips.tooltip();
+            });
         }
 
         // open modal when explore is clicked
@@ -46,8 +79,8 @@
             if (self.modal_open)
                 return;
 
-            self.modal.css('display', 'block');
             self.body.addClass('modal-open');
+            self.modal.addClass('queue-modal-open');
             self.modal_open = true;
         }
 
@@ -56,8 +89,8 @@
             if (!self.modal_open)
                 return;
 
-            self.modal.css('display', 'none');
             self.body.removeClass('modal-open');
+            self.modal.removeClass('queue-modal-open');
             self.modal_open = false;
         }
 
@@ -66,13 +99,46 @@
             return $sce.trustAsHtml(html);
         }
 
+        self.toggle_activity = function(activity) {
+            if (activity == 'active') {
+                if (!self.active) self.both = false;
+            }
+            if (activity == 'social') {
+                if (!self.social) self.both = false;
+            }
+            if (activity == 'both') {
+                if (self.both) {
+                    self.active = true;
+                    self.social = true;
+                } else {
+                    self.active = false;
+                    self.social = false;
+                }
+            }
+        }
+
         // initialize datetime picker
         self.init_datetimepicker = function() {
             if (self.datetime) {
                 $timeout(function() {
+                    // init date
                     var datepicker = angular.element("#datepicker");
                     datepicker.pickadate({
                         format: 'mmmm dd, yyyy'
+                    });
+
+                    // init start time
+                    var start_timepicker = angular.element("#start_timepicker");
+                    start_timepicker.pickatime({
+                        autoclose: true,
+                        twelvehour: true
+                    });
+
+                    // init end time
+                    var end_timepicker = angular.element("#end_timepicker");
+                    end_timepicker.pickatime({
+                        autoclose: true,
+                        twelvehour: true
                     });
                 });
             }
