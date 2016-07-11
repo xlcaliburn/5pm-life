@@ -4,13 +4,10 @@ angular.module('apiService', [])
 	.factory('Users', function($http) {
 		return {
 			get : function() {
-				return $http.get('/api/venues');
+				return $http.get('/api/users');
 			},
 			create : function(data) {
-				return $http.post('/api/venues', data);
-			},
-			delete : function(id) {
-				return $http.delete('/api/venues/' + id);
+				return $http.post('/api/users', data);
 			}
 		}
 	})

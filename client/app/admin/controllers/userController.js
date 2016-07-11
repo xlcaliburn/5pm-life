@@ -18,14 +18,8 @@ angular.module('userCtrl', [])
 					.success(function(data) {
 						$scope.formData = {};
 						$scope.Users = data;
-					});
+					})
+				;
 			}
-		};
-
-		$scope.deleteUser = function(id) {
-			Users.delete(id)
-				.success(function(data) {
-					$scope.Users = data;
-				});
 		};
 	});

@@ -9,30 +9,20 @@
 	<table style="max-width: 500px; align: center;" class="table table-striped">
 		<thead>
 			<tr>
-				<th>Tag Name</th>
-				<th>Actions</th>
+				<th>User Name</th>
+				<th>Email</th>
+				<th>Provider</th>
+				<th>Role</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="tag in Tags">
-				<td>{{ tag.enum_name }}</td>
-				<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="deleteTag(tag._id)"></td>
+			<tr ng-repeat="user in Users">
+				<td>{{ user.name }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.provider }}</td>
+				<td>{{ user.role }}</td>
+				<td><input type="button" class="btn btn-danger btn-sm" value="Edit" ng-click="editUser(user._id)"></td>
 			</tr>
 		</tbody>
 	</table>
-
-	<div class="panel panel-blue">
-		<div class="panel-heading">
-			<h3><i class="fa fa-tasks"></i> Add New Tag</h3>
-		</div>
-		<div class="panel-body">
-			<form>
-				<div class="form-group">
-					<label>Tag Name</label>
-					<input type="text" class="form-control" ng-model="formData.tag_name">
-				</div>
-				<button type="submit" class="btn btn-primary btn-lg" ng-click="createTag()">Add</button>
-			</form>
-		</div>
-	</div>
 </div>

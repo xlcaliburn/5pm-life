@@ -15,7 +15,7 @@ export default function(app) {
 	// Insert routes below
 	app.use('/api/things', require('./api/thing')); // to delete
 	app.use('/api/users', require('./api/user'));
-    app.use('/api/email', require('./api/email'));
+	app.use('/api/email', require('./api/email'));
 
 	app.use('/api/tags', require('./api/tags/routes.js'));
 	app.use('/api/venues', require('./api/venues/routes.js'));
