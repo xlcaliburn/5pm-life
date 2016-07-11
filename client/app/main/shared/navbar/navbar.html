@@ -1,3 +1,33 @@
+<div id="queue-modal">
+    <div class="queue-modal-overlay" ng-click="navbar.close_queue_modal()"></div>
+    <div class="queue-modal">
+        <!-- Modal Header -->
+        <div class="queue-modal-header valign-wrapper">
+            QUEUE FOR EVENT
+            <i class="material-icons close-queue-modal-button" ng-click="navbar.close_queue_modal()">close</i>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="queue-modal-body">
+            <div class="stage" ng-repeat="step in navbar.steps">
+                <div class="queue-modal-title">{{step.title}}</div>
+                <div class="queue-modal-subtitle">{{ navbar.to_html(step.subtitle)}}</div>
+                <div class='datetime-stage valign-wrapper' ng-if="step.stage == 'datetime'">
+                    <i class="material-icons queue-icons">event</i>
+                    <div class="input-field date-input">
+                        <input type="date" id="datepicker" class="datepicker" ng-model="navbar.queue_date" placeholder="Select a date">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="queue-modal-footer">
+            <!-- Submit button -->
+        </div>
+    </div>
+</div>
+
 <div class="navbar">
     <div class="container">
         <div class="row">
@@ -11,7 +41,7 @@
 
             <!-- Explore button -->
             <div class="nav-center col m4 s6">
-                <a id="explore-button" class="btn waves-light waves-effect">
+                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()">
                     Explore <i class="tiny material-icons">arrow_forward</i>
                 </a>
 

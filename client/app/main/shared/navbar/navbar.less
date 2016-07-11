@@ -1,3 +1,87 @@
+/*=======================================
+    Queue Modal
+========================================*/
+#queue-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5% 0;
+    overflow-y: auto;
+    z-index: 9999;
+    text-align: center;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.queue-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.queue-modal {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    width: 500px;
+    height: 1000px;
+    background-color: @white;
+}
+
+.queue-modal-header {
+    background-color: @turq;
+    padding: 25px 30px 25px 50px;
+    color: @white;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.close-queue-modal-button {
+    cursor: pointer;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.queue-modal-body {
+    padding: 25px 30px 25px 50px;
+}
+
+.queue-modal-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: @turq;
+    text-transform: uppercase;
+}
+
+.queue-modal-subtitle {
+    font-size: 16px;
+    color: @uppergrey;
+}
+
+.queue-icons {
+
+}
+
+.date-input {
+    display: inline-block;
+    width: 200px;
+    margin: 20px 0 20px 20px;
+}
+
+.date-input>input {
+    margin: 0;
+    height: auto;
+}
+
+/*==================================
+    Navbar
+===================================*/
+
 .navbar {
     background-color: #ffffff;
     padding: 20px 0;

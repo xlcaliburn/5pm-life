@@ -19,7 +19,8 @@
     "bootstrap-tags": "^1.1.6",
     "angularjs-datepicker": "latest",
     "moment": "~2.10.6",
-    "materialize": "~0.97.6"
+    "materialize": "~0.97.6",
+    "materialize-clockpicker": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"
