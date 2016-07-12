@@ -94,6 +94,82 @@
             self.modal_open = false;
         }
 
+        self.confirm_queue = function() {
+        // validate information
+            self.clear_errors('all');
+
+        /*================================================
+        ================ validate date
+        =================================================*/
+
+            // check if date is empty
+            if (!self.queue_date) {
+                self.add_errors('datetime', '#datepicker', 'Please select a date below'); return;
+            }
+
+            // check if date is valid
+            var selected_date = new Date(self.queue_date);
+            if (selected_date == 'Invalid Date') {
+                self.add_errors('datetime', '#datepicker', 'Please enter a valid date'); return;
+            }
+
+            // check if selected date is in the past
+            var today = new Date(); today.setHours(0,0,0,0);
+            if (selected_date < today) {
+                self.add_errors('datetime', '#datepicker', 'The date you have chosen is in the past');
+                return;
+            }
+
+        /*================================================
+        ================ validate time
+        =================================================*/
+
+            // check for empty inputs
+            if (!self.queue_start_time) {
+                self.add_errors('datetime', '.start-timepicker', 'Please select a starting time below');
+                return;
+            } else if (!self.queue_end_time) {
+                self.add_errors('datetime', '.end-timepicker', 'Please select an ending time below');
+                return;
+            }
+
+            // check if time between start and end is at least 3 hours and therefore start time must
+            // be less than 9:00PM
+            var start_time = parseInt(moment(self.queue_start_time, ["h:mmA"]).format("HHmm")),
+                end_time = parseInt(moment(self.queue_end_time, ["h:mmA"]).format("HHmm")),
+                modified_start_time = start_time + 300; // time with 3 hour gap
+
+            if (start_time >= 2100) {
+                self.add_errors('datetime', '.start-timepicker', 'Please select an earlier start time');
+                return;
+            }
+
+            if (modified_start_time > end_time) {
+                self.add_errors('datetime', '.start-timepicker', 'Your available time range needs to be at least 3 hours');
+                self.add_errors('datetime', '.end-timepicker', 'Your available time range needs to be at least 3 hours');
+                return;
+            }
+
+        /*================================================
+        == validate activity type and location preference
+        =================================================*/
+
+            // check if activity type is selected
+            console.log(self.active, self.social);
+            if (!self.active && !self.social) {
+                self.add_errors('activity_type', null, 'Please select an activity type');
+                return;
+            }
+
+            if (!self.location) {
+                self.add_errors('location_pref', '.location-select', 'Please select a location preference');
+                return;
+            }
+
+            // if valid, go to confirmation page
+
+        }
+
         // convert string to html
         self.to_html = function(html) {
             return $sce.trustAsHtml(html);
@@ -123,8 +199,15 @@
                 $timeout(function() {
                     // init date
                     var datepicker = angular.element("#datepicker");
+                    var yesterday = new Date((new Date()).valueOf()-1000*60*60*24);
                     datepicker.pickadate({
-                        format: 'mmmm dd, yyyy'
+                        format: 'mmmm dd, yyyy',
+                        disable: [
+                          { from: [0,0,0], to: yesterday }
+                        ],
+                        onSet: function() {
+                            setTimeout(this.close, 0);
+                        }
                     });
 
                     // init start time
@@ -142,6 +225,22 @@
                     });
                 });
             }
+        }
+
+        self.add_errors = function(type, selector, message) {
+            var error = angular.element('div[type="' + type + '"]');
+
+            error.html(message);
+            if (type != 'activity_type')
+                angular.element(selector).addClass('queue-input-error');
+        }
+
+        self.clear_errors = function(element) {
+            if (element == 'all') {
+                angular.element('.queue-errors').html('');
+                angular.element('.queue-input-error').removeClass('queue-input-error');
+            }
+
         }
 
         /* Here we go */

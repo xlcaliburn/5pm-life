@@ -152,6 +152,23 @@
     margin-bottom: 2px;
 }
 
+.queue-errors {
+    margin: 20px 0 0;
+    color: @pinkred;
+}
+
+.input-field>input {
+    transition: all 0.25s ease-out;
+}
+
+input.queue-input-error {
+    border-bottom: 1px solid @pink !important;
+}
+
+select.queue-input-error {
+    border: 1px solid @pink !important;
+}
+
 .datetime-input-container,
 .activity-stage {
     margin: 25px 0;
@@ -168,7 +185,8 @@
 .times-input #end_timepicker {
     margin: 0;
     cursor: default;
-    height: auto;
+    height: 2em;
+    cursor: pointer;
     border-bottom: 1px solid @middlegrey;
 }
 
@@ -180,6 +198,7 @@
 
 .start-timepicker, .end-timepicker {
     border: none;
+    text-align: center;
 }
 
 .time-text {

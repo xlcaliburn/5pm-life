@@ -17,6 +17,9 @@
                 </div>
                 <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
 
+                <!-- Errors -->
+                <div class="queue-errors" type="{{ step.stage }}"></div>
+
                 <!-- Datetime picker -->
                 <div class="datetime-stage" ng-if="step.stage == 'datetime'">
 
@@ -24,7 +27,7 @@
                     <div class="datetime-input-container valign-wrapper">
                         <i class="material-icons queue-icons">event</i>
                         <div class="input-field date-input">
-                            <input type="date" id="datepicker" class="datepicker" ng-model="navbar.queue_date" placeholder="Select a date">
+                            <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
                         </div>
                     </div>
 
@@ -33,11 +36,11 @@
                         <i class="material-icons queue-icons">access_time</i>
                         <span class="time-text">From</span>
                         <div class="input-field times-input">
-                            <input type="time" id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
+                            <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
                         </div>
                         <span class="time-text">to</span>
                         <div class="input-field times-input">
-                            <input type="time" id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
+                            <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
                         </div>
                     </div>
                 </div>
@@ -81,7 +84,7 @@
         <div class="queue-modal-footer">
             <!-- Submit button -->
             <div class="queue-confirm-container">
-                <a class="btn-floating btn-large waves-effect waves-light queue-confirm-button">
+                <a class="btn-floating btn-large waves-effect waves-light queue-confirm-button" ng-click="navbar.confirm_queue()">
                     <i class="material-icons">chevron_right</i>
                 </a>
             </div>
