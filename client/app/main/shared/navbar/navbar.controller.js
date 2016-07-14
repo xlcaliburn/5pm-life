@@ -47,6 +47,7 @@
         self.datetime = angular.element('.datetime-stage');
 
         // variables
+        self.status_title = "QUEUE FOR EVENT";
         self.nav_open = false;
         self.modal_open = false;
         self.queue_date;
@@ -55,6 +56,7 @@
         self.active = false;
         self.social = false;
         self.both = false;
+        self.confirm = false;
         self.location;
 
         /*======================================
@@ -167,6 +169,23 @@
             }
 
             // if valid, go to confirmation page
+            self.toggle_confirm_information();
+        }
+
+        // confirm information before submitting
+        self.toggle_confirm_information = function() {
+            // change status and title
+            self.confirm = !self.confirm;
+            if (self.confirm)
+                self.status_title = "CONFIRM EVENT PREFERENCES";
+            else
+                self.status_title = "QUEUE FOR EVENT";
+
+            // toggle classes
+            angular.element('.stages').toggleClass('confirm');
+            angular.element('.confirmation').toggleClass('confirm');
+            angular.element('.queue-modal-header').toggleClass('confirm');
+            angular.element('.queue-modal-title').toggleClass('confirm');
 
         }
 
@@ -225,6 +244,40 @@
                     });
                 });
             }
+        }
+
+        // returns date with day of week
+        self.get_full_date = function(unformatted_date) {
+            var days_of_week = ["Sunday", "Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var new_date = new Date(unformatted_date).getDay(),
+                day_of_week = days_of_week[new_date];
+
+            return day_of_week + ", " + unformatted_date;
+        }
+
+        self.get_formatted_time = function(time) {
+            if (!time) return;
+            if (time.charAt(0) == "0")
+                return time.substring(1);
+            return time;
+        }
+
+        self.get_location = function(location_id) {
+            var list_of_locations;
+            for (var i = 0; i < self.steps.length; i++) {
+                if (self.steps[i].stage == "location_pref") {
+                    list_of_locations = self.steps[i].locations;
+                }
+            }
+
+            for (var i = 0; i < list_of_locations.length; i++) {
+                if (list_of_locations[i].id == location_id) {
+                    return list_of_locations[i].city;
+                }
+            }
+
+            // else return first location
+            return list_of_locations[0].city;
         }
 
         self.add_errors = function(type, selector, message) {

@@ -79,6 +79,32 @@
     100% { opacity: 0; display: none; }
 }
 
+.stages {
+    opacity: 1;
+    transition: all 0.35s ease-out 0.25s;
+}
+
+.stages.confirm {
+    opacity: 0;
+    pointer-events:none;
+    transform: translate3d(-150px, 0, 0);
+    transition: all 0.35s ease-out;
+}
+
+.confirmation {
+    pointer-events:none;
+    padding-right: 35px;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.25s ease-out 0s;
+}
+
+.confirmation.confirm {
+    pointer-events: all;
+    opacity: 1;
+    transition: opacity 0.35s ease-out 0.25s;
+}
+
 .queue-modal-overlay {
     position: absolute;
     top: 0;
@@ -107,6 +133,11 @@
     text-transform: uppercase;
     font-weight: 300;
     font-size: 20px;
+    transition: background 0.35s ease-out;
+}
+
+.queue-modal-header.confirm {
+    background-color: @pink;
 }
 
 .close-queue-modal-button {
@@ -118,6 +149,7 @@
 .queue-modal-body {
     padding: 35px 30px;
     background-color: @white;
+    overflow: hidden;
     -webkit-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
     box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
@@ -127,11 +159,20 @@
     margin: 40px 0;
 }
 
+.confirm-stage hr {
+    margin: 20px 0;
+}
+
 .queue-modal-title {
     font-weight: 700;
     font-size: 18px;
     color: @turq;
     text-transform: uppercase;
+    transition: color 0.35s ease-out;
+}
+
+.queue-modal-title.confirm {
+    color: @pink;
 }
 
 .queue-modal-subtitle {
@@ -248,6 +289,20 @@ label.both-cb-label {
 
 .queue-confirm-button:hover {
     background-color: @pinkred;
+}
+
+.confirm-instructions {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.confirm-step-container {
+    margin: 20px 0;
+}
+
+.confirm-text {
+    display: inline-block;
+    font-size: 16px;
 }
 
 @media screen and (max-width: 991px) {

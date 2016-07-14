@@ -3,80 +3,142 @@
     <div class="queue-modal">
         <!-- Modal Header -->
         <div class="queue-modal-header valign-wrapper">
-            QUEUE FOR EVENT
+            {{ navbar.status_title }}
             <i class="material-icons close-queue-modal-button" ng-click="navbar.close_queue_modal()">close</i>
         </div>
 
         <!-- Modal Body -->
         <div class="queue-modal-body">
-            <div class="stage" ng-repeat="step in navbar.steps">
-                <hr ng-if="$index != 0">
-                <div class="queue-modal-title">
-                    {{step.title}}
-                    <a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>
+            <div class="confirmation">
+                <div class="confirm-instructions">
+                    Please confirm the following information. If it all looks correct, press the queue button!
                 </div>
-                <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
 
-                <!-- Errors -->
-                <div class="queue-errors" type="{{ step.stage }}"></div>
+                <div class="confirm-stage" ng-repeat="step in navbar.steps">
+                    <hr ng-if="$index != 0">
+                    <div class="queue-modal-title">{{ step.title }}</div>
 
-                <!-- Datetime picker -->
-                <div class="datetime-stage" ng-if="step.stage == 'datetime'">
-
-                    <!-- Date Input -->
-                    <div class="datetime-input-container valign-wrapper">
+                    <!-- Datetime -->
+                    <div ng-if="step.stage == 'datetime'" class="confirm-step-container valign-wrapper">
                         <i class="material-icons queue-icons">event</i>
-                        <div class="input-field date-input">
-                            <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
+                        <div class="confirm-text">
+                            I am available to meet up on
+                            <span class='bold pink-text'>
+                                {{ navbar.get_full_date(navbar.queue_date) }}
+                            </span> between
+                            <span class='bold pink-text'>
+                                {{ navbar.get_formatted_time(navbar.queue_start_time) }}
+                            </span>
+                            and
+                            <span class='bold pink-text'>
+                                {{ navbar.get_formatted_time(navbar.queue_end_time) }}
+                            </span>.
                         </div>
                     </div>
 
-                    <!-- Time Input -->
-                    <div class="datetime-input-container valign-wrapper">
-                        <i class="material-icons queue-icons">access_time</i>
-                        <span class="time-text">From</span>
-                        <div class="input-field times-input">
-                            <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
+                    <!-- Activity Type -->
+                    <div ng-if="step.stage == 'activity_type'" class="confirm-step-container valign-wrapper">
+                        <i ng-if="navbar.active && !navbar.social" class="material-icons queue-icons">pool</i>
+                        <i ng-if="navbar.social && !navbar.active" class="material-icons queue-icons">local_bar</i>
+                        <i ng-if="navbar.social && navbar.active" class="material-icons queue-icons">beach_access</i>
+                        <div class="confirm-text">
+                            I prefer meeting people over
+                            <span ng-if="navbar.active && !navbar.social" class='bold pink-text'>
+                                active
+                            </span>
+                            <span ng-if="navbar.social && !navbar.active" class="bold babyblue">
+                                social
+                            </span>
+                            <span ng-if="navbar.active && navbar.social">
+                                both
+                                <span class='bold pink-text'>active</span> and
+                                <span class='bold babyblue'>social</span>
+                            </span>
+                            events.
                         </div>
-                        <span class="time-text">to</span>
-                        <div class="input-field times-input">
-                            <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
+                    </div>
+
+                    <!-- Location Preference -->
+                    <div ng-if="step.stage == 'location_pref'" class="confirm-step-container valign-wrapper">
+                        <i class="material-icons queue-icons">location_on</i>
+                        <div class="confirm-text">
+                            I prefer meeting up for events in
+                            <span class='bold pink-text'>{{ navbar.get_location(navbar.location) }}</span>.
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Activity Types -->
-                <div class="activity-stage" ng-if="step.stage == 'activity_type'">
-                    <div class="row">
-                        <!-- Active checkbox -->
-                        <div class="col l4 m4 s4">
-                            <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="navbar.active" ng-change="navbar.toggle_activity('active')">
-                            <label for="active-checkbox" class="active-cb-label">Active</label>
+            <div class="stages">
+                <div class="stage" ng-repeat="step in navbar.steps">
+                    <hr ng-if="$index != 0">
+                    <div class="queue-modal-title">
+                        {{ step.title }}
+                        <a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>
+                    </div>
+                    <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
+
+                    <!-- Errors -->
+                    <div class="queue-errors" type="{{ step.stage }}"></div>
+
+                    <!-- Datetime picker -->
+                    <div class="datetime-stage" ng-if="step.stage == 'datetime'">
+
+                        <!-- Date Input -->
+                        <div class="datetime-input-container valign-wrapper">
+                            <i class="material-icons queue-icons">event</i>
+                            <div class="input-field date-input">
+                                <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
+                            </div>
                         </div>
 
-                        <!-- Social checkbox -->
-                        <div class="col l4 m4 s4">
-                            <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="navbar.social" ng-change="navbar.toggle_activity('social')">
-                            <label for="social-checkbox" class="social-cb-label">Social</label>
-                        </div>
-
-                        <!-- Both checkbox -->
-                        <div class="col l4 m4 s4">
-                            <input type="checkbox" class="filled-in" id="both-checkbox" ng-model="navbar.both" ng-change="navbar.toggle_activity('both')">
-                            <label for="both-checkbox" class="both-cb-label">Both</label>
+                        <!-- Time Input -->
+                        <div class="datetime-input-container valign-wrapper">
+                            <i class="material-icons queue-icons">access_time</i>
+                            <span class="time-text">From</span>
+                            <div class="input-field times-input">
+                                <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
+                            </div>
+                            <span class="time-text">to</span>
+                            <div class="input-field times-input">
+                                <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Location Preferences -->
-                <div class="location-stage" ng-if="step.stage == 'location_pref'">
-                    <i class="material-icons queue-icons">location_on</i>
-                    <select class="location-select browser-default" ng-model="navbar.location">
-                        <option value="" disabled selected>Select a location</option>
-                        <option ng-repeat="location in step.locations" value="{{location.id}}">{{location.city}}</option>
-                    </select>
-                </div>
+                    <!-- Activity Types -->
+                    <div class="activity-stage" ng-if="step.stage == 'activity_type'">
+                        <div class="row">
+                            <!-- Active checkbox -->
+                            <div class="col l4 m4 s4">
+                                <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="navbar.active" ng-change="navbar.toggle_activity('active')">
+                                <label for="active-checkbox" class="active-cb-label">Active</label>
+                            </div>
 
+                            <!-- Social checkbox -->
+                            <div class="col l4 m4 s4">
+                                <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="navbar.social" ng-change="navbar.toggle_activity('social')">
+                                <label for="social-checkbox" class="social-cb-label">Social</label>
+                            </div>
+
+                            <!-- Both checkbox -->
+                            <div class="col l4 m4 s4">
+                                <input type="checkbox" class="filled-in" id="both-checkbox" ng-model="navbar.both" ng-change="navbar.toggle_activity('both')">
+                                <label for="both-checkbox" class="both-cb-label">Both</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Preferences -->
+                    <div class="location-stage" ng-if="step.stage == 'location_pref'">
+                        <i class="material-icons queue-icons">location_on</i>
+                        <select class="location-select browser-default" ng-model="navbar.location">
+                            <option value="" disabled selected>Select a location</option>
+                            <option ng-repeat="location in step.locations" value="{{location.id}}">{{location.city}}</option>
+                        </select>
+                    </div>
+
+                </div>
             </div>
         </div>
 
