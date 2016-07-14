@@ -1,1 +1,28 @@
-manage users
+<div class="jumbotron text-center">
+	<h1><span class="label label-info">{{ Users.length }}</span></h1>
+</div>
+
+<div class="table-container">
+	<div style="margin-top:50px">
+	<h2>Manage Users</h2>
+	</div>
+	<table style="max-width: 500px; align: center;" class="table table-striped">
+		<thead>
+			<tr>
+				<th>User Name</th>
+				<th>Email</th>
+				<th>Provider</th>
+				<th>Role</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in Users">
+				<td>{{ user.name }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.provider }}</td>
+				<td>{{ user.role }}</td>
+				<td><input type="button" class="btn btn-danger btn-sm" value="Edit" ng-click="editUser(user._id)"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

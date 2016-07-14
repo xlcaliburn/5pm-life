@@ -14,7 +14,8 @@ angular.module('fivepmApp.admin')
 			})
 			.state('admin.users', {
 				url: '/users',
-				templateUrl: 'app/admin/views/manage_users.html'
+				templateUrl: 'app/admin/views/manage_users.html',
+				controller: "userController"
 			})
 			.state('admin.tags', {
 				url: '/tags',

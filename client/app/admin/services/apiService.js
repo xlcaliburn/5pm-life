@@ -1,6 +1,16 @@
 "use strict";
 
 angular.module('apiService', [])
+	.factory('Users', function($http) {
+		return {
+			get : function() {
+				return $http.get('/api/users');
+			},
+			create : function(data) {
+				return $http.post('/api/users', data);
+			}
+		}
+	})
 	.factory('Venues', function($http) {
 		return {
 			get : function() {
