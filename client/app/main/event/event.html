@@ -96,28 +96,14 @@
                                 <div class="message-name">
                                     <span ng-style="{'color': '{{message.colour}}'}">{{message.name}}</span>
                                 </div>
-                                <div class="message-text">
-                                    {{message.text}}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" ng-repeat="message in event.chat_messages">
-                            <div class="col s2"><img class="responsive-img circle" src="{{message.thumb}}"></div>
-                            <div class="col s9">
-                                <div class="message-name">
-                                    <span ng-style="{'color': '{{message.colour}}'}">{{message.name}}</span>
-                                </div>
-                                <div class="message-text">
-                                    {{message.text}}
-                                </div>
+                                <div class="message-text pre-wrap">{{message.text}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="chat-textarea">
                         <div class="row valign-wrapper">
                             <div class="col s10">
-                                <textarea placeholder="Enter your message..." id="chatarea" class="materialize-textarea"></textarea>
+                                <textarea ng-keyup="$event.keyCode == 13 && event.send_message()" ng-model="event.textarea" placeholder="Enter your message..." id="chatarea" class="materialize-textarea"></textarea>
                             </div>
                             <div class="col s2 align-right">
                                 <a class="btn-small waves-effect waves-light send-button">

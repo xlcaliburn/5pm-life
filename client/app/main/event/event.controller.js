@@ -92,6 +92,7 @@
         self.image_list = angular.element('.image-list');
         self.map;
         self.chatbox = angular.element('#chat-box');
+        self.textarea;
 
         // variables
         self.lat;
@@ -145,6 +146,29 @@
                 prop_string += prop_list[i];
             }
             return prop_string;
+        }
+
+        self.send_message = function() {
+
+            var user = "Michael Wong",
+                message = self.textarea;
+
+            if (self.chat_messages[self.chat_messages.length - 1].name == user) {
+                self.chat_messages[self.chat_messages.length -1].text += "\n" + message;
+            } else {
+                var message = {
+                    name: user, colour: "#000000",
+                    thumb: "assets/images/attendees/wong-thumb.png",
+                    text: message
+                }
+                self.chat_messages.push(message);
+            }
+
+            // append message
+            self.textarea = "";
+            $timeout(function() { self.chatbox.scrollTop(self.chatbox[0].scrollHeight);});
+
+            return true;
         }
 
         self.change_image = function(event, image_path) {
