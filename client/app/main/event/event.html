@@ -103,7 +103,7 @@
                     <div class="chat-textarea">
                         <div class="row valign-wrapper">
                             <div class="col s10">
-                                <textarea ng-keyup="$event.keyCode == 13 && event.send_message()" ng-model="event.textarea" placeholder="Enter your message..." id="chatarea" class="materialize-textarea"></textarea>
+                                <textarea ng-keydown="$event.keyCode == 13 && event.send_message($event)" ng-model="event.textarea" placeholder="Enter your message..." id="chatarea" class="materialize-textarea"></textarea>
                             </div>
                             <div class="col s2 align-right">
                                 <a class="btn-small waves-effect waves-light send-button">

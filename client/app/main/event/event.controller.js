@@ -148,10 +148,16 @@
             return prop_string;
         }
 
-        self.send_message = function() {
+        self.send_message = function(event) {
+            if (event.shiftKey) return false;
 
+            event.preventDefault();
+            if (!self.textarea || self.textarea.trim() == "") {
+                return false;
+            }
             var user = "Michael Wong",
-                message = self.textarea;
+                message = self.textarea.trim();
+            self.textarea = "";
 
             if (self.chat_messages[self.chat_messages.length - 1].name == user) {
                 self.chat_messages[self.chat_messages.length -1].text += "\n" + message;
@@ -165,7 +171,6 @@
             }
 
             // append message
-            self.textarea = "";
             $timeout(function() { self.chatbox.scrollTop(self.chatbox[0].scrollHeight);});
 
             return true;
