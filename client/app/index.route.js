@@ -31,10 +31,9 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'event'
 		})
 
-
 		.state('home.settings', {
 			title: '5pm Settings',
-			url: 'settings',
+			url: '/settings',
 			templateUrl: 'app/main/settings/settings.html'
 		})
 	;
