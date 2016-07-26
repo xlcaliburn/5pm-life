@@ -6,5 +6,6 @@ angular.module('fivepmApp.admin', [
 	'tagCtrl',
 	'venueCtrl',
 	'userCtrl',
+	'adminSettingsCtrl',
 	'apiService'
 ]);

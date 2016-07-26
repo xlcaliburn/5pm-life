@@ -7,10 +7,10 @@ angular.module('fivepmApp.admin')
 		$stateProvider
 			.state('admin', {
 				url: '/admin',
-				templateUrl: 'app/admin/admin.html'
+				templateUrl: 'app/admin/admin.html',
 				// controller: 'AdminController',
-				// controllerAs: 'admin'
-				// authenticate: 'admin'
+				controllerAs: 'admin',
+				authenticate: 'admin'
 			})
 			.state('admin.users', {
 				url: '/users',
@@ -27,5 +27,10 @@ angular.module('fivepmApp.admin')
 				templateUrl: 'app/admin/views/manage_venues.html',
 				controller: "venueController"
 			})
+			.state('admin.settings', {
+				url: '/settings',
+				templateUrl: 'app/admin/views/admin_settings.html',
+				controller: "adminSettingsController"
+			})			
 		;
 	});
