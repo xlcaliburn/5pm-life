@@ -19,6 +19,7 @@ export default function(app) {
 
 	app.use('/api/tags', require('./api/tags/routes.js'));
 	app.use('/api/venues', require('./api/venues/routes.js'));
+	app.use('/api/admin', require('./api/admin/routes.js'));
 
 	app.use('/auth', require('./auth').default);
 

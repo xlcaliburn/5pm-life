@@ -50,4 +50,14 @@ angular.module('apiService', [])
 			}
 		}
 	})
+	.factory('AdminSettings', function($http) {
+		return {
+			get : function() {
+				return $http.get('/api/admin');
+			},
+			create : function(data) {
+				return $http.post('/api/admin', data);
+			}
+		}
+	})
 ;
