@@ -1,7 +1,8 @@
 <div class="container">
 	<h2>Admin Settings</h2>
+	{{def}}
 	<form role="form">
-		<div ng-repeat="settingsGroup in adminSettings">
+		<div ng-repeat="settingsGroup in vm.adminSettings">
 			<div class="section">
 				<h3>{{settingsGroup.description}}</h3>
 				<div class="row" ng-repeat="subgroup in settingsGroup.settings">

@@ -1,8 +1,14 @@
 "use strict";
 
-angular.module('adminSettingsCtrl', [])
-	.controller('adminSettingsController', function($scope, $http, AdminSettings) {
-		$scope.formData = {};
+(function () {
+	angular
+	.module('adminSettingsCtrl', [])
+	.controller('AdminSettingsController', AdminSettingsController);
+
+	function AdminSettingsController($scope, $http, AdminSettings) {
+		var vm = this;
+
+		vm.formData = {};
 		var defaultSettings = [
 			{
 				settingType: "EventSearchDateTime",
@@ -46,27 +52,28 @@ angular.module('adminSettingsCtrl', [])
 				]
 			}
 		];
-
-		AdminSettings.get()
-			.success(function(data) {
-				if (data.length == 0)
-				{
-					$scope.adminSettings = defaultSettings;
-				}
-				else 
-				{
-					$scope.adminSettings = data;
-				}
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-
-		$scope.updateSettings = function() {
-			if (!$.isEmptyObject($scope.formData)) {
-				AdminSettings.create($scope.formData)
-					.success(function(data) {
-					});
+		vm.updateSettings = function() {
+			if (!$.isEmptyObject(vm.formData)) {
+				AdminSettings.create(vm.formData)
+					.success(
+						function(data) {}
+					);
 			}
 		};
-	});
+
+		AdminSettings.get()
+		.success(function(data) {
+			if (data.length == 0)
+			{
+				vm.adminSettings = defaultSettings;
+			}
+			else 
+			{
+				vm.adminSettings = data;
+			}
+		})
+		.error(function(data) {
+			console.log('Error: ' + data);
+		});		
+	}
+})();

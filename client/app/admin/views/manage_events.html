@@ -1,0 +1,26 @@
+<div class="container">
+	<h2>Event Management</h2>
+	<div class="section">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Activity</th>
+					<th>Venue</th>
+					<th>Location</th>
+					<th>Capacity</th>
+					<th>Queue Time</th>
+					<th>Admin</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="venue in venues">
+					<td>{{ venue.venue_name }}</td>
+					<td>{{ venue.tags }}</td>
+					<td>{{ venue.address.street }}</td>
+					<td>{{ venue.address.city }}</td>
+					<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="deleteVenue(venue._id)"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
