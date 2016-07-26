@@ -36,6 +36,14 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			url: '/settings',
 			templateUrl: 'app/main/settings/settings.html'
 		})
+
+		.state('login', {
+			url: '/login',
+			title: '5PM Login',
+			templateUrl: 'app/account/login/login.html',
+			controller: 'LoginController',
+			controllerAs: 'login'
+		})
 	;
 
 	$urlRouterProvider.otherwise('/');

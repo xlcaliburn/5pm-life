@@ -1,0 +1,208 @@
+@login-margins: 5px;
+
+#login-container,
+.full {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.login-background {
+    display: inline-block;
+    background-image: url('../assets/images/login-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 65%;
+    height: 100%;
+}
+
+.login-background-description {
+    position: relative;
+    top: 15%;
+    text-align: center;
+    font-size: 40px;
+    color: @darkgrey;
+    font-weight: 300;
+    text-shadow: 0px 2px 2px rgba(150, 150, 150, 0.7);
+}
+
+.login-container {
+    display: inline-block;
+    height: 100vh;
+    min-height: 500px;
+    width: 35%;
+    background-color: @white;
+    text-align: center;
+    -webkit-box-shadow: 5px 0px 15px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 5px 0px 15px 0px rgba(0,0,0,0.15);
+    box-shadow: 5px 0px 15px 0px rgba(0,0,0,0.15);
+    z-index: 1;
+}
+
+.login-box {
+    text-align: left;
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-175px);
+    width: 50%;
+}
+
+.login-title {
+    font-size: 30px;
+    font-weight: 300;
+    color: @purple;
+}
+
+.login-description {
+    color: @middlegrey;
+}
+
+.login-status {
+    margin: 10px 10px 10px 0;
+    height: 25px;
+    opacity: 0;
+    pointer-events: none;
+    color: @pink;
+    transition: opacity 0.2s ease-out;
+}
+
+.login-status.show-error {
+    opacity: 0.8;
+    pointer-events: all;
+}
+
+.login-icon {
+    color: @middlegrey;
+    margin-top: 2px;
+}
+
+.login-form input {
+    width: 85%;
+    display: inline-block;
+    margin: 10px 0px 10px 10px;
+    height: auto;
+    padding: 7px 0;
+    border-bottom: 1px solid @lightgrey;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.login-form input[type='text']:focus,
+.login-form input[type='password']:focus {
+    border-bottom: 1px solid @purple;
+    box-shadow: 0 1px 0 0 transparent;
+}
+
+.login-form input::-webkit-input-placeholder {
+    font-family: 'Roboto', sans-serif;
+    color: #b8b8b8;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.login-form input::-moz-placeholder {
+    font-family: 'Roboto', sans-serif;
+    color: #b8b8b8;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.login-form input:-ms-input-placeholder {
+    font-family: 'Roboto', sans-serif;
+    color: #b8b8b8;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.login-checkbox {
+    margin-top: 20px;
+    margin-left: @login-margins;
+}
+
+button.login-button {
+    background-color: @purple !important;
+    margin-left: auto;
+    margin-right: 10px;
+    width: 50px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+}
+
+button.login-button>i {
+    line-height: 50px !important;
+    font-size: 20px;
+}
+
+label[for='keep-signed-in'] {
+    font-weight: 400;
+}
+
+[type="checkbox"].filled-in:not(:checked) + label[for='keep-signed-in']:after {
+    margin-top: 2px;
+}
+
+[type="checkbox"].filled-in:checked + label[for='keep-signed-in']:before {
+    top: 2px;
+}
+
+[type="checkbox"].filled-in:checked + label[for='keep-signed-in']:after {
+    border: 2px solid @purple !important;
+    background-color: @purple !important;
+    margin-top: 2px;
+}
+
+.login-forgot {
+    margin-left: @login-margins;
+}
+
+.login-register-container {
+    margin-top: 30px;
+}
+
+.login-register {
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    color: @white;
+    opacity: 0.7;
+    background-color: @purple;
+}
+
+.login-register:hover {
+    opacity: 1;
+    color: @white;
+    background-color: @purple;
+}
+
+@media screen and (max-width: 1300px) {
+    .login-background,
+    .login-container {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .login-background {
+        display: none;
+    }
+
+    .login-container {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .login-box {
+        width:80%;
+    }
+}

@@ -2,13 +2,7 @@
 
 angular.module('fivepmApp')
   .config(function($stateProvider) {
-    $stateProvider.state('login', {
-        url: '/login',
-        templateUrl: 'app/account/login/login.html',
-        controller: 'LoginController',
-        controllerAs: 'vm'
-      })
-      .state('logout', {
+    $stateProvider.state('logout', {
         url: '/logout?referrer',
         referrer: 'main',
         template: '',
@@ -31,6 +25,12 @@ angular.module('fivepmApp')
       //   controllerAs: 'vm',
       //   authenticate: true
       // });
+      /*state('login', {
+          url: '/login',
+          templateUrl: 'app/account/login/login.html',
+          controller: 'LoginController',
+          controllerAs: 'vm'
+      })*/
   })
   .run(function($rootScope) {
     $rootScope.$on('$stateChangeStart', function(event, next, nextParams, current) {
