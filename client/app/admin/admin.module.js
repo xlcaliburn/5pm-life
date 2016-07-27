@@ -7,6 +7,7 @@
 		'tagCtrl',
 		'venueCtrl',
 		'userCtrl',
+		'adminEventCtrl',
 		'adminSettingsCtrl',
 		'apiService'
 	]);

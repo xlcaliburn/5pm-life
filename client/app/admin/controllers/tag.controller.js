@@ -1,7 +1,11 @@
-'use strict';
+(function() {
+	'use strict';
 
-angular.module('tagCtrl', [])
-	.controller('tagController', function($scope, $http, Tags) {
+	angular
+	.module('tagCtrl', [])
+	.controller('TagController', TagController);
+
+	function TagController ($scope, $http, Tags) {
 		$scope.formData = {};
 
 		Tags.get()
@@ -28,4 +32,5 @@ angular.module('tagCtrl', [])
 					$scope.Tags = data;
 				});
 		};
-	});
+	}
+})();

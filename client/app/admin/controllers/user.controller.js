@@ -1,7 +1,11 @@
-'use strict';
+(function() {
+	'use strict';
 
-angular.module('userCtrl', [])
-	.controller('userController', function($scope, $http, Users) {
+	angular
+	.module('userCtrl', [])
+	.controller('userController', UserController);
+
+	function UserController($scope, $http, Users) {
 		$scope.formData = {};
 
 		Users.get()
@@ -22,4 +26,5 @@ angular.module('userCtrl', [])
 				;
 			}
 		};
-	});
+	}
+})();

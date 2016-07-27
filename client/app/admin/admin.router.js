@@ -24,7 +24,7 @@
 			.state('admin.tags', {
 				url: '/tags',
 				templateUrl: 'app/admin/views/manage_tags.html',
-				controller: 'tagController'
+				controller: 'TagController'
 			})
 			.state('admin.venues', {
 				url: '/venues',
@@ -34,7 +34,8 @@
 			.state('admin.events', {
 				url: '/events',
 				templateUrl: 'app/admin/views/manage_events.html',
-				controller: 'eventController'
+				controller: 'AdminEventController',
+				controllerAs: 'vm'
 			})
 			.state('admin.settings', {
 				url: '/settings',
