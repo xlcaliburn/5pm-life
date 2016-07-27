@@ -1,16 +1,20 @@
-'use strict';
+(function() {
+	'use strict';
 
-angular.module('fivepmApp.admin')
-	.config(function($stateProvider, $urlRouterProvider) {
+	angular
+	.module('fivepmApp.admin')
+	.config(adminConfig);
+		
+	function adminConfig($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise('/admin');
 
 		$stateProvider
 			.state('admin', {
 				url: '/admin',
-				templateUrl: 'app/admin/admin.html',
+				templateUrl: 'app/admin/admin.html'
 				//controller: 'DashboardController',
-				controllerAs: 'admin',
-				authenticate: 'admin'
+				//controllerAs: 'admin',
+				//authenticate: 'admin'
 			})
 			.state('admin.users', {
 				url: '/users',
@@ -25,7 +29,7 @@ angular.module('fivepmApp.admin')
 			.state('admin.venues', {
 				url: '/venues',
 				templateUrl: 'app/admin/views/manage_venues.html',
-				controller: 'venueController'
+				controller: 'VenueController'
 			})
 			.state('admin.events', {
 				url: '/events',
@@ -39,4 +43,5 @@ angular.module('fivepmApp.admin')
 				controllerAs: 'vm'
 			})			
 		;
-	});
+	}
+})();

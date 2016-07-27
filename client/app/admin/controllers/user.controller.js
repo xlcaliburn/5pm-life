@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 angular.module('userCtrl', [])
 	.controller('userController', function($scope, $http, Users) {
