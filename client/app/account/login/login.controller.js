@@ -6,13 +6,14 @@
     .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController() {
+    function LoginController(Auth, $state) {
         var vm = this;
 
         vm.email_address;
         vm.password;
         vm.remember_login = false;
         vm.status = "";
+        vm.Auth = Auth;
 
         // try submitting form
         vm.login = function() {
@@ -20,11 +21,8 @@
             var status = vm.validate_inputs();
 
             // has errors
-            if (status) {
-
-            } else {
+            if (!status)
                 vm.submit_login();
-            }
         }
 
         // validate email address and password
@@ -53,7 +51,15 @@
 
         // submit credentials to server
         vm.submit_login = function() {
-            console.log('Email:', vm.email_address, 'Pass:', vm.password, 'Checked:', vm.remember_login);
+            vm.Auth.login({
+                email: vm.email_address,
+                password: vm.password
+            }).then(() => {
+                // Logged in, redirect to home
+                window.location.href = "/home";
+            }).catch(err => {
+                vm.status = "Incorrect username/password combination";
+            });
         }
 
         // helper function for validating email address
