@@ -17,8 +17,10 @@ export default function(app) {
 	app.use('/api/users', require('./api/user'));
 	app.use('/api/email', require('./api/email'));
 
-	app.use('/api/tags', require('./api/tags/routes.js'));
-	app.use('/api/venues', require('./api/venues/routes.js'));
+	app.use('/api/tags', require('./api/tags/tags.routes.js'));
+	app.use('/api/venues', require('./api/venues/venues.routes.js'));
+	app.use('/api/admin', require('./api/admin/admin.routes.js'));
+	app.use('/api/events', require('./api/events/event.routes.js'));
 
 	app.use('/auth', require('./auth').default);
 

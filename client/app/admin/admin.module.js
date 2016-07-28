@@ -1,11 +1,14 @@
-'use strict';
+(function() {
+	'use strict';
 
-angular.module('fivepmApp.admin', [
-	'fivepmApp.auth', 
-	'ui.router', 
-	'tagCtrl',
-	'venueCtrl',
-	'userCtrl',
-	'adminSettingsCtrl',
-	'apiService'
-]);
+	angular.module('fivepmApp.admin', [
+		'fivepmApp.auth', 
+		'ui.router', 
+		'tagCtrl',
+		'venueCtrl',
+		'userCtrl',
+		'adminEventCtrl',
+		'adminSettingsCtrl',
+		'apiService'
+	]);
+})();

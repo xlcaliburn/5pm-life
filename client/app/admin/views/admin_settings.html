@@ -1,42 +1,18 @@
 <div class="container">
 	<h2>Admin Settings</h2>
+	{{def}}
 	<form role="form">
-		<div class="section">
-		<h3>Event Search DateTime</h3>
-		<div class="settings-group">
-			<div class="row">
-				<div class="input-field col s4">
-					<input value="6" id="first_name" type="number" min="0" step="1" class="validate">
-					<label class="active" for="first_name">Minimum time before event start time (hours):</label>
-				</div>
-				<div class="input-field col s4">
-					<input value="96" id="first_name" type="number" min="0" step="1" class="validate">
-					<label class="active" for="first_name">Maximum hours before event start time (hours):</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s4">
-					<input value="4" id="first_name" type="number" min="0" step="1" class="validate">
-					<label class="active" for="first_name">Minimum event search time gap (hours):</label>
-				</div>
-				<div class="input-field col s4">
-					<input value="8" id="first_name" type="number" min="0" step="1" class="validate">
-					<label class="active" for="first_name">Maximum event search time gap (hours):</label>
-				</div>
-			</div>
-		</div>
-		</div>
-		<div class="divider"></div>
-		<div class="section">
-			<h3>Event Matchmaking Configuration</h3>
-			<div class="settings-group">
-				<div class="row">
-					<div class="input-field col s4">
-						<input value="6" id="first_name" type="number" min="0" step="1" class="validate">
-						<label class="active" for="first_name">Queue search time to alert Admin (hours):</label>
+		<div ng-repeat="settingsGroup in vm.adminSettings">
+			<div class="section">
+				<h3>{{settingsGroup.description}}</h3>
+				<div class="row" ng-repeat="subgroup in settingsGroup.settings">
+					<div class="input-field col s4" ng-repeat="setting in subgroup">
+						<input value={{setting.value}}>
+						<label class="active">{{setting.description}}</label>
 					</div>
 				</div>
 			</div>
+			<div class="divider"></div>
 		</div>
 	</form>
 </div>

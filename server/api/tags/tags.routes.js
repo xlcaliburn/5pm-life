@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
 
 			Tags.find(function(err, data) {
 				if (err)
-					res.send(err)
+					res.send(err);
 				res.json(data);
 			});
 		});
@@ -41,7 +41,7 @@ router.delete('/:tag_id', function(req, res) {
 			// get and return all the todos after you create another
 			Tags.find(function(err, data) {
 				if (err)
-					res.send(err)
+					res.send(err);
 				res.json(data);
 			});
 		});
