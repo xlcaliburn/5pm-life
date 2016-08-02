@@ -1,7 +1,7 @@
 <div class="container">
 	<h2>Event Management</h2>
 	<div class="section" style="float:right">
-		<a class="btn-floating btn-small waves-effect waves-light green right-align">
+		<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createEvent">
 			<i class="material-icons">add</i>
 		</a>
 	</div>
@@ -24,7 +24,7 @@
 					<td>{{ venue.tags }}</td>
 					<td>{{ venue.address.street }}</td>
 					<td>{{ venue.address.city }}</td>
-					<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="deleteVenue(venue._id)"></td>
+					<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click=""></td>
 				</tr>
 			</tbody>
 		</table>

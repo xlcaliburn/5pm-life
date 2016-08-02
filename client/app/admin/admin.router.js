@@ -1,13 +1,11 @@
-(function() {
-	'use strict';
+'use strict';
 
+(function() {
 	angular
-	.module('fivepmApp.admin')
-	.config(adminConfig);
+		.module('fivepmApp.admin', ["ui.router"])
+		.config(adminConfig);
 		
 	function adminConfig($stateProvider, $urlRouterProvider) {
-		$urlRouterProvider.otherwise('/admin');
-
 		$stateProvider
 			.state('admin', {
 				url: '/admin',
@@ -18,28 +16,28 @@
 			})
 			.state('admin.users', {
 				url: '/users',
-				templateUrl: 'app/admin/views/manage_users.html',
-				controller: 'userController'
+				templateUrl: 'app/admin/users/admin.users.html',
+				controller: 'AdminUsersController'
 			})
 			.state('admin.tags', {
 				url: '/tags',
-				templateUrl: 'app/admin/views/manage_tags.html',
-				controller: 'TagController'
+				templateUrl: 'app/admin/tags/admin.tags.html',
+				controller: 'AdminTagsController'
 			})
 			.state('admin.venues', {
 				url: '/venues',
-				templateUrl: 'app/admin/views/manage_venues.html',
-				controller: 'VenueController'
+				templateUrl: 'app/admin/venues/admin.venues.html',
+				controller: 'AdminVenuesController'
 			})
 			.state('admin.events', {
 				url: '/events',
-				templateUrl: 'app/admin/views/manage_events.html',
-				controller: 'AdminEventController',
+				templateUrl: 'app/admin/events/admin.events.html',
+				controller: 'AdminEventsController',
 				controllerAs: 'vm'
 			})
 			.state('admin.settings', {
 				url: '/settings',
-				templateUrl: 'app/admin/views/admin_settings.html',
+				templateUrl: 'app/admin/settings/admin.settings.html',
 				controller: 'AdminSettingsController',
 				controllerAs: 'vm'
 			})			

@@ -23,7 +23,6 @@ module.exports = function(mongoose) {
 			country: String
 		},
 		category: [String], // Matchmaking parameter
-		activity: [String], // Internal use 
 		tags : [String]     // Internal use for filtering
 	});
 
@@ -42,7 +41,6 @@ module.exports = function(mongoose) {
 				country: String
 			},
 			category: [String], // Matchmaking parameter
-			activity: [String], // Internal use 
 			tags : [String]     // Internal use for filtering			
 		},
 		dt_start : Date,

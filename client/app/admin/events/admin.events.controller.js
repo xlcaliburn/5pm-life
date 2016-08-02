@@ -2,14 +2,15 @@
 	'use strict';
 
 	angular
-	.module('adminEventCtrl', [])
-	.controller('AdminEventController', AdminEventController);
+		.module('fivepmApp.admin', [])
+		.controller('AdminEventsController', AdminEventsController);
 
-	function AdminEventController ($scope, $http, Events) {
+	function AdminEventsController ($scope, $http, Events) {
 		var vm = this;
 		vm.createFormData = {};
 
 		vm.createEvent = function() {
+			console.log("creating");
 			if (!$.isEmptyObject(vm.createFormData)) {
 				Event.create(vm.createFormData)
 					.success(function(data) {

@@ -1,10 +1,10 @@
+'use strict';
+
 (function() {
-	'use strict';
+	angular.module('fivepmApp', [])
+		.controller('AdminVenuesController', AdminVenuesController);
 
-	angular.module('venueCtrl', [])
-		.controller('VenueController', VenueController);
-
-	function VenueController ($scope, $http, Venues, Tags) {
+	function AdminVenuesController ($scope, $http, Venues, Tags) {
 			$scope.formData = {};
 			$scope.validTags = [];
 			var newTags;

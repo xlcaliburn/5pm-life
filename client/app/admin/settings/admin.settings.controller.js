@@ -2,7 +2,7 @@
 
 (function () {
 	angular
-	.module('adminSettingsCtrl', [])
+	.module('fivepmApp.admin', [])
 	.controller('AdminSettingsController', AdminSettingsController);
 
 	function AdminSettingsController($scope, $http, AdminSettings) {
