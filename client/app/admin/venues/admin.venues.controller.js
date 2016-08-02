@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-	angular.module('fivepmApp', [])
+	angular.module('fivepmApp')
 		.controller('AdminVenuesController', AdminVenuesController);
 
 	function AdminVenuesController ($scope, $http, Venues, Tags) {

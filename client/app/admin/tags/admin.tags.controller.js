@@ -2,10 +2,10 @@
 	'use strict';
 
 	angular
-	.module('fivepmApp', [])
-	.controller('TagController', TagController);
+	.module('fivepmApp')
+	.controller('AdminTagsController', AdminTagsController);
 
-	function TagController ($scope, $http, Tags) {
+	function AdminTagsController ($scope, $http, Tags) {
 		$scope.formData = {};
 
 		Tags.get()

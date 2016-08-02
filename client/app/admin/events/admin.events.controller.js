@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('fivepmApp.admin', [])
+		.module('fivepmApp.admin')
 		.controller('AdminEventsController', AdminEventsController);
 
 	function AdminEventsController ($scope, $http, Events) {

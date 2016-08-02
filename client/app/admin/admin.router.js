@@ -4,7 +4,7 @@
 	angular
 		.module('fivepmApp.admin')
 		.config(adminConfig);
-		
+				
 	function adminConfig($stateProvider, $urlRouterProvider) {
 		$stateProvider
 			.state('admin.users', {
