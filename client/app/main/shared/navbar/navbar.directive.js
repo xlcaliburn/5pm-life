@@ -1,9 +1,10 @@
 'use strict';
 
 (function() {
+    /*jslint latedef:false*/
     angular
-    .module("fivepmApp")
-    .directive("navbar", NavbarDirective);
+    .module('fivepmApp')
+    .directive('navbar', NavbarDirective);
 
     function NavbarDirective() {
         return {

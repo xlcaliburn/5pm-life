@@ -1,11 +1,15 @@
 'use strict';
 
 (function() {
+
+	/*jslint latedef:false*/
 	angular
 	.module('fivepmApp')
 	.controller('WelcomeController', WelcomeController);
 
 	/** @ngInject */
+	/*jshint camelcase: false */
+	/* jshint expr: true */
 	function WelcomeController($http, $timeout, EmailService) {
 		var self = this;
 
@@ -34,7 +38,7 @@
 
 		self.submit_email = function() {
 			if (self.no_input) {
-				angular.element('.no-input').removeClass("no-input");
+				angular.element('.no-input').removeClass('no-input');
 				$timeout(function() {
 					angular.element('.welcome-subscribe input').focus();
 				}, 250);
@@ -49,7 +53,6 @@
 			subscribe_button.prop('disabled', true);
 			subscribe_button.addClass('loading');
 			$timeout(function() {
-				console.log(email_valid);
 				if (email_valid) {
 					angular.element('.welcome-subscribe').addClass('fading-out');
 					$timeout(function() {
@@ -67,20 +70,13 @@
 					});
 				}
 			}, 1000);
-		}
+		};
 
 		self.go_to_section = function(section) {
 			angular.element('html, body').animate({
 				scrollTop: angular.element(section).offset().top
 			}, 500);
-		}
-
-		// validate email address
-		function validate_email() {
-			if (!self.form.$valid || self.form.$pristine || !self.email)
-				return false;
-			return true;
-		}
+		};
 
 		// save email address in db
 		function submit_email() {
@@ -88,7 +84,7 @@
 			// create email object
 			var email = {
 				email_address: self.email_address
-			}
+			};
 
 			// do $http request to save email
 			EmailService.sendEmail(email).then(function(res) {
@@ -102,8 +98,7 @@
 
 		// validate email address
 		function validate_email() {
-			if (!self.form.$valid || self.form.$pristine || !self.email_address)
-				return false;
+			if (!self.form.$valid || self.form.$pristine || !self.email_address) { return false; }
 			return true;
 		}
 

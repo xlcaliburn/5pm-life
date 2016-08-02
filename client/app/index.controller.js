@@ -1,6 +1,7 @@
 (function() {
     'use strict';
 
+    /*jslint latedef:false*/
     angular
     .module('fivepmApp')
     .controller('MainController', MainController);
