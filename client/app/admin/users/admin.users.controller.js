@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('fivepmApp.admin', [])
+		.module('fivepmApp', [])
 		.controller('userController', UserController);
 
 	function UserController($scope, $http, Users) {

@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-	.module('tagCtrl', [])
+	.module('fivepmApp', [])
 	.controller('TagController', TagController);
 
 	function TagController ($scope, $http, Tags) {

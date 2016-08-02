@@ -2,18 +2,11 @@
 
 (function() {
 	angular
-		.module('fivepmApp.admin', ["ui.router"])
+		.module('fivepmApp.admin')
 		.config(adminConfig);
 		
 	function adminConfig($stateProvider, $urlRouterProvider) {
 		$stateProvider
-			.state('admin', {
-				url: '/admin',
-				templateUrl: 'app/admin/admin.html'
-				//controller: 'DashboardController',
-				//controllerAs: 'admin',
-				//authenticate: 'admin'
-			})
 			.state('admin.users', {
 				url: '/users',
 				templateUrl: 'app/admin/users/admin.users.html',
