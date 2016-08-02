@@ -2,10 +2,10 @@
 	'use strict';
 
 	angular
-		.module('fivepmApp')
-		.controller('userController', UserController);
+		.module('fivepmApp.admin')
+		.controller('AdminUsersController', AdminUsersController);
 
-	function UserController($scope, $http, Users) {
+	function AdminUsersController($scope, $http, Users) {
 		$scope.formData = {};
 
 		Users.get()

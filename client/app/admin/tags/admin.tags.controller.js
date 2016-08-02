@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-	.module('fivepmApp')
+	.module('fivepmApp.admin')
 	.controller('AdminTagsController', AdminTagsController);
 
 	function AdminTagsController ($scope, $http, Tags) {
