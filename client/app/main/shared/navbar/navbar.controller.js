@@ -223,10 +223,7 @@
                         format: 'mmmm dd, yyyy',
                         disable: [
                           { from: [0,0,0], to: yesterday }
-                        ],
-                        onSet: function() {
-                            setTimeout(this.close, 0);
-                        }
+                        ]
                     });
 
                     // init start time
