@@ -1,6 +1,6 @@
 <h2>Event Management</h2>
 <div class="section" style="float:right">
-	<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createEvent()">
+	<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createModal()">
 		<i class="material-icons">add</i>
 	</a>
 </div>
@@ -29,14 +29,10 @@
 				<td>{{ (vm.currentTime - event.dt_search_start_time)/60000 | number:0}}</td>
 				<td>{{event.status}}</td>
 				<td>
-					<a href=""><i class="small material-icons">mode_edit</i></a>
-					<a class="modal-trigger"><i class="small material-icons">delete</i></a>
+					<a href="" ng-click="vm.editModal(_.id)"><i class="small material-icons">mode_edit</i></a>
+					<a href="" ng-click="vm.deleteEvent(event._id)"><i class="small material-icons">delete</i></a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-
-
-
-<button type="button" class="btn btn-default" ng-click="vm.open('lg')">Large modal</button>

@@ -32,4 +32,22 @@ router.post('/', function(req, res) {
 		});
 	});
 
+router.delete('/:venue_id', function(req, res) {
+		Event.remove({
+			_id : req.params.venue_id
+		}, function(err, data) {
+			if (err)
+				res.send(err);
+
+			// get and return all the todos after you create another
+			Event.find(function(err, data) {
+				if (err)
+					res.send(err);
+				res.json(data);
+			});
+		});
+	});
+
+
+
 module.exports = router;

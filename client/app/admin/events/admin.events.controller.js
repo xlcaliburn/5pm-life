@@ -9,17 +9,27 @@
 		var vm = this;
 		vm.createFormData = {};
 		vm.createEvent = createEvent;
+		vm.deleteEvent = deleteEvent;
 		vm.events = {};
 		vm.currentTime = new Date(Date.now()).getTime();
 
 		init();
 
-		vm.open = function (size) {
+		vm.createModal = function (size) {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'app/admin/events/modals/createNewEventModal.html',
 				// controller: '',
-				size: size,
+				size: 'lg',
+				resolve: {}
+			});
+		};
+		vm.editModal = function(id) {
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'app/admin/events/modals/createNewEventModal.html',
+				// controller: '',
+				size: 'lg',
 				resolve: {}
 			});
 		};
@@ -43,7 +53,6 @@
 						}
 					})
 					vm.events = data;
-					console.log(vm.events);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
