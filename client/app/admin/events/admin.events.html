@@ -14,25 +14,29 @@
 				<th>Venue</th>
 				<th>Location</th>
 				<th>Capacity</th>
-				<th>Queue Time</th>
+				<th>Queue Time (mins)</th>
 				<th>Status</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="event in events">
+			<tr ng-repeat="event in vm.events">
 				<td>{{event._id}}</td>
 				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>
+				<td>{{ (vm.currentTime - event.dt_search_start_time)/60000 | number:0}}</td>
 				<td>{{event.status}}</td>
 				<td>
 					<a href=""><i class="small material-icons">mode_edit</i></a>
-					<a><i class="small material-icons">delete</i></a>
+					<a class="modal-trigger"><i class="small material-icons">delete</i></a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
+
+
+
+<button type="button" class="btn btn-default" ng-click="vm.open('lg')">Large modal</button>

@@ -5275,7 +5275,7 @@ button.btn-floating {
   z-index: -1;
 }
 
-.modal {
+/*.modal {
   display: none;
   position: fixed;
   left: 0;
@@ -5362,7 +5362,7 @@ button.btn-floating {
   max-height: 45%;
   border-radius: 0;
   will-change: bottom, opacity;
-}
+}*/
 
 .collapsible {
   border-top: 1px solid #ddd;
