@@ -43,6 +43,8 @@ module.exports = function(mongoose) {
 			category: [String], // Matchmaking parameter
 			tags : [String]     // Internal use for filtering			
 		},
+		dt_search_start : Date,
+		dt_search_end : Date,
 		dt_start : Date,
 		dt_end : Date,
 		status : String,

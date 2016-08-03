@@ -17,6 +17,7 @@ router.post('/', function(req, res) {
 				activity : req.body.activity,
 				dt_start : req.body.dt_start,
 				dt_end : req.body.dt_end,
+				dt_created : req.body.dt_created,
 				status : "Active",
 				users : req.body.users
 		 }, function(err, data) {
