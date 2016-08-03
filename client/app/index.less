@@ -14,12 +14,23 @@
 /**
 App-wide Styles
 =================================
-Add global styles here.
+Add global styles here.*/
 
-FivePM Colour references
+.five-pm {
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+.life {
+    letter-spacing: 1.5px;
+    font-weight: 300;
+}
+
+/*FivePM Colour references
 =========================== */
 @teal:          #46adae; //(logo colour)
 @turq:          #00bdb8; //turquoise
+@aqua:          #2ab9bb;
 @green:         #26a69a;
 @purple:        #765f94;
 @darkgrey:      #434343; //(for text)
@@ -28,7 +39,8 @@ FivePM Colour references
 @lightgrey:     #cfcfcf;
 @BGcolor:       #f2f5f7;
 @blue:          #429fd9;
-@babyblue:      #2ebffb;
+@babyblue:      #429fd9;
+@footerblue:    #315da6;
 @navyblue:      #262a34;
 @pinkred:       #ff5d5d;
 @pink:          #e43c5c;
@@ -36,10 +48,8 @@ FivePM Colour references
 @white:         #ffffff;
 @invisible:     rgba(255,255,255,0);
 
-.teal { color: @teal; }
 .turq { color: @turq; }
 .green { color: @green; }
-.purple { color: @purple; }
 .darkgrey { color: @darkgrey; }
 .uppergrey { color: @uppergrey; }
 .middlegrey { color: @middlegrey; }
@@ -47,11 +57,14 @@ FivePM Colour references
 .bgcolor { color: @BGcolor; }
 .blue { color: @blue; }
 .navyblue { color: @navyblue; }
-.pink-text { color: @pink; }
-.babyblue { color: @babyblue; }
 .pinkred { color: @pinkred; }
 .yellow { color: @yellow; }
+
 .white-font { color: @white; }
+.purple-font { color: @purple; }
+.pink-font { color: @pink; }
+.aqua-font { color: @aqua; }
+.babyblue-font { color: @babyblue; }
 
 .bg-teal { background-color: @teal; }
 
@@ -64,6 +77,10 @@ FivePM Colour references
 
 .no-decor {
     text-decoration: none;
+}
+
+.no-margin {
+    margin-bottom: 0 !important;
 }
 
 .pre-wrap {
@@ -79,6 +96,44 @@ FivePM Colour references
 * {
     box-sizing: border-box;
 }
+
+/* Animations
+==============================*/
+
+@distance: 75px;
+@fadetime: 0.65s;
+
+.fade-from-bot {
+    opacity: 0;
+    transform: translate3d(0, @distance, 0);
+    transition: transform @fadetime ease-out, opacity @fadetime ease-out;
+}
+
+.fade-from-left {
+    opacity: 0;
+    transform: translate3d(-@distance, 0, 0);
+    transition: transform @fadetime ease-out, opacity @fadetime ease-out;
+}
+
+.fade-from-right {
+    opacity: 0;
+    transform: translate3d(@distance, 0, 0);
+    transition: transform @fadetime ease-out, opacity @fadetime ease-out;
+}
+
+.fade-from-top {
+    opacity: 0;
+    transform: translate3d(0, -@distance, 0);
+    transition: transform @fadetime ease-out, opacity @fadetime ease-out;
+}
+
+.faded {
+    opacity: 1;
+    transform: translate3d(0,0,0);
+}
+
+
+/*=============================*/
 
 html, body {
     font-family: 'Roboto', 'Open Sans', sans-serif;

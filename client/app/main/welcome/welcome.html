@@ -1,179 +1,208 @@
 <!-- Welcome page -->
 <a href="#0" class="cd-top"><span class="glyphicon glyphicon-chevron-up" style='top: 50%;
     transform: translateY(-50%); margin-left:3px'></span></a>
-<div class="welcome-section">
-	<div class="welcome-nav">
-		<div class="container">
-			<div class="col-md-3 logo-container">
-				<a class="logo" href="/" target="_self"><img src="assets/images/logo.png"></a>
+<div class="welcome-section" style="overflow-x: hidden;">
 
-				<!-- Toggle menu button -->
-				<div class="welcome-menu-button" ng-click="welcome.nav_open = !welcome.nav_open">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</div>
-			</div>
-			<div class="col-md-9 nav-links">
-				<a class="welcome-link" ng-repeat="item in welcome.menu_items" href="{{item.link}}" onclick="return false;" ng-click="welcome.go_to_section(item.link)">{{item.name}}</a>
-			</div>
-		</div>
-		<div class="mobile-nav" ng-class="{true: 'nav-open'}[welcome.nav_open]">
-            <div class="close-button-container"><i ng-click="welcome.nav_open = !welcome.nav_open" class="fa fa-times-thin close-mobile-nav"></i></div>
-            <div class="nav-link-container">
-    			<a ng-click="welcome.nav_open = !welcome.nav_open; welcome.go_to_section(item.link)" onclick="return false;"ng-repeat="item in welcome.menu_items" href="{{item.link}}">{{item.name}}</a>
+    <!-- landing section -->
+    <div class="welcome-landing">
+        <div class="container">
+            <div class="row">
+
+                <!-- logo and nav -->
+                <div class="logo-container col l2 m4 s4">
+                    <a href="/">
+                        <img src="assets/images/5pm-logo.png" width="100%" height="auto">
+                    </a>
+                </div>
+
+                <!-- signup and login -->
+                <div class="welcome-navgigation col l10 m8 s8">
+
+                    <!-- signup -->
+                    <a href="/signup" class="welcome-signup-button">sign up</a>
+
+                    <!-- login -->
+                    <a href="/login" class="welcome-login-button">login</a>
+
+                </div>
             </div>
-		</div>
-	</div>
 
-	<div class="welcome-body">
-		<div class="welcome-container">
-			<div class="welcome-content">
-				Meeting the right people<br />
-				at the right events
-			</div>
-			<div class="welcome-subscribe no-input">
-				<div class="welcome-errors">Please enter a valid email address</div>
-				<form name="welcome.form" ng-submit="welcome.submit_email()" novalidate>
-					<input ng-model="welcome.email_address" type="email" placeholder="Enter your email address">
-					<button class="subscribe-button">SUBSCRIBE</button>
-				</form>
-			</div>
-		</div>
-	</div>
+            <div class="row">
+                <!-- description -->
+                <div class="welcome-description col l6 offset-l3 m12 s12">
+                    Meeting the right people at the right events
+                </div>
+            </div>
 
-	<div class="welcome-scroll-bottom">
-		<span ng-click="welcome.go_to_section('#about')" class="scroll-bottom-arrow glyphicon glyphicon-chevron-down"></span>
-	</div>
+            <div class="row">
+                <!-- discover button -->
+                <div class="welcome-discover">
+                    <a class="welcome-discover-button" ng-click="welcome.discover()">discover</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 5pm info -->
+    <a id="discover"></a>
+    <div class="welcome-info">
+        <div class="container">
+            <div class="row">
+
+                <!-- 5pm + questions -->
+                <div class="welcome-title babyblue-font">What is <span class="five-pm">5PM</span><span class="life">LIFE</span>?</div>
+
+                <div class="welcome-text align-center">
+                    Are you an art-lover trying to find people who share the same passion?<br />
+                    An aspiring entrepreneur looking for potential partners?<br />
+                    Or a daredevil that wants to bring a partner in crime on your wild adventures?<br />
+                </div>
+
+                <!-- divider -->
+                <div class="mini-divider"></div>
+
+                <!-- feature -->
+                <div class="fade-from-bot">
+                    <div class="welcome-feature align-center">
+                        <span class="five-pm babyblue-font">5PM</span><span class="life  babyblue-font">LIFE</span>
+                        gives you the platform  to find like minded people to:
+                    </div>
+
+                    <!-- opportunities-->
+                    <div class="welcome-opportunities align-center">
+                        <span class="purple-font">share your interests</span>
+                        &nbsp; . &nbsp;
+                        <span class="pink-font">exchange ideas</span>
+                        &nbsp; . &nbsp;
+                        <span class="aqua-font">create life experiences</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- feature 1 -->
+    <div class="welcome-feature-one">
+        <div class="container">
+            <div class="row">
+
+                <!-- feature 1 title -->
+                <div class="welcome-subtitle align-center">a new way to connect</div>
+                <div class="welcome-title pink-font no-margin">Meet new friends, try new things</div>
+            </div>
+
+            <div class="row valign-wrapper description-row">
+                <!-- feature 1 cartoon -->
+                <div class="col l4 push-l7 m4 push-m8 s12 cartoon-1 align-center valign fade-from-right">
+                    <img src="assets/images/home-connect.png" width="85%" height="auto">
+                </div>
+
+                <!-- feature 1 text -->
+                <div class="welcome-text feature-1-text col l6 pull-l6 m8 pull-m4 s12 valign fade-from-left">
+                    <p>
+                        Everybody loves to meet new people yet sometimes it's hard
+                        to make that first step. <span class="five-pm babyblue-font">5PM</span><span class="life babyblue-font normal">LIFE</span> helps make that easy and connects
+                        you with other people who, like you, are also looking to make new
+                        friends.
+                    </p>
+                    <br />
+                    <p>
+                        You're not the only one who wants to attend that exotic foodie event,
+                        try the the most terrifying escape room, or take a skydiving class. Let
+                        us connect you with the right people to share in your next adventure.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- feature 2 -->
+    <div class="welcome-feature-two">
+        <div class="container">
+            <div class="row valign-wrapper description-row">
+
+                <!-- feature 2 cartoon -->
+                <div class="col l4 offset-l1 m4 s12 cartoon-2 valign fade-from-top">
+                    <img src="assets/images/home-event-image.png">
+                </div>
+
+                <!-- feature 2 text -->
+                <div class="col l5 offset-l2 m6 offset-m2 s12 valign feature-text feature-2-text fade-from-bot">
+                    <div class="welcome-title purple-font align-left">An event made<br />just for you</div>
+
+                    <div class="welcome-text">
+                        <p>
+                            Find an event that fits in your busy schedule. Enter in a time and
+                            location and we will give you the event that you'll want to go to
+                            without the hassle of scheduling everyones availabilities.
+                        </p>
+                    </div>
+
+                    <div class="purple-signup">
+                        <a class="purple-signup-button" href="/signup">sign up</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- sign up -->
+    <div class="welcome-signup">
+        <div class="container">
+            <div class="row">
+
+                <!-- title -->
+                <div class="welcome-signup-title align-center">Sign up and explore</div>
+
+                <!-- text -->
+                <div class="welcome-signup-text align-center">
+                    <p>
+                        Meet people in the same life stage as you as you build increasing meaningful connections.
+                    </p>
+                    <p>
+                        Join the 5PMLIFE community and take the first step to unlocking your new social network!
+                    </p>
+                </div>
+
+                <div class="welcome-signup-final align-center">
+                    <a class="welcome-signup-final-button" href="/signup">sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row valign-wrapper">
 
+            <!-- copyright -->
+            <div class="footer-copyright col l6 m6 s12 valign">
+                &copy; {{ welcome.get_current_year() }}
+                <span class="five-pm bold">5PM</span><span class="life normal">LIFE</span>
+            </div>
 
-<!-- DELETE CRAP LATER -->
-<!-- <a name="services"></a>
-<a id="about"></a>
-<a id="contact"></a>
-<a id="follow"></a> -->
-<div class="content-section-a">
+            <!-- social media -->
+            <div class="footer-social-media col l6 m6 s12 valign align-right">
+                <!-- facebook -->
+                <a href="https://www.facebook.com/5pmlife" target="_blank">
+                    <img src="assets/images/fb-icon.png" height="35px" width="auto">
+                </a>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-5 col-sm-6">
-				<hr class="section-heading-spacer">
-				<div class="clearfix"></div>
-				<h2 class="section-heading">Meet New Friends</h2>
-				<p class="lead">
-					Everybody loves to meet new people yet sometimes it's hard to make that first step. 5pm helps make that easy and connects you
-					with other people who, like you, are also looking to make new friends.
-				</p>
-			</div>
-			<div class="col-lg-5 col-lg-offset-2 col-sm-6">
-				<img class="img-responsive" src="img/photo-1468109320504-a5e48f17cfb7.jpg" alt="">
-			</div>
-		</div>
-	</div>
-	<!-- /.container -->
+                <!-- twitter -->
+                <a href="https://twitter.com/FivepmLife" target="_blank">
+                    <img src="assets/images/tw-icon.png" height="35px" width="auto">
+                </a>
+
+                <!-- instagram -->
+                <a href="https://www.instagram.com/5pm.life/" target="_blank">
+                    <img src="assets/images/ig-icon.png" height="35px" width="auto">
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-section-a -->
-
-<div class="content-section-b">
-
-	<div class="container">
-
-		<div class="row">
-			<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-				<hr class="section-heading-spacer">
-				<div class="clearfix"></div>
-				<h2 class="section-heading">Try New Things</h2>
-				<p class="lead">
-					You're not the only one who wants to attend that exotic foodie event, try the the most terrifying escape room, or take a skydiving class. Let us connect you with the right people to share in your next adventure.
-				</p>
-			</div>
-			<div class="col-lg-5 col-sm-pull-6  col-sm-6">
-				<img class="img-responsive" src="img/photo-1464198016405-33fd4527b89d.jpg" alt="">
-			</div>
-		</div>
-
-	</div>
-	<!-- /.container -->
-
-</div>
-<!-- /.content-section-b -->
-
-<div class="content-section-a">
-
-	<div class="container">
-
-		<div class="row">
-			<div class="col-lg-5 col-sm-6">
-				<hr class="section-heading-spacer">
-				<div class="clearfix"></div>
-				<h2 class="section-heading">An Event Made Just For You</h2>
-				<p class="lead">
-					Find an event that fits in your busy schedule. Enter in a time and location and we will give you the event that you'll want to go to without the hassle of scheduling everyones availabilities.
-				</p>
-			</div>
-			<div class="col-lg-5 col-lg-offset-2 col-sm-6">
-				<img class="img-responsive" src="img/restaurant-person-people-hand.jpg" alt="">
-			</div>
-		</div>
-
-	</div>
-	<!-- /.container -->
-
-</div>
-<!-- /.content-section-a -->
-
-<!-- <a  name="contact"></a>
-<div class="banner">
-
-	<div class="container">
-
-		<div class="row">
-			<div class="col-lg-6">
-				<h2>Connect to Start Bootstrap:</h2>
-			</div>
-			<div class="col-lg-6">
-				<ul class="list-inline banner-social-buttons">
-					<li>
-						<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-					</li>
-					<li>
-						<a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-					</li>
-					<li>
-						<a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-	</div> -->
-	<!-- /.container -->
-
-<!-- </div> -->
-<!-- /.banner -->
-
-<!-- Footer -->
-<footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<ul class="list-inline">
-					<li>
-						<a href="#">Home</a>
-					</li>
-					<li class="footer-menu-divider">&sdot;</li>
-					<li>
-						<a href="#about">About</a>
-					</li>
-					<li class="footer-menu-divider">&sdot;</li>
-					<li>
-						<a href="#contact">Contact</a>
-					</li>
-				</ul>
-				<p class="copyright text-muted small">Copyright &copy; 5pmlife 2016. All Rights Reserved</p>
-			</div>
-		</div>
-	</div>
-</footer>

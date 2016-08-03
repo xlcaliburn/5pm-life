@@ -11,124 +11,74 @@
 	/*jshint camelcase: false */
 	/* jshint expr: true */
 	function WelcomeController($http, $timeout, EmailService) {
-		var self = this;
+		var vm = this;
 
-		// variables
-		self.no_input = true;
-		self.nav_open = false;
-		self.email_address;
-		self.form;
-
-		// menu
-		self.menu_items = [
-			{
-				name: 'ABOUT',
-				link: '#about'
-			},
-			{
-				name: 'CONTACT',
-				link: '#contact'
-			}
-			// ,
-			// {
-			//     name: 'FOLLOW',
-			//     link: '#follow'
-			// }
-		];
-
-		self.submit_email = function() {
-			if (self.no_input) {
-				angular.element('.no-input').removeClass('no-input');
-				$timeout(function() {
-					angular.element('.welcome-subscribe input').focus();
-				}, 250);
-				self.no_input = false;
-				return;
-			}
-
-			// submit their email here
-			clear_errors();
-			var email_valid = validate_email();
-			var subscribe_button = angular.element('.subscribe-button');
-			subscribe_button.prop('disabled', true);
-			subscribe_button.addClass('loading');
-			$timeout(function() {
-				if (email_valid) {
-					angular.element('.welcome-subscribe').addClass('fading-out');
-					$timeout(function() {
-						submit_email();
-						var subscribe_container = angular.element('.welcome-subscribe.fading-out');
-						subscribe_container.html('Thank you for signing up. We\'ll notify you when the BETA is ready!');
-						subscribe_container.removeClass('fading-out');
-					}, 550);
-				} else {
-					angular.element('.welcome-errors').addClass('error');
-					subscribe_button.removeClass('loading');
-					subscribe_button.prop('disabled', false);
-					$timeout(function() {
-						angular.element('.welcome-subscribe input').focus();
-					});
-				}
+		// scroll to discover section
+		vm.discover = function() {
+			angular.element('html, body').animate({
+				scrollTop: angular.element('#discover').offset().top
 			}, 1000);
 		};
 
-		self.go_to_section = function(section) {
-			angular.element('html, body').animate({
-				scrollTop: angular.element(section).offset().top
-			}, 500);
-		};
-
-		// save email address in db
-		function submit_email() {
-
-			// create email object
-			var email = {
-				email_address: self.email_address
-			};
-
-			// do $http request to save email
-			EmailService.sendEmail(email).then(function(res) {
-				console.log(res);
-				// update front end
-			}, function (error) {
-				console.log(error);
-			});
-
+		vm.get_current_year = function() {
+			var date = new Date();
+			return date.getFullYear();
 		}
 
-		// validate email address
-		function validate_email() {
-			if (!self.form.$valid || self.form.$pristine || !self.email_address) { return false; }
-			return true;
-		}
+		// scroll in animations
+		var detect_distance = 700;
 
-		// clear errors on submit
-		function clear_errors() {
-			angular.element('.welcome-errors').removeClass('error');
-		}
+		var feature = angular.element('.welcome-feature');
+		var feature_offset = feature.offset().top - detect_distance;
 
+		var cartoon_1 = angular.element('.cartoon-1');
+		var cartoon_1_offset = cartoon_1.offset().top - detect_distance;
+
+		var text_1 = angular.element('.feature-1-text');
+		var text_1_offset = text_1.offset().top - detect_distance;
+
+		var cartoon_2 = angular.element('.cartoon-2');
+		var cartoon_2_offset = cartoon_2.offset().top - detect_distance;
+
+		var text_2 = angular.element('.feature-2-text');
+		var text_2_offset = text_2.offset().top - detect_distance;
 
 		/*================ BACK TO TOP CONTAINER ================================ */
 		var offset = 300,
 			nav_offset = 100,
-			//browser window scroll (in pixels) after which the "back to top" link opacity is reduced
 			offset_opacity = 1200,
-			//duration of the top scrolling animation (in ms)
-			scroll_top_duration = 700,
-			//grab the "back to top" link
+			scroll_top_duration = 900,
 			$back_to_top = $('.cd-top');
 
 		//hide or show the "back to top" link
-		$(window).scroll(function(){
-			( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
-			if( $(this).scrollTop() > offset_opacity ) {
+		$(window).scroll(function() {
+			var window_scroll = $(this).scrollTop();
+
+			// back to top
+			if (window_scroll > offset) {
+				$back_to_top.addClass('cd-is-visible')
+			} else {
+				$back_to_top.removeClass('cd-is-visible cd-fade-out');
+			}
+			if (window_scroll > offset_opacity) {
 				$back_to_top.addClass('cd-fade-out');
 			}
 
-			if ($(this).scrollTop() > nav_offset) {
-				angular.element('.welcome-nav').addClass('sticky-nav');
-			} else {
-				angular.element('.welcome-nav').removeClass('sticky-nav');
+			// animations
+			if (window_scroll > feature_offset) {
+				feature.parent().addClass('faded');
+			}
+			if (window_scroll > cartoon_1_offset) {
+				cartoon_1.addClass('faded');
+			}
+			if (window_scroll > text_1_offset) {
+				text_1.addClass('faded');
+			}
+			if (window_scroll > cartoon_2_offset) {
+				cartoon_2.addClass('faded');
+			}
+			if (window_scroll > text_2_offset) {
+				text_2.addClass('faded');
 			}
 		});
 
