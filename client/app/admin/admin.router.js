@@ -10,17 +10,20 @@
 			.state('admin.users', {
 				url: '/users',
 				templateUrl: 'app/admin/users/admin.users.html',
-				controller: 'AdminUsersController'
+				controller: 'AdminUsersController',
+				controllerAs: 'vm'
 			})
 			.state('admin.tags', {
 				url: '/tags',
 				templateUrl: 'app/admin/tags/admin.tags.html',
-				controller: 'AdminTagsController'
+				controller: 'AdminTagsController',
+				controllerAs: 'vm'
 			})
 			.state('admin.venues', {
 				url: '/venues',
 				templateUrl: 'app/admin/venues/admin.venues.html',
-				controller: 'AdminVenuesController'
+				controller: 'AdminVenuesController',
+				controllerAs: 'vm'
 			})
 			.state('admin.events', {
 				url: '/events',

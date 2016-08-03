@@ -7,8 +7,8 @@
 
 	function AdminSettingsController($scope, $http, AdminSettings) {
 		var vm = this;
-
 		vm.formData = {};
+		
 		var defaultSettings = [
 			{
 				settingType: "EventSearchDateTime",
@@ -62,18 +62,18 @@
 		};
 
 		AdminSettings.get()
-		.success(function(data) {
-			if (data.length == 0)
-			{
-				vm.adminSettings = defaultSettings;
-			}
-			else 
-			{
-				vm.adminSettings = data;
-			}
-		})
-		.error(function(data) {
-			console.log('Error: ' + data);
-		});		
+			.success(function(data) {
+				if (data.length == 0)
+				{
+					vm.adminSettings = defaultSettings;
+				}
+				else 
+				{
+					vm.adminSettings = data;
+				}
+			})
+			.error(function(data) {
+				console.log('Error: ' + data);
+			});		
 	}
 })();

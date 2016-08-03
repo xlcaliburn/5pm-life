@@ -1,32 +1,38 @@
-<div class="container">
-	<h2>Event Management</h2>
-	<div class="section" style="float:right">
-		<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createEvent">
-			<i class="material-icons">add</i>
-		</a>
-	</div>
-	<div class="section">
+<h2>Event Management</h2>
+<div class="section" style="float:right">
+	<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createEvent()">
+		<i class="material-icons">add</i>
+	</a>
+</div>
+<div class="section">
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Activity</th>
-					<th>Venue</th>
-					<th>Location</th>
-					<th>Capacity</th>
-					<th>Queue Time</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="venue in venues">
-					<td>{{ venue.venue_name }}</td>
-					<td>{{ venue.tags }}</td>
-					<td>{{ venue.address.street }}</td>
-					<td>{{ venue.address.city }}</td>
-					<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click=""></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Activity</th>
+				<th>Venue</th>
+				<th>Location</th>
+				<th>Capacity</th>
+				<th>Queue Time</th>
+				<th>Status</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="event in events">
+				<td>{{event._id}}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>{{event.status}}</td>
+				<td>
+					<a href=""><i class="small material-icons">mode_edit</i></a>
+					<a><i class="small material-icons">delete</i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
