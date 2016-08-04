@@ -15,10 +15,11 @@ router.get('/', function(req,res) {
 router.post('/', function(req, res) {
 		Event.create({
 				activity : req.body.activity,
+				venue : req.body.venue,
 				dt_start : req.body.dt_start,
 				dt_end : req.body.dt_end,
 				dt_search_start : req.body.dt_search_start,
-				status : "Active",
+				status : "Pending",
 				users : req.body.users
 		 }, function(err, data) {
 			if (err)

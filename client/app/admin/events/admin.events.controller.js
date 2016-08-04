@@ -8,11 +8,12 @@
 	function AdminEventsController ($scope, $http, $interval, $uibModal, Events) {
 		var vm = this;
 		vm.getEvents = getEvents;
-		vm.createFormData = {};
 		vm.deleteEvent = deleteEvent;
 		vm.events = {};
+		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
 		vm.createModal = createModal;
+		vm.editModal = editModal;
 
 		init();
 
@@ -32,13 +33,15 @@
 		};
 
 
-		vm.editModal = function(id) {
+		function editModal(id) {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/events/modals/createNewEventModal.html',
-				// controller: '',
+				templateUrl: 'app/admin/events/modals/editEventModal.html',
+				controller: 'EditEventModalController',
+				controllerAs:'vm', 
 				size: 'lg',
-				resolve: {}
+				resolve: {
+				}
 			});
 		};
 

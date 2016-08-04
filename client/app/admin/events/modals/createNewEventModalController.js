@@ -8,14 +8,15 @@
 	function CreateNewEventModalController ($uibModalInstance, Events) {
 		var vm = this;
 		vm.submit = submit;
-		vm.createEvent = createEvent;
 		vm.createFormData = {};
 		vm.create_activity = null;
 		vm.create_venue = null;
 
 		function submit() {
-			vm.createEvent();
-			$uibModalInstance.close();
+			if (vm.create_activity != null) {
+				createEvent();
+				$uibModalInstance.close();
+			}
 		}
 
 		function createEvent() {
@@ -27,7 +28,7 @@
 				.success(function(data) {
 					vm.createFormData = {};
 				});
-		}		
+		}
 	}
 
 })();
