@@ -1,29 +1,37 @@
-'use strict';
-
-(function() {
+(function () {
+	'use strict';
+	
 	angular
 		.module('fivepmApp.admin')
 		.controller('AdminEventsController', AdminEventsController);
 
 	function AdminEventsController ($scope, $http, $interval, $uibModal, Events) {
 		var vm = this;
+		vm.getEvents = getEvents;
 		vm.createFormData = {};
-		vm.createEvent = createEvent;
 		vm.deleteEvent = deleteEvent;
 		vm.events = {};
 		vm.currentTime = new Date(Date.now()).getTime();
+		vm.createModal = createModal;
 
 		init();
 
-		vm.createModal = function (size) {
+		function createModal() {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'app/admin/events/modals/createNewEventModal.html',
-				// controller: '',
+				controller: 'CreateNewEventModalController',
+				controllerAs: 'vm',
 				size: 'lg',
 				resolve: {}
 			});
+
+			modalInstance.result.then(function() {
+				vm.getEvents();
+			}, function () {});
 		};
+
+
 		vm.editModal = function(id) {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
@@ -53,21 +61,11 @@
 						}
 					})
 					vm.events = data;
+					console.log(vm.events);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				})
-		}
-
-		function createEvent() {
-			//if (!$.isEmptyObject(vm.createFormData)) {
-				vm.createFormData.dt_search_start = new Date().getTime();
-				Events.create(vm.createFormData)
-					.success(function(data) {
-						vm.createFormData = {};
-						getEvents();
-					});
-			//}
 		}
 
 		function deleteEvent(id) {
@@ -75,6 +73,8 @@
 				.success(function(data) {
 					getEvents();
 				});
-		}		
+		}
+
+
 	}
 })();

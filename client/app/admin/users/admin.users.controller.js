@@ -1,6 +1,6 @@
-'use strict';
+(function () {
+	'use strict';
 
-(function() {
 	angular
 		.module('fivepmApp.admin')
 		.controller('AdminUsersController', AdminUsersController);

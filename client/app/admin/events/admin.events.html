@@ -22,8 +22,8 @@
 		<tbody>
 			<tr ng-repeat="event in vm.events">
 				<td>{{event._id}}</td>
-				<td></td>
-				<td></td>
+				<td>{{event.activity}}</td>
+				<td>{{event.venue.venue_name}}</td>
 				<td></td>
 				<td></td>
 				<td>{{ (vm.currentTime - event.dt_search_start_time)/60000 | number:0}}</td>

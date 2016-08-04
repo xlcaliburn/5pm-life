@@ -1,9 +1,9 @@
-'use strict';
-
 (function () {
+	'use strict';
+	
 	angular
-	.module('fivepmApp.admin')
-	.controller('AdminSettingsController', AdminSettingsController);
+		.module('fivepmApp.admin')
+		.controller('AdminSettingsController', AdminSettingsController);
 
 	function AdminSettingsController($scope, $http, AdminSettings) {
 		var vm = this;
