@@ -28,6 +28,11 @@
 		// scroll in animations
 		var detect_distance = 700;
 
+		$timeout(function() {
+			var welcome_text = angular.element('.welcome-text-row');
+			welcome_text.addClass('faded');
+		})
+
 		var feature = angular.element('.welcome-feature');
 		var feature_offset = feature.offset().top - detect_distance;
 

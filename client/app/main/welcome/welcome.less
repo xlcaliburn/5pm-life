@@ -94,7 +94,7 @@
 }
 
 .welcome-description {
-    margin-top: 15%;
+    margin-top: 22%;
     letter-spacing: 1.25px;
     text-align: center;
     color: @white;
@@ -120,16 +120,13 @@
     color: @white;
     text-align: center;
     .user-select-none;
-    -webkit-box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
 }
 
 .welcome-discover-button:hover {
     color: @white;
-    -webkit-box-shadow: 0px 6px 15px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 0px 6px 15px 0px rgba(0,0,0,1);
-    box-shadow: 0px 6px 15px 0px rgba(0,0,0,1);
+    -webkit-box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
 }
 
 /* Welcome Info
@@ -144,7 +141,7 @@
     text-align: center;
     font-size: 45px;
     font-weight: 300;
-    letter-spacing: 3.5px;
+    letter-spacing: 1px;
 }
 
 .welcome-text {
@@ -243,7 +240,7 @@
 .welcome-signup-title {
     color: @white;
     font-size: 38px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 2px;
     margin-bottom: 30px;
 }
@@ -316,6 +313,7 @@
 }
 
 @media screen and (max-width: 600px) {
+
     .welcome-signup-button,
     .welcome-login-button {
         font-size: 12px;
@@ -326,6 +324,18 @@
         width: 120px;
         margin-right: 0;
         margin-left: auto;
+    }
+
+    .welcome-info {
+        padding: 40px 0;
+    }
+
+    .welcome-title {
+        font-size: 30px;
+    }
+
+    .welcome-text {
+        font-size: 14px;
     }
 
     .welcome-login-button {
@@ -341,8 +351,31 @@
         font-size: 30px;
     }
 
+    .welcome-discover {
+        font-size: 14px;
+        padding: 10px 45px;
+    }
+
+    .welcome-discover-button {
+        font-size: 14px;
+        padding: 12px 40px;
+        margin-top: 18px;
+    }
+
     .description-row {
         display: block;
+    }
+
+    .mini-divider {
+        margin: 40px auto;
+    }
+
+    .welcome-feature {
+        font-size: 18px;
+    }
+
+    .welcome-opportunities {
+        font-size: 22px;
     }
 
     .cartoon-1>img {
@@ -353,6 +386,18 @@
 
     .cartoon-2 {
         display: none !important;
+    }
+
+    .welcome-feature-two .welcome-title {
+        margin-bottom: 35px;
+    }
+
+    .welcome-signup-title {
+        font-size: 30px;
+    }
+
+    .welcome-signup-text {
+        font-size: 14px;
     }
 
 }
