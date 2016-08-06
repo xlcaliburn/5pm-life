@@ -3,11 +3,10 @@
   "browser": true,
   "esnext": true,
   "bitwise": true,
-  "camelcase": true,
   "curly": true,
   "eqeqeq": true,
   "immed": true,
-  "latedef": true,
+  "latedef": false,
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
@@ -16,6 +15,8 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
+  "camelcase": false,
+  "expr": true,
   "ignoreDelimiters": [
     { "start": "start-non-standard", "end": "end-non-standard" }
   ],

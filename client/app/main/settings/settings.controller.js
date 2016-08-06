@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function SettingsController($http, $timeout, EmailService) {
-        var self = this;
+        var vm = this;
 
 
     }

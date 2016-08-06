@@ -2,15 +2,13 @@
 
 (function() {
 
-	/*jslint latedef:false*/
 	angular
 	.module('fivepmApp')
 	.controller('WelcomeController', WelcomeController);
 
 	/** @ngInject */
-	/*jshint camelcase: false */
 	/* jshint expr: true */
-	function WelcomeController($http, $timeout, EmailService) {
+	function WelcomeController($http, $timeout) {
 		var vm = this;
 
 		// scroll to discover section
@@ -23,7 +21,7 @@
 		vm.get_current_year = function() {
 			var date = new Date();
 			return date.getFullYear();
-		}
+		};
 
 		// scroll in animations
 		var detect_distance = 700;
@@ -31,7 +29,7 @@
 		$timeout(function() {
 			var welcome_text = angular.element('.welcome-text-row');
 			welcome_text.addClass('faded');
-		})
+		});
 
 		var feature = angular.element('.welcome-feature');
 		var feature_offset = feature.offset().top - detect_distance;
@@ -50,7 +48,6 @@
 
 		/*================ BACK TO TOP CONTAINER ================================ */
 		var offset = 300,
-			nav_offset = 100,
 			offset_opacity = 1200,
 			scroll_top_duration = 900,
 			$back_to_top = $('.cd-top');
@@ -61,7 +58,7 @@
 
 			// back to top
 			if (window_scroll > offset) {
-				$back_to_top.addClass('cd-is-visible')
+				$back_to_top.addClass('cd-is-visible');
 			} else {
 				$back_to_top.removeClass('cd-is-visible cd-fade-out');
 			}

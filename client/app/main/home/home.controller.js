@@ -1,21 +1,19 @@
 'use strict';
 
 (function() {
-    /*jslint latedef:false*/
 
     angular
     .module('fivepmApp')
     .controller('HomeController', HomeController);
 
     /** @ngInject */
-    /*jshint camelcase: false */
     /* jshint expr: true */
     function HomeController($filter, $timeout, $rootScope, $state) {
-        var self = this;
+        var vm = this;
 
         // model
         // should definitely get this from the db
-        self.stages = [
+        vm.stages = [
             {
                 stage: 'datetime',
                 instructions: 'Select a <span class="babyblue bold">date</span> and <span class="babyblue bold">time range</span> that you are available'
@@ -25,7 +23,7 @@
                 instructions: 'Select an <span class="babyblue bold">activity card</span> you would like your event to be'
             }
         ];
-        self.activity_cards = [
+        vm.activity_cards = [
             {
                 activity_type: 'active',
                 color: '#ff5d5d'
@@ -37,25 +35,25 @@
         ];
 
         // variables
-        self.current_stage = 0;
-        self.show_calendar = true;
-        self.today = get_todays_date();
-        self.date;
-        self.time_1;
-        self.time_2;
-        self.formatted_date;
-        self.formatted_time_1;
-        self.formatted_time_2;
-        self.selected_activity_types = [];
-        self.active = false;
-        self.social = false;
-        self.next_button = false;
-        self.prev_button = false;
+        vm.current_stage = 0;
+        vm.show_calendar = true;
+        vm.today = get_todays_date();
+        vm.date;
+        vm.time_1;
+        vm.time_2;
+        vm.formatted_date;
+        vm.formatted_time_1;
+        vm.formatted_time_2;
+        vm.selected_activity_types = [];
+        vm.active = false;
+        vm.social = false;
+        vm.next_button = false;
+        vm.prev_button = false;
 
         /* class functions
         =====================================================*/
 
-        self.init = function() {
+        vm.init = function() {
             // set page title
             $rootScope.title = $state.current.title;
 
@@ -70,65 +68,65 @@
             });
         };
 
-        self.set_date = function() {
-            var unformatted_date = moment(self.date);
-            self.formatted_date = unformatted_date.format('ddd, MMMM Do, YYYY');
+        vm.set_date = function() {
+            var unformatted_date = moment(vm.date);
+            vm.formatted_date = unformatted_date.format('ddd, MMMM Do, YYYY');
 
-            if (self.formatted_time_1 && self.formatted_time_2) {
-                self.next_button = true;
+            if (vm.formatted_time_1 && vm.formatted_time_2) {
+                vm.next_button = true;
             }
         };
 
-        self.set_time = function() {
-            if (!self.time_1 || !self.time_2) { return; }
-            if (self.time_1 > self.time_2) { return; }
+        vm.set_time = function() {
+            if (!vm.time_1 || !vm.time_2) { return; }
+            if (vm.time_1 > vm.time_2) { return; }
 
             // format times
-            self.formatted_time_1 = new moment(self.time_1).format('h:mmA');
-            self.formatted_time_2 = new moment(self.time_2).format('h:mmA');
+            vm.formatted_time_1 = new moment(vm.time_1).format('h:mmA');
+            vm.formatted_time_2 = new moment(vm.time_2).format('h:mmA');
 
-            if (self.formatted_date) {
-                self.next_button = true;
+            if (vm.formatted_date) {
+                vm.next_button = true;
             }
         };
 
-        self.toggle_activity = function(type) {
-            if (self.selected_activity_types.indexOf(type) > -1) {
+        vm.toggle_activity = function(type) {
+            if (vm.selected_activity_types.indexOf(type) > -1) {
                 // it exists in array
-                var index = self.selected_activity_types.indexOf(type);
-                self.selected_activity_types.splice(index, 1);
+                var index = vm.selected_activity_types.indexOf(type);
+                vm.selected_activity_types.splice(index, 1);
 
             } else {
                 // add to array
-                self.selected_activity_types.push(type);
+                vm.selected_activity_types.push(type);
             }
 
             // show queue button
-            if (self.selected_activity_types.length > 0) {
-                self.show_ready();
+            if (vm.selected_activity_types.length > 0) {
+                vm.show_ready();
             }
         };
 
-        self.show_ready = function() {
+        vm.show_ready = function() {
 
         };
 
-        self.prev_stage = function() {
-            if (self.current_stage - 1 < 0) { return; }
+        vm.prev_stage = function() {
+            if (vm.current_stage - 1 < 0) { return; }
 
-            self.next_button = !self.next_button;
-            self.prev_button = !self.prev_button;
+            vm.next_button = !vm.next_button;
+            vm.prev_button = !vm.prev_button;
 
-            self.current_stage--;
+            vm.current_stage--;
         };
 
-        self.next_stage = function() {
-            if (self.current_stage + 1 >= self.stages.length) { return; }
+        vm.next_stage = function() {
+            if (vm.current_stage + 1 >= vm.stages.length) { return; }
 
-            self.next_button = !self.next_button;
-            self.prev_button = !self.prev_button;
+            vm.next_button = !vm.next_button;
+            vm.prev_button = !vm.prev_button;
 
-            self.current_stage++;
+            vm.current_stage++;
         };
 
         /* Helper functions
@@ -143,7 +141,7 @@
 
 
 
-        self.init();
+        vm.init();
     }
 
 })();

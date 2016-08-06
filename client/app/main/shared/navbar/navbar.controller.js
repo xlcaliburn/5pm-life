@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-    /*jslint latedef:false*/
+
     angular
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
@@ -9,7 +9,7 @@
     /** @ngInject */
     function NavbarController($sce, $timeout) {
 
-        /*jshint camelcase: false */
+
         /* jshint expr: true */
         var self = this;
 

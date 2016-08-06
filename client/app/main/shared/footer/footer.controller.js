@@ -2,7 +2,6 @@
 
 (function() {
 
-    /*jslint latedef:false*/
     angular
     .module('fivepmApp')
     .controller('FooterController', FooterController);

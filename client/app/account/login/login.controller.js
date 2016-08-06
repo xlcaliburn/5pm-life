@@ -1,13 +1,11 @@
 'use strict';
 
 (function() {
-    /*jslint latedef:false*/
     angular
     .module('fivepmApp')
     .controller('LoginController', LoginController);
 
     /** @ngInject */
-    /*jshint camelcase: false */
     /* jshint expr: true */
     function LoginController(Auth) {
         var vm = this;
