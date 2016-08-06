@@ -45,13 +45,13 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'login'
 		})
 
-			.state('admin', {
-				url: '/admin',
-				templateUrl: 'app/admin/admin.html'
-				//controller: 'DashboardController',
-				//controllerAs: 'admin',
-				//authenticate: 'admin'
-			})	
+		.state('admin', {
+			url: '/admin',
+			templateUrl: 'app/admin/admin.html'
+			//controller: 'DashboardController',
+			//controllerAs: 'admin',
+			//authenticate: 'admin'
+		})
 	;
 
 	$urlRouterProvider.otherwise('/');
