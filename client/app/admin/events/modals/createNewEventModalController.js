@@ -24,9 +24,11 @@
 			vm.createFormData.activity = vm.create_activity;
 			vm.createFormData.venue = {};
 			vm.createFormData.venue.venue_name = vm.create_venue;
+
 			Events.create(vm.createFormData)
 				.success(function(data) {
 					vm.createFormData = {};
+					$uibModalInstance.close(data);					
 				});
 		}
 	}

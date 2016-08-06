@@ -29,7 +29,7 @@
 				<td>{{ (vm.currentTime - event.dt_search_start_time)/60000 | number:0}}</td>
 				<td>{{event.status}}</td>
 				<td>
-					<a href="" ng-click="vm.editModal(_.id)"><i class="small material-icons">mode_edit</i></a>
+					<a href="" ng-click="vm.editEvent(event._id)"><i class="small material-icons">mode_edit</i></a>
 					<a href="" ng-click="vm.deleteEvent(event._id)"><i class="small material-icons">delete</i></a>
 				</td>
 			</tr>

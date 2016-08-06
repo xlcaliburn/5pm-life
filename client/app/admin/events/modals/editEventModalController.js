@@ -5,18 +5,23 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventModalController', EditEventModalController);
 
-	function EditEventModalController ($uibModalInstance, Events) {
+	function EditEventModalController ($uibModalInstance, Events, selectedEvent) {
 		var vm = this;
 		vm.submit = submit;
-		vm.createFormData = {};
-		vm.create_activity = null;
-		vm.create_venue = null;
+		vm.selectedEvent = selectedEvent;
 
 		function submit() {
-			if (vm.create_activity != null) {
-				createEvent();
+			if (vm.selectedEvent.activity != null) {
+				Events.put(vm.selectedEvent);
+					.success(function(data) {
+						$uibModalInstance.close(data);
+					});
 				$uibModalInstance.close();
 			}
+		}
+
+		function updateEvent() {
+
 		}
 	}
 

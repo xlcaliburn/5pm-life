@@ -56,6 +56,9 @@
 				get : function() {
 					return $http.get('/api/events');
 				},
+				put : function(data) {
+					return $http.put('/api/events', data);
+				},
 				create : function(data) {
 					return $http.post('/api/events', data);
 				},
