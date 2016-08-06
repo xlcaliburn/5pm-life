@@ -1,6 +1,10 @@
-<div class="jumbotron text-center">
-	<h1><span class="label label-info">{{ venues.length }}</span></h1>
+<h2>Event Management</h2>
+<div class="section" style="float:right">
+	<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createModal()">
+		<i class="material-icons">add</i>
+	</a>
 </div>
+<div class="section">
 
 <div class="table-container">
 	<table class="table table-striped">
@@ -14,12 +18,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="venue in venues">
+			<tr ng-repeat="venue in vm.venues">
 				<td>{{ venue.venue_name }}</td>
-				<td>{{ venue.tags }}</td>
+				<td>
+					<div >
+						<div ng-repeat="tag in venue.tags" class="chip">
+							{{tag}}
+						</div>
+					</div>
+				</td>
 				<td>{{ venue.address.street }}</td>
 				<td>{{ venue.address.city }}</td>
-				<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="deleteVenue(venue._id)"></td>
+				<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteVenue(venue._id)"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -57,8 +67,9 @@
 					<input type="text" class="form-control" ng-model="formData.postal_code">                                         
 				</div>
 
-				<button type="submit" class="btn btn-primary btn-lg" ng-click="createVenue()">Add</button>
+				<button type="submit" class="btn btn-primary btn-lg" ng-click="vm.createVenue()">Add</button>
 			</form>
 		</div>
 	</div>
+</div>
 </div>

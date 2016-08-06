@@ -12,7 +12,7 @@
 
 		function submit() {
 			if (vm.selectedEvent.activity != null) {
-				Events.put(vm.selectedEvent);
+				Events.put(vm.selectedEvent)
 					.success(function(data) {
 						$uibModalInstance.close(data);
 					});

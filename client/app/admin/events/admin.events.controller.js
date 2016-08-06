@@ -39,7 +39,7 @@
 				templateUrl: 'app/admin/events/modals/editEventModal.html',
 				controller: 'EditEventModalController',
 				controllerAs:'vm', 
-				size: 'lg ',
+				size: 'lg',
 				resolve: {
 					selectedEvent: function () { return selectedEvent }
 				}
