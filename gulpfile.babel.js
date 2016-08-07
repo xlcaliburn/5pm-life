@@ -532,10 +532,11 @@ gulp.task('constant', function() {
     stream: true,
     constants: { appConfig: sharedConfig }
   })
+  /*
     .pipe(plugins.rename({
       basename: 'index.constant'
     }))
-    .pipe(gulp.dest(`${clientPath}/app/`))
+    .pipe(gulp.dest(`${clientPath}/app/`))*/
 });
 
 gulp.task('build:images', () => {

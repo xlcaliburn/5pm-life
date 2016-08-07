@@ -1,11 +1,13 @@
-(function(angular, undefined) {
-  angular.module("fivepmApp.constants", [])
+'use strict';
 
-.constant("appConfig", {
-	"userRoles": [
-		"guest",
-		"user",
-		"admin"
+(function(angular, undefined) {
+  angular.module('fivepmApp.constants', [])
+
+.constant('appConfig', {
+    'userRoles': [
+		'guest',
+		'user',
+		'admin'
 	]
 })
 

@@ -9,12 +9,11 @@
     /** @ngInject */
     function NavbarController($sce, $timeout) {
 
-
         /* jshint expr: true */
-        var self = this;
+        var vm = this;
 
         // model
-        self.steps = [
+        vm.steps = [
             {
                 order: 1,
                 stage: 'datetime',
@@ -45,35 +44,35 @@
         ];
 
         // views
-        self.body = angular.element('body');
-        self.overlay = angular.element('.queue-modal-overlay');
-        self.modal = angular.element('#queue-modal');
-        self.datetime = angular.element('.datetime-stage');
+        vm.body = angular.element('body');
+        vm.overlay = angular.element('.queue-modal-overlay');
+        vm.modal = angular.element('#queue-modal');
+        vm.datetime = angular.element('.datetime-stage');
 
         // variables
-        self.status_title = 'QUEUE FOR EVENT';
-        self.nav_open = false;
-        self.modal_open = false;
-        self.queue_date;
-        self.queue_start_time;
-        self.queue_end_time;
-        self.active = false;
-        self.social = false;
-        self.both = false;
-        self.confirm = false;
-        self.location;
+        vm.status_title = 'QUEUE FOR EVENT';
+        vm.nav_open = false;
+        vm.modal_open = false;
+        vm.queue_date;
+        vm.queue_start_time;
+        vm.queue_end_time;
+        vm.active = false;
+        vm.social = false;
+        vm.both = false;
+        vm.confirm = false;
+        vm.location;
 
         /*======================================
             Functions
         =======================================*/
-        self.init = function() {
+        vm.init = function() {
             // init datetime picker
-            self.init_datetimepicker();
-            self.init_tooltips();
+            vm.init_datetimepicker();
+            vm.init_tooltips();
         };
 
         // initialiaze tooltips
-        self.init_tooltips = function() {
+        vm.init_tooltips = function() {
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');
                 tooltips.tooltip();
@@ -81,46 +80,47 @@
         };
 
         // open modal when explore is clicked
-        self.open_queue_modal = function() {
-            if (self.modal_open) { return; }
+        vm.open_queue_modal = function() {
+            if (vm.modal_open) { return; }
 
-            self.body.addClass('modal-open');
-            self.modal.addClass('queue-modal-open');
-            self.modal_open = true;
+            vm.body.addClass('modal-open');
+            vm.modal.addClass('queue-modal-open');
+            vm.modal_open = true;
+            materialize_select();
         };
 
         // close modal when overlay is clicked
-        self.close_queue_modal = function() {
-            if (!self.modal_open) { return; }
+        vm.close_queue_modal = function() {
+            if (!vm.modal_open) { return; }
 
-            self.body.removeClass('modal-open');
-            self.modal.removeClass('queue-modal-open');
-            self.modal_open = false;
+            vm.body.removeClass('modal-open');
+            vm.modal.removeClass('queue-modal-open');
+            vm.modal_open = false;
         };
 
-        self.confirm_queue = function() {
+        vm.confirm_queue = function() {
         // validate information
-            self.clear_errors('all');
+            vm.clear_errors('all');
 
         /*================================================
         ================ validate date
         =================================================*/
 
             // check if date is empty
-            if (!self.queue_date) {
-                self.add_errors('datetime', '#datepicker', 'Please select a date below'); return;
+            if (!vm.queue_date) {
+                vm.add_errors('datetime', '#datepicker', 'Please select a date below'); return;
             }
 
             // check if date is valid
-            var selected_date = new Date(self.queue_date);
+            var selected_date = new Date(vm.queue_date);
             if (selected_date === 'Invalid Date') {
-                self.add_errors('datetime', '#datepicker', 'Please enter a valid date'); return;
+                vm.add_errors('datetime', '#datepicker', 'Please enter a valid date'); return;
             }
 
             // check if selected date is in the past
             var today = new Date(); today.setHours(0,0,0,0);
             if (selected_date < today) {
-                self.add_errors('datetime', '#datepicker', 'The date you have chosen is in the past');
+                vm.add_errors('datetime', '#datepicker', 'The date you have chosen is in the past');
                 return;
             }
 
@@ -129,28 +129,28 @@
         =================================================*/
 
             // check for empty inputs
-            if (!self.queue_start_time) {
-                self.add_errors('datetime', '.start-timepicker', 'Please select a starting time below');
+            if (!vm.queue_start_time) {
+                vm.add_errors('datetime', '.start-timepicker', 'Please select a starting time below');
                 return;
-            } else if (!self.queue_end_time) {
-                self.add_errors('datetime', '.end-timepicker', 'Please select an ending time below');
+            } else if (!vm.queue_end_time) {
+                vm.add_errors('datetime', '.end-timepicker', 'Please select an ending time below');
                 return;
             }
 
             // check if time between start and end is at least 3 hours and therefore start time must
             // be less than 9:00PM
-            var start_time = parseInt(moment(self.queue_start_time, ['h:mmA']).format('HHmm')),
-                end_time = parseInt(moment(self.queue_end_time, ['h:mmA']).format('HHmm')),
+            var start_time = parseInt(moment(vm.queue_start_time, ['h:mmA']).format('HHmm')),
+                end_time = parseInt(moment(vm.queue_end_time, ['h:mmA']).format('HHmm')),
                 modified_start_time = start_time + 300; // time with 3 hour gap
 
             if (start_time >= 2100) {
-                self.add_errors('datetime', '.start-timepicker', 'Please select an earlier start time');
+                vm.add_errors('datetime', '.start-timepicker', 'Please select an earlier start time');
                 return;
             }
 
             if (modified_start_time > end_time) {
-                self.add_errors('datetime', '.start-timepicker', 'Your available time range needs to be at least 3 hours');
-                self.add_errors('datetime', '.end-timepicker', 'Your available time range needs to be at least 3 hours');
+                vm.add_errors('datetime', '.start-timepicker', 'Your available time range needs to be at least 3 hours');
+                vm.add_errors('datetime', '.end-timepicker', 'Your available time range needs to be at least 3 hours');
                 return;
             }
 
@@ -159,27 +159,26 @@
         =================================================*/
 
             // check if activity type is selected
-            console.log(self.active, self.social);
-            if (!self.active && !self.social) {
-                self.add_errors('activity_type', null, 'Please select an activity type');
+            if (!vm.active && !vm.social) {
+                vm.add_errors('activity_type', null, 'Please select an activity type');
                 return;
             }
 
-            if (!self.location) {
-                self.add_errors('location_pref', '.location-select', 'Please select a location preference');
+            if (!vm.location) {
+                vm.add_errors('location_pref', '.location-select', 'Please select a location preference');
                 return;
             }
 
             // if valid, go to confirmation page
-            self.toggle_confirm_information();
+            vm.toggle_confirm_information();
         };
 
         // confirm information before submitting
-        self.toggle_confirm_information = function() {
+        vm.toggle_confirm_information = function() {
             // change status and title
-            self.confirm = !self.confirm;
-            if (self.confirm) { self.status_title = 'CONFIRM EVENT PREFERENCES'; }
-            else { self.status_title = 'QUEUE FOR EVENT'; }
+            vm.confirm = !vm.confirm;
+            if (vm.confirm) { vm.status_title = 'CONFIRM EVENT PREFERENCES'; }
+            else { vm.status_title = 'QUEUE FOR EVENT'; }
 
             // toggle classes
             angular.element('.stages').toggleClass('confirm');
@@ -190,31 +189,31 @@
         };
 
         // convert string to html
-        self.to_html = function(html) {
+        vm.to_html = function(html) {
             return $sce.trustAsHtml(html);
         };
 
-        self.toggle_activity = function(activity) {
+        vm.toggle_activity = function(activity) {
             if (activity === 'active') {
-                if (!self.active) { self.both = false; }
+                if (!vm.active) { vm.both = false; }
             }
             if (activity === 'social') {
-                if (!self.social) { self.both = false; }
+                if (!vm.social) { vm.both = false; }
             }
             if (activity === 'both') {
-                if (self.both) {
-                    self.active = true;
-                    self.social = true;
+                if (vm.both) {
+                    vm.active = true;
+                    vm.social = true;
                 } else {
-                    self.active = false;
-                    self.social = false;
+                    vm.active = false;
+                    vm.social = false;
                 }
             }
         };
 
         // initialize datetime picker
-        self.init_datetimepicker = function() {
-            if (self.datetime) {
+        vm.init_datetimepicker = function() {
+            if (vm.datetime) {
                 $timeout(function() {
                     // init date
                     var datepicker = angular.element('#datepicker');
@@ -244,7 +243,7 @@
         };
 
         // returns date with day of week
-        self.get_full_date = function(unformatted_date) {
+        vm.get_full_date = function(unformatted_date) {
             var days_of_week = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             var new_date = new Date(unformatted_date).getDay(),
                 day_of_week = days_of_week[new_date];
@@ -252,17 +251,17 @@
             return day_of_week + ', ' + unformatted_date;
         };
 
-        self.get_formatted_time = function(time) {
+        vm.get_formatted_time = function(time) {
             if (!time) { return; }
             if (time.charAt(0) === '0') { return time.substring(1); }
             return time;
         };
 
-        self.get_location = function(location_id) {
+        vm.get_location = function(location_id) {
             var list_of_locations;
-            for (var i = 0; i < self.steps.length; i++) {
-                if (self.steps[i].stage === 'location_pref') {
-                    list_of_locations = self.steps[i].locations;
+            for (var i = 0; i < vm.steps.length; i++) {
+                if (vm.steps[i].stage === 'location_pref') {
+                    list_of_locations = vm.steps[i].locations;
                 }
             }
 
@@ -276,7 +275,7 @@
             return list_of_locations[0].city;
         };
 
-        self.add_errors = function(type, selector, message) {
+        vm.add_errors = function(type, selector, message) {
             var error = angular.element('div[type="' + type + '"]');
 
             error.html(message);
@@ -285,7 +284,7 @@
             }
         };
 
-        self.clear_errors = function(element) {
+        vm.clear_errors = function(element) {
             if (element === 'all') {
                 angular.element('.queue-errors').html('');
                 angular.element('.queue-input-error').removeClass('queue-input-error');
@@ -293,7 +292,7 @@
         };
 
         /* Here we go */
-        self.init();
+        vm.init();
     }
 
 })();

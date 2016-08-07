@@ -47,6 +47,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('signup', {
 			url: '/signup',
+			title: '5PM Signup',
 			templateUrl: 'app/account/signup/signup.html',
 			controller: 'SignupController',
 			controllerAs: 'signup'

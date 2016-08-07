@@ -23,14 +23,14 @@
                         <i class="material-icons queue-icons">event</i>
                         <div class="confirm-text">
                             I am available to meet up on
-                            <span class='bold pink-text'>
+                            <span class='bold pink-font'>
                                 {{ navbar.get_full_date(navbar.queue_date) }}
                             </span> between
-                            <span class='bold pink-text'>
+                            <span class='bold pink-font'>
                                 {{ navbar.get_formatted_time(navbar.queue_start_time) }}
                             </span>
                             and
-                            <span class='bold pink-text'>
+                            <span class='bold pink-font'>
                                 {{ navbar.get_formatted_time(navbar.queue_end_time) }}
                             </span>.
                         </div>
@@ -43,16 +43,16 @@
                         <i ng-if="navbar.social && navbar.active" class="material-icons queue-icons">beach_access</i>
                         <div class="confirm-text">
                             I prefer meeting people over
-                            <span ng-if="navbar.active && !navbar.social" class='bold pink-text'>
+                            <span ng-if="navbar.active && !navbar.social" class='bold pink-font'>
                                 active
                             </span>
-                            <span ng-if="navbar.social && !navbar.active" class="bold babyblue">
+                            <span ng-if="navbar.social && !navbar.active" class="bold babyblue-font">
                                 social
                             </span>
                             <span ng-if="navbar.active && navbar.social">
                                 both
-                                <span class='bold pink-text'>active</span> and
-                                <span class='bold babyblue'>social</span>
+                                <span class='bold pink-font'>active</span> and
+                                <span class='bold babyblue-font'>social</span>
                             </span>
                             events.
                         </div>
@@ -63,7 +63,7 @@
                         <i class="material-icons queue-icons">location_on</i>
                         <div class="confirm-text">
                             I prefer meeting up for events in
-                            <span class='bold pink-text'>{{ navbar.get_location(navbar.location) }}</span>.
+                            <span class='bold pink-font'>{{ navbar.get_location(navbar.location) }}</span>.
                         </div>
                     </div>
                 </div>
@@ -132,10 +132,12 @@
                     <!-- Location Preferences -->
                     <div class="location-stage" ng-if="step.stage == 'location_pref'">
                         <i class="material-icons queue-icons">location_on</i>
-                        <select class="location-select browser-default" ng-model="navbar.location">
-                            <option value="" disabled selected>Select a location</option>
-                            <option ng-repeat="location in step.locations" value="{{location.id}}">{{location.city}}</option>
-                        </select>
+                        <div class="location-select-wrapper">
+                            <select class="location-select" ng-model="navbar.location">
+                                <option value="" disabled selected>Select a location</option>
+                                <option ng-repeat="location in step.locations" value="{{location.id}}">{{location.city}}</option>
+                            </select>
+                        </div>
                     </div>
 
                 </div>
