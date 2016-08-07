@@ -6,13 +6,13 @@
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.create_activity" name="activity" type="text" class="validate">
+					<input ng-model="vm.createFormData.activity" name="activity" type="text" class="validate">
 					<label for="activity">Activity</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.create_venue" name="venue" type="text" class="validate">
+					<input ng-model="vm.createFormData.venue.venue_name" name="venue" type="text" class="validate">
 					<label for="Venue">Venue</label>
 				</div>
 			</div>

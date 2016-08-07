@@ -4,26 +4,25 @@
 	angular.module('fivepmApp.admin')
 		.controller('AdminVenuesController', AdminVenuesController);
 
-	function AdminVenuesController ($scope, $http, Venues, Tags) {
+	function AdminVenuesController ($scope, $http, Venues, Enums) {
 		var vm = this;
 		vm.venues = {};
 		vm.createVenue = createVenue;
 		vm.deleteVenue = deleteVenue;
-
-		$scope.formData = {};
-		$scope.validTags = [];
+		vm.formData = {};
+		vm.validTags = [];
 		var newTags;
 
-		Tags.get()
+		Enums.getTags()
 			.success(function(data) {
 				for(var tag in data) {
-					$scope.validTags.push(data[tag].enum_name);
+					vm.validTags.push(data[tag].enum_name);
 				}
 				newTags = $('#venue_tags').tags({
-		            suggestions: $scope.validTags,
-		            restrictTo: $scope.validTags,
-		            suggestOnClick: true
-		        });
+					suggestions: vm.validTags,
+					restrictTo: vm.validTags,
+					suggestOnClick: true
+				});
 			})
 			.error(function(data) {
 				console.log('Error: ' + data);
@@ -39,11 +38,12 @@
 			});
 
 		function createVenue() {
-			if (!$.isEmptyObject($scope.formData)) {
-				$scope.formData.tags = newTags.getTags();
-				Venues.create($scope.formData)
+			console.log(vm.formData); 
+			if (!$.isEmptyObject(vm.formData)) {
+				vm.formData.tags = newTags.getTags();
+				Venues.create(vm.formData)
 					.success(function(data) {
-						$scope.formData = {};
+						vm.formData = {};
 						vm.venues = data;
 						
 						var len = $('#venue_tags').tags().getTags().length;

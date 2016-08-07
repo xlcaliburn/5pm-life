@@ -43,7 +43,7 @@
 			<form>
 				<div class="form-group">
 					<label>Venue Name</label>
-					<input type="text" class="form-control" ng-model="formData.venue_name" required>
+					<input type="text" class="form-control" ng-model="vm.formData.venue_name" required>
 				</div>
 				<div class="form-group">
 					<label>Tags</label>
@@ -52,19 +52,19 @@
 
 				<div class="form-group">
 					<label>Street</label>
-					<input type="text" class="form-control" ng-model="formData.street" required>
+					<input type="text" class="form-control" ng-model="vm.formData.street" required>
 				</div>
 				<div class="form-group">
 					<label>City</label>
-					<input type="text" class="form-control" ng-model="formData.city" required>
+					<input type="text" class="form-control" ng-model="vm.formData.city" required>
 				</div>
 				<div class="form-group">
 					<label>Province/State</label>
-					<input type="text" class="form-control" ng-model="formData.province" required>
+					<input type="text" class="form-control" ng-model="vm.formData.province" required>
 				</div>
 				<div class="form-group">
 					<label>Postal Code</label>
-					<input type="text" class="form-control" ng-model="formData.postal_code">                                         
+					<input type="text" class="form-control" ng-model="vm.formData.postal_code">                                         
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-lg" ng-click="vm.createVenue()">Add</button>
