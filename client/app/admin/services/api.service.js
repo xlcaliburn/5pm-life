@@ -25,29 +25,19 @@
 				}
 			}
 		})
-		.factory('Activities', function($http) {
+		.factory('Enums', function($http) {
 			return {
-				get : function() {
-					return $http.get('/api/activities');
+				getTags : function() {
+					return $http.get('/api/enums/tags');
+				},
+				getActivities : function() {
+					return $http.get('/api/enums/activities')
 				},
 				create : function(data) {
-					return $http.post('/api/activities', data);
+					return $http.post('/api/enums', data);
 				},
 				delete : function(id) {
-					return $http.delete('/api/activities/' + id);
-				}
-			}
-		})
-		.factory('Tags', function($http) {
-			return {
-				get : function() {
-					return $http.get('/api/tags');
-				},
-				create : function(data) {
-					return $http.post('/api/tags', data);
-				},
-				delete : function(id) {
-					return $http.delete('/api/tags/' + id);
+					return $http.delete('/api/enums/' + id);
 				}
 			}
 		})

@@ -5,9 +5,8 @@ var ObjectId = Schema.ObjectId;
 // Enum table for tags
 module.exports = function(mongoose) {
 	var Enums = new Schema ({
-		type : String,
-		enum_name : String,
-		enum_value : String
+		enum_type : String,
+		enum_name : String
 	});
 
 	var Venue = new Schema ({

@@ -13,7 +13,7 @@
 				$scope.Users = data;
 			})
 			.error(function(data) {
-				console.log('Error: ' + data);
+				//console.log('Error: ' + data);
 			});
 
 		$scope.createUser = function() {

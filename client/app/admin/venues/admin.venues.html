@@ -1,4 +1,4 @@
-<h2>Event Management</h2>
+<h2>Venue Management</h2>
 <div class="section" style="float:right">
 	<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createModal()">
 		<i class="material-icons">add</i>
@@ -21,7 +21,7 @@
 			<tr ng-repeat="venue in vm.venues">
 				<td>{{ venue.venue_name }}</td>
 				<td>
-					<div >
+					<div>
 						<div ng-repeat="tag in venue.tags" class="chip">
 							{{tag}}
 						</div>

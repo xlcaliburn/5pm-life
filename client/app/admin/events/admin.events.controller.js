@@ -41,7 +41,7 @@
 				controllerAs:'vm', 
 				size: 'lg',
 				resolve: {
-					selectedEvent: function () { return selectedEvent }
+					selectedEvent: function () { return selectedEvent; }
 				}
 			});
 
