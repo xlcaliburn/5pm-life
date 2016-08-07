@@ -34,7 +34,7 @@ router.post('/', function(req, res) {
 
 			Venue.find(function(err, data) {
 				if (err)
-					res.send(err)
+					res.send(err);
 				res.json(data);
 			});
 		});
@@ -50,7 +50,7 @@ router.delete('/:venue_id', function(req, res) {
 			// get and return all the todos after you create another
 			Venue.find(function(err, data) {
 				if (err)
-					res.send(err)
+					res.send(err);
 				res.json(data);
 			});
 		});

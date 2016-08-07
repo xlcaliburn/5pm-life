@@ -41,12 +41,12 @@
 				});
 		}
 
-		function deleteEnum(id, tagType) {
+		function deleteEnum(id) {
 			Enums.delete(id)
-				.success(function(data) {
+				.success(function() {
 					vm.get();
 				});
-		};
+		}
 
 		function createModal(tagType) {
 			var modalInstance = $uibModal.open({

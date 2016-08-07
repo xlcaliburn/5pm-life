@@ -17,13 +17,13 @@
 		init();
 
 		function init() {
-			if (vm.tagType === "activity")
+			if (vm.tagType === 'activity')
 			{
-				vm.title = "Activity";
+				vm.title = 'Activity';
 			}
-			else if (vm.tagType === "tag")
+			else if (vm.tagType === 'tag')
 			{
-				vm.title = "Event Tag";
+				vm.title = 'Event Tag';
 			}
 		}
 

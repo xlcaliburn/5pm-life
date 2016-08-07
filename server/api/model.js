@@ -53,14 +53,14 @@ module.exports = function(mongoose) {
 	var AdminSettings = new Schema ({
 		setting : String,
 		value : String
-	})
+	});
 
 	var models = {
 		Enums : mongoose.model('Enums', Enums),
 		Venue : mongoose.model('Venue', Venue),
 		Event : mongoose.model('Event', Event),
 		AdminSettings : mongoose.model('AdminSettings', AdminSettings)
-	}
+	};
 
 	return models;
-}
+};

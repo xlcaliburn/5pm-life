@@ -11,17 +11,13 @@
 		vm.selectedEvent = selectedEvent;
 
 		function submit() {
-			if (vm.selectedEvent.activity != null) {
+			if (vm.selectedEvent.activity) {
 				Events.put(vm.selectedEvent)
 					.success(function(data) {
 						$uibModalInstance.close(data);
 					});
 				$uibModalInstance.close();
 			}
-		}
-
-		function updateEvent() {
-
 		}
 	}
 

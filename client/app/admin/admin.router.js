@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.config(adminConfig);
 				
-	function adminConfig($stateProvider, $urlRouterProvider) {
+	function adminConfig($stateProvider) {
 		$stateProvider
 			.state('admin.users', {
 				url: '/users',

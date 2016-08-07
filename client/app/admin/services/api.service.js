@@ -10,7 +10,7 @@
 				create : function(data) {
 					return $http.post('/api/users', data);
 				}
-			}
+			};
 		})
 		.factory('Venues', function($http) {
 			return {
@@ -23,7 +23,7 @@
 				delete : function(id) {
 					return $http.delete('/api/venues/' + id);
 				}
-			}
+			};
 		})
 		.factory('Enums', function($http) {
 			return {
@@ -31,7 +31,7 @@
 					return $http.get('/api/enums/tags');
 				},
 				getActivities : function() {
-					return $http.get('/api/enums/activities')
+					return $http.get('/api/enums/activities');
 				},
 				create : function(data) {
 					return $http.post('/api/enums', data);
@@ -39,7 +39,7 @@
 				delete : function(id) {
 					return $http.delete('/api/enums/' + id);
 				}
-			}
+			};
 		})
 		.factory('Events', function($http) {
 			return {
@@ -55,7 +55,7 @@
 				delete : function(id) {
 					return $http.delete('/api/events/' + id);
 				}
-			}
+			};
 		})		
 		.factory('AdminSettings', function($http) {
 			return {
@@ -65,6 +65,6 @@
 				create : function(data) {
 					return $http.post('/api/admin', data);
 				}
-			}
-		})
+			};
+		});
 })();

@@ -30,7 +30,7 @@
 			modalInstance.result.then(function(data) {
 				vm.events = data;
 			}, function () {});
-		};
+		}
 
 		function editModal(selectedEvent) {
 
@@ -48,14 +48,14 @@
 			modalInstance.result.then(function(data) {
 				vm.events = data;
 			}, function () {});
-		};
+		}
 
 		function init() {
 			getEvents();
 
 			var tick = function() {
 				vm.currentTime = new Date(Date.now()).getTime();
-			}
+			};
 			$interval(tick, 1000);
 		}
 
@@ -66,20 +66,19 @@
 						if (event.dt_search_start) {
 							event.dt_search_start_time = new Date(event.dt_search_start).getTime();
 						}
-					})
+					});
 					vm.events = data;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
-				})
+				});
 		}
 
 		function editEvent(id) {
-			var selectedEvent = null;
 			Events.get(id)
 				.success(function(data) {
 					editModal(data[0]);
-				})
+				});
 		}
 
 		function deleteEvent(id) {

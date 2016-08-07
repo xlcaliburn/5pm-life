@@ -22,7 +22,7 @@ router.get('/:event_id', function(req,res) {
 
 		res.json(data);
 	});
-})
+});
 
 router.post('/', function(req, res) {
 	Event.create({

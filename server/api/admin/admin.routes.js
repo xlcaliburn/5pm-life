@@ -23,7 +23,7 @@ router.post('/', function(req, res) {
 
 			AdminSettings.find(function(err, data) {
 				if (err)
-					res.send(err)
+					res.send(err);
 				res.json(data);
 			});
 		});

@@ -11,9 +11,6 @@
 		Users.get()
 			.success(function(data) {
 				$scope.Users = data;
-			})
-			.error(function(data) {
-				//console.log('Error: ' + data);
 			});
 
 		$scope.createUser = function() {

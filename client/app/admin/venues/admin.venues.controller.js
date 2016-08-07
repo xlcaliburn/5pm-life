@@ -53,13 +53,13 @@
 						}
 				});
 			}
-		};
+		}
 
 		function deleteVenue(id) {
 			Venues.delete(id)
 				.success(function(data) {
 					vm.venues = data;
 				});
-		};
+		}
 	}
 })();

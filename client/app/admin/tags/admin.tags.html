@@ -19,7 +19,7 @@
 				<tbody>
 					<tr ng-repeat="enum in vm.activities">
 						<td>{{ enum.enum_name }}</td>
-						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id, 'activity')"></td>
+						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id)"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -40,7 +40,7 @@
 				<tbody>
 					<tr ng-repeat="enum in vm.eventTags">
 						<td>{{ enum.enum_name }}</td>
-						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id, 'tag')"></td>
+						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id)"></td>
 					</tr>
 				</tbody>
 			</table>

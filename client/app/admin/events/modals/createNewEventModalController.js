@@ -13,7 +13,7 @@
 		vm.create_venue = null;
 
 		function submit() {
-			if (vm.create_activity != null) {
+			if (vm.create_activity) {
 				createEvent();
 				$uibModalInstance.close();
 			}
