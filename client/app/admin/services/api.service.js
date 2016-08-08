@@ -46,6 +46,9 @@
 				get : function() {
 					return $http.get('/api/events');
 				},
+				getEvent : function(id) {
+					return $http.get('/api/events/' + id);
+				},
 				put : function(data) {
 					return $http.put('/api/events', data);
 				},

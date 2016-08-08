@@ -12,32 +12,16 @@
 		vm.events = {};
 		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
-		vm.createModal = createModal;
-		vm.editEvent = editEvent;
+		vm.openModal = openModal;
 
 		init();
 
-		function createModal() {
-			var modalInstance = $uibModal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/events/modals/createNewEventModal.html',
-				controller: 'CreateNewEventModalController',
-				controllerAs: 'vm',
-				size: 'lg',
-				resolve: {}
-			});
-
-			modalInstance.result.then(function(data) {
-				vm.events = data;
-			}, function () {});
-		}
-
-		function editModal(selectedEvent) {
+		function eventModal(selectedEvent) {
 
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/events/modals/editEventModal.html',
-				controller: 'EditEventModalController',
+				templateUrl: 'app/admin/events/modals/eventModal.html',
+				controller: 'EventModalController',
 				controllerAs:'vm', 
 				size: 'lg',
 				resolve: {
@@ -74,10 +58,10 @@
 				});
 		}
 
-		function editEvent(id) {
-			Events.get(id)
+		function openModal(id) {
+			Events.getEvent(id)
 				.success(function(data) {
-					editModal(data[0]);
+					eventModal(data[0]);
 				});
 		}
 
