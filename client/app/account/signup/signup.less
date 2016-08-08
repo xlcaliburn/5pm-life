@@ -81,6 +81,12 @@
 
 #personal-information {
     padding: 30px 0;
+    transition: all 0.5s ease-out;
+}
+
+.out-of-view {
+    transform: translate3d(-100px,0,0);
+    opacity: 0;
 }
 
 .signup-field-row {
@@ -101,6 +107,13 @@ input.signup-input {
     font-size: 16px;
     margin-bottom: 0;
     padding: 0 0 6px 0;
+}
+
+input.signup-input:focus,
+input.signup-birthday:focus,
+input.signup-birthyear:focus {
+    border-bottom: 1px solid @babyblue !important;
+    box-shadow: 0 1px 0 0 @babyblue !important;
 }
 
 div.signup-inputs {
@@ -143,6 +156,10 @@ input.signup-birthyear {
     opacity: 0.3;
     cursor: default;
     .user-select-none;
+}
+
+.signup-prev-button, .signup-next-button {
+    font-size: 14px;
 }
 
 .step-pending {

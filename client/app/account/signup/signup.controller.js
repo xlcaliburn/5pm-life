@@ -10,6 +10,9 @@
     function SignupController() {
         var vm = this;
 
+        // variables
+        vm.current_stage = 1;
+
         // inputs
         vm.first_name;
         vm.last_name;

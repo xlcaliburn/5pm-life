@@ -60,6 +60,8 @@ Add global styles here.*/
 .pinkred { color: @pinkred; }
 .yellow { color: @yellow; }
 
+.babyblue-bg { background-color: @babyblue; }
+
 .white-font { color: @white; }
 .purple-font { color: @purple; }
 .pink-font { color: @pink; }
@@ -99,6 +101,22 @@ Add global styles here.*/
 
 .dropdown-content {
     opacity: initial;
+}
+
+.rect-button {
+    color: @white;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 10px 30px;
+    border-radius: 2px;
+    .user-select-none;
+}
+
+.rect-button:hover {
+    color: @white;
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.35);
 }
 
 * {
