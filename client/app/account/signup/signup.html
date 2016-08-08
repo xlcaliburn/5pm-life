@@ -49,10 +49,39 @@
 
         <!-- personal information -->
         <div id="personal-information">
-            <div class="row" ng-repeat="stage in signup.steps" ng-if="stage.stage == 1">
-                <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label">{{ stage.value }}</div>
-                <div class="col l4 m4 s8">
+            <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 1">
+                <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
+                <div class="col l4 m4 s8 valign signup-inputs">
+
+                    <!-- first and last name -->
                     <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]">
+
+                    <!-- birthday -->
+                    <div class="date-selects valign-wrapper" ng-if="stage.type == 'date'">
+
+                        <!-- month -->
+                        <select ng-model="signup.birthday_month" class="browser-default signup-birthmonth valign">
+                            <option value="" disabled selected>Month</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+
+                        <!-- day -->
+                        <input class="signup-birthday valign" type="number" placeholder="Day" min="1" max="31" ng-model="signup.birthday_day">
+
+                        <!-- year -->
+                        <input class="signup-birthyear valign" type="text" placeholder="Year" ng-model="signup.birthday_year">
+                    </div>
                 </div>
             </div>
         </div>

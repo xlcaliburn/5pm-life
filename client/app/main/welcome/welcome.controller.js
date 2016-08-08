@@ -27,7 +27,7 @@
 		var detect_distance = 700;
 
 		$timeout(function() {
-			var welcome_text = angular.element('.welcome-text-row');
+			var welcome_text = angular.element('.welcome-description');
 			welcome_text.addClass('faded');
 		});
 
