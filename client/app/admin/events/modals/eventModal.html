@@ -4,15 +4,11 @@
 <div class="modal-body">
 	<div class="row">
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
-
 			<div class="row">
 				<div class="input-field col s12">
-					<select>
-						<option value="" disabled selected>Choose your option</option>
-						<option 
-							ng-repeat="activity in vm.allowedActivities"
-							value="activity.enum_name">{{activity.enum_name}}
-						</option>
+					<select 
+						ng-model="vm.selectedEvent.activity" 
+						ng-options="activity.enum_name for activity in vm.allowedActivities">
 					</select>
 					<label>Activity</label>
 				</div>
@@ -20,12 +16,9 @@
 
 			<div class="row">
 				<div class="input-field col s12">
-					<select>
-						<option value="" disabled selected>Choose your option</option>
-						<option 
-							ng-repeat="venue in vm.allowedVenues"
-							value="venue.venue_name">{{venue.venue_name}}
-						</option>
+					<select
+						ng-model="vm.selectedEvent.venue"
+						ng-options="venue.venue_name for venue in vm.allowedVenues">
 					</select>
 					<label>Venue</label>
 				</div>

@@ -36,7 +36,7 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.events = data;
+				vm.events = updateTime(data);
 			}, function () {});
 		}
 
@@ -47,6 +47,7 @@
 				vm.currentTime = new Date(Date.now()).getTime();
 			};
 			$interval(tick, 1000);
+			console.log(vm.currentTime);
 
 			Venues.get()
 				.success(function(data) {
@@ -68,12 +69,7 @@
 		function getEvents() {
 			Events.get()
 				.success(function(data) {
-					$.each(data, function(index, event) {
-						if (event.dt_search_start) {
-							event.dt_search_start_time = new Date(event.dt_search_start).getTime();
-						}
-					});
-					vm.events = data;
+					vm.events = updateTime(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -90,8 +86,18 @@
 		function deleteEvent(id) {
 			Events.delete(id)
 				.success(function(data) {
-					vm.events = data;
+					vm.events = updateTime(data);
 				});
+		}
+
+		function updateTime(data) {
+			$.each(data, function(index, event) {
+				if (event.dt_search_start) {
+					event.dt_search_start_time = new Date(event.dt_search_start).getTime();
+				}
+			});
+
+			return data;
 		}
 	}
 })();

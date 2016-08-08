@@ -26,7 +26,10 @@ module.exports = function(mongoose) {
 	});
 
 	var Event = new Schema ({
-		activity : String,
+		activity : {
+			enum_type : String,
+			enum_name : String
+		},
 		venue : {
 			venue_name: String,
 			activity: [{

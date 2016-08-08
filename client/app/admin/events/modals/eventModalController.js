@@ -8,7 +8,7 @@
 	function EventModalController ($timeout, $uibModalInstance, Events, allowedActivities, allowedVenues, selectedEvent) {
 		var vm = this;
 		vm.submit = submit;
-		vm.selectedEvent = selectedEvent;
+		vm.selectedEvent = {};
 		vm.allowedActivities = allowedActivities;
 		vm.allowedVenues = allowedVenues;
 
@@ -18,7 +18,7 @@
 			$timeout(function() {
 				materialize_select();
 			});
-			console.log(vm.allowedVenues);
+			vm.selectedEvent = selectedEvent ? selectedEvent : {}; 
 		}
 
 		function submit() {
@@ -38,6 +38,7 @@
 
 		function createEvent() {
 			vm.selectedEvent.dt_search_start = new Date().getTime();
+			console.log(vm.selectedEvent);
 			Events.create(vm.selectedEvent)
 				.success(function(data) {
 					vm.selectedEvent = {};
