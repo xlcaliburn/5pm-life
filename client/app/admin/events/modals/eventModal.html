@@ -6,19 +6,20 @@
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
 			<div class="row">
 				<div class="input-field col s12">
-					<select 
-						ng-model="vm.selectedEvent.activity" 
-						ng-options="activity.enum_name for activity in vm.allowedActivities">
-					</select>
+				<select 
+					ng-model="vm.selectedEvent.activity"
+					ng-options="activity as activity.enum_name for activity in vm.allowedActivities track by activity.enum_name">
+				</select>
+
 					<label>Activity</label>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s12">
-					<select
+					<select 
 						ng-model="vm.selectedEvent.venue"
-						ng-options="venue.venue_name for venue in vm.allowedVenues">
+						ng-options="venue as venue.venue_name for venue in vm.allowedVenues track by venue.venue_name">
 					</select>
 					<label>Venue</label>
 				</div>

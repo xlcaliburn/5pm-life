@@ -18,27 +18,6 @@
 		vm.allowedActivities = {};
 
 		init();
-		materialize_select();
-
-		function eventModal(selectedEvent) {
-
-			var modalInstance = $uibModal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/events/modals/eventModal.html',
-				controller: 'EventModalController',
-				controllerAs:'vm', 
-				size: 'lg',
-				resolve: {
-					selectedEvent: function () { return selectedEvent; },
-					allowedVenues: function () { return vm.allowedVenues; },
-					allowedActivities: function () { return vm.allowedActivities; }
-				}
-			});
-
-			modalInstance.result.then(function(data) {
-				vm.events = updateTime(data);
-			}, function () {});
-		}
 
 		function init() {
 			getEvents();
@@ -47,7 +26,6 @@
 				vm.currentTime = new Date(Date.now()).getTime();
 			};
 			$interval(tick, 1000);
-			console.log(vm.currentTime);
 
 			Venues.get()
 				.success(function(data) {
@@ -66,6 +44,26 @@
 				});			
 		}
 
+		function eventModal(selectedEvent) {
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'app/admin/events/modals/eventModal.html',
+				controller: 'EventModalController',
+				controllerAs:'vm', 
+				size: 'lg',
+				resolve: {
+					selectedEvent: function () { return selectedEvent; },
+					allowedVenues: function () { return vm.allowedVenues; },
+					allowedActivities: function () { return vm.allowedActivities; }
+				}
+			});
+
+			modalInstance.result.then(function(data) {
+				vm.events = updateTime(data);
+			}, function () {});
+		}
+
+
 		function getEvents() {
 			Events.get()
 				.success(function(data) {
@@ -77,10 +75,15 @@
 		}
 
 		function openModal(id) {
-			Events.getEvent(id)
-				.success(function(data) {
-					eventModal(data[0]);
-				});
+			if (id) {
+				Events.getEvent(id)
+					.success(function(data) {
+						eventModal(data[0]);
+					});
+			}
+			else {
+				eventModal();
+			}
 		}
 
 		function deleteEvent(id) {

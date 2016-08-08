@@ -18,6 +18,7 @@
 			$timeout(function() {
 				materialize_select();
 			});
+
 			vm.selectedEvent = selectedEvent ? selectedEvent : {}; 
 		}
 
@@ -38,6 +39,7 @@
 
 		function createEvent() {
 			vm.selectedEvent.dt_search_start = new Date().getTime();
+
 			console.log(vm.selectedEvent);
 			Events.create(vm.selectedEvent)
 				.success(function(data) {
