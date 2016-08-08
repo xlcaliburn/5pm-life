@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('AdminEventsController', AdminEventsController);
 
-	function AdminEventsController ($scope, $http, $interval, $uibModal, Events) {
+	function AdminEventsController ($scope, $http, $interval, $uibModal, Events, Venues, Enums) {
 		var vm = this;
 		vm.getEvents = getEvents;
 		vm.deleteEvent = deleteEvent;
@@ -14,7 +14,11 @@
 		vm.currentTime = new Date(Date.now()).getTime();
 		vm.openModal = openModal;
 
+		vm.allowedVenues = {};
+		vm.allowedActivities = {};
+
 		init();
+		materialize_select();
 
 		function eventModal(selectedEvent) {
 
@@ -25,7 +29,9 @@
 				controllerAs:'vm', 
 				size: 'lg',
 				resolve: {
-					selectedEvent: function () { return selectedEvent; }
+					selectedEvent: function () { return selectedEvent; },
+					allowedVenues: function () { return vm.allowedVenues; },
+					allowedActivities: function () { return vm.allowedActivities; }
 				}
 			});
 
@@ -41,6 +47,22 @@
 				vm.currentTime = new Date(Date.now()).getTime();
 			};
 			$interval(tick, 1000);
+
+			Venues.get()
+				.success(function(data) {
+					vm.allowedVenues = data;
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});
+
+			Enums.getActivities()
+				.success(function(data) {
+					vm.allowedActivities = data;
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});			
 		}
 
 		function getEvents() {

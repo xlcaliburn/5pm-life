@@ -4,18 +4,34 @@
 <div class="modal-body">
 	<div class="row">
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
+
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.selectedEvent.activity" name="activity" type="text" class="validate">
-					<label class="active" for="activity">Activity</label>
+					<select>
+						<option value="" disabled selected>Choose your option</option>
+						<option 
+							ng-repeat="activity in vm.allowedActivities"
+							value="activity.enum_name">{{activity.enum_name}}
+						</option>
+					</select>
+					<label>Activity</label>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.selectedEvent.venue.venue_name" name="venue" type="text" class="validate">
-					<label class="active" for="Venue">Venue</label>
+					<select>
+						<option value="" disabled selected>Choose your option</option>
+						<option 
+							ng-repeat="venue in vm.allowedVenues"
+							value="venue.venue_name">{{venue.venue_name}}
+						</option>
+					</select>
+					<label>Venue</label>
 				</div>
 			</div>
+
+
 			<div class="row right-align">
 				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 					<i class="material-icons right">send</i>

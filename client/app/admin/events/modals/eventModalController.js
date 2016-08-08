@@ -5,15 +5,26 @@
 		.module('fivepmApp.admin')
 		.controller('EventModalController', EventModalController);
 
-	function EventModalController ($uibModalInstance, Events, selectedEvent) {
+	function EventModalController ($timeout, $uibModalInstance, Events, allowedActivities, allowedVenues, selectedEvent) {
 		var vm = this;
 		vm.submit = submit;
 		vm.selectedEvent = selectedEvent;
+		vm.allowedActivities = allowedActivities;
+		vm.allowedVenues = allowedVenues;
 
+		init();
+
+		function init() {
+			$timeout(function() {
+				materialize_select();
+			});
+			console.log(vm.allowedVenues);
+		}
 
 		function submit() {
 			selectedEvent ? editEvent() : createEvent();
 		}
+
 
 		function editEvent() {
 			if (vm.selectedEvent.activity) {
@@ -22,7 +33,7 @@
 						vm.selectedEvent = {};
 						$uibModalInstance.close(data);
 					});
-			}			
+			}
 		}
 
 		function createEvent() {
