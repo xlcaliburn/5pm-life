@@ -1,29 +1,8 @@
 <div class="section">
-<h2>Tag Management</h2>
+<h2>Enum Management</h2>
 </div>
 <div class="section">
 	<div class="row">
-		<div class="col s6">
-			<h2>Activities</h2>
-			<div class="col s9 right-align">
-				<a class="btn-floating btn-small waves-effect waves-light green" ng-click="vm.createModal('activity')">
-					<i class="material-icons">add</i>
-				</a>
-			</div>
-			<table class="table table-striped col s9">
-				<thead>
-					<tr>
-						<th width="70%">Activity Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="enum in vm.activities">
-						<td>{{ enum.enum_name }}</td>
-						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id)"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 		<div class="col s6">
 			<h2>Event tags</h2>
 			<div class="col s9 right-align">

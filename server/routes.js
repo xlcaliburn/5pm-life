@@ -18,6 +18,7 @@ export default function(app) {
 	app.use('/api/email', require('./api/email'));
 
 	app.use('/api/enums', require('./api/enums/enums.routes.js'));
+	app.use('/api/activities', require('./api/activities/activities.routes.js'));
 	app.use('/api/venues', require('./api/venues/venues.routes.js'));
 	app.use('/api/admin', require('./api/admin/admin.routes.js'));
 	app.use('/api/events', require('./api/events/event.routes.js'));

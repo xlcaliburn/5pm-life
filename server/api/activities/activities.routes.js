@@ -1,13 +1,12 @@
 import {Router} from 'express';
 
 var mongoose = require('mongoose');
-var Enums = mongoose.model('Enums');
+var Activity = mongoose.model('Activity');
+
 var router = new Router();
 
-router.get('/tags', function(req,res) {
-		Enums.find({
-			enum_type : "tag"
-		}, function(err, data) {
+router.get('/', function(req,res) {
+		Activity.find(function(err, data) {
 			if (err)
 				res.send(err);
 
@@ -16,14 +15,16 @@ router.get('/tags', function(req,res) {
 	});
 
 router.post('/', function(req, res) {
-		Enums.create({
-				enum_type : req.body.enum_type,
-				enum_name : req.body.enum_name
+		Activity.create({
+				activity_name : req.body.activity_name,
+				tags : req.body.tags,
+				allowed_capacity : req.body.allowed_capacity,
+				required_equipment : req.body.required_equipment 
 		 }, function(err, data) {
 			if (err)
 				res.send(err);
 
-			Enums.find(function(err, data) {
+			Activity.find(function(err, data) {
 				if (err)
 					res.send(err);
 				res.json(data);
@@ -31,15 +32,15 @@ router.post('/', function(req, res) {
 		});
 	});
 
-router.delete('/:enum_id', function(req, res) {
-		Enums.remove({
-			_id : req.params.enum_id
+router.delete('/:activity_id', function(req, res) {
+		Activity.remove({
+			_id : req.params.activity_id
 		}, function(err, data) {
 			if (err)
 				res.send(err);
 
 			// get and return all the todos after you create another
-			Enums.find(function(err, data) {
+			Activity.find(function(err, data) {
 				if (err)
 					res.send(err);
 				res.json(data);

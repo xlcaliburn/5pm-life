@@ -2,16 +2,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-// Enum table for tags
 module.exports = function(mongoose) {
 	var Enums = new Schema ({
 		enum_type : String,
 		enum_name : String
 	});
 
+	var Activity = new Schema ({
+		activity : {
+			activity_name : String,
+			tags : [String],
+			allowed_capacity : String,
+			required_equipment : [String]
+		}
+	});
+
 	var Venue = new Schema ({
 		venue_name: String,
-		activity: [{
+		allowed_activities: [{
 			activity_name : String
 		}],
 		address: {
@@ -21,14 +29,15 @@ module.exports = function(mongoose) {
 			postal_code: String,
 			country: String
 		},
-		category: [String], // Matchmaking parameter
-		tags : [String]     // Internal use for filtering
+		max_capacity : Number
 	});
 
 	var Event = new Schema ({
 		activity : {
-			enum_type : String,
-			enum_name : String
+			activity_name : String,
+			tags : [String],
+			allowed_capacity : Number,
+			required_equipment : [String]
 		},
 		venue : {
 			venue_name: String,
@@ -41,9 +50,7 @@ module.exports = function(mongoose) {
 				province: String,
 				postal_code: String,
 				country: String
-			},
-			category: [String], // Matchmaking parameter
-			tags : [String]     // Internal use for filtering			
+			}
 		},
 		dt_search_start : Date,
 		dt_search_end : Date,
@@ -60,6 +67,7 @@ module.exports = function(mongoose) {
 
 	var models = {
 		Enums : mongoose.model('Enums', Enums),
+		Activity: mongoose.model('Activity', Activity),
 		Venue : mongoose.model('Venue', Venue),
 		Event : mongoose.model('Event', Event),
 		AdminSettings : mongoose.model('AdminSettings', AdminSettings)

@@ -5,8 +5,9 @@
 		.module('fivepmApp.admin')
 		.controller('AdminTagsController', AdminTagsController);
 
-	function AdminTagsController ($scope, $http, $uibModal, Enums) {
+	function AdminTagsController ($scope, $http, $uibModal, Enums, Activities) {
 		var vm = this;
+		vm.activities = {};
 		vm.eventTags = {};
 		vm.formData = {};
 		vm.get = get;
@@ -17,12 +18,23 @@
 
 		function get() {
 			getEventTags();
+			getActivities();
 		}
 
 		function getEventTags() {
 			Enums.getTags()
 				.success(function(data) {
 					vm.eventTags = data;
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});
+		}
+
+		function getActivities() {
+			Activities.getActivities()
+				.success(function(data) {
+					vm.activities = data;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);

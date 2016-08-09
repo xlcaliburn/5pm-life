@@ -12,6 +12,19 @@
 				}
 			};
 		})
+		.factory('Activities', function($http) {
+			return {
+				get : function() {
+					return $http.get('/api/activities');
+				},
+				create : function(data) {
+					return $http.post('/api/activities', data);
+				},
+				delete : function(id) {
+					return $http.delete('/api/activities/' + id);
+				}
+			};
+		})		
 		.factory('Venues', function($http) {
 			return {
 				get : function() {
@@ -29,9 +42,6 @@
 			return {
 				getTags : function() {
 					return $http.get('/api/enums/tags');
-				},
-				getActivities : function() {
-					return $http.get('/api/enums/activities');
 				},
 				create : function(data) {
 					return $http.post('/api/enums', data);
