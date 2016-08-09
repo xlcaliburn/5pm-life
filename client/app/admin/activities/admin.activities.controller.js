@@ -10,6 +10,7 @@
 		vm.activities = {};
 		vm.formData = {};
 		vm.createModal = createModal;
+		vm.deleteActivity = deleteActivity;
 
 		var validTags = [];
 		var newTags;
@@ -40,10 +41,16 @@
 			Activities.get()
 				.success(function(data) {
 					vm.activities = data;
-					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
+				});
+		}
+
+		function deleteActivity(id) {
+			Activities.delete(id)
+				.success(function(data) {
+					vm.activities = data;
 				});
 		}
 
@@ -58,7 +65,9 @@
 				}
 			});
 
-			modalInstance.result.then(function() {}, function () {});			
+			modalInstance.result.then(function(data) {
+				vm.activities = data;
+			}, function () {});			
 		}
 	}
 })();

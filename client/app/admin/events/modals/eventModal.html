@@ -1,5 +1,5 @@
 <div class="modal-header">
-	<h3 class="modal-title">Edit Event</h3>
+	<h3 class="modal-title">{{vm.title}}</h3>
 </div>
 <div class="modal-body">
 	<div class="row">
@@ -8,7 +8,7 @@
 				<div class="input-field col s12">
 				<select 
 					ng-model="vm.selectedEvent.activity"
-					ng-options="activity as activity.enum_name for activity in vm.allowedActivities track by activity.enum_name">
+					ng-options="activity as activity.activity_name for activity in vm.allowedActivities track by activity.activity_name">
 				</select>
 
 					<label>Activity</label>
@@ -24,8 +24,6 @@
 					<label>Venue</label>
 				</div>
 			</div>
-
-
 			<div class="row right-align">
 				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 					<i class="material-icons right">send</i>

@@ -11,14 +11,16 @@
 			<thead>
 				<tr>
 					<th>Venue Name</th>
+					<th>Allowed Activities</th>
 					<th>Street</th>
 					<th>City</th>
-					<th></th>
+					<th width="10%"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="venue in vm.venues">
 					<td>{{ venue.venue_name }}</td>
+					<td></td>
 					<td>{{ venue.address.street }}</td>
 					<td>{{ venue.address.city }}</td>
 					<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteVenue(venue._id)"></td>

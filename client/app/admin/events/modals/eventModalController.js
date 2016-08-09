@@ -11,6 +11,7 @@
 		vm.selectedEvent = {};
 		vm.allowedActivities = allowedActivities;
 		vm.allowedVenues = allowedVenues;
+		vm.title = "Create Event";
 
 		init();
 
@@ -19,7 +20,11 @@
 				materialize_select();
 			});
 
-			vm.selectedEvent = selectedEvent ? selectedEvent : {}; 
+			if (selectedEvent)
+			{
+				vm.selectedEvent = selectedEvent;
+				vm.title = "Edit Event";
+			}
 		}
 
 		function submit() {
@@ -39,8 +44,6 @@
 
 		function createEvent() {
 			vm.selectedEvent.dt_search_start = new Date().getTime();
-
-			console.log(vm.selectedEvent);
 			Events.create(vm.selectedEvent)
 				.success(function(data) {
 					vm.selectedEvent = {};

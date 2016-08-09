@@ -38,6 +38,7 @@
 			Activities.get()
 				.success(function(data) {
 					vm.allowedActivities = data;
+					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
