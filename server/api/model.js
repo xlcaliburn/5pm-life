@@ -9,12 +9,10 @@ module.exports = function(mongoose) {
 	});
 
 	var Activity = new Schema ({
-		activity : {
-			activity_name : String,
-			tags : [String],
-			allowed_capacity : String,
-			required_equipment : [String]
-		}
+		activity_name : String,
+		tags : [String],
+		allowed_capacity : Number,
+		required_equipment : [String]
 	});
 
 	var Venue = new Schema ({

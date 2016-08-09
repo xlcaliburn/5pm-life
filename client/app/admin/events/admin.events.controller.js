@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('AdminEventsController', AdminEventsController);
 
-	function AdminEventsController ($scope, $http, $interval, $uibModal, Events, Venues, Enums) {
+	function AdminEventsController ($scope, $http, $interval, $uibModal, Events, Venues, Activities, Enums) {
 		var vm = this;
 		vm.getEvents = getEvents;
 		vm.deleteEvent = deleteEvent;
@@ -35,7 +35,7 @@
 					console.log('Error: ' + data);
 				});
 
-			Enums.getActivities()
+			Activities.get()
 				.success(function(data) {
 					vm.allowedActivities = data;
 				})

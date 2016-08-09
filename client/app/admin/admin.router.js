@@ -19,6 +19,12 @@
 				controller: 'AdminTagsController',
 				controllerAs: 'vm'
 			})
+			.state('admin.activities', {
+				url: '/activities',
+				templateUrl: 'app/admin/activities/admin.activities.html',
+				controller: 'AdminActivitiesController',
+				controllerAs: 'vm'
+			})
 			.state('admin.venues', {
 				url: '/venues',
 				templateUrl: 'app/admin/venues/admin.venues.html',

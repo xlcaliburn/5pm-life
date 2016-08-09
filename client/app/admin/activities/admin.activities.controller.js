@@ -3,66 +3,62 @@
 
 	angular
 		.module('fivepmApp.admin')
-		.controller('AdminTagsController', AdminTagsController);
+		.controller('AdminActivitiesController', AdminActivitiesController);
 
-	function AdminTagsController ($scope, $http, $uibModal, Enums, Activities) {
+	function AdminActivitiesController ($scope, $http, $uibModal, Enums, Activities) {
 		var vm = this;
 		vm.activities = {};
-		vm.eventTags = {};
 		vm.formData = {};
-		vm.get = get;
-		vm.deleteEnum = deleteEnum;
 		vm.createModal = createModal;
 
-		get();
+		var validTags = [];
+		var newTags;
 
-		function get() {
-			getEventTags();
-			getActivities();
-		}
+		init();
 
-		function getEventTags() {
+		function init() {
 			Enums.getTags()
 				.success(function(data) {
-					vm.eventTags = data;
+					for(var tag in data) {
+						validTags.push(data[tag].enum_name);
+					}
+					newTags = $('#activity_tags').tags({
+						suggestions: validTags,
+						restrictTo: validTags,
+						suggestOnClick: true
+					});
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
+
+				getActivities();
 		}
 
 		function getActivities() {
-			Activities.getActivities()
+
+			Activities.get()
 				.success(function(data) {
 					vm.activities = data;
+					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
 		}
 
-		function deleteEnum(id) {
-			Enums.delete(id)
-				.success(function() {
-					vm.get();
-				});
-		}
-
-		function createModal(tagType) {
+		function createModal() {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/tags/modals/createTagModal.html',
-				controller: 'CreateTagModalController',
+				templateUrl: 'app/admin/activities/modals/activityModal.html',
+				controller: 'ActivityModalController',
 				controllerAs: 'vm',
 				size: 'lg',
 				resolve: {
-					tagType: function () { return tagType; }
 				}
 			});
 
-			modalInstance.result.then(function() {
-				get();
-			}, function () {});			
+			modalInstance.result.then(function() {}, function () {});			
 		}
 	}
 })();
