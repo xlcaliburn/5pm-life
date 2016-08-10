@@ -8,7 +8,7 @@
             <!-- logo (blue) -->
             <div class="logo-container col l2 m4 s4">
                 <a href="/">
-                    <img src="assets/images/5pm-logo-blue.png" width="100%" height="auto">
+                    <!--<img src="assets/images/5pm-logo-blue.png" width="100%" height="auto">-->
                 </a>
             </div>
 
@@ -25,7 +25,7 @@
         <div class="spacer"></div>
 
         <!-- stepper -->
-        <div class="signup-stepper">
+        <div class="signup-stepper" ng-class="{true: 'hidden'}[signup.current_stage > 3]">
             <div class="stepper-line"></div>
             <div class="step-1">
                 <a href="#personal-information" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(1)">
@@ -45,10 +45,13 @@
                     <div class="steps-description">Account Settings</div>
                 </a>
             </div>
+            <div class="disabled hidden">
+                <a href="#register-success" data-toggle="tab" role="tab"></a>
+            </div>
         </div>
 
         <!-- instructions -->
-        <div class="signup-instructions">
+        <div class="signup-instructions" ng-if="signup.current_stage < 4">
             <div class="signup-instructions-title">Fill in your details below.</div>
             <div class="signup-instructions-subtitle">All of your information is private unless you say so.</div>
 
@@ -130,10 +133,20 @@
                     </div>
                 </div>
             </div>
+
+            <!-- register success -->
+            <div id="register-success" class="tab-pane fade in">
+                <div class="row signup-success-row valign-wrapper">
+                    <div class="col l12 m12 s12 align-center valign">
+                        A new verification email has been sent to <span class="babyblue-font">{{ signup.email_address }}</span>.<br />
+                        Follow the instructions to activate your account in order to <a href="/login">login</a>.
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- prev/next buttons -->
-        <div class="prev-next-buttons">
+        <div class="prev-next-buttons" ng-if="signup.current_stage < 4">
             <div class="row">
                 <!-- previous button -->
                 <div class="col l4 m4 s6 offset-l2 offset-m2 align-left">

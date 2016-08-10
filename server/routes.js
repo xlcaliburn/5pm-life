@@ -16,6 +16,7 @@ export default function(app) {
 	app.use('/api/things', require('./api/thing')); // to delete
 	app.use('/api/users', require('./api/user'));
 	app.use('/api/email', require('./api/email'));
+	app.use('/api/signup', require('./api/signup'));
 
 	app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/activities', require('./api/activities/activities.routes.js'));

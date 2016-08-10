@@ -13,6 +13,7 @@
 		'ui.bootstrap',
 		'validation.match',
 		'EmailService',
-		'720kb.datepicker'
+		'720kb.datepicker',
+		'SignupService'
 	]);
 })();

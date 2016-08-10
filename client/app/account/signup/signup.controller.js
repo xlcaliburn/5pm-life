@@ -7,7 +7,7 @@
 
     /** @ngInject */
     /* jshint expr: true */
-    function SignupController() {
+    function SignupController($timeout, loading_spinner, SignupService) {
         var vm = this;
 
         // model
@@ -135,7 +135,7 @@
 
                 // return if there are any errors
                 if (vm.error_message) {
-                    vm.current_stage == 1;
+                    vm.go_to_stage(1, true);
                     return;
                 }
             }
@@ -164,7 +164,7 @@
 
                 // return if there are any errors
                 if (vm.error_message) {
-                    vm.current_stage == 2;
+                    vm.go_to_stage(2, true);
                     return;
                 }
             }
@@ -186,7 +186,7 @@
 
                 // return if there are any errors
                 if (vm.error_message) {
-                    vm.current_stage == 3;
+                    vm.go_to_stage(3, true);
                     return;
                 }
             }
@@ -204,19 +204,40 @@
                     vm.validate(true);
                 }
             } else {
+                // make signup button unclickable and show loading
+                var signup_button = angular.element('.signup-submit-button');
+                signup_button.addClass('disabled');
+                signup_button.html(loading_spinner);
+
                 // backend validation + submit
-                vm.error_message = "You have successfully registered";
-                angular.element('.signup-errors').addClass('success');
+                var data = {};
+                for (var i = 0; i < vm.steps.length; i++) {
+                    var key = vm.steps[i].key;
+                    data[key] = vm[key];
+                }
+
+                SignupService.submitSignup(data).then(function(res) {
+                    if (res.data.status == 'valid') {
+                        // good data
+                        $timeout(function() {
+                            angular.element('a[href="#register-success"]').tab('show');
+                            vm.current_stage = 4;
+                        }, 1000);
+                    } else {
+                        // bad data - they tampered with our js
+                        vm.error_message = "Please check all of your fields and try submitting again."
+                        vm.go_to_stage(1);
+                    }
+                });
             }
         }
 
-        vm.go_to_stage = function(stage) {
-            if (stage < 1 || stage > 3) {
-                return;
-            }
+        vm.go_to_stage = function(stage, allow_error) {
+            if (stage < 1 || stage > 3) { return; }
+
+            if (!allow_error) { vm.error_message = ""; }
 
             vm.current_stage = stage;
-            vm.error_message = "";
             var tab_button;
 
             if (stage == 1) {
