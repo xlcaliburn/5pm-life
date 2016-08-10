@@ -24,140 +24,144 @@
 
         <div class="spacer"></div>
 
-        <!-- stepper -->
-        <div class="signup-stepper" ng-class="{true: 'hidden'}[signup.current_stage > 3]">
-            <div class="stepper-line"></div>
-            <div class="step-1">
-                <a href="#personal-information" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(1)">
-                    <span class="steps">1</span>
-                    <div class="steps-description">Personal Information</div>
-                </a>
+        <div class="fade-me-hard">
+            <!-- stepper -->
+            <div class="signup-stepper" ng-class="{true: 'hidden'}[signup.current_stage > 3]">
+                <div class="stepper-line"></div>
+                <div class="step-1">
+                    <a href="#personal-information" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(1)">
+                        <span class="steps">1</span>
+                        <div class="steps-description">Personal Information</div>
+                    </a>
+                </div>
+                <div class="step-2 disabled">
+                    <a href="#personal-details" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(2)">
+                        <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 2]">2</span>
+                        <div class="steps-description">Personal Details</div>
+                    </a>
+                </div>
+                <div class="step-3 disabled">
+                    <a href="#account-settings" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(3)">
+                        <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 3]">3</span>
+                        <div class="steps-description">Account Settings</div>
+                    </a>
+                </div>
+                <div class="disabled hidden">
+                    <a href="#register-success" data-toggle="tab" role="tab"></a>
+                </div>
             </div>
-            <div class="step-2 disabled">
-                <a href="#personal-details" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(2)">
-                    <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 2]">2</span>
-                    <div class="steps-description">Personal Details</div>
-                </a>
+
+            <!-- instructions -->
+            <div class="signup-instructions" ng-if="signup.current_stage < 4">
+                <div class="signup-instructions-title">Fill in your details below.</div>
+                <div class="signup-instructions-subtitle">All of your information is private unless you say so.</div>
+
+                <!-- errors -->
+                <div class="signup-errors invis" ng-class="{'appear': signup.error_message}">{{ signup.error_message }}</div>
             </div>
-            <div class="step-3 disabled">
-                <a href="#account-settings" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(3)">
-                    <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 3]">3</span>
-                    <div class="steps-description">Account Settings</div>
-                </a>
-            </div>
-            <div class="disabled hidden">
-                <a href="#register-success" data-toggle="tab" role="tab"></a>
-            </div>
-        </div>
 
-        <!-- instructions -->
-        <div class="signup-instructions" ng-if="signup.current_stage < 4">
-            <div class="signup-instructions-title">Fill in your details below.</div>
-            <div class="signup-instructions-subtitle">All of your information is private unless you say so.</div>
+            <div class="tab-content">
 
-            <!-- errors -->
-            <div class="signup-errors invis" ng-class="{'appear': signup.error_message}">{{ signup.error_message }}</div>
-        </div>
+                <!-- personal information -->
+                <div id="personal-information" class="tab-pane fade in active">
+                    <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 1">
+                        <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
+                        <div class="col l4 m4 s8 valign signup-inputs">
 
-        <div class="tab-content">
+                            <!-- first and last name -->
+                            <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]">
 
-            <!-- personal information -->
-            <div id="personal-information" class="tab-pane fade in active">
-                <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 1">
-                    <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
-                    <div class="col l4 m4 s8 valign signup-inputs">
+                            <!-- birthday -->
+                            <div class="date-selects valign-wrapper" ng-if="stage.type == 'date'">
 
-                        <!-- first and last name -->
-                        <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]">
+                                <!-- month -->
+                                <select ng-model="signup.birthday.month" class="browser-default signup-birthmonth valign">
+                                    <option value="" disabled selected>Month</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
 
-                        <!-- birthday -->
-                        <div class="date-selects valign-wrapper" ng-if="stage.type == 'date'">
+                                <!-- day -->
+                                <input class="signup-birthday valign" type="text" placeholder="Day" maxlength="2" ng-model="signup.birthday.day">
 
-                            <!-- month -->
-                            <select ng-model="signup.birthday.month" class="browser-default signup-birthmonth valign">
-                                <option value="" disabled selected>Month</option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
+                                <!-- year -->
+                                <input class="signup-birthyear valign" type="text" placeholder="Year" maxlength="4" ng-model="signup.birthday.year">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- day -->
-                            <input class="signup-birthday valign" type="text" placeholder="Day" maxlength="2" ng-model="signup.birthday.day">
+                <!-- personal details -->
+                <div id="personal-details" class="tab-pane fade in">
+                    <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 2">
+                        <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
+                        <div class="col l4 m4 s8 valign signup-inputs">
 
-                            <!-- year -->
-                            <input class="signup-birthyear valign" type="text" placeholder="Year" maxlength="4" ng-model="signup.birthday.year">
+                            <!-- ethnicity && gender -->
+                            <div class="valign-wrapper" ng-if="stage.type == 'select'">
+                                <select ng-model="signup[stage.key]" class="browser-default signup-select valign">
+                                    <option value="" disabled selected>Select {{ stage.value }}</option>
+                                    <option ng-repeat="data in stage.data" value="{{ data }}">{{ data }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- account settings -->
+                <div id="account-settings" class="tab-pane fade in">
+                    <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 3">
+                        <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
+                        <div class="col l4 m4 s8 valign signup-inputs">
+
+                            <!-- email -->
+                            <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]">
+
+                            <!-- password, confirm password -->
+                            <input ng-if="stage.type == 'password'" type="password" class="signup-input" ng-model="signup[stage.key]">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- register success -->
+                <div id="register-success" class="tab-pane fade in">
+                    <div class="row signup-success-row valign-wrapper">
+                        <div class="col l12 m12 s12 align-center valign">
+                            A new verification email has been sent to <span class="babyblue-font">{{ signup.email_address }}</span>.<br />
+                            Follow the instructions to activate your account in order to <a href="/login">login</a>.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- personal details -->
-            <div id="personal-details" class="tab-pane fade in">
-                <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 2">
-                    <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
-                    <div class="col l4 m4 s8 valign signup-inputs">
-
-                        <!-- ethnicity && gender -->
-                        <div class="valign-wrapper" ng-if="stage.type == 'select'">
-                            <select ng-model="signup[stage.key]" class="browser-default signup-select valign">
-                                <option value="" disabled selected>Select {{ stage.value }}</option>
-                                <option ng-repeat="data in stage.data" value="{{ data }}">{{ data }}</option>
-                            </select>
-                        </div>
-
+            <!-- prev/next buttons -->
+            <div class="prev-next-buttons" ng-if="signup.current_stage < 4">
+                <div class="row">
+                    <!-- previous button -->
+                    <div class="col l4 m4 s6 offset-l2 offset-m2 align-left">
+                        <a class="signup-prev-button babyblue-bg rect-button" ng-if="signup.current_stage != 1" ng-click="signup.go_to_stage(signup.current_stage - 1)">PREVIOUS</a>
                     </div>
-                </div>
-            </div>
 
-            <!-- account settings -->
-            <div id="account-settings" class="tab-pane fade in">
-                <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 3">
-                    <div class="col l2 m2 s4 offset-l2 offset-m2 align-right signup-label valign">{{ stage.value }}</div>
-                    <div class="col l4 m4 s8 valign signup-inputs">
-
-                        <!-- email -->
-                        <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]">
-
-                        <!-- password, confirm password -->
-                        <input ng-if="stage.type == 'password'" type="password" class="signup-input" ng-model="signup[stage.key]">
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- register success -->
-            <div id="register-success" class="tab-pane fade in">
-                <div class="row signup-success-row valign-wrapper">
-                    <div class="col l12 m12 s12 align-center valign">
-                        A new verification email has been sent to <span class="babyblue-font">{{ signup.email_address }}</span>.<br />
-                        Follow the instructions to activate your account in order to <a href="/login">login</a>.
+                    <!--next button -->
+                    <div class="col l4 m4 s6 align-right">
+                        <a class="signup-next-button babyblue-bg rect-button" ng-click="signup.validate()" ng-if="signup.current_stage != 3">NEXT</a>
+                        <a class="signup-submit-button pink-bg rect-button" ng-click="signup.validate('true')" ng-if="signup.current_stage == 3">SIGN UP</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- prev/next buttons -->
-        <div class="prev-next-buttons" ng-if="signup.current_stage < 4">
-            <div class="row">
-                <!-- previous button -->
-                <div class="col l4 m4 s6 offset-l2 offset-m2 align-left">
-                    <a class="signup-prev-button babyblue-bg rect-button" ng-if="signup.current_stage != 1" ng-click="signup.go_to_stage(signup.current_stage - 1)">PREVIOUS</a>
-                </div>
-
-                <!--next button -->
-                <div class="col l4 m4 s6 align-right">
-                    <a class="signup-next-button babyblue-bg rect-button" ng-click="signup.validate()" ng-if="signup.current_stage != 3">NEXT</a>
-                    <a class="signup-submit-button pink-bg rect-button" ng-click="signup.validate('true')" ng-if="signup.current_stage == 3">SIGN UP</a>
-                </div>
-            </div>
-        </div>
+        
+    </div>
 </div>

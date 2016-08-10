@@ -217,16 +217,24 @@
                 }
 
                 SignupService.submitSignup(data).then(function(res) {
-                    if (res.data.status == 'valid') {
+                    var response = res.data.response;
+                    console.log(res);
+                    if (response.status == 'ok') {
                         // good data
                         $timeout(function() {
-                            angular.element('a[href="#register-success"]').tab('show');
-                            vm.current_stage = 4;
+                            angular.element('.fade-me-hard').addClass('invis');
+                            $timeout(function() {
+                                angular.element('a[href="#register-success"]').tab('show');
+                                vm.current_stage = 4;
+                            }, 500);
+                            $timeout(function() {
+                                angular.element('.fade-me-hard').removeClass('invis');
+                            }, 1000);
                         }, 1000);
                     } else {
                         // bad data - they tampered with our js
-                        vm.error_message = "Please check all of your fields and try submitting again."
-                        vm.go_to_stage(1);
+                        vm.error_message = response.error_message;
+                        vm.go_to_stage(response.stage);
                     }
                 });
             }

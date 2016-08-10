@@ -9,7 +9,9 @@ var ObjectId = Schema.ObjectId;
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var UserSchema = new Schema({
-	name: String,
+	first_name: String,
+	last_name: String,
+	birthday: Date,
 	email: {
 		type: String,
 		lowercase: true,
@@ -21,6 +23,8 @@ var UserSchema = new Schema({
 			}
 		}
 	},
+	ethnicity: String,
+	gender: String,
 	role: {
 		type: String,
 		default: 'user'
@@ -39,12 +43,13 @@ var UserSchema = new Schema({
 	salt: String,
 	facebook: {},
 	event_status : {
-		status : Number, // 0 = None, 1 = Searching, 2 = Awaiting confirm, 3 = In an Event, 
+		status : Number, // 0 = None, 1 = Searching, 2 = Awaiting confirm, 3 = In an Event,
 		event : [ObjectId],
 		queue_start_time : Date,
 		queue_end_time : Date
 	},
-	event_history : [ObjectId]
+	event_history : [ObjectId],
+	verified: Boolean
 });
 
 /**

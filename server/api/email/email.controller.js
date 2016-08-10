@@ -4,7 +4,7 @@ import Email from './email.model';
 var nodemailer = require("nodemailer");
 var smtp_transport = require('nodemailer-smtp-transport');
 
-function sendEmail(email_address) {
+export function sendEmail(email_address, message_body) {
     console.log('Attempting to send email to', email_address);
 
     // trying nodemailer
@@ -32,10 +32,7 @@ function sendEmail(email_address) {
     });
 }
 
-export function saveEmail(req, res) {
-    return Email.create(req.body)
-        .then(function() {
-            sendEmail(req.body.email_address);
-            res.json({ status: "success" });
-        });
+export function send_email(req, res) {
+    sendEmail(req.body.email_address);
+    return res.json({ status: "success" });
 }
