@@ -5,17 +5,13 @@
 		.module('fivepmApp.admin')
 		.controller('AdminEventsController', AdminEventsController);
 
-	function AdminEventsController ($scope, $http, $interval, $uibModal, Events, Venues, Activities, Enums) {
+	function AdminEventsController ($scope, $http, $interval, $uibModal, Events) {
 		var vm = this;
 		vm.getEvents = getEvents;
-		vm.deleteEvent = deleteEvent;
 		vm.events = {};
 		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
 		vm.openModal = openModal;
-
-		vm.allowedVenues = {};
-		vm.allowedActivities = {};
 
 		init();
 
@@ -25,38 +21,17 @@
 			var tick = function() {
 				vm.currentTime = new Date(Date.now()).getTime();
 			};
-			$interval(tick, 1000);
-
-			Venues.get()
-				.success(function(data) {
-					vm.allowedVenues = data;
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
-
-			Activities.get()
-				.success(function(data) {
-					vm.allowedActivities = data;
-					console.log(data);
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});			
+			$interval(tick, 1000);		
 		}
 
-		function eventModal(selectedEvent) {
+		function eventModal() {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'app/admin/events/modals/eventModal.html',
 				controller: 'EventModalController',
 				controllerAs:'vm', 
 				size: 'lg',
-				resolve: {
-					selectedEvent: function () { return selectedEvent; },
-					allowedVenues: function () { return vm.allowedVenues; },
-					allowedActivities: function () { return vm.allowedActivities; }
-				}
+				resolve: {}
 			});
 
 			modalInstance.result.then(function(data) {
@@ -85,13 +60,6 @@
 			else {
 				eventModal();
 			}
-		}
-
-		function deleteEvent(id) {
-			Events.delete(id)
-				.success(function(data) {
-					vm.events = updateTime(data);
-				});
 		}
 
 		function updateTime(data) {

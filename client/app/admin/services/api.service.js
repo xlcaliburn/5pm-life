@@ -56,11 +56,11 @@
 				get : function() {
 					return $http.get('/api/events');
 				},
-				getEvent : function(id) {
+				getById : function(id) {
 					return $http.get('/api/events/' + id);
 				},
 				put : function(data) {
-					return $http.put('/api/events', data);
+					return $http.put('/api/events/' + id, data);
 				},
 				create : function(data) {
 					return $http.post('/api/events', data);

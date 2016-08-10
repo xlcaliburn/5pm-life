@@ -4,7 +4,7 @@
 	angular.module('fivepmApp.admin')
 		.controller('AdminVenuesController', AdminVenuesController);
 
-	function AdminVenuesController ($scope, $http, Venues, Enums) {
+	function AdminVenuesController ($scope, $http, Venues) {
 		var vm = this;
 		vm.venues = {};
 		vm.createVenue = createVenue;

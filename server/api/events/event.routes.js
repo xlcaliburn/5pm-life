@@ -45,7 +45,7 @@ router.post('/', function(req, res) {
 	});
 });
 
-router.put('/', function(req, res) {
+router.put('/:event_id', function(req, res) {
 	Event.findOneAndUpdate({
 		_id : req.body._id
 	}, 
@@ -68,7 +68,7 @@ router.put('/', function(req, res) {
 
 router.delete('/:event_id', function(req, res) {
 	Event.remove({
-		_id : req.params.event_id
+		_id : req.body._id
 	}, function(err, data) {
 		if (err)
 			res.send(err);

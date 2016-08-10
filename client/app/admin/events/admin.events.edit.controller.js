@@ -3,15 +3,14 @@
 
 	angular
 		.module('fivepmApp.admin')
-		.controller('EventModalController', EventModalController);
+		.controller('EditEventController', EditEventController);
 
-	function EventModalController ($timeout, $uibModalInstance, Events, Venues, Activities) {
+	function EditEventController ($stateParams, $timeout, Events, Venues, Activities, Users) {
 		var vm = this;
-		vm.submit = submit;
 		vm.selectedEvent = {};
 		vm.allowedActivities = {};
 		vm.allowedVenues = {};
-		vm.title = 'Create Event';
+		vm.delete_event = deleteEvent;
 
 		init();
 
@@ -31,22 +30,32 @@
 			Activities.get()
 				.success(function(data) {
 					vm.allowedActivities = data;
-					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});	
 
+			Events.getById($stateParams.event_id)
+				.success(function(data) {
+					vm.selectedEvent = data[0];
+					console.log(vm.selectedEvent);
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});				
 		}
 
 		function submit() {
-			vm.selectedEvent.dt_search_start = new Date().getTime();
-			Events.create(vm.selectedEvent)
-				.success(function(data) {
-					vm.selectedEvent = {};
-					$uibModalInstance.close(data);
-				});
+			
 		}
+
+		function deleteEvent(id) {
+			Events.delete(id)
+				.success(function(data) {
+
+				});
+		}		
+
 	}
 
 })();
