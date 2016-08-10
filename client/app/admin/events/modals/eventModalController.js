@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('EventModalController', EventModalController);
 
-	function EventModalController ($timeout, $uibModalInstance, Events, Venues, Activities) {
+	function EventModalController ($q, $timeout, $uibModalInstance, Events, Venues, Activities) {
 		var vm = this;
 		vm.submit = submit;
 		vm.selectedEvent = {};
@@ -16,13 +16,11 @@
 		init();
 
 		function init() {
-			$timeout(function() {
-				materialize_select();
-			});
 
 			Venues.get()
 				.success(function(data) {
 					vm.allowedVenues = data;
+					init_materialize();
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -31,12 +29,15 @@
 			Activities.get()
 				.success(function(data) {
 					vm.allowedActivities = data;
-					console.log(data);
+					init_materialize();
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
-				});	
+				});
+		}
 
+		function init_materialize() {
+			$timeout(function() {materialize_select();});
 		}
 
 		function submit() {

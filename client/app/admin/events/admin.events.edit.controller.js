@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($stateParams, $timeout, Events, Venues, Activities, Users) {
+	function EditEventController ($q, $stateParams, $timeout, Events, Venues, Activities, Users) {
 		var vm = this;
 		vm.selectedEvent = {};
 		vm.allowedActivities = {};
@@ -15,13 +15,11 @@
 		init();
 
 		function init() {
-			$timeout(function() {
-				materialize_select();
-			});
 
 			Venues.get()
 				.success(function(data) {
 					vm.allowedVenues = data;
+					init_materialize();
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -30,19 +28,24 @@
 			Activities.get()
 				.success(function(data) {
 					vm.allowedActivities = data;
+					init_materialize();
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
-				});	
+				});
 
 			Events.getById($stateParams.event_id)
 				.success(function(data) {
 					vm.selectedEvent = data[0];
-					console.log(vm.selectedEvent);
+					init_materialize();
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
-				});				
+				});
+		}
+
+		function init_materialize() {
+			$timeout(function() {materialize_select();});
 		}
 
 		function submit() {
