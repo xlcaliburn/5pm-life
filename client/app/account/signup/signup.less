@@ -79,8 +79,15 @@
     color: @uppergrey;
 }
 
+.signup-errors {
+    min-height: 20px;
+    margin-top: 20px;
+    color: @pink;
+    font-size: 14px;
+    text-align: center;
+}
+
 #personal-information {
-    padding: 30px 0;
     transition: all 0.5s ease-out;
 }
 
@@ -152,16 +159,32 @@ input.signup-birthyear {
     margin: 0;
 }
 
+select.signup-select {
+    width: 70%;
+    outline: none;
+    padding: 0 10px;
+    border: 1px solid #b8b8b8;
+    border-radius: 0;
+}
+
+.prev-next-buttons {
+    margin-top: 50px;
+}
+
 .step-pending + .steps-description, .step-pending {
     opacity: 0.3;
     cursor: default;
     .user-select-none;
 }
 
-.signup-prev-button, .signup-next-button {
+.signup-prev-button, .signup-next-button, .signup-submit-button {
     font-size: 14px;
 }
 
 .step-pending {
     background-color: @uppergrey;
+}
+
+.success {
+    color: @aqua;
 }

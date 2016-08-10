@@ -61,6 +61,7 @@ Add global styles here.*/
 .yellow { color: @yellow; }
 
 .babyblue-bg { background-color: @babyblue; }
+.pink-bg { background-color: @pink; }
 
 .white-font { color: @white; }
 .purple-font { color: @purple; }
@@ -94,6 +95,11 @@ Add global styles here.*/
     -moz-user-select: none;     /* Firefox all */
     -ms-user-select: none;      /* IE 10+ */
 }
+
+.invis { opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; }
+.appear { opacity: 1; pointer-events: all; transition: opacity 0.25s ease-out; }
+
+.disabled { pointer-events: none; }
 
 .select-wrapper span.caret {
     font-size: 0;
