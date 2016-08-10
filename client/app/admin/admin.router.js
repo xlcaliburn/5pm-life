@@ -37,6 +37,12 @@
 				controller: 'AdminEventsController',
 				controllerAs: 'vm'
 			})
+			.state('admin.events.edit', {
+				url: '/events/:event_id',
+				templateUrl: 'app/admin/events/admin.events.edit.html'
+				// controller: 'AdminEventsController',
+				// controllerAs: 'vm'
+			})
 			.state('admin.settings', {
 				url: '/settings',
 				templateUrl: 'app/admin/settings/admin.settings.html',
