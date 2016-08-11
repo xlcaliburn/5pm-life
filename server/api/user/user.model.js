@@ -119,7 +119,8 @@ UserSchema
 				return respond(true);
 			})
 			.catch(function(err) {
-				throw err;
+				// throw err;
+				console.log('The specified email address is already in use.');
 			});
 	}, 'The specified email address is already in use.');
 

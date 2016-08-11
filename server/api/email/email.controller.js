@@ -24,6 +24,11 @@ export function sendEmail(email_address, message_body) {
         html: '<b>Thank you</b><p>Thank you for signing up for our BETA. You will hear back from us very soon!</p><p>Sincerely,<br>5PM Team</p>' // html body
     };
 
+    if (message_body) {
+        mailOptions.text = message_body;
+        mailOptions.html = message_body;
+    }
+
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             return console.log(error);

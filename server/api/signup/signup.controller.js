@@ -1,6 +1,8 @@
 'use strict';
 
 var email_controller = require('../email/email.controller');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 function validate_user(data) {
     // back-end validation
@@ -96,6 +98,20 @@ function validate_user(data) {
 
     // no errors
     response.status = 'ok';
+    response.user = {};
+
+    // add fields
+    response.user.first_name = data.first_name;
+    response.user.last_name = data.last_name;
+    response.user.ethnicity = data.ethnicity;
+    response.user.gender = data.gender;
+    response.user.email = data.email_address;
+    response.user.password = data.password;
+
+    // change birthday to date
+    var bday_string = data.birthday.year + '-' + data.birthday.month + '-' + data.birthday.day;
+    response.user.birthday = new Date(bday_string);
+
     return response;
 }
 
@@ -104,14 +120,47 @@ function valid_email(email_address) {
     return re.test(email_address);
 }
 
+function validationError(res, statusCode) {
+	statusCode = statusCode || 422;
+	return function(err) {
+		res.status(statusCode).json(err);
+	};
+}
+
 export function validate_save(req, res) {
     // validate first
     var response = validate_user(req.body);
+    if (response.status == 'ok') {
+        response.verified = false;
+        
+        var newUser = new User(response.user);
+        newUser.save()
+        .then(function(user) {
+            var email_verification_link = "http://5pm.life/verify_email/" + user._id;
 
-    // TODO: save them into db (make sure to promise chain)
+            var email_body = "Dear " + user.first_name + ",\n\nThank you for becoming" +
+            " a member of 5PMLIFE!\n\nPlease click on the following link to verify your registration:"
+            + "\n\n" + email_verification_link + "\n\nAnd don't forget to RSVP to our events to get all the updates you need. We look forward to meeting you very soon!\n\nCheers,\n5PMLIFE Team";
 
-    // TODO: write verification email
-    email_controller.sendEmail(req.body.email_address);
+            email_controller.sendEmail(req.body.email_address, email_body);
+            console.log('User saved successfully');
+            return res.json({response: response});
+        })
+        .catch(function(err) {
+            if (err.errors) {
+                response.status = 'error';
+                if (err.errors.email) {
+                    if (err.errors.email.message) {
+                        response.error_message = err.errors.email.message;
+                        response.stage = 3;
+                    }
+                }
+            }
+            response.error = err;
+            return res.json({response: response});
+        });
 
-    return res.json({response: response});
+    } else {
+        return res.json({response: response});
+    }
 }

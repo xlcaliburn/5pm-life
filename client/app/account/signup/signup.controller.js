@@ -217,8 +217,8 @@
                 }
 
                 SignupService.submitSignup(data).then(function(res) {
-                    var response = res.data.response;
                     console.log(res);
+                    var response = res.data.response;
                     if (response.status == 'ok') {
                         // good data
                         $timeout(function() {
@@ -233,8 +233,12 @@
                         }, 1000);
                     } else {
                         // bad data - they tampered with our js
-                        vm.error_message = response.error_message;
-                        vm.go_to_stage(response.stage);
+                        if (response.error_message) {
+                            vm.error_message = response.error_message;
+                            vm.go_to_stage(response.stage, true);
+                        }
+                        signup_button.removeClass('disabled');
+                        signup_button.html('SIGN UP');
                     }
                 });
             }
@@ -255,8 +259,10 @@
             } else if (stage == 3) {
                 tab_button = angular.element('a[href="#account-settings"]');
             }
-            tab_button.parent().removeClass('disabled');
-            tab_button.tab('show');
+            if (tab_button) {
+                tab_button.parent().removeClass('disabled');
+                tab_button.tab('show');
+            }
 
             for (var i = 3; i > stage; i--) {
                 angular.element('.step-' + i).addClass('disabled');
