@@ -42,12 +42,6 @@ var UserSchema = new Schema({
 	provider: String,
 	salt: String,
 	facebook: {},
-	event_status : {
-		status : Number, // 0 = None, 1 = Searching, 2 = Awaiting confirm, 3 = In an Event,
-		event : [ObjectId],
-		queue_start_time : Date,
-		queue_end_time : Date
-	},
 	event_history : [ObjectId],
 	verified: Boolean
 });

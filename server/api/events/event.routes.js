@@ -56,7 +56,7 @@ router.put('/:event_id', function(req, res) {
 		if (err)
 			res.send(err);
 
-		// get and return all the todos after you create another
+
 		Event.find(function(err, data) {
 			if (err)
 				res.send(err);
@@ -68,12 +68,11 @@ router.put('/:event_id', function(req, res) {
 
 router.delete('/:event_id', function(req, res) {
 	Event.remove({
-		_id : req.body._id
+		_id : req.params.event_id
 	}, function(err, data) {
 		if (err)
 			res.send(err);
 
-		// get and return all the todos after you create another
 		Event.find(function(err, data) {
 			if (err)
 				res.send(err);

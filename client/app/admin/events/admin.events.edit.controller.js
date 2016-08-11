@@ -5,12 +5,14 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($q, $stateParams, $timeout, Events, Venues, Activities, Users) {
+	function EditEventController ($scope, $q, $state, $stateParams, $timeout, Events, Venues, Activities, Users) {
 		var vm = this;
 		vm.selectedEvent = {};
-		vm.allowedActivities = {};
-		vm.allowedVenues = {};
+		vm.allowed_activities = {};
+		vm.allowed_venues = {};
 		vm.delete_event = deleteEvent;
+		vm.submit = submit;
+		vm.user_queue = {};
 
 		init();
 
@@ -18,8 +20,8 @@
 
 			Venues.get()
 				.success(function(data) {
-					vm.allowedVenues = data;
-					init_materialize();
+					vm.allowed_venues = data;
+					$timeout(function() {materialize_select();});
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -27,8 +29,8 @@
 
 			Activities.get()
 				.success(function(data) {
-					vm.allowedActivities = data;
-					init_materialize();
+					vm.allowed_activities = data;
+					$timeout(function() {materialize_select();});
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -37,25 +39,38 @@
 			Events.getById($stateParams.event_id)
 				.success(function(data) {
 					vm.selectedEvent = data[0];
-					init_materialize();
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
+
+			Users.get()
+				.success(function(data) {
+					vm.user_queue = data;
+					console.log(data);
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});				
 		}
 
-		function init_materialize() {
-			$timeout(function() {materialize_select();});
-		}
 
 		function submit() {
 			
+			Events.put(vm.selectedEvent)
+				.success(function(data) {
+					vm.selectedEvent = {};
+					$state.go('admin.events', {}, { reload: true });
+					Materialize.toast('Event saved', 2000);
+				});			
 		}
 
-		function deleteEvent(id) {
-			Events.delete(id)
+		function deleteEvent() {
+			console.log(vm.selectedEvent._id);
+			Events.delete(vm.selectedEvent._id)
 				.success(function(data) {
-
+					$state.go('admin.events', {}, { reload: true });
+					Materialize.toast('Event deleted', 2000);					
 				});
 		}		
 

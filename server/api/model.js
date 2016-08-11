@@ -58,6 +58,15 @@ module.exports = function(mongoose) {
 		users : [ObjectId]
 	});
 
+	var Queue = new Schema ({
+		user : ObjectId,
+		status : Number, // 0 = None, 1 = Searching, 2 = Awaiting confirm, 3 = In an Event,
+		event : [ObjectId],
+		queue_start_time : Date,
+		queue_end_time : Date
+	},
+	})
+
 	var AdminSettings = new Schema ({
 		setting : String,
 		value : String

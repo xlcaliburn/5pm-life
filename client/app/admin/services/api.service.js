@@ -60,7 +60,7 @@
 					return $http.get('/api/events/' + id);
 				},
 				put : function(data) {
-					return $http.put('/api/events/' + id, data);
+					return $http.put('/api/events/' + data._id, data);
 				},
 				create : function(data) {
 					return $http.post('/api/events', data);
