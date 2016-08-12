@@ -7,6 +7,7 @@
 
 	function AdminEnumsController ($scope, $http, $uibModal, Enums) {
 		var vm = this;
+		vm.selected_enum = {};
 		vm.enums = {};
 		vm.formData = {};
 		vm.delete_enum = delete_enum;
@@ -18,8 +19,9 @@
 			Enums.get()
 				.success(function(data) {
 					vm.enums = data;
+					materialize_select();
 				})
-				.error(function(Data) {
+				.error(function(data) {
 					console.log('Error: ' + data);
 				});
 		}

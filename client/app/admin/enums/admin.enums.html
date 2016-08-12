@@ -10,10 +10,16 @@
 					<i class="material-icons">add</i>
 				</a>
 			</div>
-			<table class="table table-striped col s9">
+
+			<select 
+				ng-model="vm.selected_enum.type"
+				ng-options="enum as enum.type for enum in vm.enums track by enum.type">
+			</select>
+
+<!-- 			<table class="table table-striped col s9">
 				<thead>
 					<tr>
-						<th width="70%">Tag Name</th>
+						<th width="70%">Enum</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -22,7 +28,7 @@
 						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id)"></td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</div>
 	</div>
 </div>

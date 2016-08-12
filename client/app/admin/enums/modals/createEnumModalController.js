@@ -3,13 +3,13 @@
 
 	angular
 		.module('fivepmApp.admin')
-		.controller('CreateTagModalController', CreateTagModalController);
+		.controller('CreateEnumModalController', CreateEnumModalController);
 
-	function CreateTagModalController ($uibModalInstance, Enums, tagType) {
+	function CreateEnumModalController ($uibModalInstance, Enums) {
 		var vm = this;
-		vm.title = null;
+		vm.enums = {};
 		vm.tagType = tagType;
-		vm.createFormData = {};
+		vm.form_data = {};
 		vm.createType = null;
 		vm.enum_name = null;
 		vm.submit = submit;
@@ -17,23 +17,22 @@
 		init();
 
 		function init() {
-			if (vm.tagType === 'activity')
-			{
-				vm.title = 'Activity';
-			}
-			else if (vm.tagType === 'tag')
-			{
-				vm.title = 'Event Tag';
-			}
+			Enums.get()
+				.success(function(data) {
+					vm.enums = data;
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});
 		}
 
 		function submit() {
-			vm.createFormData.enum_type = vm.tagType;
-			vm.createFormData.enum_name = vm.enum_name;
+			vm.form_data.enum_type = vm.tagType;
+			vm.form_data.enum_name = vm.enum_name;
 
-			Enums.create(vm.createFormData)
+			Enums.create(vm.form_data)
 				.success(function(data) {
-					vm.createFormData = {};
+					vm.form_data = {};
 					$uibModalInstance.close(data);					
 				});
 

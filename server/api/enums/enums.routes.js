@@ -4,10 +4,8 @@ var mongoose = require('mongoose');
 var Enums = mongoose.model('Enums');
 var router = new Router();
 
-router.get('/tags', function(req,res) {
-		Enums.find({
-			enum_type : "tag"
-		}, function(err, data) {
+router.get('/', function(req,res) {
+		Enums.find(function(err, data) {
 			if (err)
 				res.send(err);
 
@@ -17,8 +15,9 @@ router.get('/tags', function(req,res) {
 
 router.post('/', function(req, res) {
 		Enums.create({
-				enum_type : req.body.enum_type,
-				enum_name : req.body.enum_name
+				type : req.body.type,
+				list : req.body.list
+				
 		 }, function(err, data) {
 			if (err)
 				res.send(err);
