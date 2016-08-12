@@ -12,7 +12,7 @@
 		vm.allowed_venues = {};
 		vm.delete_event = deleteEvent;
 		vm.submit = submit;
-		vm.user_queue = {};
+		vm.queue = {};
 
 		init();
 
@@ -45,24 +45,47 @@
 					console.log('Error: ' + data);
 				});
 
+			test();
+		}
+
+		function test() {
 			Users.get()
 				.success(function(data) {
-					vm.user_queue = data;
+					vm.queue = data;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
-				});				
+				}); 
 		}
 
-
 		function submit() {
-			
 			Events.put(vm.selectedEvent)
 				.success(function(data) {
 					vm.selectedEvent = {};
+
+					updateUserStatus();
+					notifyUser();
+
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event saved', 2000);
 				});			
+		}
+
+		function updateUserStatus() {
+			for (var q in vm.queue)
+			{
+				Queue.updateQueueStatus(q._id, 2)
+					.success(function(data) {
+						vm.queue = data;
+					})
+					.error(function(data) {
+						console.log('Error: ' + data);
+					});
+			}
+		}
+
+		function notifyUser() {
+			//todo
 		}
 
 		function deleteEvent() {

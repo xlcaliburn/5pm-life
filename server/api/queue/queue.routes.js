@@ -31,7 +31,7 @@ router.post('/', function(req, res) {
 	});
 });
 
-router.put('/:Queue_id', function(req, res) {
+router.put('/:_id', function(req, res) {
 	Queue.findOneAndUpdate({
 		_id : req.body._id
 	}, 
