@@ -22,6 +22,7 @@
 				.success(function(data) {
 					vm.allowed_venues = data;
 					$timeout(function() {materialize_select();});
+					console.log(vm.allowed_venues);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -47,7 +48,6 @@
 			Users.get()
 				.success(function(data) {
 					vm.user_queue = data;
-					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);

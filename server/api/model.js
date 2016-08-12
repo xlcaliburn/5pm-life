@@ -61,11 +61,16 @@ module.exports = function(mongoose) {
 	var Queue = new Schema ({
 		user : ObjectId,
 		status : Number, // 0 = None, 1 = Searching, 2 = Awaiting confirm, 3 = In an Event,
-		event : [ObjectId],
+		search_parameters : {
+			override_default : Boolean,
+			tags : [String],
+			event_search_dt_start : Date,
+			event_search_dt_end : Date,
+			city : String
+		},
 		queue_start_time : Date,
 		queue_end_time : Date
-	},
-	})
+	});
 
 	var AdminSettings = new Schema ({
 		setting : String,
@@ -77,6 +82,7 @@ module.exports = function(mongoose) {
 		Activity: mongoose.model('Activity', Activity),
 		Venue : mongoose.model('Venue', Venue),
 		Event : mongoose.model('Event', Event),
+		Queue : mongoose.model('Queue', Queue),
 		AdminSettings : mongoose.model('AdminSettings', AdminSettings)
 	};
 

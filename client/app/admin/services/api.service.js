@@ -12,6 +12,19 @@
 				}
 			};
 		})
+		.factory('Queue', function($http) {
+			return {
+				get : function() {
+					return $http.get('/api/queue');
+				},
+				put : function(data) {
+					return $http.put('/api/queue', data);
+				},
+				create : function(data) {
+					return $http.post('/api/queue', data);
+				}
+			};
+		})
 		.factory('Activities', function($http) {
 			return {
 				get : function() {

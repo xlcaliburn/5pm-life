@@ -13,7 +13,7 @@
 	<form class="col s12" name="createForm" ng-submit="vm.submit()">
 		<div class="row">
 			<div class="input-field col s12">
-				<select ng-model="vm.selectedEvent.activity" ng-options="activity as activity.activity_name for activity in vm.allowedActivities track by activity.activity_name">
+				<select ng-model="vm.selectedEvent.activity" ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name">
 				</select>
 
 				<label>Activity</label>
@@ -22,7 +22,7 @@
 
 		<div class="row">
 			<div class="input-field col s12">
-				<select ng-model="vm.selectedEvent.venue" ng-options="venue as venue.venue_name for venue in vm.allowedVenues track by venue.venue_name">
+				<select ng-model="vm.selectedEvent.venue" ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
 				</select>
 				<label>Venue</label>
 			</div>
@@ -49,7 +49,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in vm.user_queue">
-						<td>{{user.email}}</td>
+						<td>{{user.first_name + " " + user.last_name}}</td>
 						<td></td>
 						<td></td>
 						<td></td>
