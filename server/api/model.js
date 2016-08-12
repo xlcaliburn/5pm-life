@@ -3,9 +3,10 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 module.exports = function(mongoose) {
+
 	var Enums = new Schema ({
-		enum_type : String,
-		enum_name : String
+		type : String,
+		list : {}
 	});
 
 	var Activity = new Schema ({

@@ -13,10 +13,10 @@
 				controller: 'AdminUsersController',
 				controllerAs: 'vm'
 			})
-			.state('admin.tags', {
-				url: '/tags',
-				templateUrl: 'app/admin/tags/admin.tags.html',
-				controller: 'AdminTagsController',
+			.state('admin.enums', {
+				url: '/enums',
+				templateUrl: 'app/admin/enums/admin.enums.html',
+				controller: 'AdminEnumsController',
 				controllerAs: 'vm'
 			})
 			.state('admin.activities', {

@@ -56,8 +56,11 @@
 		})
 		.factory('Enums', function($http) {
 			return {
-				getTags : function() {
-					return $http.get('/api/enums/tags');
+				get : function() {
+					return $http.get('/api/enums');
+				},
+				getByType : function(type) {
+					return $http.get('/api/enums/' + type);
 				},
 				create : function(data) {
 					return $http.post('/api/enums', data);
