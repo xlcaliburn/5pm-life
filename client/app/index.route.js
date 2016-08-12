@@ -53,6 +53,14 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'signup'
 		})
 
+		.state('verify', {
+			url: '/signup/verify/:id',
+			title: 'Verify Email',
+			templateUrl: 'app/account/signup/verify.html',
+			controller: 'VerifyController',
+			controllerAs: 'verify'
+		})
+
 		.state('admin', {
 			url: '/admin',
 			templateUrl: 'app/admin/admin.html'

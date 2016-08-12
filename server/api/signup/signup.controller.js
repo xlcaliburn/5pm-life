@@ -1,6 +1,7 @@
 'use strict';
 
 var email_controller = require('../email/email.controller');
+var VerificationEmail = require('../email/templates/email.verification');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -131,19 +132,26 @@ export function validate_save(req, res) {
     // validate first
     var response = validate_user(req.body);
     if (response.status == 'ok') {
-        response.verified = false;
-        
+        response.user.verified = false;
+
         var newUser = new User(response.user);
         newUser.save()
         .then(function(user) {
-            var email_verification_link = "http://5pm.life/verify_email/" + user._id;
-
-            var email_body = "Dear " + user.first_name + ",\n\nThank you for becoming" +
-            " a member of 5PMLIFE!\n\nPlease click on the following link to verify your registration:"
-            + "\n\n" + email_verification_link + "\n\nAnd don't forget to RSVP to our events to get all the updates you need. We look forward to meeting you very soon!\n\nCheers,\n5PMLIFE Team";
-
-            email_controller.sendEmail(req.body.email_address, email_body);
-            console.log('User saved successfully');
+            console.log('Attempting to create user...');
+            var temp_user = {
+                id: user.id,
+                first_name: user.first_name,
+                verification_link: req.headers.origin + '/signup/verify/' + user.id
+            }
+            var email_content = {
+                to: req.body.email_address,
+                subject: '[5PMLIFE] Thank you for signing up!',
+                text: VerificationEmail.get_text_version(temp_user),
+                html: VerificationEmail.get_html_version(temp_user)
+            };
+            console.log(email_content);
+            email_controller.sendEmail(email_content);
+            console.log('User created successfully');
             return res.json({response: response});
         })
         .catch(function(err) {

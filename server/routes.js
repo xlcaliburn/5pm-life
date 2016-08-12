@@ -17,6 +17,7 @@ export default function(app) {
 	app.use('/api/users', require('./api/user'));
 	app.use('/api/email', require('./api/email'));
 	app.use('/api/signup', require('./api/signup'));
+	app.use('/api/signup/verify', require('./api/signup/verify'));
 
 	app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/activities', require('./api/activities/activities.routes.js'));
