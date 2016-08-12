@@ -6,29 +6,28 @@
 		<div class="col s6">
 			<h2>Enums</h2>
 			<div class="col s9 right-align">
-				<a class="btn-floating btn-small waves-effect waves-light green" ng-click="vm.createModal('tag')">
+				<a class="btn-floating btn-small waves-effect waves-light green" ng-click="vm.create_modal()">
 					<i class="material-icons">add</i>
 				</a>
 			</div>
 
-			<select 
-				ng-model="vm.selected_enum.type"
-				ng-options="enum as enum.type for enum in vm.enums track by enum.type">
-			</select>
-
-<!-- 			<table class="table table-striped col s9">
+			<table class="table table-striped col s9">
 				<thead>
 					<tr>
-						<th width="70%">Enum</th>
+						<th>Enum</th>
+						<th>Key</th>
+						<th>Value</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="enum in vm.enums">
-						<td>{{ enum }}</td>
-						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.deleteEnum(enum._id)"></td>
+					<tr ng-repeat="enum.list in enum in vm.enums">
+						<td>{{ enum.type }}</td>
+						<td>{{ enum.list.key }}</td>
+						<td>{{ enum.list.value }}</td>
+						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.delete_enum(enum._id)"></td>
 					</tr>
 				</tbody>
-			</table> -->
+			</table>
 		</div>
 	</div>
 </div>

@@ -8,11 +8,8 @@
 	function CreateEnumModalController ($uibModalInstance, Enums) {
 		var vm = this;
 		vm.enums = {};
-		vm.tagType = tagType;
-		vm.form_data = {};
-		vm.createType = null;
-		vm.enum_name = null;
 		vm.submit = submit;
+		vm.form_data = {};
 
 		init();
 
@@ -27,8 +24,8 @@
 		}
 
 		function submit() {
-			vm.form_data.enum_type = vm.tagType;
-			vm.form_data.enum_name = vm.enum_name;
+			vm.form_data.list = {};
+			vm.form_data.list[vm.form_data.key] = vm.form_data.value;
 
 			Enums.create(vm.form_data)
 				.success(function(data) {

@@ -20,6 +20,7 @@
 				.success(function(data) {
 					vm.enums = data;
 					materialize_select();
+					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -28,15 +29,16 @@
 
 		function delete_enum(id) {
 			Enums.delete(id)
-				.success(function() {
-					vm.get();
+				.success(function(data) {
+					vm.enums = data;
+					console.log(data);
 				});
 		}
 
 		function create_modal() {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/tags/modals/createEnumModalController.html',
+				templateUrl: 'app/admin/enums/modals/createEnumModal.html',
 				controller: 'CreateEnumModalController',
 				controllerAs: 'vm',
 				size: 'lg',
@@ -44,7 +46,7 @@
 			});
 
 			modalInstance.result.then(function() {
-				get();
+
 			}, function () {});			
 		}
 	}

@@ -6,10 +6,22 @@
 		<form class="col s12" name="create_form" ng-submit="vm.submit()">
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.enum_name" name="activity" type="text" class="validate">
-					<label for="activity">{{vm.title}} Name</label>
+					<input ng-model="vm.form_data.type" name="activity" type="text" class="validate">
+					<label for="activity">Enum Type</label>
 				</div>
 			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input ng-model="vm.form_data.key" name="key" type="text" class="validate">
+					<label for="activity">Key</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input ng-model="vm.form_data.value" name="value" type="text" class="validate">
+					<label for="activity">Value</label>
+				</div>
+			</div>			
 			<div class="row right-align">
 				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 					<i class="material-icons right">send</i>
