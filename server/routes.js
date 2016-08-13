@@ -19,7 +19,8 @@ export default function(app) {
 	app.use('/api/signup', require('./api/signup'));
 	app.use('/api/signup/verify', require('./api/signup/verify'));
 
-	app.use('/api/enums', require('./api/enums/enums.routes.js'));
+	//app.use('/api/enums', require('./api/enums/enums.routes.js'));
+	app.use('/api/enums', require('./api/enums'));
 	app.use('/api/activities', require('./api/activities/activities.routes.js'));
 	app.use('/api/venues', require('./api/venues/venues.routes.js'));
 	app.use('/api/admin', require('./api/admin/admin.routes.js'));

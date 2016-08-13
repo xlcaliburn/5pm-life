@@ -4,12 +4,6 @@ var ObjectId = Schema.ObjectId;
 
 module.exports = function(mongoose) {
 
-	var Enums = new Schema ({
-		type : String,
-		key : String,
-		value : Number
-	});
-
 	var Activity = new Schema ({
 		activity_name : String,
 		tags : [String],
@@ -80,7 +74,6 @@ module.exports = function(mongoose) {
 	});
 
 	var models = {
-		Enums : mongoose.model('Enums', Enums),
 		Activity: mongoose.model('Activity', Activity),
 		Venue : mongoose.model('Venue', Venue),
 		Event : mongoose.model('Event', Event),
