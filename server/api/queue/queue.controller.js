@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import Enums from './enums.model';
+import Queue from './queue.model';
 
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
@@ -51,24 +51,24 @@ function handleError(res, statusCode) {
 	};
 }
 
-// Gets a list of Enums
+// Gets a list of Queue
 export function index(req, res) {
-	return Enums.find().exec()
+	return Queue.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets a single Enums from the DB
+// Gets a single Queue from the DB
 export function show(req, res) {
-	return Enums.findById(req.params.id).exec()
+	return Queue.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets all enums of a certain type
+// Gets all Queue of a certain type
 export function getByType(req, res) {
-	return Enums.find({
+	return Queue.find({
 		type : req.params.type
 	}).exec()
 		.then(handleEntityNotFound(res))
@@ -76,28 +76,28 @@ export function getByType(req, res) {
 		.catch(handleError(res));
 }
 
-// Creates a new Enums in the DB
+// Creates a new Queue in the DB
 export function create(req, res) {
-	return Enums.create(req.body)
+	return Queue.create(req.body)
 		.then(respondWithResult(res, 201))
 		.catch(handleError(res));
 }
 
-// Updates an existing Enums in the DB
+// Updates an existing Queue in the DB
 export function update(req, res) {
 	if (req.body._id) {
 		delete req.body._id;
 	}
-	return Enums.findById(req.params.id).exec()
+	return Queue.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(saveUpdates(req.body))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Deletes a Enums from the DB
+// Deletes a Queue from the DB
 export function destroy(req, res) {
-	return Enums.findById(req.params.id).exec()
+	return Queue.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(removeEntity(res))
 		.catch(handleError(res));

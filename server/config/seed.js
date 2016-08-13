@@ -6,6 +6,7 @@
 'use strict';
 import User from '../api/user/user.model';
 import Enums from '../api/enums/enums.model';
+import Queue from '../api/queue/queue.model';
 
 User.find({}).remove()
 	.then(() => {
@@ -35,6 +36,20 @@ User.find({}).remove()
 		});
 	});
 
+Queue.find({}).remove()
+	.then(() => {
+		Queue.create({
+			user : "57af88c2e71a6cd05cad91cc",
+			status : 1
+		}, {
+			user : "57af88c2e71a6cd05cad91cc",
+			status : 1			
+		})
+		.then(() => {
+			console.log('Finished populating queue');
+		});
+	});
+
 Enums.find({}).remove()
 	.then(() => {
 		Enums.create({
@@ -47,24 +62,12 @@ Enums.find({}).remove()
 			value : 1
 		}, {
 			type : 'queue_status',
-			key : 'Inactive',
+			key : 'Searching',
 			value : 0
 		}, {
 			type : 'queue_status',
-			key : 'Searching',
-			value : 1
-		}, {
-			type : 'queue_status',
 			key : 'Pending Confirm',
-			value : 2,
-		}, {
-			type : 'queue_status',
-			key : 'In Event',
-			value : 3
-		}, {
-			type : 'queue_status',
-			key : 'Cancelled',
-			value : 4
+			value : 1,
 		})
 		.then(() => {
 			console.log('Finished populating enums');

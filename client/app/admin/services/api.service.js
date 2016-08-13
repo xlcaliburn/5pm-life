@@ -7,6 +7,9 @@
 				get : function() {
 					return $http.get('/api/users');
 				},
+				getUsersById : function(users) {
+					return $http.get('/api/users');
+				},
 				create : function(data) {
 					return $http.post('/api/users', data);
 				}
@@ -24,7 +27,7 @@
 					return $http.post('/api/queue', data);
 				},
 				updateQueueStatus : function (id, status) {
-
+					
 				}
 			};
 		})

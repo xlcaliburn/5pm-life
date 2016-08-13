@@ -32,6 +32,18 @@ export function index(req, res) {
 }
 
 /**
+ * Get users by id
+ */
+export function getUsersById(req, res) {
+	return User.find({_id : req.body.users}).exec()
+		.then(users => {
+			return res.status(200).json(users);
+		})
+		.catch(handleError(res));
+}
+
+
+/**
  * Creates a new user
  */
 export function create(req, res, next) {

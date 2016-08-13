@@ -1,4 +1,4 @@
-;var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
@@ -54,20 +54,6 @@ module.exports = function(mongoose) {
 		users : [ObjectId]
 	});
 
-	var Queue = new Schema ({
-		user : ObjectId,
-		status : Number, // 0 = None, 1 = Searching, 2 = Awaiting confirm, 3 = In an Event,
-		search_parameters : {
-			override_default : Boolean,
-			tags : [String],
-			event_search_dt_start : Date,
-			event_search_dt_end : Date,
-			city : String
-		},
-		queue_start_time : Date,
-		queue_end_time : Date
-	});
-
 	var AdminSettings = new Schema ({
 		setting : String,
 		value : String
@@ -77,7 +63,6 @@ module.exports = function(mongoose) {
 		Activity: mongoose.model('Activity', Activity),
 		Venue : mongoose.model('Venue', Venue),
 		Event : mongoose.model('Event', Event),
-		Queue : mongoose.model('Queue', Queue),
 		AdminSettings : mongoose.model('AdminSettings', AdminSettings)
 	};
 

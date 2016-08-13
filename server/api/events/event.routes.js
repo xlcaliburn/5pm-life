@@ -51,7 +51,7 @@ router.put('/:event_id', function(req, res) {
 	}, 
 	{ 
 		activity : req.body.activity,
-		venue : req.body.venue 
+		venue : req.body.venue
 	}, {} , function(err, data) {
 		if (err)
 			res.send(err);
