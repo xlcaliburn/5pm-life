@@ -16,10 +16,10 @@
 		init();
 
 		function init() {
-			Enums.getTags()
+			Enums.getByType('activity_tags')
 				.success(function(data) {
 					for(var tag in data) {
-						vm.validTags.push(data[tag].enum_name);
+						vm.validTags.push(data[tag].key);
 					}
 					newTags = $('#activity_tags').tags({
 						suggestions: vm.validTags,

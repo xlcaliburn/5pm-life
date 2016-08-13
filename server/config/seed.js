@@ -5,6 +5,7 @@
 
 'use strict';
 import User from '../api/user/user.model';
+import Enums from '../api/enums/enums.model';
 
 User.find({}).remove()
 	.then(() => {
@@ -34,35 +35,38 @@ User.find({}).remove()
 		});
 	});
 
-// Enums.find({}).remove();
-	// .then(() => {
-	// 	Enums.create({
-	// 		type : 'activity_tag',
-	// 		key : 'Active',
-	// 		value : 0
-	// 	}, {
-	// 		type : 'activity_tag',
-	// 		key : 'Social',
-	// 		value : 1
-	// 	}, {
-	// 		type : 'queue_status',
-	// 		key : 'Inactive',
-	// 		value : 0
-	// 	}, {
-	// 		type : 'queue_status',
-	// 		key : 'Searching',
-	// 		value : 1
-	// 	}, {
-	// 		type : 'queue_status',
-	// 		key : 'Pending Confirm',
-	// 		value : 2,
-	// 	}, {
-	// 		type : 'queue_status',
-	// 		key : 'In Event',
-	// 		value : 3
-	// 	}, {
-	// 		type : 'queue_status',
-	// 		key : 'Cancelled',
-	// 		value : 4
-	// 	});
-	// });
+Enums.find({}).remove()
+	.then(() => {
+		Enums.create({
+			type : 'activity_tag',
+			key : 'Active',
+			value : 0
+		}, {
+			type : 'activity_tag',
+			key : 'Social',
+			value : 1
+		}, {
+			type : 'queue_status',
+			key : 'Inactive',
+			value : 0
+		}, {
+			type : 'queue_status',
+			key : 'Searching',
+			value : 1
+		}, {
+			type : 'queue_status',
+			key : 'Pending Confirm',
+			value : 2,
+		}, {
+			type : 'queue_status',
+			key : 'In Event',
+			value : 3
+		}, {
+			type : 'queue_status',
+			key : 'Cancelled',
+			value : 4
+		})
+		.then(() => {
+			console.log('Finished populating enums');
+		});
+	});
