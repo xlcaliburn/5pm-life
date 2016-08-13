@@ -258,6 +258,9 @@
                 tab_button = angular.element('a[href="#personal-details"]');
             } else if (stage == 3) {
                 tab_button = angular.element('a[href="#account-settings"]');
+                $timeout(function() {
+                    angular.element('input[stage="email_address"]').focus();
+                }, 300);
             }
             if (tab_button) {
                 tab_button.parent().removeClass('disabled');

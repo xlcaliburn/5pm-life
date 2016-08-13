@@ -121,13 +121,6 @@ function valid_email(email_address) {
     return re.test(email_address);
 }
 
-function validationError(res, statusCode) {
-	statusCode = statusCode || 422;
-	return function(err) {
-		res.status(statusCode).json(err);
-	};
-}
-
 export function validate_save(req, res) {
     // validate first
     var response = validate_user(req.body);

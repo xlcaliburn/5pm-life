@@ -61,6 +61,14 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'verify'
 		})
 
+		.state('recovery', {
+			url: '/recovery',
+			title: 'Forgot Password',
+			templateUrl: 'app/account/recovery/recovery.html',
+			controller: 'RecoveryController',
+			controllerAs: 'recovery'
+		})
+
 		.state('admin', {
 			url: '/admin',
 			templateUrl: 'app/admin/admin.html'

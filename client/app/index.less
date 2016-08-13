@@ -51,7 +51,6 @@ Add global styles here.*/
 .turq { color: @turq; }
 .green { color: @green; }
 .darkgrey { color: @darkgrey; }
-.uppergrey { color: @uppergrey; }
 .middlegrey { color: @middlegrey; }
 .lightgrey { color: @lightgrey; }
 .bgcolor { color: @BGcolor; }
@@ -68,6 +67,7 @@ Add global styles here.*/
 .pink-font { color: @pink; }
 .aqua-font { color: @aqua; }
 .babyblue-font { color: @babyblue; }
+.uppergrey-font { color: @uppergrey; }
 
 .bg-teal { background-color: @teal; }
 
@@ -77,6 +77,9 @@ Add global styles here.*/
 .medium { font-weight: 500; }
 .bold { font-weight: 700; }
 .xbold { font-weight: 900; }
+
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
 
 .no-decor {
     text-decoration: none;
@@ -235,6 +238,7 @@ i {
 
 /* inject:less */
 @import 'account/login/login';
+@import 'account/recovery/recovery';
 @import 'account/signup/signup';
 @import 'admin/admin';
 @import 'main/event/event';

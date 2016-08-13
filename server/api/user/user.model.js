@@ -39,6 +39,7 @@ var UserSchema = new Schema({
 			}
 		}
 	},
+	password_reset: Boolean,
 	provider: String,
 	salt: String,
 	facebook: {},

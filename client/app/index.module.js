@@ -14,6 +14,7 @@
 		'validation.match',
 		'EmailService',
 		'720kb.datepicker',
-		'SignupService'
+		'SignupService',
+		'RecoveryService'
 	]);
 })();

@@ -95,7 +95,7 @@
                                 <input class="signup-birthday valign" type="text" placeholder="Day" maxlength="2" ng-model="signup.birthday.day">
 
                                 <!-- year -->
-                                <input class="signup-birthyear valign" type="text" placeholder="Year" maxlength="4" ng-model="signup.birthday.year">
+                                <input class="signup-birthyear valign" type="text" placeholder="Year" maxlength="4" ng-model="signup.birthday.year" ng-keypress="($event.which === 13 || $event.which === 32) && signup.validate()">
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
 
                             <!-- ethnicity && gender -->
                             <div class="valign-wrapper" ng-if="stage.type == 'select'">
-                                <select ng-model="signup[stage.key]" class="browser-default signup-select valign">
+                                <select ng-model="signup[stage.key]" class="browser-default signup-select valign" ng-keypress="($event.which === 13 || $event.which === 32) && signup.validate()">
                                     <option value="" disabled selected>Select {{ stage.value }}</option>
                                     <option ng-repeat="data in stage.data" value="{{ data }}">{{ data }}</option>
                                 </select>
@@ -126,7 +126,7 @@
                         <div class="col l4 m6 s12 valign signup-inputs">
 
                             <!-- email -->
-                            <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]">
+                            <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]" stage="{{stage.key}}">
 
                             <!-- password, confirm password -->
                             <input ng-if="stage.type == 'password'" type="password" class="signup-input" ng-model="signup[stage.key]">

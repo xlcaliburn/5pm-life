@@ -15,9 +15,10 @@ export default function(app) {
 	// Insert routes below
 	app.use('/api/things', require('./api/thing')); // to delete
 	app.use('/api/users', require('./api/user'));
-	app.use('/api/email', require('./api/email'));
-	app.use('/api/signup', require('./api/signup'));
-	app.use('/api/signup/verify', require('./api/signup/verify'));
+	app.use('/api/email', require('./api/email')); // generic send email
+	app.use('/api/signup', require('./api/signup')); // signup
+	app.use('/api/signup/verify', require('./api/signup/verify')); // verify email
+	app.use('/api/recovery', require('./api/recovery')); // reset password
 
 	//app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/enums', require('./api/enums'));
