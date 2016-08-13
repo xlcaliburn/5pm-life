@@ -24,16 +24,11 @@
 		}
 
 		function submit() {
-			vm.form_data.list = {};
-			vm.form_data.list[vm.form_data.key] = vm.form_data.value;
-
 			Enums.create(vm.form_data)
 				.success(function(data) {
 					vm.form_data = {};
 					$uibModalInstance.close(data);					
 				});
-
-			$uibModalInstance.close();
 		}
 	}
 })();

@@ -20,10 +20,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="enum.list in enum in vm.enums">
+					<tr ng-repeat="enum in vm.enums">
 						<td>{{ enum.type }}</td>
-						<td>{{ enum.list.key }}</td>
-						<td>{{ enum.list.value }}</td>
+						<td>{{ enum.key }}</td>
+						<td>{{ enum.value }}</td>
 						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.delete_enum(enum._id)"></td>
 					</tr>
 				</tbody>

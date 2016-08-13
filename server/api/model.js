@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+;var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
@@ -6,7 +6,8 @@ module.exports = function(mongoose) {
 
 	var Enums = new Schema ({
 		type : String,
-		list : {}
+		key : String,
+		value : Number
 	});
 
 	var Activity = new Schema ({

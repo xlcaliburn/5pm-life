@@ -20,7 +20,6 @@
 				.success(function(data) {
 					vm.enums = data;
 					materialize_select();
-					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -31,7 +30,6 @@
 			Enums.delete(id)
 				.success(function(data) {
 					vm.enums = data;
-					console.log(data);
 				});
 		}
 
@@ -45,8 +43,8 @@
 				resolve: {}
 			});
 
-			modalInstance.result.then(function() {
-
+			modalInstance.result.then(function(data) {
+				vm.enums = data;
 			}, function () {});			
 		}
 	}

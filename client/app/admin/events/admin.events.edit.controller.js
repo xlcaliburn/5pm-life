@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $stateParams, $timeout, Events, Venues, Activities, Users) {
+	function EditEventController ($scope, $q, $state, $stateParams, $timeout, Queue, Events, Venues, Activities, Users) {
 		var vm = this;
 		vm.selectedEvent = {};
 		vm.allowed_activities = {};
@@ -72,16 +72,16 @@
 		}
 
 		function updateUserStatus() {
-			for (var q in vm.queue)
-			{
-				Queue.updateQueueStatus(q._id, 2)
-					.success(function(data) {
-						vm.queue = data;
-					})
-					.error(function(data) {
-						console.log('Error: ' + data);
-					});
-			}
+			// for (var q in vm.queue)
+			// {
+			// 	Queue.updateQueueStatus(q._id, 2)
+			// 		.success(function(data) {
+			// 			vm.queue = data;
+			// 		})
+			// 		.error(function(data) {
+			// 			console.log('Error: ' + data);
+			// 		});
+			// }
 		}
 
 		function notifyUser() {

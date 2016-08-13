@@ -15,9 +15,9 @@ router.get('/', function(req,res) {
 
 router.post('/', function(req, res) {
 		Enums.create({
-				type : req.body.type,
-				list : req.body.list
-				
+				type : req.body.type.toLowerCase(),
+				key : req.body.key,
+				value : req.body.value
 		 }, function(err, data) {
 			if (err)
 				res.send(err);
