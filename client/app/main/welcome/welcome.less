@@ -12,7 +12,7 @@
   height: 50px;
   width: 50px;
   position: fixed;
-  border-radius: 15px;
+  border-radius: 50%;
   bottom: 40px;
   right: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
@@ -21,7 +21,7 @@
   text-align: center;
   color: #ffffff !important;
   white-space: nowrap;
-  background: rgba(232, 98, 86, 0.8) url(../img/cd-top-arrow.svg) no-repeat center 50%;
+  background-color: rgba(228, 60, 92, 0.8);
   visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity .3s 0s, visibility 0s .3s;
@@ -44,9 +44,18 @@
   opacity: .5;
 }
 
+.cd-top>i {
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 2px
+}
+
 /* Welcome landing
 ===========================================================*/
 .welcome-landing {
+    position: relative;
     background-image: url('../../assets/images/home-bg.jpg');
     background-repeat: no-repeat;
     background-position: top center;
@@ -70,13 +79,12 @@
     text-align: center;
     text-transform: uppercase;
     color: @white;
-    font-weight: 300;
+    font-weight: 700;
     font-size: 14px;
     letter-spacing: 1px;
 }
 
 .welcome-signup-button {
-    border-radius: 2px;
     border: 2px solid @white;
     padding: 8px 30px;
     margin-right: 50px;
@@ -131,6 +139,28 @@
     -webkit-box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 6px 15px 0px rgba(0,0,0,0.75);
+}
+
+.home-arrow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px 0;
+    width: 100%;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#bf000000',GradientType=0 ); /* IE6-9 */
+}
+
+.home-arrow>i {
+    font-size: 40px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.home-arrow>i:hover {
+    opacity: 1;
 }
 
 /* Welcome Info
@@ -300,7 +330,6 @@
 @media screen and (max-width: 992px) {
 
     .welcome-description {
-        margin-top: 25%;
         font-size: 40px;
     }
 }
@@ -351,7 +380,6 @@
     }
 
     .welcome-description {
-        margin-top: 30%;
         font-size: 30px;
     }
 

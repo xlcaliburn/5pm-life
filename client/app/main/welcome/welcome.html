@@ -1,6 +1,5 @@
 <!-- Welcome page -->
-<a href="#0" class="cd-top"><span class="glyphicon glyphicon-chevron-up" style='top: 50%;
-    transform: translateY(-50%); margin-left:3px'></span></a>
+<a href="#0" class="cd-top"><i class="material-icons">keyboard_arrow_up</i></a>
 <div class="welcome-section" style="overflow-x: hidden;">
 
     <!-- landing section -->
@@ -35,10 +34,15 @@
 
                 <!-- discover button -->
                 <div class="welcome-discover col l12 m12 s12">
-                    <a class="welcome-discover-button" ng-click="welcome.discover()">discover</a>
+                    <a class="welcome-discover-button" href="/signup">get started</a>
                 </div>
             </div>
 
+        </div>
+
+        <!-- welcome arrow -->
+        <div class="home-arrow align-center">
+            <i class="material-icons white-font" ng-click="welcome.discover()">keyboard_arrow_down</i>
         </div>
     </div>
 
