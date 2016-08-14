@@ -33,7 +33,7 @@
 		<h3>Users</h3>
 		<div class="table-container">
 			<div class="section" style="float:right">
-				<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createModal()">
+				<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
 					<i class="material-icons">add</i>
 				</a>
 			</div>
@@ -48,8 +48,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in vm.user_queue">
-						<td>{{user.first_name + " " + user.last_name}}</td>
+					<tr ng-repeat="queue in vm.user_queue">
+						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -65,7 +65,7 @@
 
 		<div class="section">
 			<div class="row right-align">
-				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+				<button class="btn waves-effect waves-light" type="submit" name="action">Save
 					<i class="material-icons right">send</i>
 				</button>
 			</div>

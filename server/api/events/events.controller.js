@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import Enums from './enums.model';
+import Events from './events.model';
 
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
@@ -16,7 +16,7 @@ function respondWithResult(res, statusCode) {
 function respondWithAll(res, statusCode) {
 	statusCode = statusCode || 200;
 	return function(entity) {
-		return Enums.find().exec()
+		return events.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 	}
@@ -58,24 +58,24 @@ function handleError(res, statusCode) {
 	};
 }
 
-// Gets a list of Enums
+// Gets a list of events
 export function index(req, res) {
-	return Enums.find().exec()
+	return events.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets a single Enums from the DB
+// Gets a single events from the DB
 export function show(req, res) {
-	return Enums.findById(req.params.id).exec()
+	return events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets all enums of a certain type
+// Gets all events of a certain type
 export function getByType(req, res) {
-	return Enums.find({
+	return events.find({
 		type : req.params.type
 	}).exec()
 		.then(handleEntityNotFound(res))
@@ -83,28 +83,28 @@ export function getByType(req, res) {
 		.catch(handleError(res));
 }
 
-// Creates a new Enums in the DB
+// Creates a new events in the DB
 export function create(req, res) {
-	return Enums.create(req.body)
+	return events.create(req.body)
 		.then(respondWithAll(res, 201))
 		.catch(handleError(res));
 }
 
-// Updates an existing Enums in the DB
+// Updates an existing events in the DB
 export function update(req, res) {
 	if (req.body._id) {
 		delete req.body._id;
 	}
-	return Enums.findById(req.params.id).exec()
+	return events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(saveUpdates(req.body))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Deletes a Enums from the DB
+// Deletes a events from the DB
 export function destroy(req, res) {
-	return Enums.findById(req.params.id).exec()
+	return events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(removeEntity(res))
 		.catch(handleError(res));

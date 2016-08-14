@@ -3,9 +3,9 @@
 
 	angular
 		.module('fivepmApp.admin')
-		.controller('EventModalController', EventModalController);
+		.controller('EventAddUsersModalController', EventAddUsersModalController);
 
-	function EventModalController ($q, $timeout, $uibModalInstance, Users, Queue, Events, Venues, Activities) {
+	function EventAddUsersModalController ($q, $timeout, $uibModalInstance, Users, Queue, Events, selectedQueue) {
 		var vm = this;
 		vm.queue = {};
 		vm.submit = submit;
@@ -18,35 +18,25 @@
 			Queue.get()
 				.success(function(data) {
 					vm.queue = data;
-					
-					for(var o in vm.queue) {
-						queueArray.push(dataObject[o]);
-					}				
+					//console.log(data);
+					// for(var o in vm.queue) {
+					// 	queueArray.push(dataObject[o]);
+					// }				
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
 
-			Users.getUsersById(queueArray)
-				.success(function(data) {
-					console.log(data);
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
-		}
+		} 
 
-		function init_materialize() {
-			$timeout(function() {materialize_select();});
-		}
+		function addUser() {
 
-		function submit() {
-			vm.selectedEvent.dt_search_start = new Date().getTime();
-			Events.create(vm.selectedEvent)
-				.success(function(data) {
-					vm.selectedEvent = {};
-					$uibModalInstance.close(data);
-				});
+			
+			// (vm.selectedEvent)
+			// 	.success(function(data) {
+			// 		vm.selectedEvent = {};
+			// 		$uibModalInstance.close(data);
+			// 	});
 		}
 	}
 

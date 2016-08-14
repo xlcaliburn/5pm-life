@@ -1,4 +1,4 @@
-(function () {
+	(function () {
 	'use strict';
 
 	angular
@@ -18,11 +18,13 @@
 		init();
 
 		function init() {
-			Enums.getByType('activity_tags')
+			Enums.getByType('activity_tag')
 				.success(function(data) {
+					console.log(data);
 					for(var tag in data) {
 						validTags.push(data[tag].key);
 					}
+					console.log(validTags);
 					newTags = $('#activity_tags').tags({
 						suggestions: validTags,
 						restrictTo: validTags,

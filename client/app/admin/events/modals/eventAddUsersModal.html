@@ -2,33 +2,35 @@
 	<h3 class="modal-title">Add Users to Event</h3>
 </div>
 <div class="modal-body">
-	<div class="row">
-		<form class="col s12" name="createForm" ng-submit="vm.submit()">
-			<div class="row">
-				<div class="input-field col s12">
-				<select 
-					ng-model="vm.selectedEvent.activity"
-					ng-options="activity as activity.activity_name for activity in vm.allowedActivities track by activity.activity_name">
-				</select>
+<form>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Activity Tags</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Queue Time (mins)</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="queue in vm.queue">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
 
-					<label>Activity</label>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="input-field col s12">
-					<select 
-						ng-model="vm.selectedEvent.venue"
-						ng-options="venue as venue.venue_name for venue in vm.allowedVenues track by venue.venue_name">
-					</select>
-					<label>Venue</label>
-				</div>
-			</div>
-			<div class="row right-align">
-				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
-					<i class="material-icons right">send</i>
-				</button>
-			</div>	
-		</form>
-	</div>
+				</td>
+				<td>
+					<p>
+						<input type="checkbox" id="test5" />
+						<label for="test5">Red</label>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</form>
 </div>

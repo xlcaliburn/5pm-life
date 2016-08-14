@@ -16,7 +16,7 @@
 		init();
 
 		function init() {
-			Enums.getByType('activity_tags')
+			Enums.getByType('activity_tag')
 				.success(function(data) {
 					for(var tag in data) {
 						vm.validTags.push(data[tag].key);

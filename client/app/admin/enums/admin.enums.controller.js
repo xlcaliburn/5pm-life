@@ -45,7 +45,7 @@
 
 			modalInstance.result.then(function(data) {
 				vm.enums = data;
-			}, function () {});			
+			});			
 		}
 	}
 })();
