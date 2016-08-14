@@ -69,6 +69,14 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'recovery'
 		})
 
+		.state('resetpassword', {
+			url: '/passwordreset/:id',
+			title: 'Reset Password',
+			templateUrl: 'app/account/resetpassword/resetpassword.html',
+			controller: 'ResetPasswordController',
+			controllerAs: 'reset'
+		})
+
 		.state('admin', {
 			url: '/admin',
 			templateUrl: 'app/admin/admin.html'

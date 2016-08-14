@@ -18,14 +18,15 @@ export default function(app) {
 	app.use('/api/email', require('./api/email')); // generic send email
 	app.use('/api/signup', require('./api/signup')); // signup
 	app.use('/api/signup/verify', require('./api/signup/verify')); // verify email
-	app.use('/api/recovery', require('./api/recovery')); // reset password
+	app.use('/api/recovery', require('./api/recovery')); // verify reset password
+	app.use('/api/resetpassword', require('./api/recovery/resetpassword')); // change password
 
 	//app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/enums', require('./api/enums'));
 	app.use('/api/activities', require('./api/activities/activities.routes.js'));
 	app.use('/api/venues', require('./api/venues/venues.routes.js'));
 	app.use('/api/admin', require('./api/admin/admin.routes.js'));
-	app.use('/api/events', require('./api/events'));
+	app.use('/api/events', require('./api/events/event.routes.js'));
 	app.use('/api/queue', require('./api/queue'));
 
 	app.use('/auth', require('./auth').default);

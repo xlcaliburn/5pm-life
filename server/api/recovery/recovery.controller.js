@@ -1,7 +1,7 @@
 'use strict';
 
 var email_controller = require('../email/email.controller');
-var VerificationEmail = require('../email/templates/email.verification');
+var ResetPasswordEmail = require('../email/templates/email.passwordrecovery');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -29,7 +29,7 @@ function catch_error(err) {
     return response;
 }
 
-export function reset_password(req, res) {
+export function send_reset_link(req, res) {
     var result = validate_reset(req.body);
     var email_address = req.body.email_address;
     var response = {};
@@ -46,8 +46,21 @@ export function reset_password(req, res) {
             else {
                 user.password_reset = true;
                 user.save()
-                .then(function() {
+                .then(function(user) {
                     response.status = 'ok';
+
+                    // send email to user with new link
+                    var user_details = {
+                        first_name: user.first_name,
+                        password_recovery_link: req.headers.origin + '/passwordreset/' + user.id
+                    };
+                    var email_content = {
+                        to: user.email,
+                        subject: '[5PMLIFE] Reset Password',
+                        text: ResetPasswordEmail.get_text_version(user_details),
+                        html: ResetPasswordEmail.get_html_version(user_details)
+                    };
+                    email_controller.sendEmail(email_content);
                     return res.json({ response: response });
                 })
                 .catch(function(err) {

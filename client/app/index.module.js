@@ -15,6 +15,7 @@
 		'EmailService',
 		'720kb.datepicker',
 		'SignupService',
-		'RecoveryService'
+		'RecoveryService',
+		'PasswordResetService'
 	]);
 })();

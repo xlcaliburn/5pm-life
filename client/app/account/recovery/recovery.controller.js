@@ -19,6 +19,7 @@
         // function headers
         vm.validate_email = validate_email;
         vm.reset_password = reset_password;
+        vm.verified = false;
 
         /* class functions
         *************************************************/
@@ -41,15 +42,14 @@
             };
 
             RecoveryService.resetPassword(data).then(function(res) {
-                console.log(res);
                 reset_button.html('RESET PASSWORD');
                 reset_button.attr('disabled', '');
 
                 var res_data = res.data.response;
-                if (res_data.status == 'ok') {
-                    console.log('password reset enabled');
-                } else if (res_data.status == 'error') {
+                if (res_data.status == 'error') {
                     vm.error_message = res_data.error_message;
+                } else if (res_data.status == 'ok') {
+                    vm.verified = true;
                 }
             });
         }

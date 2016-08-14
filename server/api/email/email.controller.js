@@ -5,7 +5,7 @@ var nodemailer = require("nodemailer");
 var smtp_transport = require('nodemailer-smtp-transport');
 
 export function sendEmail(email_content) {
-    console.log('Attempting to send email to', email_content.to);
+    console.log('Attempting to send email to', email_content.to, '...');
 
     // trying nodemailer
     var transporter = nodemailer.createTransport(smtp_transport({

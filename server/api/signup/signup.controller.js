@@ -130,7 +130,6 @@ export function validate_save(req, res) {
         var newUser = new User(response.user);
         newUser.save()
         .then(function(user) {
-            console.log('Attempting to create user...');
             var temp_user = {
                 id: user.id,
                 first_name: user.first_name,
@@ -142,9 +141,7 @@ export function validate_save(req, res) {
                 text: VerificationEmail.get_text_version(temp_user),
                 html: VerificationEmail.get_html_version(temp_user)
             };
-            console.log(email_content);
             email_controller.sendEmail(email_content);
-            console.log('User created successfully');
             return res.json({response: response});
         })
         .catch(function(err) {
