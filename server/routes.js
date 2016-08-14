@@ -26,7 +26,7 @@ export default function(app) {
 	app.use('/api/activities', require('./api/activities/activities.routes.js'));
 	app.use('/api/venues', require('./api/venues/venues.routes.js'));
 	app.use('/api/admin', require('./api/admin/admin.routes.js'));
-	app.use('/api/events', require('./api/events/event.routes.js'));
+	app.use('/api/events', require('./api/events'));
 	app.use('/api/queue', require('./api/queue'));
 
 	app.use('/auth', require('./auth').default);
