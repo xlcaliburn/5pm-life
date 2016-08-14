@@ -16,6 +16,7 @@
 		'720kb.datepicker',
 		'SignupService',
 		'RecoveryService',
-		'PasswordResetService'
+		'PasswordResetService',
+		'NavbarService'
 	]);
 })();

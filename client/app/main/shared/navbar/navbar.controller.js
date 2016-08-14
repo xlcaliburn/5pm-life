@@ -7,10 +7,18 @@
     .controller('NavbarController', NavbarController);
 
     /** @ngInject */
-    function NavbarController($sce, $timeout) {
+    function NavbarController($cookies, $sce, $timeout, NavbarService) {
 
         /* jshint expr: true */
         var vm = this;
+
+        var token = $cookies.get('token');
+        var token_data = {
+            token: token
+        };
+        NavbarService.getToken(token_data).then(function(res) {
+            console.log(res);
+        });
 
         // model
         vm.steps = [
@@ -175,6 +183,7 @@
 
         // confirm information before submitting
         vm.toggle_confirm_information = function() {
+
             // change status and title
             vm.confirm = !vm.confirm;
             if (vm.confirm) { vm.status_title = 'CONFIRM EVENT PREFERENCES'; }
