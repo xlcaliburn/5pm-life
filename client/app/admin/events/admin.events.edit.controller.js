@@ -40,7 +40,7 @@
 
 			Events.getById($stateParams.event_id)
 				.success(function(data) {
-					vm.selectedEvent = data[0];
+					vm.selectedEvent = data;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);

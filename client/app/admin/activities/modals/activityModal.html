@@ -6,7 +6,7 @@
 		<form class="col s12" name="create_form" ng-submit="vm.submit()">
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.create_form.activity_name" name="activity" type="text" class="validate">
+					<input ng-model="vm.create_form.activity_name" name="activity" type="text" class="validate" required>
 					<label for="activity">Activity Name</label>
 				</div>
 			</div>		
@@ -18,7 +18,7 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s12">
-					<input ng-model="vm.create_form.allowed_capacity" name="allowed_capacity" type="number" class="validate">
+					<input ng-model="vm.create_form.allowed_capacity" name="allowed_capacity" type="number" class="validate" required>
 					<label for="allowed_capacity">Capacity</label>
 				</div>
 			</div>

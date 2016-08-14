@@ -20,7 +20,6 @@
 		function init() {
 			Enums.getByType('activity_tag')
 				.success(function(data) {
-					console.log(data);
 					for(var tag in data) {
 						validTags.push(data[tag].key);
 					}

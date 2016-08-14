@@ -4,12 +4,11 @@
 	angular.module('fivepmApp.admin')
 		.controller('AdminVenuesController', AdminVenuesController);
 
-	function AdminVenuesController ($scope, $http, Venues) {
+	function AdminVenuesController ($scope, $http, $uibModal, Venues) {
 		var vm = this;
 		vm.venues = {};
-		vm.createVenue = createVenue;
-		vm.deleteVenue = deleteVenue;
-		vm.formData = {};
+		vm.delete_venue = deleteVenue;
+		vm.create_modal = create_modal;
 
 		Venues.get()
 			.success(function(data) {
@@ -19,22 +18,26 @@
 				console.log('Error: ' + data);
 			});
 
-		function createVenue() {
-			if (!$.isEmptyObject(vm.formData)) {
-				
-				Venues.create(vm.formData)
-					.success(function(data) {
-						vm.formData = {};
-						vm.venues = data;
-				});
-			}
-		}
-
 		function deleteVenue(id) {
 			Venues.delete(id)
 				.success(function(data) {
 					vm.venues = data;
 				});
 		}
+
+		function create_modal() {
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'app/admin/venues/modals/createVenueModal.html',
+				controller: 'CreateVenueModalController',
+				controllerAs: 'vm',
+				size: 'lg',
+				resolve: {}
+			});
+
+			modalInstance.result.then(function(data) {
+				vm.venues = data;
+			});			
+		}		
 	}
 })();

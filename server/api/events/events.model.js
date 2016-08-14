@@ -5,18 +5,32 @@ import {Schema} from 'mongoose';
 
 var ObjectId = Schema.ObjectId;
 
-var QueueSchema = new Schema({
-		user : { type : Schema.Types.ObjectId, ref : 'User'},
-		status : Number, // 0 = Searching, 1 = Awaiting confirm
-		search_parameters : {
-			override_default : Boolean,
-			tags : [String],
-			event_search_dt_start : Date,
-			event_search_dt_end : Date,
-			city : String
-		},
-		queue_start_time : Date,
-		queue_end_time : Date
+var EventsSchema = new Schema({
+	activity : {
+		activity_name : String,
+		tags : [String],
+		allowed_capacity : Number,
+		required_equipment : [String]
+	},
+	venue : {
+		venue_name: String,
+		activity: [{
+			activity_name : String
+		}],
+		address: {
+			street: String,
+			city: String,
+			province: String,
+			postal_code: String,
+			country: String
+		}
+	},
+	dt_search_start : Date,
+	dt_search_end : Date,
+	dt_start : Date,
+	dt_end : Date,
+	status : String,
+	users : [ObjectId]
 });
 
-export default mongoose.model('Queue', QueueSchema);
+export default mongoose.model('Events', EventsSchema);

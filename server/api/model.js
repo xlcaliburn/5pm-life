@@ -26,34 +26,6 @@ module.exports = function(mongoose) {
 		max_capacity : Number
 	});
 
-	var Event = new Schema ({
-		activity : {
-			activity_name : String,
-			tags : [String],
-			allowed_capacity : Number,
-			required_equipment : [String]
-		},
-		venue : {
-			venue_name: String,
-			activity: [{
-				activity_name : String
-			}],
-			address: {
-				street: String,
-				city: String,
-				province: String,
-				postal_code: String,
-				country: String
-			}
-		},
-		dt_search_start : Date,
-		dt_search_end : Date,
-		dt_start : Date,
-		dt_end : Date,
-		status : String,
-		users : [ObjectId]
-	});
-
 	var AdminSettings = new Schema ({
 		setting : String,
 		value : String
@@ -62,7 +34,6 @@ module.exports = function(mongoose) {
 	var models = {
 		Activity: mongoose.model('Activity', Activity),
 		Venue : mongoose.model('Venue', Venue),
-		Event : mongoose.model('Event', Event),
 		AdminSettings : mongoose.model('AdminSettings', AdminSettings)
 	};
 

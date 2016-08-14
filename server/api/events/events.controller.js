@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import Events from './events.model';
+import Events from './Events.model';
 
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
@@ -16,7 +16,7 @@ function respondWithResult(res, statusCode) {
 function respondWithAll(res, statusCode) {
 	statusCode = statusCode || 200;
 	return function(entity) {
-		return events.find().exec()
+		return Events.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 	}
@@ -58,53 +58,43 @@ function handleError(res, statusCode) {
 	};
 }
 
-// Gets a list of events
+// Gets a list of Events
 export function index(req, res) {
-	return events.find().exec()
+	return Events.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets a single events from the DB
+// Gets a single event from the DB
 export function show(req, res) {
-	return events.findById(req.params.id).exec()
+	return Events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets all events of a certain type
-export function getByType(req, res) {
-	return events.find({
-		type : req.params.type
-	}).exec()
-		.then(handleEntityNotFound(res))
-		.then(respondWithResult(res))
-		.catch(handleError(res));
-}
-
-// Creates a new events in the DB
+// Creates a new Events in the DB
 export function create(req, res) {
-	return events.create(req.body)
+	return Events.create(req.body)
 		.then(respondWithAll(res, 201))
 		.catch(handleError(res));
 }
 
-// Updates an existing events in the DB
+// Updates an existing Events in the DB
 export function update(req, res) {
 	if (req.body._id) {
 		delete req.body._id;
 	}
-	return events.findById(req.params.id).exec()
+	return Events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(saveUpdates(req.body))
-		.then(respondWithResult(res))
+		.then(respondWithAll(res, 200))
 		.catch(handleError(res));
 }
 
-// Deletes a events from the DB
+// Deletes a Events from the DB
 export function destroy(req, res) {
-	return events.findById(req.params.id).exec()
+	return Events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(removeEntity(res))
 		.catch(handleError(res));
