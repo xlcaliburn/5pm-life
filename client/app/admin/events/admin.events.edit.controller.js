@@ -15,6 +15,7 @@
 		vm.user_queue = {};
 		vm.submit = submit;
 		vm.queue = {};
+		vm.event_id = $stateParams.event_id;
 
 		init();
 
@@ -38,7 +39,7 @@
 					console.log('Error: ' + data);
 				});
 
-			Events.getById($stateParams.event_id)
+			Events.getById(vm.event_id)
 				.success(function(data) {
 					vm.selectedEvent = data;
 				})
@@ -56,6 +57,7 @@
 				controllerAs:'vm', 
 				size: 'lg',
 				resolve: {
+					eventId : function() { return vm.event_id; }
 				}
 			});
 

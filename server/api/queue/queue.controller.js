@@ -61,10 +61,11 @@ export function addToQueue(req, res) {
 	return res.json({ user_id: decoded_user._id });
 }
 
-
 // Gets a list of Queue
 export function index(req, res) {
-	return Queue.find().exec()
+	return Queue.find()
+		.populate('user', 'email first_name last_name role')
+		.exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
@@ -72,16 +73,6 @@ export function index(req, res) {
 // Gets a single Queue from the DB
 export function show(req, res) {
 	return Queue.findById(req.params.id).exec()
-		.then(handleEntityNotFound(res))
-		.then(respondWithResult(res))
-		.catch(handleError(res));
-}
-
-// Gets all Queue of a certain type
-export function getByType(req, res) {
-	return Queue.find({
-		type : req.params.type
-	}).exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
