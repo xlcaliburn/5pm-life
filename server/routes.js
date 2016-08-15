@@ -22,7 +22,7 @@ export default function(app) {
 	app.use('/api/resetpassword', require('./api/recovery/resetpassword')); // change password
 
 	// queue routes
-	app.use('/api/queue/add', require('./api/queue/add'));
+	app.use('/api/queue/add', require('./api/queue/process'));
 
 	//app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/enums', require('./api/enums'));

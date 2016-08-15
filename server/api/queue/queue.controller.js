@@ -2,7 +2,6 @@
 
 import _ from 'lodash';
 import Queue from './queue.model';
-import jwt from 'jsonwebtoken';
 import config from '../../config/environment';
 
 function respondWithResult(res, statusCode) {
@@ -51,14 +50,6 @@ function handleError(res, statusCode) {
 	return function(err) {
 		res.status(statusCode).send(err);
 	};
-}
-
-// add to queue
-export function addToQueue(req, res) {
-	var token = req.body.token;
-	var decoded_user = jwt.verify(token, config.secrets.session);
-	
-	return res.json({ user_id: decoded_user._id });
 }
 
 // Gets a list of Queue
