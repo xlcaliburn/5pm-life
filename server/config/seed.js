@@ -66,8 +66,12 @@ Enums.find({}).remove()
 			value : 0
 		}, {
 			type : 'queue_status',
-			key : 'Pending Confirm',
+			key : 'Pending',
 			value : 1,
+		}, {
+			type : 'queue_status',
+			key : 'Pending User Confirm',
+			value : 2,
 		})
 		.then(() => {
 			console.log('Finished populating enums');

@@ -19,7 +19,7 @@ function respondWithAll(res, statusCode) {
 		return Enums.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
-	}
+	};
 }
 
 function saveUpdates(updates) {

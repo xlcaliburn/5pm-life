@@ -7,65 +7,57 @@
 
 	function EventAddUsersModalController ($uibModalInstance, Users, Queue, Events, eventId) {
 		var vm = this;
-		vm.queue = {};
+		vm.event = {}; 
+		vm.queues = {}; // Get all valid queues
 		vm.submit = submit;
-		var queueArray = [];
-		vm.users = [];
+		vm.getAge = getAge;
+		vm.selected_queue = []; // Get queues to add to event
+
 		init();
 
 		function init() {
-
-			Users.get()
-			.success(function(data) {
-				vm.users = data;
-
-			var test = {};
-			test.user = vm.users[0]._id;
-			test.status = 1;
-			test.search_parameters = {};
-			test.search_parameters.override_default = false;
-
-			console.log(test);
-
-			Queue.create(test)
-				.success(function(data) {
-					console.log(data);
-				})
-				.error(function(data) {
-					console.log(data);
-				});
-
-			});
-
-
 			Queue.get()
 				.success(function(data) {
-					vm.queue = data;
-					console.log(data);
-					//console.log(data);
-					// for(var o in vm.queue) {
-					// 	queueArray.push(dataObject[o]);
-					// }
-
+					vm.queues = data;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
 
-		} 
+			Events.get(eventId)
+				.success(function(data) {
+					vm.event = data;
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});
+		}
 
-		function addUser() {
+		function addUsersToEvent() {
+			Queue.put(vm.selectedEvent)
+				.success(function(data) {
+					vm.selectedEvent = {};
+					$uibModalInstance.close(data);
+				});
+		}
 
-			
-			// (vm.selectedEvent)
-			// 	.success(function(data) {
-			// 		vm.selectedEvent = {};
-			// 		$uibModalInstance.close(data);
-			// 	});
+		function getAge(dateString) {
+			var today = new Date();
+			var birthDate = new Date(dateString);
+			var age = today.getFullYear() - birthDate.getFullYear();
+			var m = today.getMonth() - birthDate.getMonth();
+			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			    age--;
+			}
+			return age;
 		}
 
 		function submit() {
+			// Get selected queues and set status to 1
 
+			// Pass list of queue ids back to admin.events.edit and close
+
+			
 		}
 	}
 

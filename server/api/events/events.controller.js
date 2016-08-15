@@ -88,7 +88,7 @@ export function update(req, res) {
 	return Events.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(saveUpdates(req.body))
-		.then(respondWithAll(res, 200))
+		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 

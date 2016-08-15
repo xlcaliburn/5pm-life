@@ -20,14 +20,11 @@
 				get : function() {
 					return $http.get('/api/queue');
 				},
-				put : function(data) {
-					return $http.put('/api/queue', data);
+				put : function(id, data) {
+					return $http.put('/api/queue/' + id, data);
 				},
 				create : function(data) {
 					return $http.post('/api/queue', data);
-				},
-				updateQueueStatus : function (id, status) {
-					
 				}
 			};
 		})
@@ -81,8 +78,8 @@
 				getById : function(id) {
 					return $http.get('/api/events/' + id);
 				},
-				put : function(data) {
-					return $http.put('/api/events/' + data._id, data);
+				put : function(id, data) {
+					return $http.put('/api/events/' + id, data);
 				},
 				create : function(data) {
 					return $http.post('/api/events', data);

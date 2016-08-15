@@ -54,7 +54,7 @@ function handleError(res, statusCode) {
 // Gets a list of Queue
 export function index(req, res) {
 	return Queue.find()
-		.populate('user', 'email first_name last_name role')
+		.populate('user', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
@@ -62,7 +62,9 @@ export function index(req, res) {
 
 // Gets a single Queue from the DB
 export function show(req, res) {
-	return Queue.findById(req.params.id).exec()
+	return Queue.findById(req.params.id)
+		.populate('user', 'email first_name last_name role birthday gender')
+		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res));

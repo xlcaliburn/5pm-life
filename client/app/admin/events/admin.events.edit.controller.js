@@ -11,7 +11,7 @@
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
 		vm.delete_event = deleteEvent;
-		vm.add_users = addUsers;
+		vm.add_users = addUsersModal;
 		vm.user_queue = {};
 		vm.submit = submit;
 		vm.queue = {};
@@ -22,21 +22,19 @@
 		function init() {
 
 			Venues.get()
-				.success(function(data) {
-					vm.allowed_venues = data;
+				.then(function(res) {
+					vm.allowed_venues = res.data;
+					return Activities.get();
+				})
+				.then(function(res) {
+					vm.allowed_activities = res.data;
+					return res;
+				})
+				.then(function() {
 					$timeout(function() {materialize_select();});
 				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
-
-			Activities.get()
-				.success(function(data) {
-					vm.allowed_activities = data;
-					$timeout(function() {materialize_select();});
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
+				.catch(function(err) {
+					console.log(err);
 				});
 
 			Events.getById(vm.event_id)
@@ -46,14 +44,13 @@
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
-
 		}
 
-		function addUsers() {
+		function addUsersModal() {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/events/modals/eventAddUsersModal.html',
-				controller: 'EventAddUsersModalController',
+				templateUrl: 'app/admin/events/modals/eventaddUsersModalModal.html',
+				controller: 'EventaddUsersModalModalController',
 				controllerAs:'vm', 
 				size: 'lg',
 				resolve: {
@@ -66,21 +63,7 @@
 			}, function () {});
 		}
 
-
-		function submit() {
-			Events.put(vm.selectedEvent)
-				.success(function(data) {
-					vm.selectedEvent = {};
-
-					updateUserStatus();
-					notifyUser();
-
-					$state.go('admin.events', {}, { reload: true });
-					Materialize.toast('Event saved', 2000);
-				});			
-		}
-
-		function updateUserStatus() {
+		function updateQueueStatus() {
 			// for (var q in vm.queue)
 			// {
 			// 	Queue.updateQueueStatus(q._id, 2)
@@ -93,19 +76,35 @@
 			// }
 		}
 
-		function notifyUser() {
+		function notifyUsers() {
 			//todo
 		}
 
 		function deleteEvent() {
 			console.log(vm.selectedEvent._id);
 			Events.delete(vm.selectedEvent._id)
-				.success(function(data) {
+				.success(function() {
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event deleted', 2000);					
 				});
+		}
+
+		function submit() {
+			if (vm.selectedEvent.users.length === vm.selectedEvent.allowed_capacity)
+			{
+			 	// Update queue status from 1 to 2
+				updateQueueStatus();
+				notifyUsers();
+
+				vm.selectedEvent.status = "Active";
+			}
+			
+			Events.put(vm.selectedEvent._id, vm.selectedEvent)
+				.success(function(data) {
+
+					$state.go('admin.events', {}, { reload: true });
+					Materialize.toast('Event saved', 2000);
+				});			
 		}		
-
 	}
-
 })();
