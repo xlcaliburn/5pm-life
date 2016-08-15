@@ -12,14 +12,6 @@
         /* jshint expr: true */
         var vm = this;
 
-        var token = $cookies.get('token');
-        var token_data = {
-            token: token
-        };
-        NavbarService.getToken(token_data).then(function(res) {
-            console.log(res);
-        });
-
         // model
         vm.steps = [
             {
@@ -302,6 +294,7 @@
 
         /* Here we go */
         vm.init();
+
     }
 
 })();

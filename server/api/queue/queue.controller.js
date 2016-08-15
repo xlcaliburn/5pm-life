@@ -2,7 +2,6 @@
 
 import _ from 'lodash';
 import Queue from './queue.model';
-import config from '../../config/environment';
 
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;

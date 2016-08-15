@@ -1,6 +1,6 @@
 (function() {
-  'use strict';
-  /*jslint latedef:false*/
+    'use strict';
+    /*jslint latedef:false*/
 
     angular
     .module('fivepmApp')
@@ -9,7 +9,6 @@
     /** @ngInject */
     function runBlock() {
 
-        //$log.debug('runBlock end');
     }
 
 })();

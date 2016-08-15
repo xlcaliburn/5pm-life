@@ -9,7 +9,7 @@
         return {
             // api call for signup verification
             getToken : function(token) {
-                return $http.post('/api/queue/add', token);
+                return $http.post('/api/queue/process', token);
             }
         };
     }

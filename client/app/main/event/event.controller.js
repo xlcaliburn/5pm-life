@@ -8,7 +8,8 @@
     /** @ngInject */
     /*global google */
     /* jshint expr: true */
-    function EventController($timeout) {
+    function EventController($cookies, $timeout, NavbarService, auth) {
+
         var vm = this;
 
         // model

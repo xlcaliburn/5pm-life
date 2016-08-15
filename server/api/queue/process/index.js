@@ -1,7 +1,7 @@
 'use strict';
 import {Router} from 'express';
 var express = require('express');
-var controller = require('../queue.controller');
+var controller = require('./process.queue.controller');
 
 var router = express.Router();
 

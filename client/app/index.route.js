@@ -28,7 +28,27 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			url: '/event/:id',
 			templateUrl: 'app/main/event/event.html',
 			controller: 'EventController',
-			controllerAs: 'event'
+			controllerAs: 'event',
+			resolve: {
+				auth: function($cookies, $state, NavbarService) {
+					var user_token = $cookies.get('token');
+
+					if (!user_token) {
+						return $state.go('login');
+					}
+
+					var token = {
+						token: user_token
+					};
+
+					return NavbarService.getToken(token).then(function(res) {
+						var user_id = res.data.user_id;
+						return {
+							user_id: user_id
+						};
+					});
+				}
+			}
 		})
 
 		.state('home.settings', {
