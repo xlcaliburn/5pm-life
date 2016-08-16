@@ -21,9 +21,6 @@ export default function(app) {
 	app.use('/api/recovery', require('./api/recovery')); // verify reset password
 	app.use('/api/resetpassword', require('./api/recovery/resetpassword')); // change password
 
-	// queue process routes
-	app.use('/api/queue/process', require('./api/queue/process'));
-
 	//app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/enums', require('./api/enums'));
 	app.use('/api/activities', require('./api/activities/activities.routes.js'));

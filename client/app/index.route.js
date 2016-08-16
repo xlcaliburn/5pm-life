@@ -30,6 +30,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controller: 'EventController',
 			controllerAs: 'event',
 			resolve: {
+				/*
 				auth: function($cookies, $state, NavbarService) {
 					var user_token = $cookies.get('token');
 
@@ -47,7 +48,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 							user_id: user_id
 						};
 					});
-				}
+				}*/
 			}
 		})
 

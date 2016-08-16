@@ -170,14 +170,18 @@
             }
 
             // if valid, go to confirmation page
-            vm.toggle_confirm_information();
+            if (!vm.confirm) {
+                vm.toggle_confirm_information();
+            } else {
+                vm.add_to_queue();
+            }
         };
 
         // confirm information before submitting
         vm.toggle_confirm_information = function() {
 
             // change status and title
-            vm.confirm = !vm.confirm;
+            vm.confirm = true;
             if (vm.confirm) { vm.status_title = 'CONFIRM EVENT PREFERENCES'; }
             else { vm.status_title = 'QUEUE FOR EVENT'; }
 
@@ -187,6 +191,46 @@
             angular.element('.queue-modal-header').toggleClass('confirm');
             angular.element('.queue-modal-title').toggleClass('confirm');
 
+        };
+
+        // add them to queue
+        vm.add_to_queue = function() {
+            //token
+            var token = $cookies.get('token');
+
+            // tags
+            var tags = [];
+            if (vm.social) { tags.push('social'); }
+            if (vm.active) { tags.push('active'); }
+
+            // event start
+            var start_date_string = vm.queue_date + " " + get_time(vm.queue_start_time);
+            var event_start = new Date(start_date_string);
+
+            // event end
+            var end_date_string = vm.queue_date + " " + get_time(vm.queue_end_time);
+            var event_end = new Date(end_date_string);
+
+            // city
+            var city = vm.location;
+
+            var queue_data = {
+                token: token,
+                tags: tags,
+                event_start: event_start,
+                event_end: event_end,
+                city: city
+            };
+            NavbarService.addToQueue(queue_data).then(function(res) {
+                console.log(res);
+                var response = res.data.response;
+                if (response.status == 'ok') {
+                    vm.close_queue_modal();
+                    Materialize.toast('You have been added to the queue!', 6000);
+                } else {
+                    Materialize.toast('Something went wrong', 6000);
+                }
+            })
         };
 
         // convert string to html
@@ -291,6 +335,19 @@
                 angular.element('.queue-input-error').removeClass('queue-input-error');
             }
         };
+
+        function get_time(time_string) {
+            // 09:00PM
+            var hour = parseInt(time_string.substr(0,2));
+            var minute = time_string.substr(3,2);
+            var ampm = time_string.substr(5,2);
+
+            if (ampm === 'PM') {
+                hour += 12;
+            }
+
+            return hour + ":" + minute + ":00 EDT";
+        }
 
         /* Here we go */
         vm.init();
