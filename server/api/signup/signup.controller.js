@@ -106,7 +106,7 @@ function validate_user(data) {
     response.user.last_name = data.last_name;
     response.user.ethnicity = data.ethnicity;
     response.user.gender = data.gender;
-    response.user.email = data.email_address;
+    response.user.email = data.email_address.toLowerCase();
     response.user.password = data.password;
 
     // change birthday to date
@@ -126,7 +126,7 @@ export function validate_save(req, res) {
     var response = validate_user(req.body);
     if (response.status == 'ok') {
         response.user.verified = false;
-
+        
         var newUser = new User(response.user);
         newUser.save()
         .then(function(user) {
