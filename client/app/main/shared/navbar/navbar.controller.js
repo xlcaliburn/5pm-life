@@ -266,7 +266,8 @@
                     datepicker.pickadate({
                         format: 'mmmm dd, yyyy',
                         disable: [
-                          { from: [0,0,0], to: yesterday }
+                          { from: [0,0,0], to: yesterday },
+                          1,2,3,4,5,6
                         ]
                     });
 
