@@ -40,6 +40,7 @@
 			Events.getById(vm.event_id)
 				.success(function(data) {
 					vm.selectedEvent = data;
+					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -49,8 +50,8 @@
 		function addUsersModal() {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/events/modals/eventaddUsersModalModal.html',
-				controller: 'EventaddUsersModalModalController',
+				templateUrl: 'app/admin/events/modals/eventAddUsersModal.html',
+				controller: 'EventAddUsersModalController',
 				controllerAs:'vm', 
 				size: 'lg',
 				resolve: {
@@ -59,7 +60,7 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.user_queue = data;
+				vm.user_queue = data.user_queue;
 			}, function () {});
 		}
 
@@ -90,7 +91,7 @@
 		}
 
 		function submit() {
-			if (vm.selectedEvent.users.length === vm.selectedEvent.allowed_capacity)
+			if (vm.selectedEvent.user_queue.length === vm.selectedEvent.allowed_capacity)
 			{
 			 	// Update queue status from 1 to 2
 				updateQueueStatus();
@@ -98,7 +99,7 @@
 
 				vm.selectedEvent.status = "Active";
 			}
-			
+
 			Events.put(vm.selectedEvent._id, vm.selectedEvent)
 				.success(function(data) {
 

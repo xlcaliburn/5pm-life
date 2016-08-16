@@ -20,6 +20,9 @@
 				get : function() {
 					return $http.get('/api/queue');
 				},
+				getByStatus : function(status) {
+					return $http.get('/api/queue/status/' + status);
+				},
 				put : function(id, data) {
 					return $http.put('/api/queue/' + id, data);
 				},

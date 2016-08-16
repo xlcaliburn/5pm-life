@@ -7,8 +7,10 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
+router.get('/status/:status', controller.getByStatus);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
+router.put('/status', controller.updateMultipleStatus);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 

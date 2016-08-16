@@ -48,13 +48,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="queue in vm.user_queue">
-						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
+					<tr ng-repeat="queue in vm.selectedEvent.user_queue">
+						<td>{{queue.first_name + " " + queue.last_name}}</td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td>
-							<a href="" ng-click="vm.delete_user_from_event(user._id)"><i class="small material-icons">delete</i></a>							
+							<a href="" ng-click="vm.delete_user_from_event(queue._id)"><i class="small material-icons">delete</i></a>							
 						</td>
 					</tr>
 				</tbody>

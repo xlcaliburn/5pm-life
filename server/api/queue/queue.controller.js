@@ -72,6 +72,14 @@ export function show(req, res) {
 		.catch(handleError(res));
 }
 
+export function getByStatus(req, res) {
+	return Queue.find({status : req.params.status})
+		.populate('user', 'email first_name last_name role birthday gender')
+		.exec()
+		.then(handleEntityNotFound(res))
+		.then(respondWithResult(res))
+		.catch(handleError(res));
+}
 /* Add to Queue
 =====================================*/
 // Validate queue data
@@ -102,7 +110,7 @@ export function create(req, res) {
 	var queue_data = req.body;
 	var queue_data_status = validateQueueData(queue_data);
 
-	if (queue_data_status.status != 'ok') {
+	if (queue_data_status.status !== 'ok') {
 		return res.json({ response: response });
 	}
 
@@ -138,8 +146,6 @@ export function create(req, res) {
 			response.result = result;
 			return res.json({ response: response });
 		});
-
-	return null;
 }
 
 /*=====================================*/
@@ -155,6 +161,14 @@ export function update(req, res) {
 		.then(saveUpdates(req.body))
 		.then(respondWithResult(res))
 		.catch(handleError(res));
+}
+
+export function updateMultipleStatus(req, res) {
+	return Queue.find()
+		.populate('user', 'email first_name last_name role birthday gender')
+		.exec()
+		.then(respondWithResult(res))
+		.catch(handleError(res));	
 }
 
 // Deletes a Queue from the DB

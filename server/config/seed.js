@@ -37,17 +37,8 @@ User.find({}).remove()
 	});
 
 Queue.find({}).remove()
-	.then(() => {
-		Queue.create({
-			user : "57af88c2e71a6cd05cad91cc",
-			status : 1
-		}, {
-			user : "57af88c2e71a6cd05cad91cc",
-			status : 1			
-		})
-		.then(() => {
-			console.log('Finished populating queue');
-		});
+	.then(()=> {
+		console.log('Deleted Queue');
 	});
 
 Enums.find({}).remove()
