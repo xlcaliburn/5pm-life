@@ -128,7 +128,7 @@
 
 .queue-modal-header {
     background-color: @turq;
-    padding: 25px 30px 25px 50px;
+    padding: 25px 30px 25px 30px;
     color: @white;
     text-transform: uppercase;
     font-weight: 300;
@@ -328,6 +328,62 @@ label.both-cb-label {
     width: 60%;
 }
 
+.toggle-confirm-button {
+    padding-right: 15px;
+    cursor: pointer;
+    color: @white !important;
+}
+
+/*=================================
+    Cancel Queue Modal
+===================================*/
+
+.lean-overlay {
+    position: fixed;
+    z-index: 999;
+    top: -100px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 125%;
+    width: 100%;
+    background: #000;
+    display: none;
+    will-change: opacity;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    background-color: #ffffff;
+    padding: 0;
+    border-radius: 0;
+    max-height: 70%;
+    width: 55%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+}
+
+.modal-content {
+    padding: 24px;
+    position: relative;
+    background-color: #fff;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    background-clip: none;
+    outline: 0;
+}
+
+#cancel-search {
+    width: 35%;
+}
+
 /*==================================
     Navbar
 ===================================*/
@@ -363,7 +419,15 @@ label.both-cb-label {
     text-align: center;
 }
 
-#explore-button {
+#cancel-button {
+    opacity: 0.8;
+}
+
+#cancel-button:hover {
+    opacity: 1;
+}
+
+#explore-button, #cancel-button {
     height: auto;
     padding: 6px 30px 4px;
     background-color: @pink;
@@ -380,7 +444,7 @@ label.both-cb-label {
     background-color: @green;
 }
 
-#explore-button i {
+#explore-button i, #cancel-button i {
     vertical-align: middle;
     transform: translate(15px, -1px);
 }

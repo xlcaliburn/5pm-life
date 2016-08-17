@@ -6,8 +6,7 @@
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
 
-    /** @ngInject */
-    function NavbarController($cookies, $sce, $timeout, NavbarService) {
+    function NavbarController($cookies, $sce, $state, $timeout, NavbarService) {
 
         /* jshint expr: true */
         var vm = this;
@@ -50,6 +49,7 @@
         vm.datetime = angular.element('.datetime-stage');
 
         // variables
+        vm.queue_status;
         vm.status_title = 'QUEUE FOR EVENT';
         vm.nav_open = false;
         vm.modal_open = false;
@@ -67,6 +67,7 @@
         =======================================*/
         vm.init = function() {
             // init datetime picker
+            vm.get_queue_status();
             vm.init_datetimepicker();
             vm.init_tooltips();
         };
@@ -76,6 +77,20 @@
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');
                 tooltips.tooltip();
+            });
+
+        };
+
+        // initialiaze modals
+        vm.init_modals = function() {
+            $timeout(function() {
+                var modals = angular.element('.modal-trigger');
+                modals.leanModal({
+                    dismissible: true,
+                    opacity: 0.5,
+                    starting_top: '4%',
+                    ending_top: '10%'
+                });
             });
         };
 
@@ -97,6 +112,23 @@
             vm.modal.removeClass('queue-modal-open');
             vm.modal_open = false;
         };
+
+        // reset queue so users can queue again
+        vm.reset_queue = function() {
+            vm.toggle_confirm_information();
+            vm.status_title = 'QUEUE FOR EVENT';
+            vm.nav_open = false;
+            vm.modal_open = false;
+            vm.queue_date = null;
+            vm.queue_start_time = null;
+            vm.queue_end_time = null;
+            vm.active = false;
+            vm.social = false;
+            vm.both = false;
+            vm.confirm = false;
+            vm.location = null;
+            angular.element('.picker__day--selected').removeClass('picker__day--selected');
+        }
 
         vm.confirm_queue = function() {
         // validate information
@@ -181,7 +213,7 @@
         vm.toggle_confirm_information = function() {
 
             // change status and title
-            vm.confirm = true;
+            vm.confirm = !vm.confirm;
             if (vm.confirm) { vm.status_title = 'CONFIRM EVENT PREFERENCES'; }
             else { vm.status_title = 'QUEUE FOR EVENT'; }
 
@@ -222,11 +254,11 @@
                 city: city
             };
             NavbarService.addToQueue(queue_data).then(function(res) {
-                console.log(res);
                 var response = res.data.response;
                 if (response.status == 'ok') {
                     vm.close_queue_modal();
                     Materialize.toast('You have been added to the queue!', 6000);
+                    vm.get_queue_status();
                 } else {
                     Materialize.toast('Something went wrong', 6000);
                 }
@@ -268,7 +300,15 @@
                         disable: [
                           { from: [0,0,0], to: yesterday },
                           1,2,3,4,5,6
-                        ]
+                        ],
+                        onSet: function( arg ){
+                            if ( 'select' in arg ){ //prevent closing on selecting month/year
+                                this.close();
+                            }
+                        },
+                        onOpen: function() {
+                            angular.element('.picker__today').remove();
+                        }
                     });
 
                     // init start time
@@ -336,6 +376,30 @@
                 angular.element('.queue-input-error').removeClass('queue-input-error');
             }
         };
+
+        // get user's queue status
+        vm.get_queue_status = function() {
+            var token = $cookies.get('token');
+            if (!token) { $state.go('login'); }
+
+            NavbarService.getUserQueueStatus(token).then(function(res) {
+                console.log(res);
+                vm.queue_status = res.data.response.queue;
+                vm.init_modals();
+            });
+        }
+
+        // cancel_queue
+        vm.cancel_queue = function() {
+            var token = $cookies.get('token');
+            if (!token) { $state.go('login'); }
+
+            NavbarService.cancelUserQueue(token).then(function(res) {
+                vm.reset_queue();
+                vm.get_queue_status();
+                Materialize.toast('Event search cancelled', 6000);
+            });
+        }
 
         function get_time(time_string) {
             // 09:00PM

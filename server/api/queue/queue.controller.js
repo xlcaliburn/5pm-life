@@ -80,6 +80,47 @@ export function getByStatus(req, res) {
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
+
+/* Check if user in queue
+=====================================*/
+function getDecodedToken(token) {
+	if (!token) {
+		return false;
+	}
+
+	return jwt.verify(token, config.secrets.session);
+}
+
+export function getUserStatus(req, res) {
+	var response = { status: 'ok' };
+	var token = getDecodedToken(req.params.token);
+	if (!token) {
+		return res.json({ response: 'unauthorized' });
+	}
+
+	// check queue to see if user is in queue
+	// and return status
+	return Queue.findOne({ user: token._id }).exec()
+		.then(function(queue) {
+			if (!queue) {
+				response.queue = -1;
+				return res.json({ response: response })
+			}
+
+			response.queue = queue.status;
+			return res.json({ response: response });
+		})
+		.catch(function(err) {
+			response.status = 'error';
+			response.errors = err;
+			return res.json({ response: response });
+		});
+
+}
+
+
+/*=====================================*/
+
 /* Add to Queue
 =====================================*/
 // Validate queue data
@@ -147,9 +188,35 @@ export function create(req, res) {
 			return res.json({ response: response });
 		});
 }
-
 /*=====================================*/
 
+/* Cancel user event search
+=======================================*/
+
+export function cancelEventSearch(req, res) {
+	var response = { status: 'ok' };
+	var token = getDecodedToken(req.params.token);
+
+	return Queue.findOne({ user: token._id }).exec()
+		.then(function(queue) {
+			if (!queue) {
+				return null;
+			}
+			var queue_id = queue._id;
+			console.log('queue id', queue_id);
+			return Queue.remove({ _id: queue_id }).exec()
+				.then(function() {
+					res.json({ response: response });
+				});
+		})
+		.catch(function(err) {
+			response.status = 'error';
+			response.errors = err;
+			res.json({ response: response });
+		});
+}
+
+/*======================================*/
 
 // Updates an existing Queue in the DB
 export function update(req, res) {
@@ -168,7 +235,7 @@ export function updateMultipleStatus(req, res) {
 		.populate('user', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(respondWithResult(res))
-		.catch(handleError(res));	
+		.catch(handleError(res));
 }
 
 // Deletes a Queue from the DB

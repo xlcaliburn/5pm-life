@@ -3,6 +3,9 @@
     <div class="queue-modal">
         <!-- Modal Header -->
         <div class="queue-modal-header valign-wrapper">
+            <a ng-click="navbar.toggle_confirm_information()" class="toggle-confirm-button" ng-if="navbar.confirm">
+                <i class="material-icons valign">chevron_left</i>
+            </a>
             {{ navbar.status_title }}
             <i class="material-icons close-queue-modal-button" ng-click="navbar.close_queue_modal()">close</i>
         </div>
@@ -49,11 +52,11 @@
                             <span ng-if="navbar.social && !navbar.active" class="bold babyblue-font">
                                 social
                             </span>
-                            <span ng-if="navbar.active && navbar.social">
+                            <!--<span ng-if="navbar.active && navbar.social">
                                 both
                                 <span class='bold pink-font'>active</span> and
                                 <span class='bold babyblue-font'>social</span>
-                            </span>
+                            </span>-->
                             events.
                         </div>
                     </div>
@@ -122,10 +125,10 @@
                             </div>
 
                             <!-- Both checkbox -->
-                            <div class="col l4 m4 s4">
+                            <!--<div class="col l4 m4 s4">
                                 <input type="checkbox" class="filled-in" id="both-checkbox" ng-model="navbar.both" ng-change="navbar.toggle_activity('both')">
                                 <label for="both-checkbox" class="both-cb-label">Both</label>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 
@@ -156,6 +159,18 @@
     </div>
 </div>
 
+<!-- cancel event search modal -->
+<div id="cancel-search" class="modal">
+    <div class="modal-content">
+        <h4>Cancel Event Search</h4>
+        <p>Are you sure you would like to cancel the event search?</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="navbar.cancel_queue()" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
+    </div>
+</div>
+
 <div class="navbar">
     <div class="container">
         <div class="row">
@@ -169,9 +184,16 @@
 
             <!-- Explore button -->
             <div class="nav-center col m4 s6">
-                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()">
+                <!-- explore -->
+                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()" ng-if="navbar.queue_status == -1">
                     Explore <i class="tiny material-icons">arrow_forward</i>
                 </a>
+
+                <!-- cancel queue -->
+                <a id="cancel-button" class="btn waves-light waves-effect modal-trigger" ng-if="navbar.queue_status == 0" title="Cancel search" href="#cancel-search">
+                    CANCEL SEARCH <i class="tiny material-icons">close</i>
+                </a>
+
 
                 <div id="mobile-nav" ng-click="navbar.nav_open = !navbar.nav_open" ng-class="{true:'nav-open'}[navbar.nav_open]">
                     <div class="nav-menu">
