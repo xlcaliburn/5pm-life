@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('apiService', [])
+	angular.module('ApiService', [])
 		.factory('Users', function($http) {
 			return {
 				get : function() {

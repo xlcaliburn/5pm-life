@@ -60,7 +60,6 @@
 					return d._id === vm.queue_ids[0];
 				});
 				
-				console.log(queue[0]);
 				vm.queue_user_ids.push({
 					"user_id" : queue[0].user._id,
 					"first_name" : queue[0].user.first_name,
@@ -76,9 +75,9 @@
 						console.log('Error: ' + data);
 					})
 			}
-			console.log(vm.event.user_queue);
+
+			// Combine with users existing users in the event
 			vm.event.user_queue = vm.event.user_queue.concat(vm.queue_user_ids);
-			console.log(vm.event.user_queue);
 			Events.put(vm.event._id, vm.event)
 				.success(function(data) {
 					$uibModalInstance.close(data);

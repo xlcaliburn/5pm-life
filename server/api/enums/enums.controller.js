@@ -13,6 +13,22 @@ function respondWithResult(res, statusCode) {
 	};
 }
 
+function respondAsFormattedKeyValuePair(res, statusCode) {
+	statusCode = statusCode || 200;
+	return function(entity) {
+		if (entity) {
+			var formatted = {};
+			for (var i = 0; i < entity.length; i++)
+			{
+				formatted[entity[i].key] = entity[i].value;
+			}
+
+			res.status(statusCode).json(formatted);
+		}
+		return null;
+	};
+}
+
 function respondWithAll(res, statusCode) {
 	statusCode = statusCode || 200;
 	return function(entity) {
@@ -58,14 +74,14 @@ function handleError(res, statusCode) {
 	};
 }
 
-// Gets a list of Enums
+// Gets a list of enums
 export function index(req, res) {
 	return Enums.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
 
-// Gets a single Enums from the DB
+// Gets a single enum from the DB
 export function show(req, res) {
 	return Enums.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
@@ -73,24 +89,34 @@ export function show(req, res) {
 		.catch(handleError(res));
 }
 
-// Gets all enums of a certain type
+// Gets all enums of a certain type and return as an array of key-value pairs
 export function getByType(req, res) {
 	return Enums.find({
 		type : req.params.type
 	}).exec()
 		.then(handleEntityNotFound(res))
-		.then(respondWithResult(res))
+		.then(respondAsFormattedKeyValuePair(res, 200))
 		.catch(handleError(res));
 }
 
-// Creates a new Enums in the DB
+// Gets all enums of a certain type and return unformatted with all fields
+export function getByTypeRaw(req, res) {
+	return Enums.find({
+		type : req.params.type
+	}).exec()
+		.then(handleEntityNotFound(res))
+		.then(respondWithResult(res, 200))
+		.catch(handleError(res));
+}
+
+// Creates a new enum in the DB
 export function create(req, res) {
 	return Enums.create(req.body)
 		.then(respondWithAll(res, 201))
 		.catch(handleError(res));
 }
 
-// Updates an existing Enums in the DB
+// Updates an existing enum in the DB
 export function update(req, res) {
 	if (req.body._id) {
 		delete req.body._id;
