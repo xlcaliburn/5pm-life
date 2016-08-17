@@ -5,12 +5,16 @@ var controller = require('./enums.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
-router.get('/:type', controller.getByType);
-router.get('/:id', controller.show);
+router.get('/:type', controller.getByType);			// Standard call to return only key value pairs of a type
+router.get('/:type/raw', controller.getByTypeRaw); 	// To be handled client side, also returns other attributes
 router.post('/', controller.create);
 router.put('/:id', controller.update);
-router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
+
+// To be removed
+router.get('/', controller.index);
+router.get('/:id', controller.show);
+router.patch('/:id', controller.update);
+
 
 module.exports = router;
