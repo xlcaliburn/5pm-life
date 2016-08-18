@@ -56,11 +56,11 @@
             vm.Auth.login({
                 email: vm.email_address,
                 password: vm.password
-            }).then(() => {
+            }).then((res) => {
                 // Logged in, redirect to home
                 window.location.href = '/home';
-            }).catch(() => {
-                vm.status = 'Incorrect username/password combination';
+            }).catch((err) => {
+                vm.status = err.message;
             });
         };
 
