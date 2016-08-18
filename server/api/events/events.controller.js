@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import Events from './Events.model';
+import Events from './events.model';
 
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
