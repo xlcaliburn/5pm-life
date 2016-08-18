@@ -40,7 +40,6 @@
 			Events.getById(vm.event_id)
 				.success(function(data) {
 					vm.selectedEvent = data;
-					console.log(data);
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);

@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('EventAddUsersModalController', EventAddUsersModalController);
 
-	function EventAddUsersModalController ($uibModalInstance, $filter, Users, Queue, Events, eventId) {
+	function EventAddUsersModalController ($uibModalInstance, $filter, Enums, Users, Queue, Events, eventId) {
 		var vm = this;
 		vm.event = {}; 
 		vm.queues = {}; // Get all valid queues
@@ -14,6 +14,7 @@
 		vm.selected_queue = []; // Get queues to add to event from html
 		vm.queue_ids = []; 
 		vm.queue_user_ids = []; // Get users corresponding to selected ids
+		vm.enum_status = [];	
 
 		init();
 
@@ -33,8 +34,12 @@
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
-		}
 
+			Enums.getByType('queue_status')
+				.success(function(data) {
+					vm.enum_status = data;
+				})
+		}
 
 		function getAge(dateString) {
 			var today = new Date();
@@ -66,7 +71,7 @@
 					'last_name' : queue[0].user.last_name
 				});
 				
-				queue[0].status = 1;
+				queue[0].status = vm.enum_status.PENDING;
 				Queue.put(queue[0]._id, queue[0])
 					.success(function() {
 						
