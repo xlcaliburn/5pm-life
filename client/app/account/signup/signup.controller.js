@@ -7,8 +7,14 @@
 
     /** @ngInject */
     /* jshint expr: true */
-    function SignupController($timeout, loading_spinner, SignupService) {
+    function SignupController($timeout, loading_spinner, SignupService, Enums) {
         var vm = this;
+        vm.ethnicity_labels = [];
+
+        Enums.getByTypeNames()
+            .success(function(data) {
+                vm.ethnicity_labels = data;
+            });
 
         // model
         vm.steps = [
@@ -39,7 +45,7 @@
                 key: 'ethnicity',
                 value: 'ethnicity',
                 type: 'select',
-                data: ['Caucasian', 'African', 'South East Asian', 'Native American', 'Indian', 'Middle East', 'Mixed', 'Other']
+                data: vm.ethnicity_labels
             },
             {
                 stage: 2,

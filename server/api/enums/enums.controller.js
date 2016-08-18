@@ -3,6 +3,13 @@
 import _ from 'lodash';
 import Enums from './enums.model';
 
+function handleError(res, statusCode) {
+	statusCode = statusCode || 500;
+	return function(err) {
+		res.status(statusCode).send(err);
+	};
+}
+
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
 	return function(entity) {
@@ -24,6 +31,22 @@ function respondAsFormattedKeyValuePair(res, statusCode) {
 			}
 
 			res.status(statusCode).json(formatted);
+		}
+		return null;
+	};
+}
+
+function respondWithTypeNames(res, statusCode) {
+	statusCode = statusCode || 200;
+	return function(entity) {
+		if (entity) {
+			var names = [];
+			for (var i = 0; i < entity.length; i++)
+			{
+				names[i] = entity[i].name;
+			}
+
+			res.status(statusCode).json(names);
 		}
 		return null;
 	};
@@ -67,13 +90,6 @@ function handleEntityNotFound(res) {
 	};
 }
 
-function handleError(res, statusCode) {
-	statusCode = statusCode || 500;
-	return function(err) {
-		res.status(statusCode).send(err);
-	};
-}
-
 // Gets a list of enums
 export function index(req, res) {
 	return Enums.find().exec()
@@ -99,13 +115,13 @@ export function getByType(req, res) {
 		.catch(handleError(res));
 }
 
-// Gets all enums of a certain type and return unformatted with all fields
-export function getByTypeRaw(req, res) {
+// Gets all enums of a certain type and return the name values only
+export function getByTypeNames(req, res) {
 	return Enums.find({
 		type : req.params.type
 	}).exec()
 		.then(handleEntityNotFound(res))
-		.then(respondWithResult(res, 200))
+		.then(respondWithTypeNames(res, 200))
 		.catch(handleError(res));
 }
 

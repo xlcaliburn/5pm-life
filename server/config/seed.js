@@ -28,6 +28,18 @@ User.find({}).remove()
 			"last_name" : "bc",
 			"ethnicity" : "South East Asian",
 			"gender" : "Male",
+			"email" : "admin@example.com",
+			"password" : "admin",
+			"verified" : true,
+			"event_history" : [ ],
+			"role" : "admin",
+			"__v" : 0
+		},
+		{
+			"first_name" : "a",
+			"last_name" : "bc",
+			"ethnicity" : "South East Asian",
+			"gender" : "Male",
 			"email" : "a@gmail.com",
 			"password" : "a",
 			"verified" : true,

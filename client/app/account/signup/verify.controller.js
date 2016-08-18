@@ -9,7 +9,7 @@
         var vm = this;
 
         vm.user_id = $stateParams.id;
-        vm.api_url = "/api/signup/verify/" + vm.user_id;
+        vm.api_url = '/api/signup/verify/' + vm.user_id;
         vm.message;
         vm.status;
 

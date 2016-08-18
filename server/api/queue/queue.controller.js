@@ -104,7 +104,7 @@ export function getUserStatus(req, res) {
 		.then(function(queue) {
 			if (!queue) {
 				response.queue = -1;
-				return res.json({ response: response })
+				return res.json({ response: response });
 			}
 
 			response.queue = queue.status;

@@ -3,6 +3,13 @@
 import _ from 'lodash';
 import Events from './events.model';
 
+function handleError(res, statusCode) {
+	statusCode = statusCode || 500;
+	return function(err) {
+		res.status(statusCode).send(err);
+	};
+}
+
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
 	return function(entity) {
@@ -19,7 +26,7 @@ function respondWithAll(res, statusCode) {
 		return Events.find().exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
-	}
+	};
 }
 
 function saveUpdates(updates) {
@@ -48,13 +55,6 @@ function handleEntityNotFound(res) {
 			return null;
 		}
 		return entity;
-	};
-}
-
-function handleError(res, statusCode) {
-	statusCode = statusCode || 500;
-	return function(err) {
-		res.status(statusCode).send(err);
 	};
 }
 

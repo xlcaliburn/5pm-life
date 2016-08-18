@@ -17,7 +17,7 @@
 			Activities.get()
 				.success(function(data) {
 					vm.valid_activities = data;
-				})
+				});
 		}
 
 		function submit() {
