@@ -61,9 +61,9 @@
 				});
 				
 				vm.queue_user_ids.push({
-					"user_id" : queue[0].user._id,
-					"first_name" : queue[0].user.first_name,
-					"last_name" : queue[0].user.last_name
+					'user_id' : queue[0].user._id,
+					'first_name' : queue[0].user.first_name,
+					'last_name' : queue[0].user.last_name
 				});
 				
 				queue[0].status = 1;
@@ -73,7 +73,7 @@
 					})
 					.error(function(data) {
 						console.log('Error: ' + data);
-					})
+					});
 			}
 
 			// Combine with users existing users in the event

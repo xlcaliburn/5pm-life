@@ -97,12 +97,11 @@
 				updateQueueStatus();
 				notifyUsers();
 
-				vm.selectedEvent.status = "Active";
+				vm.selectedEvent.status = 'Active';
 			}
 
 			Events.put(vm.selectedEvent._id, vm.selectedEvent)
-				.success(function(data) {
-
+				.success(function() {
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event saved', 2000);
 				});			

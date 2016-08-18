@@ -11,72 +11,74 @@
         var vm = this;
         vm.ethnicity_labels = [];
 
-        Enums.getByTypeNames()
-            .success(function(data) {
-                vm.ethnicity_labels = data;
+        Enums.getByTypeNames('ethnicity')
+            .then(function(res) {
+                vm.ethnicity_labels = res.data;
+                console.log(vm.ethnicity_labels);
+            })
+            .then(function() {            
+                // model
+                vm.steps = [
+                    {
+                        stage: 1,
+                        order_id: 1,
+                        key: 'first_name',
+                        value: 'first name',
+                        type: 'input'
+                    },
+                    {
+                        stage: 1,
+                        order_id: 2,
+                        key: 'last_name',
+                        value: 'last name',
+                        type: 'input'
+                    },
+                    {
+                        stage: 1,
+                        order_id: 3,
+                        key: 'birthday',
+                        value: 'birthday',
+                        type: 'date'
+                    },
+                    {
+                        stage: 2,
+                        order_id: 4,
+                        key: 'ethnicity',
+                        value: 'ethnicity',
+                        type: 'select',
+                        data: vm.ethnicity_labels
+                    },
+                    {
+                        stage: 2,
+                        order_id: 5,
+                        key: 'gender',
+                        value: 'gender',
+                        type: 'select',
+                        data: ['Male', 'Female']
+                    },
+                    {
+                        stage: 3,
+                        order_id: 6,
+                        key: 'email_address',
+                        value: 'email address',
+                        type: 'input'
+                    },
+                    {
+                        stage: 3,
+                        order_id: 7,
+                        key: 'password',
+                        value: 'password',
+                        type: 'password'
+                    },
+                    {
+                        stage: 3,
+                        order_id: 8,
+                        key: 'confirm_password',
+                        value: 'confirm password',
+                        type: 'password'
+                    }
+                ];
             });
-
-        // model
-        vm.steps = [
-            {
-                stage: 1,
-                order_id: 1,
-                key: 'first_name',
-                value: 'first name',
-                type: 'input'
-            },
-            {
-                stage: 1,
-                order_id: 2,
-                key: 'last_name',
-                value: 'last name',
-                type: 'input'
-            },
-            {
-                stage: 1,
-                order_id: 3,
-                key: 'birthday',
-                value: 'birthday',
-                type: 'date'
-            },
-            {
-                stage: 2,
-                order_id: 4,
-                key: 'ethnicity',
-                value: 'ethnicity',
-                type: 'select',
-                data: vm.ethnicity_labels
-            },
-            {
-                stage: 2,
-                order_id: 5,
-                key: 'gender',
-                value: 'gender',
-                type: 'select',
-                data: ['Male', 'Female']
-            },
-            {
-                stage: 3,
-                order_id: 6,
-                key: 'email_address',
-                value: 'email address',
-                type: 'input'
-            },
-            {
-                stage: 3,
-                order_id: 7,
-                key: 'password',
-                value: 'password',
-                type: 'password'
-            },
-            {
-                stage: 3,
-                order_id: 8,
-                key: 'confirm_password',
-                value: 'confirm password',
-                type: 'password'
-            }
-        ];
 
         // view
         vm.error_message;
