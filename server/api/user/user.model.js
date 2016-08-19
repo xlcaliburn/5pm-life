@@ -48,7 +48,7 @@ var UserSchema = new Schema({
 	profile_picture: {
 		current : String,
 		past : [String]
-	}
+	},
 	verified: Boolean
 });
 
