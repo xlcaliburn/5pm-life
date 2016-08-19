@@ -14,9 +14,8 @@
         Enums.getByTypeNames('ethnicity')
             .then(function(res) {
                 vm.ethnicity_labels = res.data;
-                console.log(vm.ethnicity_labels);
             })
-            .then(function() {            
+            .then(function() {
                 // model
                 vm.steps = [
                     {

@@ -121,7 +121,7 @@ export function getByTypeNames(req, res) {
 	return Enums.find({
 		type : req.params.type
 	}).exec()
-		.sort({ })
+		
 		.then(handleEntityNotFound(res))
 		.then(respondWithTypeNames(res, 200))
 		.catch(handleError(res));

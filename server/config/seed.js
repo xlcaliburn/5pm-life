@@ -8,7 +8,7 @@ import User from '../api/user/user.model';
 import Enums from '../api/enums/enums.model';
 import Queue from '../api/queue/queue.model';
 
-User.find({}).remove()
+/*User.find({}).remove()
 	.then(() => {
 		User.create(
 		{
@@ -62,7 +62,7 @@ User.find({}).remove()
 		.then(() => {
 			console.log('Finished populating users');
 		});
-	});
+	});*/
 
 Enums.find({}).remove()
 	.then(() => {

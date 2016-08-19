@@ -4,6 +4,7 @@ var email_controller = require('../email/email.controller');
 var VerificationEmail = require('../email/templates/email.verification');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Enums = require('../enums/enums.controller');
 
 function validate_user(data) {
     // back-end validation
@@ -53,7 +54,7 @@ function validate_user(data) {
 
     /* Personal Details
     ************************************************/
-    var valid_ethnicity = ['Caucasian', 'African', 'South East Asian', 'Native American', 'Indian', 'Middle East', 'Mixed', 'Other'];
+    var valid_ethnicity = ['Caucasian', 'Latino/Hispanic', 'African', 'Caribbean', 'South Asian', 'East Asian', 'Mixed', 'Other'];
     var valid_gender = ['Male', 'Female'];
     var i;
 
@@ -126,7 +127,7 @@ export function validate_save(req, res) {
     var response = validate_user(req.body);
     if (response.status == 'ok') {
         response.user.verified = false;
-        
+
         var newUser = new User(response.user);
         newUser.save()
         .then(function(user) {
