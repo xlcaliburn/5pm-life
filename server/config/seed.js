@@ -126,6 +126,11 @@ Enums.find({}).remove()
 			name : 'Other',
 			key : 'OTHER',
 			value : 7
+		}, {
+			type : 'location',
+			name : 'Richmond Hill',
+			key : 'CA_ON_RICHMOND_HILL',
+			value : 0
 		})
 		.then(() => {
 			console.log('Finished populating enums');

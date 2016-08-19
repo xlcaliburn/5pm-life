@@ -44,6 +44,11 @@ var UserSchema = new Schema({
 	salt: String,
 	facebook: {},
 	event_history : [ObjectId],
+	account_create_date : Date,
+	profile_picture: {
+		current : String,
+		past : [String]
+	}
 	verified: Boolean
 });
 

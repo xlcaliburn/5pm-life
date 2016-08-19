@@ -32,10 +32,13 @@
 
 		<h3>Users</h3>
 		<div class="table-container">
-			<div class="section" style="float:right">
-				<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
-					<i class="material-icons">add</i>
-				</a>
+			<div class="section">
+				<h5>Activity Capacity: {{vm.selectedEvent.activity.allowed_capacity}}</h5>
+				<div style="float:right">
+					<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
+						<i class="material-icons">add</i>
+					</a>
+				</div>
 			</div>
 			<table class="table table-striped">
 				<thead>

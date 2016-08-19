@@ -6,10 +6,11 @@
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
 
-    function NavbarController($cookies, $sce, $state, $timeout, NavbarService) {
+    function NavbarController($cookies, $sce, $state, $timeout, NavbarService, Users) {
 
         /* jshint expr: true */
         var vm = this;
+        vm.user = {};
 
         // model
         vm.steps = [
@@ -65,32 +66,26 @@
         /*======================================
             Functions
         =======================================*/
-        vm.init = function() {
-            // init datetime picker
-            vm.get_queue_status();
-            vm.init_datetimepicker();
-            vm.init_tooltips();
-        };
+        init();
 
-        // initialiaze tooltips
-        vm.init_tooltips = function() {
+        function init() {
+
+            Users.getMe()
+                .success(function(data) {
+                    vm.user = data;
+                    console.log(vm.user.first_name);
+                })
+                .error(function(data) {
+                    console.log("error: "+ data);
+                })
+
+            // init datetime picker
+            get_queue_status();
+            init_datetimepicker();
+            
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');
                 tooltips.tooltip();
-            });
-
-        };
-
-        // initialiaze modals
-        vm.init_modals = function() {
-            $timeout(function() {
-                var modals = angular.element('.modal-trigger');
-                modals.leanModal({
-                    dismissible: true,
-                    opacity: 0.5,
-                    starting_top: '4%',
-                    ending_top: '10%'
-                });
             });
         };
 
@@ -289,7 +284,7 @@
         };
 
         // initialize datetime picker
-        vm.init_datetimepicker = function() {
+        function init_datetimepicker() {
             if (vm.datetime) {
                 $timeout(function() {
                     // init date
@@ -378,14 +373,20 @@
         };
 
         // get user's queue status
-        vm.get_queue_status = function() {
+        function get_queue_status() {
             var token = $cookies.get('token');
             if (!token) { $state.go('login'); }
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
-                console.log(res);
                 vm.queue_status = res.data.response.queue;
-                vm.init_modals();
+                
+                var modals = angular.element('.modal-trigger');
+                modals.leanModal({
+                    dismissible: true,
+                    opacity: 0.5,
+                    starting_top: '4%',
+                    ending_top: '10%'
+                });
             });
         }
 
@@ -413,10 +414,6 @@
 
             return hour + ":" + minute + ":00 EDT";
         }
-
-        /* Here we go */
-        vm.init();
-
     }
 
 })();

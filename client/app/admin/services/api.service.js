@@ -9,6 +9,9 @@
 				},
 				create : function(data) {
 					return $http.post('/api/users', data);
+				},
+				getMe : function() {
+					return $http.get('/api/users/me');
 				}
 			};
 		})
