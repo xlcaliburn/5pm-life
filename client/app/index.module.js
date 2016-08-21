@@ -17,6 +17,7 @@
 		'SignupService',
 		'RecoveryService',
 		'PasswordResetService',
-		'NavbarService'
+		'NavbarService',
+		'SettingsService'
 	]);
 })();

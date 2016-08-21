@@ -24,7 +24,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'home'
 		})
 
-		.state('event', {
+		.state('home.event', {
 			url: '/event/:id',
 			templateUrl: 'app/main/event/event.html',
 			controller: 'EventController',
@@ -55,7 +55,25 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		.state('home.settings', {
 			title: '5pm Settings',
 			url: '/settings',
-			templateUrl: 'app/main/settings/settings.html'
+			templateUrl: 'app/main/settings/settings.html',
+			controller: 'SettingsController',
+			controllerAs: 'settings',
+			resolve: {
+				user: function($cookies, $state, SettingsService) {
+					var token = $cookies.get('token');
+					if (!token) {
+						return $state.go('login');
+					}
+					return SettingsService.getUserSettings(token).then(function(res) {
+						if (res.data.response.status == 'ok') {
+							return res.data.response.user;
+						} else if (res.data.response.status == 'error') {
+							return res.data.response.error;
+						}
+						return $state.go('login');
+					});
+				}
+			}
 		})
 
 		.state('login', {

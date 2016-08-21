@@ -48,6 +48,9 @@ Add global styles here.*/
 @white:         #ffffff;
 @invisible:     rgba(255,255,255,0);
 
+// footer
+@footerheight:  95px;
+
 .turq { color: @turq; }
 .green { color: @green; }
 .darkgrey { color: @darkgrey; }
@@ -205,12 +208,14 @@ Add global styles here.*/
 /*=============================*/
 
 html, body {
+    position: relative;
     font-family: 'Roboto', 'Open Sans', sans-serif;
     font-size: 14px;
     margin: 0;
     padding: 0;
     background-color: @BGcolor;
     color: @darkgrey;
+    height: 100%;
 }
 
 body.modal-open {
@@ -220,6 +225,9 @@ body.modal-open {
 a, a.link, a.visited, a.hover, a.active { text-decoration: none !important; outline: none; }
 
 .body-content {
+    min-height: 100%;
+    height: auto !important;
+    margin-bottom: -@footerheight;
     width: 100%;
     height: 100%;
     position: relative;

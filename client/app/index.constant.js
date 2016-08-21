@@ -12,6 +12,8 @@
     })
 
     .constant('loading_spinner', '<div class="loading-spinner"></div>')
-
+    .constant('Months', [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'
+    ])
     ;
 })(angular);

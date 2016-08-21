@@ -19,6 +19,13 @@ function handleError(res, statusCode) {
 	};
 }
 
+function getDecodedToken(token) {
+	if (!token) {
+		return false;
+	}
+	return jwt.verify(token, config.secrets.session);
+}
+
 /**
  * Get list of users
  * restriction: 'admin'
@@ -126,6 +133,33 @@ export function me(req, res, next) {
 			return res.json(user);
 		})
 		.catch(err => next(err));
+}
+
+// get settings info
+export function getUserSettings(req, res, next) {
+	var token = req.params.token;
+	var response = {};
+	if (!token) {
+		response.status = 'unauthorized';
+		return res.json({ response: response });
+	}
+	var decoded_token = jwt.verify(token, config.secrets.session);
+
+	return User.findOne({ _id: decoded_token._id }, '-_id first_name last_name ethnicity gender birthday email').exec()
+		.then(function(user) {
+			if (!user) {
+				response.status = 'unauthorized';
+				return res.json({ response: response });
+			}
+			response.status = 'ok';
+			response.user = user;
+			return res.json({ response: response });
+		})
+		.catch(function(err) {
+			response.status = 'error';
+			response.error = err;
+			return res.json({ response: response });
+		});
 }
 
 /**
