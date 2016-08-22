@@ -87,6 +87,9 @@
 				put : function(id, data) {
 					return $http.put('/api/events/' + id, data);
 				},
+				updateUserQueue : function(id, users) {
+					return $http.put('/api/events/users/'+id, users);
+				},
 				create : function(data) {
 					return $http.post('/api/events', data);
 				},

@@ -12,10 +12,10 @@
 		vm.allowed_venues = {};
 		vm.delete_event = deleteEvent;
 		vm.add_users = addUsersModal;
-		vm.user_queue = {};
 		vm.submit = submit;
 		vm.queue = {};
 		vm.event_id = $stateParams.event_id;
+		vm.remove_user_from_event = removeUserFromEvent;
 
 		init();
 
@@ -59,29 +59,33 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.user_queue = data.user_queue;
+				vm.selectedEvent.user_queue = data.user_queue;
 			}, function () {});
 		}
 
 		function updateQueueStatus() {
-			// for (var q in vm.queue)
-			// {
-			// 	Queue.updateQueueStatus(q._id, 2)
-			// 		.success(function(data) {
-			// 			vm.queue = data;
-			// 		})
-			// 		.error(function(data) {
-			// 			console.log('Error: ' + data);
-			// 		});
-			// }
+			// TODO
 		}
 
 		function notifyUsers() {
-			//todo
+			// TODO
+		}
+
+		function removeUserFromEvent(id) {
+			for(var i = 0; i<vm.selectedEvent.user_queue.length; i++)
+			{
+				if (vm.selectedEvent.user_queue[i]._id === id) {
+					vm.selectedEvent.user_queue.splice(i,1);
+					
+					console.log(vm.selectedEvent._id);
+					Events.put(vm.selectedEvent._id, vm.selectedEvent)
+						.success(function(data) {console.log(data);})
+					break;
+				}
+			}
 		}
 
 		function deleteEvent() {
-			console.log(vm.selectedEvent._id);
 			Events.delete(vm.selectedEvent._id)
 				.success(function() {
 					$state.go('admin.events', {}, { reload: true });
