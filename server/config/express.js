@@ -28,8 +28,8 @@ export default function(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
   app.use(compression());
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ limit: '1mb', extended: false }));
+  app.use(bodyParser.json({limit: '1mb'}));
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
@@ -51,7 +51,8 @@ export default function(app) {
    * Lusca - express server security
    * https://github.com/krakenjs/lusca
    */
-  if (env !== 'test' && !process.env.SAUCE_USERNAME) {
+   // DISABLED DUE TO NEEDING TO UPLOAD IMAGES
+  /*if (env !== 'test' && !process.env.SAUCE_USERNAME) {
     app.use(lusca({
       csrf: {
         angular: true
@@ -64,7 +65,7 @@ export default function(app) {
       },
       xssProtection: true
     }));
-  }
+}*/
 
   app.set('appPath', path.join(config.root, 'client'));
 

@@ -7,9 +7,24 @@
 
     function SettingsService($http) {
         return {
-            getUserSettings: function(token) {                
+            getUserSettings: function(token) {
                 var url = "/api/users/settings/" + token;
                 return $http.get(url);
+            },
+            uploadProfilePicture: function(formData) {
+                console.log(formData);
+                var request = $http({
+                    method: 'post',
+                    url: '/api/upload/avatar',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                });
+                return request.then(function(res) {
+                    return res;
+                });
             }
         }
     }

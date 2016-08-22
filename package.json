@@ -31,7 +31,8 @@
         "serve-favicon": "^2.3.0",
         "nodemailer": "latest",
 		"bcrypt-nodejs" : "*",
-		"connect-flash" : "*"
+		"connect-flash" : "*",
+        "multer": "1.1.0"
     },
     "devDependencies": {
         "autoprefixer": "^6.0.0",

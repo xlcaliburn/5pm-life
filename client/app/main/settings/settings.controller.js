@@ -6,16 +6,21 @@
     .controller('SettingsController', SettingsController);
 
     /** @ngInject */
-    function SettingsController(user, Months) {
+    function SettingsController(user, Months, SettingsService) {
         var vm = this;
 
         // model
         vm.user = user;
-        console.log(user);
+
+        // view
+        vm.profile_picture = 'default_profile.png';
+
         // functions
         vm.get_name = get_name;
         vm.format_birthday = format_birthday;
         vm.get_age = get_age;
+        vm.select_image = select_image;
+        vm.upload = upload;
 
         // get user full name
         function get_name() {
@@ -36,6 +41,27 @@
             var ageDifMs = Date.now() - birthday.getTime();
             var ageDate = new Date(ageDifMs); // miliseconds from epoch
             return Math.abs(ageDate.getUTCFullYear() - 1970);
+        }
+
+        // select new profile picture
+        function select_image() {
+            angular.element('input[name="userImage"]').click();
+        }
+
+        // upload profile picture
+        function upload(target) {
+            var target_input = angular.element(target)[0].files;
+            var input_file = target_input[0];
+            var formData = new FormData();
+
+            formData.append('userImage', input_file);
+            SettingsService.uploadProfilePicture(formData).then(function(res) {
+                console.log(res);
+                var response = res.data.response;
+                if (response.status === 'ok') {
+                    vm.profile_picture = response.file;
+                }
+            });
         }
     }
 
