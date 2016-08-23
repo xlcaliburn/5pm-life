@@ -8,61 +8,61 @@ import User from '../api/user/user.model';
 import Enums from '../api/enums/enums.model';
 import Queue from '../api/queue/queue.model';
 
-// User.find({}).remove()
-// 	.then(() => {
-// 		User.create(
-// 		{
-// 			'first_name' : 'Michael',
-// 			'last_name' : 'Wong',
-// 			'ethnicity' : 'South East Asian',
-// 			'gender' : 'Male',
-// 			'email' : 'michaelchunkitwong@gmail.com',
-// 			'password' : 'a',
-// 			'verified' : true,
-// 			'event_history' : [ ],
-// 			'role' : 'admin',
-// 			'__v' : 0
-// 		},
-// 		{
-// 			"first_name" : "a",
-// 			"last_name" : "bc",
-// 			"ethnicity" : "South East Asian",
-// 			"gender" : "Male",
-// 			"email" : "admin@example.com",
-// 			"password" : "admin",
-// 			"verified" : true,
-// 			"event_history" : [ ],
-// 			"role" : "admin",
-// 			"__v" : 0
-// 		},
-// 		{
-// 			"first_name" : "a",
-// 			"last_name" : "bc",
-// 			"ethnicity" : "South East Asian",
-// 			"gender" : "Male",
-// 			"email" : "a@gmail.com",
-// 			"password" : "a",
-// 			"verified" : true,
-// 			"event_history" : [ ],
-// 			"role" : "user",
-// 			"__v" : 0
-// 		},
-// 		{
-// 			"first_name" : "asdf",
-// 			"last_name" : "de",
-// 			"ethnicity" : "South East Asian",
-// 			"gender" : "Male",
-// 			"email" : "b@gmail.com",
-// 			"password" : "b",
-// 			"verified" : true,
-// 			"event_history" : [ ],
-// 			"role" : "user",
-// 			"__v" : 0
-// 		})
-// 		.then(() => {
-// 			console.log('Finished populating users');
-// 		});
-// 	});
+User.find({}).remove()
+	.then(() => {
+		User.create(
+		{
+			'first_name' : 'Michael',
+			'last_name' : 'Wong',
+			'ethnicity' : 'South East Asian',
+			'gender' : 'Male',
+			'email' : 'michaelchunkitwong@gmail.com',
+			'password' : 'a',
+			'verified' : true,
+			'event_history' : [ ],
+			'role' : 'admin',
+			'__v' : 0
+		},
+		{
+			"first_name" : "a",
+			"last_name" : "bc",
+			"ethnicity" : "South East Asian",
+			"gender" : "Male",
+			"email" : "admin@example.com",
+			"password" : "admin",
+			"verified" : true,
+			"event_history" : [ ],
+			"role" : "admin",
+			"__v" : 0
+		},
+		{
+			"first_name" : "a",
+			"last_name" : "bc",
+			"ethnicity" : "South East Asian",
+			"gender" : "Male",
+			"email" : "a@gmail.com",
+			"password" : "a",
+			"verified" : true,
+			"event_history" : [ ],
+			"role" : "user",
+			"__v" : 0
+		},
+		{
+			"first_name" : "asdf",
+			"last_name" : "de",
+			"ethnicity" : "South East Asian",
+			"gender" : "Male",
+			"email" : "b@gmail.com",
+			"password" : "b",
+			"verified" : true,
+			"event_history" : [ ],
+			"role" : "user",
+			"__v" : 0
+		})
+		.then(() => {
+			console.log('Finished populating users');
+		});
+	});
 
 Queue.find({}).remove()
 	.then(() => {

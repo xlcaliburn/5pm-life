@@ -7,7 +7,7 @@
 
 	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Queue, Events, Venues, Activities, Users) {
 		var vm = this;
-		vm.selectedEvent = {};
+		vm.selected_event = {};
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
 		vm.delete_event = deleteEvent;
@@ -16,6 +16,8 @@
 		vm.queue = {};
 		vm.event_id = $stateParams.event_id;
 		vm.remove_user_from_event = removeUserFromEvent;
+
+		vm.users_to_add = [];
 
 		init();
 
@@ -39,7 +41,7 @@
 
 			Events.getById(vm.event_id)
 				.success(function(data) {
-					vm.selectedEvent = data;
+					vm.selected_event = data;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -59,7 +61,15 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.selectedEvent.user_queue = data.user_queue;
+				for (var queue_id in data)
+				{
+					if (data[queue_id] && vm.users_to_add.indexOf(queue_id) === -1)
+					{
+						vm.users_to_add.push(queue_id);
+					}
+				}
+
+				// vm.selected_event.user_queue = data.user_queue;
 			}, function () {});
 		}
 
@@ -72,21 +82,23 @@
 		}
 
 		function removeUserFromEvent(id) {
-			for(var i = 0; i<vm.selectedEvent.user_queue.length; i++)
-			{
-				if (vm.selectedEvent.user_queue[i]._id === id) {
-					vm.selectedEvent.user_queue.splice(i,1);
+			vm.users_to_add.splice(vm.users_to_add.indexOf(id), 1);
+
+			// for(var i = 0; i<vm.selected_event.user_queue.length; i++)
+			// {
+			// 	if (vm.selected_event.user_queue[i]._id === id) {
+			// 		vm.selected_event.user_queue.splice(i,1);
 					
-					console.log(vm.selectedEvent._id);
-					Events.put(vm.selectedEvent._id, vm.selectedEvent)
-						.success(function(data) {console.log(data);})
-					break;
-				}
-			}
+			// 		console.log(vm.selected_event._id);
+			// 		Events.put(vm.selected_event._id, vm.selected_event)
+			// 			.success(function(data) {console.log(data);})
+			// 		break;
+			// 	}
+			// }
 		}
 
 		function deleteEvent() {
-			Events.delete(vm.selectedEvent._id)
+			Events.delete(vm.selected_event._id)
 				.success(function() {
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event deleted', 2000);					
@@ -94,16 +106,16 @@
 		}
 
 		function submit() {
-			if (vm.selectedEvent.user_queue.length === vm.selectedEvent.allowed_capacity)
+			if (vm.selected_event.user_queue.length === vm.selected_event.allowed_capacity)
 			{
 			 	// Update queue status from 1 to 2
 				updateQueueStatus();
 				notifyUsers();
 
-				vm.selectedEvent.status = 'Active';
+				vm.selected_event.status = 'Active';
 			}
 
-			Events.put(vm.selectedEvent._id, vm.selectedEvent)
+			Events.put(vm.selected_event._id, vm.selected_event)
 				.success(function() {
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event saved', 2000);

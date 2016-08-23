@@ -1,7 +1,7 @@
 <div class="container">
 	<h2>Edit Event</h2>
 	<section>
-		<a ui-sref="admin.events">Events</a> > Event #{{vm.selectedEvent._id}}
+		<a ui-sref="admin.events">Events</a> > Event #{{vm.selected_event._id}}
 	</section>
 
 	<div class="right-align">
@@ -13,7 +13,7 @@
 	<form class="col s12" name="createForm" ng-submit="vm.submit()">
 		<div class="row">
 			<div class="input-field col s12">
-				<select ng-model="vm.selectedEvent.activity" ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name">
+				<select ng-model="vm.selected_event.activity" ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name">
 				</select>
 
 				<label>Activity</label>
@@ -22,7 +22,7 @@
 
 		<div class="row">
 			<div class="input-field col s12">
-				<select ng-model="vm.selectedEvent.venue" ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
+				<select ng-model="vm.selected_event.venue" ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
 				</select>
 				<label>Venue</label>
 			</div>
@@ -33,7 +33,7 @@
 		<h3>Users</h3>
 		<div class="table-container">
 			<div class="section">
-				<h5>Activity Capacity: {{vm.selectedEvent.activity.allowed_capacity}}</h5>
+				<h5>Activity Capacity: {{vm.selected_event.activity.allowed_capacity}}</h5>
 				<div style="float:right">
 					<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
 						<i class="material-icons">add</i>
@@ -51,9 +51,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="queue in vm.selectedEvent.user_queue">
+					<tr ng-repeat="queue in vm.users_to_add">
 						<td>{{queue.first_name + " " + queue.last_name}}</td>
-						<td></td>
+						<td>{{queue}}</td>
 						<td></td>
 						<td></td>
 						<td>
