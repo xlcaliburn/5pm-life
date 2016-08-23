@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Queue, Events, Venues, Activities, Users) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Enums, Queue, Events, Venues, Activities, Users) {
 		var vm = this;
 		vm.selected_event = {};
 		vm.allowed_activities = {};
@@ -15,9 +15,11 @@
 		vm.submit = submit;
 		vm.queue = {};
 		vm.event_id = $stateParams.event_id;
-		vm.remove_user_from_event = removeUserFromEvent;
+		vm.remove_queue_from_event = removeQueueFromEvent;
 
-		vm.users_to_add = [];
+		vm.queues_to_add = [];
+		vm.queues_to_remove = [];
+		vm.enum_status = [];
 
 		init();
 
@@ -42,10 +44,17 @@
 			Events.getById(vm.event_id)
 				.success(function(data) {
 					vm.selected_event = data;
+					vm.queues_to_add = vm.selected_event.queue;
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
 				});
+
+
+			Enums.getByType('queue_status')
+				.success(function(data) {
+					vm.enum_status = data;
+				})
 		}
 
 		function addUsersModal() {
@@ -61,11 +70,9 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				for (var queue_id in data)
-				{
-					if (data[queue_id] && vm.users_to_add.indexOf(queue_id) === -1)
-					{
-						vm.users_to_add.push(queue_id);
+				for (var queue_id in data) {
+					if (data[queue_id] && vm.queues_to_add.indexOf(queue_id) === -1) {
+						vm.queues_to_add.push(queue_id);
 					}
 				}
 
@@ -73,28 +80,30 @@
 			}, function () {});
 		}
 
-		function updateQueueStatus() {
-			// TODO
+		function updateQueueStatus(newStatus) {
+			// TODO: Make this a single call
+			for (var add_id in vm.queues_to_add) {
+				Queue.put(vm.queues_to_add[add_id], {status : newStatus})
+					// .then(function(res) { console.log(res); })
+					.catch(function(err) { console.log(err); });
+			}
+
+			for (var remove_id in vm.queues_to_remove) {
+				console.log(remove_id);
+				console.log(vm.queues_to_remove);
+				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
+					// .then(function(res) { console.log(res); })
+					.catch(function(err) { console.log(err); });
+			}			
 		}
 
 		function notifyUsers() {
 			// TODO
 		}
 
-		function removeUserFromEvent(id) {
-			vm.users_to_add.splice(vm.users_to_add.indexOf(id), 1);
-
-			// for(var i = 0; i<vm.selected_event.user_queue.length; i++)
-			// {
-			// 	if (vm.selected_event.user_queue[i]._id === id) {
-			// 		vm.selected_event.user_queue.splice(i,1);
-					
-			// 		console.log(vm.selected_event._id);
-			// 		Events.put(vm.selected_event._id, vm.selected_event)
-			// 			.success(function(data) {console.log(data);})
-			// 		break;
-			// 	}
-			// }
+		function removeQueueFromEvent(id) {
+			vm.queues_to_remove.push(id);
+			vm.queues_to_add.splice(vm.queues_to_add.indexOf(id), 1);
 		}
 
 		function deleteEvent() {
@@ -106,20 +115,24 @@
 		}
 
 		function submit() {
-			if (vm.selected_event.user_queue.length === vm.selected_event.allowed_capacity)
-			{
-			 	// Update queue status from 1 to 2
-				updateQueueStatus();
-				notifyUsers();
+			// if (vm.selected_event.user_queue.length === vm.selected_event.allowed_capacity)
+			// {
+			 	
+			// 	updateQueueStatus();
+			// 	notifyUsers();
 
-				vm.selected_event.status = 'Active';
-			}
+			// 	vm.selected_event.status = 'Active';
+			// }
+
+			updateQueueStatus(vm.enum_status.PENDING);
+			vm.selected_event.queue = vm.queues_to_add;
 
 			Events.put(vm.selected_event._id, vm.selected_event)
-				.success(function() {
+				.success(function(data) {
+					console.log(data);
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event saved', 2000);
-				});			
+				});
 		}		
 	}
 })();

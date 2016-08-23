@@ -31,11 +31,9 @@ function respondWithAll(res, statusCode) {
 
 function saveUpdates(updates) {
 	return function(entity) {
-
-		// console.log(updates);
-
 		var updated = _.merge(entity, updates);
-
+		updated.queue = updates.queue;
+		console.log(updated);
 		return updated.save({new : true})
 			.then(updated => {
 				return updated;
