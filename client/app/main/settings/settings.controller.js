@@ -56,10 +56,10 @@
 
             formData.append('userImage', input_file);
             SettingsService.uploadProfilePicture(formData).then(function(res) {
-                console.log(res);
                 var response = res.data.response;
                 if (response.status === 'ok') {
-                    vm.profile_picture = response.file;
+                    Materialize.toast('Profile picture updated', 6000);
+                    vm.user.profile_picture.current = response.file;
                 }
             });
         }

@@ -19,7 +19,7 @@ function handleError(res, statusCode) {
 	};
 }
 
-function getDecodedToken(token) {
+export function getDecodedToken(token) {
 	if (!token) {
 		return false;
 	}
@@ -145,7 +145,7 @@ export function getUserSettings(req, res, next) {
 	}
 	var decoded_token = jwt.verify(token, config.secrets.session);
 
-	return User.findOne({ _id: decoded_token._id }, '-_id first_name last_name ethnicity gender birthday email').exec()
+	return User.findOne({ _id: decoded_token._id }, '-_id first_name last_name ethnicity gender birthday email profile_picture.current').exec()
 		.then(function(user) {
 			if (!user) {
 				response.status = 'unauthorized';

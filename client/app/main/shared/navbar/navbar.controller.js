@@ -66,29 +66,47 @@
         /*======================================
             Functions
         =======================================*/
-
         init();
 
         function init() {
+            get_queue_status();
 
             Users.getMe()
                 .success(function(data) {
                     vm.user = data;
-                    console.log(vm.user.first_name);
                 })
                 .error(function(data) {
                     console.log("error: "+ data);
                 })
 
             // init datetime picker
-            get_queue_status();
             init_datetimepicker();
 
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');
                 tooltips.tooltip();
             });
-        };
+        }
+
+        // get user's queue status
+        function get_queue_status() {
+            var token = $cookies.get('token');
+            if (!token) { $state.go('login'); }
+
+            NavbarService.getUserQueueStatus(token).then(function(res) {
+                vm.queue_status = res.data.response.queue;
+
+                $timeout(function() {
+                    var modals = angular.element('.modal-trigger');
+                    modals.leanModal({
+                        dismissible: true,
+                        opacity: 0.5,
+                        starting_top: '4%',
+                        ending_top: '10%'
+                    });
+                });
+            });
+        }
 
         // open modal when explore is clicked
         vm.open_queue_modal = function() {
@@ -110,7 +128,7 @@
         };
 
         // reset queue so users can queue again
-        vm.reset_queue = function() {
+        function reset_queue() {
             vm.toggle_confirm_information();
             vm.status_title = 'QUEUE FOR EVENT';
             vm.nav_open = false;
@@ -254,7 +272,7 @@
                 if (response.status == 'ok') {
                     vm.close_queue_modal();
                     Materialize.toast('You have been added to the queue!', 6000);
-                    vm.get_queue_status();
+                    get_queue_status();
                 } else {
                     Materialize.toast('Something went wrong', 6000);
                 }
@@ -373,32 +391,14 @@
             }
         };
 
-        // get user's queue status
-        function get_queue_status() {
-            var token = $cookies.get('token');
-            if (!token) { $state.go('login'); }
-
-            NavbarService.getUserQueueStatus(token).then(function(res) {
-                vm.queue_status = res.data.response.queue;
-
-                var modals = angular.element('.modal-trigger');
-                modals.leanModal({
-                    dismissible: true,
-                    opacity: 0.5,
-                    starting_top: '4%',
-                    ending_top: '10%'
-                });
-            });
-        }
-
         // cancel_queue
         vm.cancel_queue = function() {
             var token = $cookies.get('token');
             if (!token) { $state.go('login'); }
 
             NavbarService.cancelUserQueue(token).then(function(res) {
-                vm.reset_queue();
-                vm.get_queue_status();
+                reset_queue();
+                get_queue_status();
                 Materialize.toast('Event search cancelled', 6000);
             });
         }
@@ -415,6 +415,7 @@
 
             return hour + ":" + minute + ":00 EDT";
         }
+
     }
 
 })();

@@ -12,7 +12,6 @@
                 return $http.get(url);
             },
             uploadProfilePicture: function(formData) {
-                console.log(formData);
                 var request = $http({
                     method: 'post',
                     url: '/api/upload/avatar',

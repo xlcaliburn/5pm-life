@@ -14,23 +14,7 @@
 
         // model
         vm.event_data = event_data;
-        console.log(vm.event_data);
-        vm.carousel = [
-            { src: 'assets/images/carousel/stock-1.jpg' },
-            { src: 'assets/images/carousel/stock-2.jpg' },
-            { src: 'assets/images/carousel/stock-3.jpg' },
-            { src: 'assets/images/carousel/stock-4.jpg' },
-            { src: 'assets/images/carousel/stock-5.jpg' },
-            { src: 'assets/images/carousel/stock-6.jpg' }
-        ];
-        vm.venue = {
-            name: 'Pillow Fight',
-            venue: 'Nathan Phillip\'s Square',
-            date: 'Tuesday, July, 2016',
-            time: '3:00 pm',
-            location: '100 Queen St W\nToronto, ON\nM5H 2N2',
-            lat_lng: '43.653488, -79.383962'
-        };
+
         vm.attendees = [
             {
                 name: 'Henry Klay',
@@ -63,6 +47,7 @@
                 props: ['Computer Scientist', 'Realist', 'Gamer']
             },
         ];
+
         vm.chat_messages = [
             {
                 name: 'Jennifer Grey', colour: '#2ab9bb',
@@ -93,8 +78,8 @@
         vm.status = 'attend';
 
         // views
-        vm.image_container = angular.element('.current-image');
-        vm.image_list = angular.element('.image-list');
+        //vm.image_container = angular.element('.current-image');
+        //vm.image_list = angular.element('.image-list');
         vm.map;
         vm.chatbox = angular.element('#chat-box');
         vm.textarea;
@@ -105,15 +90,15 @@
 
         vm.init = function() {
             // setup initial image first
-            vm.image_container.css('background-image', 'url("' + vm.carousel[0].src + '")');
+            //vm.image_container.css('background-image', 'url("' + vm.carousel[0].src + '")');
             $timeout(function() {
                 angular.element('.image-0').addClass('image-selected');
+                vm.init_map();
             });
 
             // set image list width
-            var width = (vm.carousel.length * 160) + 30;
-            vm.image_list.css('width', width);
-            vm.init_map();
+            //var width = (vm.carousel.length * 160) + 30;
+            //vm.image_list.css('width', width);
 
             // setup chat
             $timeout(function() { vm.chatbox.scrollTop(vm.chatbox[0].scrollHeight);});
