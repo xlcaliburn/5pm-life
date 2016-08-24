@@ -18,6 +18,7 @@
 		'RecoveryService',
 		'PasswordResetService',
 		'NavbarService',
-		'SettingsService'
+		'SettingsService',
+		'EventService'
 	]);
 })();

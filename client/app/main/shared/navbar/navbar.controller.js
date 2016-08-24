@@ -66,6 +66,7 @@
         /*======================================
             Functions
         =======================================*/
+
         init();
 
         function init() {
@@ -82,7 +83,7 @@
             // init datetime picker
             get_queue_status();
             init_datetimepicker();
-            
+
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');
                 tooltips.tooltip();
@@ -379,7 +380,7 @@
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
                 vm.queue_status = res.data.response.queue;
-                
+
                 var modals = angular.element('.modal-trigger');
                 modals.leanModal({
                     dismissible: true,

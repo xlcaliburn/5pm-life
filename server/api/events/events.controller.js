@@ -69,10 +69,22 @@ export function index(req, res) {
 
 // Gets a single event from the DB
 export function show(req, res) {
-	return Events.findById(req.params.id).exec()
-		.then(handleEntityNotFound(res))
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	var response = {};
+	return Events.findById(req.params.id, 'activity venue dt_start dt_end status').exec()
+		.then(function(event) {
+			if (!event) {
+				response.status = 'error';
+				return res.json({ response: response });
+			}
+			response.status = 'ok';
+			response.event_model = event;
+			return res.json({ response: response });
+		})
+		.catch(function(err) {
+			response.status = 'error';
+			response.error = err;
+			return res.json({ response: response });
+		});
 }
 
 // Creates a new Events in the DB

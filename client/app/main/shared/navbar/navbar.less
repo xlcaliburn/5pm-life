@@ -389,14 +389,20 @@ label.both-cb-label {
 ===================================*/
 
 .navbar {
-    background-color: #ffffff;
-    padding: 20px 0;
+    background-color: @white;
+    padding: 0;
+    height: 65px;
     border: none;
     margin: 0;
     border-radius: 0;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
     box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
+}
+
+.navbar>.container,
+.navbar>.container>.row {
+    height: 100%;
 }
 
 .navbar .row {
@@ -408,6 +414,7 @@ label.both-cb-label {
 }
 
 .nav-logo {
+    height: 1.5em;
     opacity: 1;
     outline: none;
     transition: opacity 0.25s ease-out;
@@ -428,14 +435,15 @@ label.both-cb-label {
 }
 
 #explore-button, #cancel-button {
-    height: auto;
-    padding: 6px 30px 4px;
+    height: 40px;
+    padding: 0 25px;
     background-color: @pink;
     border: none;
     border-radius: 30px;
     color: @white;
+    font-size: 1em;
+    line-height: 42px;
     font-weight: 300;
-    margin-top: 2px;
     text-decoration: none;
     transition: all 0.25s ease-out;
 }
@@ -446,7 +454,8 @@ label.both-cb-label {
 
 #explore-button i, #cancel-button i {
     vertical-align: middle;
-    transform: translate(15px, -1px);
+    transform: translate(10px, -1px);
+    font-size: 1em;
 }
 
 .nav-right {
@@ -465,8 +474,12 @@ label.both-cb-label {
     cursor: pointer;
 }
 
+.dropdown-hr {
+    margin-top: 10px;
+}
+
 .profile-image {
-    max-height: 50px;
+    max-height: 45px;
     border-radius: 50%;
 }
 
@@ -481,30 +494,27 @@ label.both-cb-label {
 
 .nav-dropdown {
     position: absolute;
-    background-color: @white;
+    background-color: #ffffff;
     text-align: left;
-    top: -999px;
     z-index: 99;
+    top: 50px;
     right: 0;
-    padding: 30px;
-    width: 280px;
-    opacity: 0;
-    transform: translate3d(-30px,0,0);
-    transition: transform 0.25s ease-out, opacity 0.25s ease-out, top 0s linear 0.25s;
-    -webkit-box-shadow: 0px 30px 50px 4px rgba(0,0,0,0.15);
-    -moz-box-shadow: 0px 30px 50px 4px rgba(0,0,0,0.15);
-    box-shadow: 0px 30px 50px 4px rgba(0,0,0,0.15);
+    border: none;
+    left: auto;
+    border-radius: 2px;
+    padding: 10px 30px;
+    width: 200px;
+    -webkit-box-shadow: 0px 20px 35px 3px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 20px 35px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 20px 35px 3px rgba(0, 0, 0, 0.05);
 }
 
-.nav-dropdown-container:hover .nav-dropdown {
-    top: 50px;
-    opacity: 1;
-    transform: translate3d(0,0,0);
-    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+.nav-dropdown.show {
+    display: block;
 }
 
 .dropdown-name {
-    font-size: 24px;
+    font-size: 20px;
     color: @darkgrey;
     font-weight: 300;
 }
@@ -516,7 +526,7 @@ label.both-cb-label {
     display: block;
     margin: 10px 0;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     transition: color 0.25s ease-out;
 }
 

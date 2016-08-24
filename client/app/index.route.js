@@ -21,7 +21,23 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			title: '5pm.life Home',
 			templateUrl: 'app/main/home/home.html',
 			controller: 'HomeController',
-			controllerAs: 'home'
+			controllerAs: 'home',
+			resolve: {
+				user: function($cookies, $state, SettingsService) {
+					var token = $cookies.get('token');
+					if (!token) {
+						return $state.go('login');
+					}
+					return SettingsService.getUserSettings(token).then(function(res) {
+						if (res.data.response.status == 'ok') {
+							return res.data.response.user;
+						} else if (res.data.response.status == 'error') {
+							return res.data.response.error;
+						}
+						return $state.go('login');
+					});
+				}
+			}
 		})
 
 		.state('home.event', {
@@ -30,25 +46,22 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controller: 'EventController',
 			controllerAs: 'event',
 			resolve: {
-				/*
-				auth: function($cookies, $state, NavbarService) {
-					var user_token = $cookies.get('token');
+				event_data: function($state, $stateParams, EventService) {
+					var event_id = $stateParams.id;
 
-					if (!user_token) {
-						return $state.go('login');
+					if (!event_id) {
+						return $state.go('home');
 					}
 
-					var token = {
-						token: user_token
-					};
+					return EventService.getEventModel(event_id).then(function(res) {
+						var status = res.data.response.status;
+						if (status != 'ok') {
+							return $state.go('home');
+						}
 
-					return NavbarService.getToken(token).then(function(res) {
-						var user_id = res.data.user_id;
-						return {
-							user_id: user_id
-						};
+						return res.data.response.event_model;
 					});
-				}*/
+				}
 			}
 		})
 

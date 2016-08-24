@@ -8,11 +8,13 @@
     /** @ngInject */
     /*global google */
     /* jshint expr: true */
-    function EventController($cookies, $timeout, NavbarService) {
+    function EventController($cookies, $timeout, NavbarService, event_data) {
 
         var vm = this;
 
         // model
+        vm.event_data = event_data;
+        console.log(vm.event_data);
         vm.carousel = [
             { src: 'assets/images/carousel/stock-1.jpg' },
             { src: 'assets/images/carousel/stock-2.jpg' },
