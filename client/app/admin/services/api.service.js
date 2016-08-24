@@ -84,6 +84,9 @@
 				getById : function(id) {
 					return $http.get('/api/events/' + id);
 				},
+				getByIdAdmin : function(id) {
+					return $http.get('/api/events/admin/' + id);
+				},				
 				put : function(id, data) {
 					return $http.put('/api/events/' + id, data);
 				},

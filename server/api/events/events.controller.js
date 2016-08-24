@@ -87,6 +87,15 @@ export function show(req, res) {
 		});
 }
 
+// Admin level GetById
+export function admin_show(req, res) {
+	var response = {};
+	return Events.findById(req.params.id).exec()
+		.then(handleEntityNotFound(res))
+		.then(respondWithResult(res))
+		.catch(handleError(res));
+}
+
 // Creates a new Events in the DB
 export function create(req, res) {
 	return Events.create(req.body)
