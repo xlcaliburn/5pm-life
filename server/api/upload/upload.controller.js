@@ -62,8 +62,11 @@ export function saveUserImage(req, res) {
 
                 // delete old image
                 var old_image = user.profile_picture.current;
-                fs.unlink('client/uploads/profile/' + old_image);
-
+                console.log(old_image);
+                if (old_image) {
+                    fs.unlink('client/uploads/profile/' + old_image);
+                }
+                
                 // save new one
                 user.profile_picture.current = req.file.filename;
                 user.save()

@@ -88,7 +88,14 @@ function getDecodedToken(token) {
 		return false;
 	}
 
-	return jwt.verify(token, config.secrets.session);
+	var verified_token = false;
+	try {
+		verified_token = jwt.verify(token, config.secrets.session);	
+	} catch (err) {
+		console.log(err);
+	}
+
+	return verified_token;
 }
 
 export function getUserStatus(req, res) {
