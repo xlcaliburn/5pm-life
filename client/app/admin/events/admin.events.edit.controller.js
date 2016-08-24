@@ -5,7 +5,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, Months, $stateParams, $timeout, Enums, Queue, Events, Venues, Activities) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Enums, Queue, Events, Venues, Activities) {
 		var vm = this;
 		vm.event_id = $stateParams.event_id;
 		vm.selected_event = {};
@@ -25,7 +25,6 @@
 		init();
 
 		function init() {
-
 			Venues.get()
 				.then(function(res) {
 					vm.allowed_venues = res.data;
@@ -48,9 +47,9 @@
 					vm.queues_to_add = vm.selected_event.queue;
 
 					var start_date = new Date(vm.selected_event.dt_start);
-					vm.form_date = Months[start_date.getMonth()] + " " + start_date.getDate() + ", " + start_date.getFullYear();
-					vm.form_start_time = formatAMPM(start_date);
-					vm.form_end_time = formatAMPM(new Date(vm.selected_event.dt_end));
+					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
+					vm.form_start_time = moment(start_date).format('hh:mmA');
+					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -162,18 +161,6 @@
 
             return hour + ":" + minute + ":00 EDT";
         }
-
-        function formatAMPM(date) {
-			var hours = date.getHours();
-			var minutes = date.getMinutes();
-			var ampm = hours >= 12 ? 'PM' : 'AM';
-			hours = hours % 12;
-			hours = hours ? hours : 12; // the hour '0' should be '12'
-			hours = hours < 10 ? '0'+hours : hours;
-			minutes = minutes < 10 ? '0'+minutes : minutes;
-			var strTime = hours + ':' + minutes + ampm;
-			return strTime;
-		}
 
 		function submit() {
 			if (vm.selected_event.user_queue.length === vm.selected_event.allowed_capacity)

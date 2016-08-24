@@ -23,7 +23,6 @@
 					for(var tag in data) {
 						validTags.push(data[tag].key);
 					}
-					console.log(validTags);
 					newTags = $('#activity_tags').tags({
 						suggestions: validTags,
 						restrictTo: validTags,
