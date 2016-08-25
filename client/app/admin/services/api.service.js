@@ -68,6 +68,9 @@
 				getByTypeNames : function (type) {
 					return $http.get('/api/enums/name/' + type);
 				},
+				getByTypeAll : function(type) {
+					return $http.get('/api/enums/all/' + type);
+				},
 				create : function(data) {
 					return $http.post('/api/enums', data);
 				},

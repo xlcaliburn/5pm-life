@@ -127,6 +127,16 @@ export function getByTypeNames(req, res) {
 		.catch(handleError(res));
 }
 
+// Gets all enums of a certain type and return everything
+export function getByTypeAll(req, res) {
+	return Enums.find({
+		type : req.params.type
+	}).exec()
+		.then(handleEntityNotFound(res))
+		.then(respondWithResult(res))
+		.catch(handleError(res));
+}
+
 // Creates a new enum in the DB
 export function create(req, res) {
 	return Enums.create(req.body)

@@ -1,6 +1,4 @@
-(function() {
-	'use strict';
-
+(function() { 'use strict';
 	angular
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
@@ -60,7 +58,6 @@
 				.success(function(data) {
 					vm.enum_status = data;
 				});
-
 
 			// init date
 			var datepicker = angular.element('#datepicker');

@@ -150,6 +150,26 @@ Enums.find({}).remove()
 			name : 'Richmond Hill',
 			key : 'CA_ON_RICHMOND_HILL',
 			value : 0
+		}, {
+			type : 'event_status',
+			name : 'Pending',
+			key : 'PENDING',
+			value : 0
+		}, {
+			type : 'event_status',
+			name : 'Active',
+			key : 'ACTIVE',
+			value : 1
+		}, {
+			type : 'event_status',
+			name : 'Completed',
+			key : 'COMPLETED',
+			value : 2
+		}, {
+			type : 'event_status',
+			name : 'Cancelled',
+			key : 'CANCELLED',
+			value : 3	
 		})
 		.then(() => {
 			console.log('Finished populating enums');

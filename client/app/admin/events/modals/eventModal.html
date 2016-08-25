@@ -7,8 +7,8 @@
 			<div class="row">
 				<div class="input-field col s12">
 				<select 
-					ng-model="vm.selectedEvent.activity"
-					ng-options="activity as activity.activity_name for activity in vm.allowedActivities track by activity.activity_name">
+					ng-model="vm.selected_event.activity"
+					ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name">
 				</select>
 
 					<label>Activity</label>
@@ -18,8 +18,8 @@
 			<div class="row">
 				<div class="input-field col s12">
 					<select 
-						ng-model="vm.selectedEvent.venue"
-						ng-options="venue as venue.venue_name for venue in vm.allowedVenues track by venue.venue_name">
+						ng-model="vm.selected_event.venue"
+						ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
 					</select>
 					<label>Venue</label>
 				</div>
