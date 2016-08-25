@@ -177,7 +177,7 @@
 
             <!-- Logo -->
             <div class="nav-left col l4 m4 s6 valign">
-                <a href="/" target="_self">
+                <a href="/home" target="_self">
                     <img class="nav-logo" src="assets/images/5pm-logo-blue.png">
                 </a>
             </div>
@@ -196,13 +196,13 @@
 
 
                 <div id="mobile-nav">
-                    <div class="nav-menu">
-                        <img class="profile-image" src="assets/images/profile.png">
+                    <div class="nav-menu" data-toggle="dropdown" id="home-mobile-menu">
+                        <img class="profile-image" src="uploads/profile/{{navbar.user.profile_picture.current}}">
                         <i class="tiny material-icons drop-indicator">expand_more</i>
                     </div>
 
-                    <div class="mobile-menu">
-                        <div class="dropdown-name">{{vm.user.first_name + " " + vm.user.last_name}}</div>
+                    <div class="mobile-menu nav-dropdown dropdown-menu" aria-labelledby="home-mobile-menu">
+                        <div class="dropdown-name">{{navbar.user.first_name + " " + navbar.user.last_name}}</div>
                         <hr class="dropdown-hr">
                         <ul class="dropdown-ul">
                             <li class="dropdown-li">
@@ -226,7 +226,7 @@
             <div class="nav-right col m4">
                 <div class="nav-dropdown-container dropdown">
                     <div class="nav-menu" data-toggle="dropdown" id="home-menu-button">
-                        <img class="profile-image" src="assets/images/default_profile.png">
+                        <img class="profile-image" src="uploads/profile/{{ navbar.user.profile_picture.current}}">
                         <i class="tiny material-icons drop-indicator">expand_more</i>
                     </div>
                     <!-- Dropdown menu -->

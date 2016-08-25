@@ -1,5 +1,39 @@
 @home-border-radius: 3px;
 
+.flexible {
+    margin-top: 20vh;
+}
+
+.flexible h1 {
+    font-size: 4em;
+    font-weight: 700;
+}
+
+.flexible p {
+    font-size: 1.5em;
+    font-weight: 300;
+    color: @darkgrey;
+}
+
+.flexible p>strong {
+    color: @pink;
+}
+
+.flexible .home-notice {
+    font-size: 1.1em;
+}
+
+@media screen and (max-width: 500px) {
+    .flexible h1 {
+        font-size: 3em;
+        font-weight: 700;
+    }
+
+    .flexible p {
+        font-size: 1.1em;
+    }
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

@@ -74,6 +74,7 @@
             Users.getMe()
                 .success(function(data) {
                     vm.user = data;
+                    console.log(vm.user);
                 })
                 .error(function(data) {
                     console.log("error: "+ data);
