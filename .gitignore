@@ -5,6 +5,7 @@
 #client/bower_components
 dist/
 #/server/config/local.env.js
+client/uploads
 .gitignore
 .tmp
 npm-debug.log

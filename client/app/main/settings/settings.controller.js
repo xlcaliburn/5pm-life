@@ -59,7 +59,13 @@
                 var response = res.data.response;
                 if (response.status === 'ok') {
                     Materialize.toast('Profile picture updated', 6000);
-                    vm.user.profile_picture.current = response.file;
+                    if (!vm.user.profile_picture) {
+                        vm.user.profile_picture = {
+                            current: response.file
+                        }
+                    } else {
+                        vm.user.profile_picture.current = response.file;
+                    }
                 }
             });
         }

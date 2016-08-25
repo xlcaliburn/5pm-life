@@ -7,16 +7,17 @@
 
 	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Enums, Queue, Events, Venues, Activities) {
 		var vm = this;
+		vm.event_id = $stateParams.event_id;
 		vm.selected_event = {};
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
 		vm.delete_event = deleteEvent;
 		vm.add_users = addUsersModal;
 		vm.submit = submit;
-		vm.queue = {};
-		vm.event_id = $stateParams.event_id;
 		vm.remove_queue_from_event = removeQueueFromEvent;
-
+		vm.form_date = null;
+		vm.form_start_time = null;
+		vm.form_end_time = null;
 		vm.queues_to_add = [];
 		vm.queues_to_remove = [];
 		vm.enum_status = [];
@@ -24,7 +25,6 @@
 		init();
 
 		function init() {
-
 			Venues.get()
 				.then(function(res) {
 					vm.allowed_venues = res.data;
@@ -41,10 +41,15 @@
 					console.log(err);
 				});
 
-			Events.getById(vm.event_id)
+			Events.getByIdAdmin(vm.event_id)
 				.success(function(data) {
 					vm.selected_event = data;
 					vm.queues_to_add = vm.selected_event.queue;
+
+					var start_date = new Date(vm.selected_event.dt_start);
+					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
+					vm.form_start_time = moment(start_date).format('hh:mmA');
+					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
@@ -55,6 +60,40 @@
 				.success(function(data) {
 					vm.enum_status = data;
 				});
+
+
+			// init date
+			var datepicker = angular.element('#datepicker');
+			var yesterday = new Date((new Date()).valueOf()-1000*60*60*24);
+			datepicker.pickadate({
+				format: 'mmmm dd, yyyy',
+				disable: [
+				  { from: [0,0,0], to: yesterday },
+				  1,2,3,4,5,6
+				],
+				onSet: function( arg ){
+					if ( 'select' in arg ){ //prevent closing on selecting month/year
+						this.close();
+					}
+				},
+				onOpen: function() {
+					angular.element('.picker__today').remove();
+				}
+			});
+
+			// init start time
+			var start_timepicker = angular.element('#start_timepicker');
+			start_timepicker.pickatime({
+				autoclose: true,
+				twelvehour: true
+			});
+
+			// init end time
+			var end_timepicker = angular.element('#end_timepicker');
+			end_timepicker.pickatime({
+				autoclose: true,
+				twelvehour: true
+			});	
 		}
 
 		function addUsersModal() {
@@ -83,15 +122,11 @@
 			// TODO: Make this a single call
 			for (var add_id in vm.queues_to_add) {
 				Queue.put(vm.queues_to_add[add_id], {status : newStatus})
-					// .then(function(res) { console.log(res); })
 					.catch(function(err) { console.log(err); });
 			}
 
 			for (var remove_id in vm.queues_to_remove) {
-				console.log(remove_id);
-				console.log(vm.queues_to_remove);
 				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
-					// .then(function(res) { console.log(res); })
 					.catch(function(err) { console.log(err); });
 			}
 
@@ -115,6 +150,18 @@
 				});
 		}
 
+        function get_time(time_string) {
+            var hour = parseInt(time_string.substr(0,2));
+            var minute = time_string.substr(3,2);
+            var ampm = time_string.substr(5,2);
+
+            if (ampm === 'PM') {
+                hour += 12;
+            }
+
+            return hour + ":" + minute + ":00 EDT";
+        }
+
 		function submit() {
 			if (vm.selected_event.user_queue.length === vm.selected_event.allowed_capacity)
 			{
@@ -131,9 +178,11 @@
 				updateQueueStatus(vm.enum_status.PENDING);
 			}
 
+			vm.selected_event.dt_start = new Date(vm.form_date + " " + get_time(vm.form_start_time));
+			vm.selected_event.dt_end = new Date(vm.form_date + " " + get_time(vm.form_end_time));
+			
 			Events.put(vm.selected_event._id, vm.selected_event)
 				.success(function(data) {
-					console.log(data);
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast('Event saved', 2000);
 				});

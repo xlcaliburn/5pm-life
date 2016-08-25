@@ -23,10 +23,12 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controller: 'HomeController',
 			controllerAs: 'home',
 			resolve: {
-				user: function($cookies, $state, SettingsService) {
+				user: function($cookies, $q, $state, SettingsService) {
 					var token = $cookies.get('token');
 					if (!token) {
-						return $state.go('login');
+						return $q.reject().catch(function() {
+							$state.go('login');
+						});
 					}
 					return SettingsService.getUserSettings(token).then(function(res) {
 						if (res.data.response.status == 'ok') {
@@ -34,7 +36,9 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 						} else if (res.data.response.status == 'error') {
 							return res.data.response.error;
 						}
-						return $state.go('login');
+						return $q.reject().catch(function() {
+							$state.go('login');
+						});
 					});
 				}
 			}
@@ -46,17 +50,21 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controller: 'EventController',
 			controllerAs: 'event',
 			resolve: {
-				event_data: function($state, $stateParams, EventService) {
+				event_data: function($q, $state, $stateParams, EventService) {
 					var event_id = $stateParams.id;
 
 					if (!event_id) {
-						return $state.go('home');
+						return $q.reject().catch(function() {
+							$state.go('home');
+						});
 					}
 
 					return EventService.getEventModel(event_id).then(function(res) {
 						var status = res.data.response.status;
 						if (status != 'ok') {
-							return $state.go('home');
+							return $q.reject().catch(function() {
+								$state.go('home');
+							});
 						}
 
 						return res.data.response.event_model;
@@ -72,18 +80,20 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controller: 'SettingsController',
 			controllerAs: 'settings',
 			resolve: {
-				user: function($cookies, $state, SettingsService) {
+				user: function($cookies, $q, $state, $timeout, SettingsService) {
 					var token = $cookies.get('token');
-					if (!token) {
-						return $state.go('login');
-					}
 					return SettingsService.getUserSettings(token).then(function(res) {
 						if (res.data.response.status == 'ok') {
 							return res.data.response.user;
 						} else if (res.data.response.status == 'error') {
-							return res.data.response.error;
+							console.log(res.data.response.error);
+							return $q.reject().catch(function() {
+								$state.go('login');
+							});
 						}
-						return $state.go('login');
+						return $q.reject().catch(function() {
+							$state.go('login');
+						});
 					});
 				}
 			}

@@ -2,7 +2,8 @@
 	'use strict';
 
 	angular.module('fivepmApp.admin', [
-		'fivepmApp.auth', 
+		'fivepmApp.auth',
+		'fivepmApp.constants', 
 		'ui.router', 
 		'ApiService'
 	]);
