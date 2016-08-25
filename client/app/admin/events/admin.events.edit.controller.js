@@ -3,22 +3,24 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Enums, Queue, Events, Venues, Activities) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Venues) {
 		var vm = this;
 		vm.event_id = $stateParams.event_id;
-		vm.selected_event = {};
+		vm.add_users = addUsersModal;
+		vm.delete_event = deleteEvent;
+		vm.remove_queue_from_event = removeQueueFromEvent;
+		vm.start_event = startEvent;
+		vm.submit = submit;
+
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
-		vm.delete_event = deleteEvent;
-		vm.add_users = addUsersModal;
-		vm.submit = submit;
-		vm.remove_queue_from_event = removeQueueFromEvent;
+		vm.enum_status = [];
 		vm.form_date = null;
 		vm.form_start_time = null;
 		vm.form_end_time = null;
 		vm.queues_to_add = [];
 		vm.queues_to_remove = [];
-		vm.enum_status = [];
+		vm.selected_event = {};
 
 		init();
 
@@ -35,9 +37,7 @@
 				.then(function() {
 					$timeout(function() {materialize_select();});
 				})
-				.catch(function(err) {
-					console.log(err);
-				});
+				.catch(function(err) {console.log(err);});
 
 			Events.getByIdAdmin(vm.event_id)
 				.success(function(data) {
@@ -49,9 +49,7 @@
 					vm.form_start_time = moment(start_date).format('hh:mmA');
 					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
 				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
+				.error(function(data) { console.log('Error: ' + data); });
 
 
 			Enums.getByType('queue_status')
@@ -65,8 +63,8 @@
 			datepicker.pickadate({
 				format: 'mmmm dd, yyyy',
 				disable: [
-				  { from: [0,0,0], to: yesterday },
-				  1,2,3,4,5,6
+					{ from: [0,0,0], to: yesterday },
+					1,2,3,4,5,6
 				],
 				onSet: function( arg ){
 					if ( 'select' in arg ){ //prevent closing on selecting month/year
@@ -90,7 +88,7 @@
 			end_timepicker.pickatime({
 				autoclose: true,
 				twelvehour: true
-			});	
+			});
 		}
 
 		function addUsersModal() {
@@ -98,7 +96,7 @@
 				animation: $scope.animationsEnabled,
 				templateUrl: 'app/admin/events/modals/eventAddUsersModal.html',
 				controller: 'EventAddUsersModalController',
-				controllerAs:'vm', 
+				controllerAs:'vm',
 				size: 'lg',
 				resolve: {
 					eventId : function() { return vm.event_id; }
@@ -111,7 +109,7 @@
 						vm.queues_to_add.push(queue_id);
 					}
 				}
-				
+
 			}, function () {});
 		}
 
@@ -119,12 +117,12 @@
 			// TODO: Make this a single call
 			for (var add_id in vm.queues_to_add) {
 				Queue.put(vm.queues_to_add[add_id], {status : newStatus})
-					.catch(function(err) { console.log(err); });
+				.catch(function(err) { console.log(err); });
 			}
 
 			for (var remove_id in vm.queues_to_remove) {
 				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
-					.catch(function(err) { console.log(err); });
+				.catch(function(err) { console.log(err); });
 			}
 
 			vm.selected_event.queue = vm.queues_to_add;
@@ -141,48 +139,45 @@
 
 		function deleteEvent() {
 			Events.delete(vm.selected_event._id)
-				.success(function() {
-					$state.go('admin.events', {}, { reload: true });
-					Materialize.toast('Event deleted', 2000);					
-				});
+			.success(function() {
+				$state.go('admin.events', {}, { reload: true });
+				Materialize.toast('Event deleted', 2000);
+			});
 		}
 
-        function get_time(time_string) {
-            var hour = parseInt(time_string.substr(0,2));
-            var minute = time_string.substr(3,2);
-            var ampm = time_string.substr(5,2);
+		function get_time(time_string) {
+			var hour = parseInt(time_string.substr(0,2));
+			var minute = time_string.substr(3,2);
+			var ampm = time_string.substr(5,2);
 
-            if (ampm === 'PM') {
-                hour += 12;
-            }
+			if (ampm === 'PM') {
+				hour += 12;
+			}
 
-            return hour + ":" + minute + ":00 EDT";
-        }
+			return hour + ':' + minute + ':00 EDT';
+		}
+
+		function startEvent() {
+			// TODO: Add warning
+			console.log('Event now set to active');
+
+			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
+			notifyUsers();
+
+			vm.selected_event.status = 'Active';
+		}
 
 		function submit() {
-			if (vm.selected_event.user_queue.length === vm.selected_event.allowed_capacity)
-			{
-			 	// TODO: Add warning 
-			 	console.log('Event now set to active');
+			updateQueueStatus(vm.enum_status.PENDING);
 
-				updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
-				notifyUsers();
+			vm.selected_event.dt_start = new Date(vm.form_date + ' ' + get_time(vm.form_start_time));
+			vm.selected_event.dt_end = new Date(vm.form_date + ' ' + get_time(vm.form_end_time));
 
-				vm.selected_event.status = 'Active';
-			}
-			else
-			{
-				updateQueueStatus(vm.enum_status.PENDING);
-			}
-
-			vm.selected_event.dt_start = new Date(vm.form_date + " " + get_time(vm.form_start_time));
-			vm.selected_event.dt_end = new Date(vm.form_date + " " + get_time(vm.form_end_time));
-			
 			Events.put(vm.selected_event._id, vm.selected_event)
-				.success(function(data) {
-					$state.go('admin.events', {}, { reload: true });
-					Materialize.toast('Event saved', 2000);
-				});
-		}		
+			.success(function() {
+				$state.go('admin.events', {}, { reload: true });
+				Materialize.toast('Event saved', 2000);
+			});
+		}
 	}
 })();
