@@ -1,6 +1,5 @@
-(function () {
-	'use strict';
-	
+(function () { 'use strict';
+
 	angular
 		.module('fivepmApp.admin')
 		.controller('AdminEventsController', AdminEventsController);
@@ -8,10 +7,10 @@
 	function AdminEventsController ($scope, $http, $interval, $uibModal, Events) {
 		var vm = this;
 		vm.getEvents = getEvents;
-		vm.events = {};
+		vm.openModal = openModal;
 		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
-		vm.openModal = openModal;
+		vm.events = {};
 
 		init();
 
@@ -21,7 +20,7 @@
 			var tick = function() {
 				vm.currentTime = new Date(Date.now()).getTime();
 			};
-			$interval(tick, 1000);		
+			$interval(tick, 1000);
 		}
 
 		function eventModal() {
@@ -29,7 +28,7 @@
 				animation: $scope.animationsEnabled,
 				templateUrl: 'app/admin/events/modals/eventModal.html',
 				controller: 'EventModalController',
-				controllerAs:'vm', 
+				controllerAs:'vm',
 				size: 'lg',
 				resolve: {}
 			});
@@ -38,7 +37,6 @@
 				vm.events = updateTime(data);
 			}, function () {});
 		}
-
 
 		function getEvents() {
 			Events.get()
@@ -53,9 +51,7 @@
 		function openModal(id) {
 			if (id) {
 				Events.getEvent(id)
-					.success(function(data) {
-						eventModal(data[0]);
-					});
+					.success(function(data) { (data[0]); });
 			}
 			else {
 				eventModal();
@@ -68,7 +64,6 @@
 					event.dt_search_start_time = new Date(event.dt_search_start).getTime();
 				}
 			});
-
 			return data;
 		}
 	}

@@ -68,14 +68,14 @@ Queue.find({}).remove()
 	.then(() => {
 		Queue.create({
 			user : "57b675bfb921140c3ab275c3",
-			status : 0,
+			status : 'Pending',
 			search_parameters : {
 				override_default : false,
 				tags : []
 			}
 		}, {
 			user : "57b675bfb921140c3ab275c4",
-			status : 0,
+			status : 'Pending',
 			search_parameters : {
 				override_default : false,
 				tags : []
@@ -88,88 +88,59 @@ Enums.find({}).remove()
 		Enums.create({
 			type : 'activity_tag',
 			key : 'ACTIVE',
-			value : 0
+			value : 'Active'
 		}, {
 			type : 'activity_tag',
 			key : 'SOCIAL',
-			value : 1
+			value : 'Social'
 		}, {
 			type : 'queue_status',
 			key : 'SEARCHING',
-			value : 0
+			value : 'Searching'
 		}, {
 			type : 'queue_status',
 			key : 'PENDING',
-			value : 1,
+			value : 'Pending'
 		}, {
 			type : 'queue_status',
 			key : 'PENDING_USER_CONFIRM',
-			value : 2,
+			value : 'Pending User Confirmation',
 		}, {
 			type : 'ethnicity',
-			name : 'Caucasian',
 			key : 'CAUCASIAN',
-			value : 0
+			value : 'Caucasian'
 		}, {
 			type : 'ethnicity',
-			name : 'Latino/Hispanic',
 			key : 'LATINO',
-			value : 1
+			value : 'Latino/Hispanic'
 		}, {
 			type : 'ethnicity',
-			name : 'African',
 			key : 'AFRICAN',
-			value : 2
+			value : 'African'
 		}, {
 			type : 'ethnicity',
-			name : 'Caribbean',
 			key : 'CARIBBEAN',
-			value : 3
+			value : 'Caribbean'
 		}, {
 			type : 'ethnicity',
-			name : 'South Asian',
 			key : 'SOUTH_ASIAN',
-			value : 4
+			value :  'South Asian'
 		}, {
 			type : 'ethnicity',
-			name : 'East Asian',
 			key : 'EAST_ASIAN',
-			value : 5
+			value : 'East Asian'
 		}, {
 			type : 'ethnicity',
-			name : 'Mixed',
 			key : 'MIXED',
-			value : 6
+			value : 'Mixed'
 		}, {
 			type : 'ethnicity',
-			name : 'Other',
 			key : 'OTHER',
-			value : 7
+			value : 'Other'
 		}, {
 			type : 'location',
-			name : 'Richmond Hill',
 			key : 'CA_ON_RICHMOND_HILL',
-			value : 0
-		}, {
-			type : 'event_status',
-			name : 'Pending',
-			key : 'PENDING',
-			value : 0
-		}, {
-			type : 'event_status',
-			name : 'Active',
-			key : 'ACTIVE',
-			value : 1
-		}, {
-			type : 'event_status',
-			name : 'Completed',
-			key : 'COMPLETED',
-			value : 2
-		}, {
-			type : 'event_status',
-			name : 'Cancelled',
-			key : 'CANCELLED',
-			value : 3	
+			value : 'Richmond Hill'
 		})
 		.then(() => {
 			console.log('Finished populating enums');

@@ -7,7 +7,7 @@ var ObjectId = Schema.ObjectId;
 
 var QueueSchema = new Schema({
 		user : { type : Schema.Types.ObjectId, ref : 'User'},
-		status : Number, // 0 = Searching, 1 = Awaiting confirm
+		status : String,
 		search_parameters : {
 			override_default : Boolean,
 			tags : [String],

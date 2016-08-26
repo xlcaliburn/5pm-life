@@ -4,9 +4,8 @@ import mongoose from 'mongoose';
 
 var EnumsSchema = new mongoose.Schema({
 	type : String,
-	name : String,
 	key : String,
-	value : Number
+	value : String
 });
 
 export default mongoose.model('Enums', EnumsSchema);

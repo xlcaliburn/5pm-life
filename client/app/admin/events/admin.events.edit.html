@@ -4,7 +4,10 @@
 		<a ui-sref="admin.events">Events</a> > Event #{{vm.selected_event._id}}
 	</section>
 
-	<div class="right-align">
+	<div class="row right-align">
+		<button class="btn waves-effect waves-light" ng-click="vm.event_found()">Trigger Event
+		</button>
+
 		<button class="btn red darken-4" name="Delete" value="Delete" ng-click="vm.delete_event()">Delete
 		</button>
 	</div>
@@ -91,16 +94,12 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 
 		<div class="divider"></div>
 
 		<div class="section">
-			<div class="row right-align">
-				<button class="btn waves-effect waves-light" type="submit" name="action">Start Event
-					<i class="material-icons right">send</i>
-				</button>
-			</div>
+
 			<div class="row right-align">
 				<button class="btn waves-effect waves-light" type="submit" name="action">Save
 					<i class="material-icons right">send</i>

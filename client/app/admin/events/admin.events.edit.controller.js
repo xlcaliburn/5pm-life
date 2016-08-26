@@ -9,9 +9,8 @@
 		vm.add_users = addUsersModal;
 		vm.delete_event = deleteEvent;
 		vm.remove_queue_from_event = removeQueueFromEvent;
-		vm.start_event = startEvent;
+		vm.event_found = eventFound;
 		vm.submit = submit;
-
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
 		vm.enum_status = [];
@@ -109,7 +108,6 @@
 						vm.queues_to_add.push(queue_id);
 					}
 				}
-
 			}, function () {});
 		}
 
@@ -124,12 +122,7 @@
 				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
 				.catch(function(err) { console.log(err); });
 			}
-
 			vm.selected_event.queue = vm.queues_to_add;
-		}
-
-		function notifyUsers() {
-			// TODO
 		}
 
 		function removeQueueFromEvent(id) {
@@ -141,7 +134,7 @@
 			Events.delete(vm.selected_event._id)
 			.success(function() {
 				$state.go('admin.events', {}, { reload: true });
-				Materialize.toast('Event deleted', 2000);
+				Materialize.toast('Event deleted', 2000); // jshint ignore:line
 			});
 		}
 
@@ -157,27 +150,30 @@
 			return hour + ':' + minute + ':00 EDT';
 		}
 
-		function startEvent() {
+		function eventFound() {
 			// TODO: Add warning
-			console.log('Event now set to active');
-
 			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
-			notifyUsers();
 
-			vm.selected_event.status = 'Active';
+			// TODO: Send event found email
+
+			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
+			saveAndClose('Event started');
 		}
 
 		function submit() {
 			updateQueueStatus(vm.enum_status.PENDING);
-
 			vm.selected_event.dt_start = new Date(vm.form_date + ' ' + get_time(vm.form_start_time));
 			vm.selected_event.dt_end = new Date(vm.form_date + ' ' + get_time(vm.form_end_time));
 
+			saveAndClose('Event saved');
+		}
+
+		function saveAndClose(notificationString) {
 			Events.put(vm.selected_event._id, vm.selected_event)
-			.success(function() {
-				$state.go('admin.events', {}, { reload: true });
-				Materialize.toast('Event saved', 2000);
-			});
+				.success(function() {
+					$state.go('admin.events', {}, { reload: true });
+					Materialize.toast(notificationString, 2000); // jshint ignore:line
+				});
 		}
 	}
 })();
