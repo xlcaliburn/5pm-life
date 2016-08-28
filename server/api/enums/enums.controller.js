@@ -43,7 +43,7 @@ function respondWithTypeNames(res, statusCode) {
 			var names = [];
 			for (var i = 0; i < entity.length; i++)
 			{
-				names[i] = entity[i].name;
+				names[i] = entity[i].value;
 			}
 
 			res.status(statusCode).json(names);
@@ -121,7 +121,7 @@ export function getByTypeNames(req, res) {
 	return Enums.find({
 		type : req.params.type
 	}).exec()
-		
+
 		.then(handleEntityNotFound(res))
 		.then(respondWithTypeNames(res, 200))
 		.catch(handleError(res));
