@@ -26,7 +26,7 @@
 
         <div class="fade-me-hard">
             <!-- stepper -->
-            <div class="signup-stepper" ng-class="{true: 'hidden'}[signup.current_stage > 3]">
+            <div class="signup-stepper" ng-class="{'hidden': signup.current_stage > 3, 'current-2': signup.current_stage == 2, 'current-3': signup.current_stage == 3}">
                 <div class="stepper-line"></div>
                 <div class="step-1">
                     <a href="#personal-information" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(1)">
@@ -149,15 +149,15 @@
             <!-- prev/next buttons -->
             <div class="prev-next-buttons" ng-if="signup.current_stage < 4">
                 <div class="row">
-                    <!-- previous button -->
-                    <div class="col l4 m5 s12 offset-l2 offset-m1 align-left">
-                        <a class="signup-prev-button babyblue-bg rect-button" ng-if="signup.current_stage != 1" ng-click="signup.go_to_stage(signup.current_stage - 1)">PREVIOUS</a>
-                    </div>
-
                     <!--next button -->
-                    <div class="col l4 m5 s12 align-right">
+                    <div class="col push-l6 l4 m5 push-m6 s12 align-right">
                         <a class="signup-next-button babyblue-bg rect-button" ng-click="signup.validate()" ng-if="signup.current_stage != 3">NEXT</a>
                         <a class="signup-submit-button pink-bg rect-button" ng-click="signup.validate('true')" ng-if="signup.current_stage == 3">SIGN UP</a>
+                    </div>
+
+                    <!-- previous button -->
+                    <div class="col pull-l4 l4 m5 pull-m4 s12 offset-l2 offset-m1 align-left">
+                        <a class="signup-prev-button babyblue-bg rect-button" ng-if="signup.current_stage != 1" ng-click="signup.go_to_stage(signup.current_stage - 1)">PREVIOUS</a>
                     </div>
                 </div>
             </div>

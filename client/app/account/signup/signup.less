@@ -1,3 +1,7 @@
+#signup-container {
+    padding-bottom: 60px;
+}
+
 .signup-navigation {
     margin-top: 35px;
     font-size: 18px;
@@ -265,12 +269,38 @@ select.signup-select {
     select.signup-select {
         width: 100%;
     }
+
+    a.signup-next-button,
+    a.signup-prev-button,
+    a.signup-submit-button {
+        display: block;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 }
 
 @media screen and (max-width: 450px) {
+    .fade-me-hard {
+        overflow: hidden;
+    }
+
+    .signup-stepper {
+        width: 300%;
+        transition: transform 0.25s ease-out;
+    }
+
+    .signup-stepper.current-2 {
+        transform: translateZ(0) translateX(-33.3%) scale(1.0, 1.0);
+    }
+
+    .signup-stepper.current-3 {
+        -webkit-transform: translateZ(0) translateX(-66.6%) scale(1.0, 1.0);
+        transform: translateZ(0) translateX(-66.6%) scale(1.0, 1.0);
+    }
+
     .step-1, .step-2, .step-3 {
         transform: translate3d(0,0,0);
-        width: 30%;
+        width: 33.33%;
         margin: 10px 0;
     }
 
@@ -286,13 +316,6 @@ select.signup-select {
 
     input.signup-birthyear {
         width: 55%;
-    }
-
-    a.signup-next-button,
-    a.signup-prev-button,
-    a.signup-submit-button {
-        display: block;
-        text-align: center;
     }
 
     a.signup-prev-button {
