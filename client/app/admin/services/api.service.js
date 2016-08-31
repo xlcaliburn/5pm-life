@@ -43,7 +43,7 @@
 					return $http.delete('/api/activities/' + id);
 				}
 			};
-		})		
+		})
 		.factory('Venues', function($http) {
 			return {
 				get : function() {
@@ -84,12 +84,15 @@
 				get : function() {
 					return $http.get('/api/events');
 				},
+				sendConfirmation: function(event_id) {
+
+				},
 				getById : function(id) {
 					return $http.get('/api/events/' + id);
 				},
 				getByIdAdmin : function(id) {
 					return $http.get('/api/events/admin/' + id);
-				},				
+				},
 				put : function(id, data) {
 					return $http.put('/api/events/' + id, data);
 				},
@@ -103,7 +106,7 @@
 					return $http.delete('/api/events/' + id);
 				}
 			};
-		})		
+		})
 		.factory('AdminSettings', function($http) {
 			return {
 				get : function() {

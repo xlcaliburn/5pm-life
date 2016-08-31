@@ -155,6 +155,8 @@
 			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
 
 			// TODO: Send event found email
+			// need event_id
+
 
 			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
 			saveAndClose('Event started');
