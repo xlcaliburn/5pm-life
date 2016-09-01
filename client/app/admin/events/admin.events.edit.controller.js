@@ -106,6 +106,7 @@
 				for (var queue_id in data) {
 					if (data[queue_id] && vm.queues_to_add.indexOf(queue_id) === -1) {
 						vm.queues_to_add.push(queue_id);
+
 					}
 				}
 			}, function () {});
@@ -156,7 +157,9 @@
 
 			// TODO: Send event found email
 			// need event_id
-
+			Queue.sendConfirmEmail(vm.queues_to_add).then(function(res) {
+				console.log(res.data);
+			});
 
 			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
 			saveAndClose('Event started');

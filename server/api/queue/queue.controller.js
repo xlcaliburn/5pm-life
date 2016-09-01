@@ -2,8 +2,10 @@
 
 import _ from 'lodash';
 import Queue from './queue.model';
+import User from '../user/user.model';
 import jwt from 'jsonwebtoken';
 import config from '../../config/environment';
+import mongoose from 'mongoose';
 
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
@@ -90,7 +92,7 @@ function getDecodedToken(token) {
 
 	var verified_token = false;
 	try {
-		verified_token = jwt.verify(token, config.secrets.session);	
+		verified_token = jwt.verify(token, config.secrets.session);
 	} catch (err) {
 		console.log(err);
 	}
@@ -224,6 +226,37 @@ export function cancelEventSearch(req, res) {
 }
 
 /*======================================*/
+
+// send confirmation email
+export function sendConfirm(req, res) {
+	var queue = req.body;
+	var query_array = [];
+
+	for (var i = 0; i < queue.length; i++) {
+		var query_obj = new mongoose.Types.ObjectId(queue[i]);
+		query_array.push(query_obj);
+	}
+
+	return Queue.find({ _id : { $in: query_array }}).exec()
+	 	.then(function(queue_items) {
+			var user_array = [];
+			console.log(queue_items);
+			for (var j = 0; j < queue_items.length; i++) {
+				user_array.push(queue_items[i]);
+			}
+
+			return User.find({_id: { $in: user_array }}).exec()
+				.then(function(users) {
+					return res.json({users: users });
+				})
+
+
+		})
+		.catch(function(err) {
+			return res.json({ error: err });
+		})
+
+}
 
 // Updates an existing Queue in the DB
 export function update(req, res) {
