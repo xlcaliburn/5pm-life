@@ -1,27 +1,18 @@
-(function () {
-	'use strict';
-
+(function () { 'use strict';
 	angular
 		.module('fivepmApp.admin')
 		.controller('AdminUsersController', AdminUsersController);
 
 	function AdminUsersController($scope, $http, Users) {
-		$scope.formData = {};
+		var vm = this;
+		vm.users = {};
+		vm.form_data = {};
+		vm.age = function(dob) { return moment().diff(dob, 'years'); };
 
 		Users.get()
 			.success(function(data) {
-				$scope.Users = data;
+				vm.users = data;
+				console.log(data);
 			});
-
-		$scope.createUser = function() {
-			if (!$.isEmptyObject($scope.formData)) {
-				Users.create($scope.formData)
-					.success(function(data) {
-						$scope.formData = {};
-						$scope.Users = data;
-					})
-				;
-			}
-		};
 	}
 })();

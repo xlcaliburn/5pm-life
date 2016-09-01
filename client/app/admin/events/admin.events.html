@@ -1,36 +1,38 @@
-<div ui-view>
-	<h2>Event Management</h2>
-	<div class="section" style="float:right">
-		<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.openModal()">
-			<i class="material-icons">add</i>
-		</a>
-	</div>
-	<div class="section">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Activity</th>
-					<th>Venue</th>
-					<th>Capacity</th>
-					<th>Queue Time (mins)</th>
-					<th>Status</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="event in vm.events">
-					<td>{{event._id}}</td>
-					<td>{{event.activity.activity_name}}</td>
-					<td>{{event.venue.venue_name}}</td>
-					<td>{{event.user_queue.length ? event.user_queue.length : 0}}/{{event.activity.allowed_capacity}}</td>
-					<td>{{ (vm.currentTime - event.dt_search_start_time)/60000 | number:0}}</td>
-					<td>{{event.status}}</td>
-					<td>
-						<a ui-sref="admin.events.edit({ event_id: event._id })"><i class="small material-icons">mode_edit</i></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+<div class="container">
+	<div ui-view>
+		<h2>Event Management</h2>
+		<div class="section" style="float:right">
+			<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.openModal()">
+				<i class="material-icons">add</i>
+			</a>
+		</div>
+		<div class="section">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Activity</th>
+						<th>Venue</th>
+						<th>Capacity</th>
+						<th>Queue Time (mins)</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="event in vm.events">
+						<td>{{event._id}}</td>
+						<td>{{event.activity.activity_name}}</td>
+						<td>{{event.venue.venue_name}}</td>
+						<td>{{event.user_queue.length ? event.user_queue.length : 0}}/{{event.activity.allowed_capacity}}</td>
+						<td>{{ (vm.currentTime - event.dt_search_start_time)/60000 | number:0}}</td>
+						<td>{{event.status}}</td>
+						<td>
+							<a ui-sref="admin.events.edit({ event_id: event._id })"><i class="small material-icons">mode_edit</i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

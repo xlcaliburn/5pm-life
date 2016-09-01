@@ -1,37 +1,39 @@
-<h2>Activities</h2>
-<div class="section" style="float:right">
-	<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createModal()">
-		<i class="material-icons">add</i>
-	</a>
-</div>
-<div class="section">
+<div class="container">
+	<h2>Activities</h2>
+	<div class="section" style="float:right">
+		<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.createModal()">
+			<i class="material-icons">add</i>
+		</a>
+	</div>
+	<div class="section">
 
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Activity</th>
-				<th>Tags</th>
-				<th>Capacity</th>
-				<th>Requirements</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="activity in vm.activities">
-				<td>{{activity.activity_name}}</td>
-				<td>
-					<div>
-						<div ng-repeat="tag in activity.tags" class="chip">
-							{{tag}}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Activity</th>
+					<th>Tags</th>
+					<th>Capacity</th>
+					<th>Requirements</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="activity in vm.activities">
+					<td>{{activity.activity_name}}</td>
+					<td>
+						<div>
+							<div ng-repeat="tag in activity.tags" class="chip">
+								{{tag}}
+							</div>
 						</div>
-					</div>
-				</td>
-				<td>{{activity.allowed_capacity}}</td>
-				<td>{{activity.required_equipment}}</td>
-				<td>
-					<a href="" ng-click="vm.deleteActivity(activity._id)"><i class="small material-icons">delete</i></a>
-				</td>				
-			</tr>
-		</tbody>
-	</table>
+					</td>
+					<td>{{activity.allowed_capacity}}</td>
+					<td>{{activity.required_equipment}}</td>
+					<td>
+						<a href="" ng-click="vm.deleteActivity(activity._id)"><i class="small material-icons">delete</i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

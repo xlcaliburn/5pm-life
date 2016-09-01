@@ -1,33 +1,32 @@
-<div class="section">
-		<h2>Enum Management</h2>
-</div>
-<div class="section">
-	<div class="row">
-		<div class="col s6">
-			<h2>Enums</h2>
-			<div class="col s9 right-align">
-				<a class="btn-floating btn-small waves-effect waves-light green" ng-click="vm.create_modal()">
-					<i class="material-icons">add</i>
-				</a>
-			</div>
+<div class="container">
+	<h2>Enum Management</h2>
+	<div class="section">
+		<div class="row">
+				<div class="right-align">
+					<a class="btn-floating btn-small waves-effect waves-light green" ng-click="vm.create_modal()">
+						<i class="material-icons">add</i>
+					</a>
+				</div>
 
-			<table class="table table-striped col s9">
-				<thead>
-					<tr>
-						<th>Enum</th>
-						<th>Key</th>
-						<th>Value</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="enum in vm.enums">
-						<td>{{ enum.type }}</td>
-						<td>{{ enum.key }}</td>
-						<td>{{ enum.value }}</td>
-						<td><input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="vm.delete_enum(enum._id)"></td>
-					</tr>
-				</tbody>
-			</table>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Enum</th>
+							<th>Key</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="enum in vm.enums">
+							<td>{{ enum.type }}</td>
+							<td>{{ enum.key }}</td>
+							<td>{{ enum.value }}</td>
+							<td>
+								<a href="" ng-click="vm.delete_enum(enum._id)"><i class="small material-icons">delete</i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 		</div>
 	</div>
 </div>
