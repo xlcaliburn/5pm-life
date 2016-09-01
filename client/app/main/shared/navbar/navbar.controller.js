@@ -95,7 +95,14 @@
             if (!token) { $state.go('login'); }
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
-                vm.queue_status = res.data.response.queue;
+                var queue_status = res.data.response.queue;
+                vm.queue_status = queue_status;
+
+                if (!vm.queue_status) {
+                    vm.queue_status = -1;
+                }
+
+                console.log(vm.queue_status);
 
                 $timeout(function() {
                     var modals = angular.element('.modal-trigger');

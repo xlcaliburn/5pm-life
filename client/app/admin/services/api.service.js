@@ -29,8 +29,8 @@
 				create : function(data) {
 					return $http.post('/api/queue', data);
 				},
-				sendConfirmEmail: function(queue) {
-					return $http.post('/api/queue/sendconfirm', queue);
+				sendConfirmEmail: function(queue_data) {
+					return $http.post('/api/queue/sendconfirm', queue_data);
 				}
 			};
 		})

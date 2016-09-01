@@ -157,7 +157,12 @@
 
 			// TODO: Send event found email
 			// need event_id
-			Queue.sendConfirmEmail(vm.queues_to_add).then(function(res) {
+			var queue_data = {
+				event_id: vm.event_id,
+				queues: vm.queues_to_add
+			};
+
+			Queue.sendConfirmEmail(queue_data).then(function(res) {
 				console.log(res.data);
 			});
 

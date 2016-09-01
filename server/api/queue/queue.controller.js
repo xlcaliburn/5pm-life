@@ -7,6 +7,9 @@ import jwt from 'jsonwebtoken';
 import config from '../../config/environment';
 import mongoose from 'mongoose';
 
+var EmailTemplate = require('../email/templates/email.global');
+var emailCtrl = require('../email/email.controller');
+
 function respondWithResult(res, statusCode) {
 	statusCode = statusCode || 200;
 	return function(entity) {
@@ -229,7 +232,8 @@ export function cancelEventSearch(req, res) {
 
 // send confirmation email
 export function sendConfirm(req, res) {
-	var queue = req.body;
+	var queue = req.body.queues;
+	var event_id = req.body.event_id;
 	var query_array = [];
 
 	for (var i = 0; i < queue.length; i++) {
@@ -240,21 +244,44 @@ export function sendConfirm(req, res) {
 	return Queue.find({ _id : { $in: query_array }}).exec()
 	 	.then(function(queue_items) {
 			var user_array = [];
-			console.log(queue_items);
-			for (var j = 0; j < queue_items.length; i++) {
-				user_array.push(queue_items[i]);
+
+			for (var j = 0; j < queue_items.length; j++) {
+				user_array.push(queue_items[j].user);
 			}
 
 			return User.find({_id: { $in: user_array }}).exec()
 				.then(function(users) {
-					return res.json({users: users });
+					var user_emails = [];
+					for (var k = 0; k < users.length; k++) {
+						// send emails to all users
+						var email_data = {
+			                first_name: users[k].first_name,
+							template: 'event-confirmation',
+			                event_link: req.headers.origin + '/home/event/' + event_id
+			            };
+
+						var text_version = EmailTemplate.get_text_version(email_data);
+						var html_version = EmailTemplate.get_html_version(email_data);
+
+			            var email_content = {
+			                to: users[k].email,
+			                subject: '[5PMLIFE] An event has been found!',
+			                text: text_version,
+			                html: html_version
+			            };
+
+			            emailCtrl.sendEmail(email_content);
+					}
+
+					return res.json({user_emails: user_emails });
 				})
-
-
+				.catch(function(err) {
+					return res.json({error: err});
+				});
 		})
 		.catch(function(err) {
 			return res.json({ error: err });
-		})
+		});
 
 }
 
