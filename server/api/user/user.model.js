@@ -43,6 +43,8 @@ var UserSchema = new Schema({
 	provider: String,
 	salt: String,
 	facebook: {},
+	event_status : String,
+	current_event : ObjectId,
 	event_history : [ObjectId],
 	account_create_date : Date,
 	profile_picture: {

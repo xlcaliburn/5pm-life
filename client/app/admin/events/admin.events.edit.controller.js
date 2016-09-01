@@ -116,12 +116,12 @@
 			// TODO: Make this a single call
 			for (var add_id in vm.queues_to_add) {
 				Queue.put(vm.queues_to_add[add_id], {status : newStatus})
-				.catch(function(err) { console.log(err); });
+				.catch(function(err) { console.log(err); }); // jshint ignore:line
 			}
 
 			for (var remove_id in vm.queues_to_remove) {
 				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
-				.catch(function(err) { console.log(err); });
+				.catch(function(err) { console.log(err); }); // jshint ignore:line
 			}
 			vm.selected_event.queue = vm.queues_to_add;
 		}
@@ -139,24 +139,18 @@
 			});
 		}
 
-		function get_time(time_string) {
-			var hour = parseInt(time_string.substr(0,2));
-			var minute = time_string.substr(3,2);
-			var ampm = time_string.substr(5,2);
-
-			if (ampm === 'PM') {
-				hour += 12;
-			}
-
-			return hour + ':' + minute + ':00 EDT';
+		function createDate(date, time_string) {
+			return new Date(date + ' ' + moment(time_string, 'hh:mmA').format('HH:mm:00'));
 		}
 
+		// TODO: Add warning before calling this function
 		function eventFound() {
-			// TODO: Add warning
 			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
 
 			// TODO: Send event found email
-			// need event_id
+			// TODO: Update each user.event_status to vm.enum_status.PENDING_USER_CONFIRM
+			// TODO: Update each user.current_event to eventId
+
 			var queue_data = {
 				event_id: vm.event_id,
 				queues: vm.queues_to_add
@@ -172,8 +166,8 @@
 
 		function submit() {
 			updateQueueStatus(vm.enum_status.PENDING);
-			vm.selected_event.dt_start = new Date(vm.form_date + ' ' + get_time(vm.form_start_time));
-			vm.selected_event.dt_end = new Date(vm.form_date + ' ' + get_time(vm.form_end_time));
+			vm.selected_event.dt_start = createDate(vm.form_date, vm.form_start_time);
+			vm.selected_event.dt_end = createDate(vm.form_date, vm.form_end_time);
 
 			saveAndClose('Event saved');
 		}
