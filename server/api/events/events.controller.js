@@ -131,11 +131,12 @@ export function getAttendees(req, res) {
 	var response = {};
 	var event_id = req.params.event_id;
 	var token = req.cookies.token;
-	var token_result = userController.getDecodedToken(token);
 
 	if (!token) {
-		response.status = 'unauthorized';
-		return res.json({ response: response });
+		return res.status(403).send('Unauthorized');
+	}
+	else {
+		var token_result = userController.getDecodedToken(token);
 	}
 
 	return Events.findById(event_id).exec()
@@ -150,22 +151,21 @@ export function getAttendees(req, res) {
 
 					// check if user is allowed to view event
 					for (var i = 0; i < users.length; i++) {
-						if (users[i]._id == token_result._id) {
+						if (users[i]._id === token_result._id) {
 							isAllowed = true;
 						}
 
-						if (users[i].event_status == 'Confirmed') {
+						if (users[i].event_status === 'Confirmed') {
 							var current_user = {
 								name: users[i].first_name + ' ' + users[i].last_name,
 								profile_picture: users[i].profile_picture.current
-							}
+							};
 							confirmed_users.push(current_user);
 						}
 					}
 
 					if (!isAllowed) {
-						response.status = 'unauthorized';
-						return res.json({ response: response });
+						return res.status(403).send('Unauthorized');
 					}
 
 					// everything is good, return the attendees
@@ -177,10 +177,6 @@ export function getAttendees(req, res) {
 					response.status = 'error';
 					return res.json({ response: response });
 				});
-
-			response.status = 'ok';
-			response.attendees = confirmed_users;
-			return res.json({ response: response });
 		})
 		.catch(function(err) {
 			response.status = 'error';
