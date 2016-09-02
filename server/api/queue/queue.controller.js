@@ -3,6 +3,7 @@
 import _ from 'lodash';
 import Queue from './queue.model';
 import User from '../user/user.model';
+import Events from '../events/events.model';
 import jwt from 'jsonwebtoken';
 import config from '../../config/environment';
 import mongoose from 'mongoose';
@@ -230,8 +231,9 @@ export function cancelEventSearch(req, res) {
 
 /*======================================*/
 
-// send confirmation email
-export function sendConfirm(req, res) {
+// send confirmation email + add users to event
+export function triggerEvent(req, res) {
+	var response = {};
 	var queue = req.body.queues;
 	var event_id = req.body.event_id;
 	var query_array = [];
@@ -251,7 +253,7 @@ export function sendConfirm(req, res) {
 
 			return User.find({_id: { $in: user_array }}).exec()
 				.then(function(users) {
-					var user_emails = [];
+					var users_array = [];
 					for (var k = 0; k < users.length; k++) {
 						// send emails to all users
 						var email_data = {
@@ -271,9 +273,29 @@ export function sendConfirm(req, res) {
 			            };
 
 			            emailCtrl.sendEmail(email_content);
+
+						// add users to event
+						var user_obj = new User(users[k]);
+						users_array.push(user_obj);
 					}
 
-					return res.json({user_emails: user_emails });
+					return Events.findById(event_id).exec()
+						.then(function(event) {
+
+							event.users = users_array;
+							event.save()
+								.then(function() {
+									return null;
+								})
+								.catch(function(err) {
+									return res.json({error: err});
+								});
+							return null;
+						})
+						.catch(function(err) {
+							return res.json({error: err});
+						});
+
 				})
 				.catch(function(err) {
 					return res.json({error: err});

@@ -106,6 +106,10 @@ Enums.find({}).remove()
 			key : 'PENDING_USER_CONFIRM',
 			value : 'Pending User Confirmation',
 		}, {
+			type : 'event_status',
+			key : 'CONFIRMED',
+			value : 'Confirmed'
+		}, {
 			type : 'ethnicity',
 			key : 'CAUCASIAN',
 			value : 'Caucasian'

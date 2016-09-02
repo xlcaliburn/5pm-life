@@ -69,6 +69,18 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 						return res.data.response.event_model;
 					});
+				},
+				attendees: function($stateParams, EventService) {
+					var event_id = $stateParams.id;
+
+					return EventService.getEventAttendees(event_id).then(function(res) {
+						if (res.data.response.status == 'ok') {
+							console.log(res.data);
+							return res.data.attendees;
+						} else {
+							return $state.go('home');
+						}
+					});
 				}
 			}
 		})

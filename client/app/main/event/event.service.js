@@ -10,6 +10,10 @@
             getEventModel: function(event_id) {
                 var url = "/api/events/" + event_id;
                 return $http.get(url);
+            },
+            getEventAttendees: function(event_id) {
+                var url = "/api/events/attendees/" + event_id;
+                return $http.get(url);
             }
         }
     }

@@ -11,7 +11,7 @@ router.get('/status/:status', controller.getByStatus);
 router.get('/user/:token', controller.getUserStatus);
 router.get('/cancel/:token', controller.cancelEventSearch);
 router.post('/', controller.create);
-router.post('/sendconfirm', controller.sendConfirm);
+router.post('/triggerEvent', controller.triggerEvent);
 router.put('/:id', controller.update);
 router.put('/status', controller.updateMultipleStatus);
 router.patch('/:id', controller.update);

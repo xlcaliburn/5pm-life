@@ -2,6 +2,8 @@
 
 import _ from 'lodash';
 import Events from './events.model';
+import User from '../user/user.model';
+var userController = require('../user/user.controller');
 
 function handleError(res, statusCode) {
 	statusCode = statusCode || 500;
@@ -122,4 +124,67 @@ export function destroy(req, res) {
 		.then(handleEntityNotFound(res))
 		.then(removeEntity(res))
 		.catch(handleError(res));
+}
+
+// get attendees based on event_id
+export function getAttendees(req, res) {
+	var response = {};
+	var event_id = req.params.event_id;
+	var token = req.cookies.token;
+	var token_result = userController.getDecodedToken(token);
+
+	if (!token) {
+		response.status = 'unauthorized';
+		return res.json({ response: response });
+	}
+
+	return Events.findById(event_id).exec()
+		.then(function(event) {
+
+			// fetch all of the users based on their ObjectId
+			var user_array = event.users;
+			return User.find({ _id: { $in: user_array }}).exec()
+				.then(function(users) {
+					var confirmed_users = [];
+					var isAllowed = false;
+
+					// check if user is allowed to view event
+					for (var i = 0; i < users.length; i++) {
+						if (users[i]._id == token_result._id) {
+							isAllowed = true;
+						}
+
+						if (users[i].event_status == 'Confirmed') {
+							var current_user = {
+								name: users[i].first_name + ' ' + users[i].last_name,
+								profile_picture: users[i].profile_picture.current
+							}
+							confirmed_users.push(current_user);
+						}
+					}
+
+					if (!isAllowed) {
+						response.status = 'unauthorized';
+						return res.json({ response: response });
+					}
+
+					// everything is good, return the attendees
+					response.status = 'ok';
+					response.attendees = confirmed_users;
+					return res.json({ response: response });
+				})
+				.catch(function(err) {
+					response.status = 'error';
+					return res.json({ response: response });
+				});
+
+			response.status = 'ok';
+			response.attendees = confirmed_users;
+			return res.json({ response: response });
+		})
+		.catch(function(err) {
+			response.status = 'error';
+			response.error = err;
+			return res.json({ response: response });
+		});
 }

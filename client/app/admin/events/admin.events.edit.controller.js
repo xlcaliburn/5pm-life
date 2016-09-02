@@ -156,7 +156,7 @@
 				queues: vm.queues_to_add
 			};
 
-			Queue.sendConfirmEmail(queue_data).then(function(res) {
+			Queue.triggerEventStart(queue_data).then(function(res) {
 				console.log(res.data);
 			});
 

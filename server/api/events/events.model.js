@@ -30,7 +30,8 @@ var EventsSchema = new Schema({
 	dt_start : Date,
 	dt_end : Date,
 	status : String,
-	queue : [{ type : Schema.Types.ObjectId, ref : 'Queue'}]
+	queue : [{ type : Schema.Types.ObjectId, ref : 'Queue'}],
+	users : [{ type : Schema.Types.ObjectId, ref : 'User'}]
 });
 
 export default mongoose.model('Events', EventsSchema);
