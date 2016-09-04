@@ -156,6 +156,12 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controllerAs: 'reset'
 		})
 
+		.state('logoutsuccess', {
+			url: '/logoutsuccess',
+			title: '5PM Logout',
+			templateUrl: 'app/account/logout/logout.html'
+		})
+
 		.state('admin', {
 			url: '/admin',
 			templateUrl: 'app/admin/admin.html'

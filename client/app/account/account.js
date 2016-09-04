@@ -3,13 +3,11 @@
 angular.module('fivepmApp')
 	.config(function($stateProvider) {
 		$stateProvider.state('logout', {
-				url: '/logout?referrer',
-				referrer: 'main',
+				url: '/logout',
 				template: '',
 				controller: function($state, Auth) {
-					var referrer = $state.params.referrer || $state.current.referrer || 'main';
 					Auth.logout();
-					$state.go(referrer);
+					$state.go('logoutsuccess');
 				}
 			});
 		//   .state('signup', {
