@@ -64,6 +64,7 @@
         vm.both = false;
         vm.confirm = false;
         vm.location;
+        vm.get_queue_status = get_queue_status;
 
         /*======================================
             Functions
@@ -73,12 +74,9 @@
         function init() {
             get_queue_status();
 
-            Users.getMe()
-                .success(function(data) {
-                    vm.user = data;
-                })
-                .error(function(data) {
-                })
+            Users.getMe().success(function(data) {
+                vm.user = data;
+            });
 
             // init datetime picker
             init_datetimepicker();
@@ -95,6 +93,7 @@
             if (!token) { $state.go('login'); }
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
+                
                 var queue_status = res.data.response.queue_status;
                 var event_link = res.data.response.event_link;
                 vm.queue_status = queue_status;
@@ -265,11 +264,11 @@
             if (vm.active) { tags.push('active'); }
 
             // event start
-            var start_date_string = vm.queue_date + " " + get_time(vm.queue_start_time);
+            var start_date_string = vm.queue_date + ' ' + get_time(vm.queue_start_time);
             var event_start = new Date(start_date_string);
 
             // event end
-            var end_date_string = vm.queue_date + " " + get_time(vm.queue_end_time);
+            var end_date_string = vm.queue_date + ' ' + get_time(vm.queue_end_time);
             var event_end = new Date(end_date_string);
 
             // city
@@ -284,14 +283,14 @@
             };
             NavbarService.addToQueue(queue_data).then(function(res) {
                 var response = res.data.response;
-                if (response.status == 'ok') {
+                if (response.status === 'ok') {
                     vm.close_queue_modal();
                     Materialize.toast('You have been added to the queue!', 6000);
                     get_queue_status();
                 } else {
                     Materialize.toast('Something went wrong', 6000);
                 }
-            })
+            });
         };
 
         // convert string to html
@@ -355,7 +354,7 @@
                     });
                 });
             }
-        };
+        }
 
         // returns date with day of week
         vm.get_full_date = function(unformatted_date) {
@@ -410,13 +409,14 @@
         vm.cancel_queue = function() {
             var token = $cookies.get('token');
             if (!token) { $state.go('login'); }
-
-            NavbarService.cancelUserQueue(token).then(function(res) {
+            console.log('working');
+            NavbarService.cancelUserQueue(token).then(function() {
                 reset_queue();
                 get_queue_status();
                 Materialize.toast('Event search cancelled', 6000);
-            });
-        }
+            })
+            .catch(function() { $state.go('home'); });
+        };
 
         function get_time(time_string) {
             // 09:00PM
@@ -428,7 +428,7 @@
                 hour += 12;
             }
 
-            return hour + ":" + minute + ":00 EDT";
+            return hour + ':' + minute + ':00 EDT';
         }
 
     }

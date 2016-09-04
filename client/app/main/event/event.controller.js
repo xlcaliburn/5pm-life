@@ -8,13 +8,14 @@
     /** @ngInject */
     /*global google */
     /* jshint expr: true */
-    function EventController($cookies, $rootScope, $timeout, attendees, event_data, EventService) {
+    function EventController($cookies, $rootScope, $state, $timeout, attendees, event_data, EventService) {
 
         var vm = this;
 
         // model
         vm.attendees = attendees;
         vm.event_data = event_data;
+        vm.user_status;
 
         // variables
         var map, marker, infowindow, lat, lng;
@@ -36,6 +37,7 @@
             $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
 
             getLatLng();
+            getSelfStatus();
             initPlugins();
         }
 
@@ -54,18 +56,30 @@
                 gmaps_link: getGoogleMapsLink(),
                 attendees: getConfirmedAttendees()
             };
-            console.log(event_details);
+
             EventService.confirmEvent(event_details).then(function(data) {
-                console.log(data);
                 if (data.response.status === 'ok') {
-                    alert('Event confirmed!');
+                    getSelfStatus(true);
+                    Materialize.toast('You\'ve accepted the invitation!', 6000);
                 }
             });
         }
 
         // decline event confirmation
         function declineEvent() {
+            var event_details = {
+                id: vm.event_data._id
+            };
 
+            EventService.declineEvent(event_details).then(function(data) {
+                if (data.response.status === 'ok') {
+                    $state.go('home');
+                    Materialize.toast('You have declined the event and will be placed back into queue.', 10000);
+                }
+            })
+            .catch(function() {
+                $state.go('home');
+            });
         }
 
         // get latitude and longitude based on event address
@@ -116,10 +130,28 @@
         }
 
         // returns your status
-        function getSelfStatus() {
-            for (var i = 0; i < vm.attendees.length; i++) {
-                if (vm.attendees[i].status) {
-                    return vm.attendees[i].status;
+        function getSelfStatus(new_data) {
+            if (new_data) {
+                return EventService.getEventAttendees(vm.event_data._id).then(function(res) {
+                    if (res.data.response.status === 'ok') {
+                        vm.attendees = res.data.response.attendees;
+                        for (var i = 0; i < vm.attendees.length; i++) {
+                            if (vm.attendees[i].status) {
+                                 vm.user_status = vm.attendees[i].status;
+                                 return;
+                            }
+                        }
+                    } else {
+                        console.log(res.data);
+                        $state.go('home');
+                    }
+                });
+            } else {
+                for (var i = 0; i < vm.attendees.length; i++) {
+                    if (vm.attendees[i].status) {
+                         vm.user_status = vm.attendees[i].status;
+                         return;
+                    }
                 }
             }
         }

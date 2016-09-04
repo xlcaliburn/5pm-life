@@ -7,20 +7,21 @@
 
 	function EventAddUsersModalController ($uibModalInstance, $filter, Enums, Users, Queue, Events, eventId) {
 		var vm = this;
-		vm.event = {}; 
+		vm.event = {};
 		vm.queues = {}; // Get all valid queues
 		vm.submit = submit;
 		vm.getAge = getAge;
 		vm.selected_queue = []; // Get queues to add to event from html
-		vm.queue_ids = []; 
+		vm.queue_ids = [];
 		vm.queue_user_ids = []; // Get users corresponding to selected ids
-		vm.enum_status = [];	
+		vm.enum_status = [];
 
 		init();
 
 		function init() {
-			Queue.getByStatus(0)
+			Queue.getByStatus('Searching')
 				.success(function(data) {
+					console.log(data);
 					vm.queues = data;
 				})
 				.error(function(data) {

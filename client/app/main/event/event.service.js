@@ -20,6 +20,12 @@
                 return $http.post(url, event_details).then(function(res) {
                     return res.data;
                 });
+            },
+            declineEvent: function(event_details) {
+                var url = 'api/events/decline';
+                return $http.post(url, event_details). then(function(res) {
+                    return res.data;
+                });
             }
         };
     }

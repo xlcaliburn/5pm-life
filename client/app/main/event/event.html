@@ -2,7 +2,7 @@
     <div class="container">
 
         <!-- confirmation header -->
-        <div class="row confirmation-row" ng-if="vm.get_self_status() == 'Pending User Confirmation'">
+        <div class="row confirmation-row" ng-if="vm.user_status == 'Pending User Confirmation'">
             <div class="col m8 s12 confirmation-description">
                 Please confirm your event attendance to ensure a spot
             </div>
@@ -37,7 +37,7 @@
                             <table width="100%">
                                 <tbody><tr>
                                     <td class="event-icons"><i class="material-icons" data-position="left" data-delay="0" data-tooltip="Your Attendance">person</i></td>
-                                    <td ng-class="{'pending': vm.get_self_status() == 'Pending User Confirmation', 'confirmed': vm.get_self_status() == 'Confirmed'}">{{ vm.get_self_status() }}</td>
+                                    <td ng-class="{'pending': vm.user_status == 'Pending User Confirmation', 'confirmed': vm.user_status == 'Confirmed'}">{{ vm.user_status }}</td>
                                 </tr>
                                 <tr>
                                     <td class="event-icons"><i class="material-icons" data-position="left" data-delay="0" data-tooltip="Event Date">event</i></td>

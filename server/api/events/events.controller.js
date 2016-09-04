@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Events from './events.model';
 import User from '../user/user.model';
 import Queue from '../queue/queue.model';
+import mongoose from 'mongoose';
 
 var userController = require('../user/user.controller');
 var EmailTemplate = require('../email/templates/email.global');
@@ -167,6 +168,59 @@ export function confirmEvent(req, res) {
 					emailCtrl.sendEmail(email_content);
 					response.status = 'ok';
 					return res.json({ response: response });
+				})
+				.catch(handleError(res));
+			})
+			.catch(handleError(res));
+		})
+		.catch(handleError(res));
+	})
+	.catch(handleError(res));
+}
+
+// user declines an event inside event confirmation
+export function declineEvent(req, res) {
+	var response = {};
+	var event_id = req.body.id;
+	console.log('event id is', event_id);
+	var token = req.cookies.token;
+	var token_result = userController.getDecodedToken(token);
+
+	// Queue table - change user status to 'Pending'
+	var user_id = new mongoose.Types.ObjectId(token_result._id);
+	return Queue.findOne({ user: user_id }).exec()
+	.then(function(queue) {
+		if (!queue) {
+			return res.status(403).send('unauthorized');
+		}
+		var queue_id = queue._id;
+		queue.status = 'Searching';
+		return queue.save()
+		.then(function() {
+
+
+			return Events.findById(event_id).exec()
+			.then(function(event) {
+
+				// Event table - remove user and queue from event
+				event.users.remove(user_id);
+				event.queue.remove(queue_id);
+				return event.save()
+				.then(function() {
+
+					// User table - Change event_status and current_event to null
+					return User.findById(token_result._id).exec()
+					.then(function(user) {
+						user.event_status = 'Pending';
+						user.current_event = null;
+						return user.save()
+						.then(function() {
+							response.status = 'ok';
+							return res.json({ response: response });
+						})
+						.catch(handleError(res));
+					})
+					.catch(handleError(res));
 				})
 				.catch(handleError(res));
 			})

@@ -37,6 +37,7 @@
     "browser": true,
     "element": true,
     "by": true,
-    "materialize_select": false
+    "materialize_select": false,
+    "Materialize": false
   }
 }

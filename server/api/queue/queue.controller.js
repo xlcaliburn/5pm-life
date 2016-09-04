@@ -55,6 +55,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
 	statusCode = statusCode || 500;
 	return function(err) {
+		console.log(err);
 		res.status(statusCode).send(err);
 	};
 }
@@ -165,7 +166,7 @@ function validateQueueData(queue_data) {
 
 // Creates a new Queue in the DB
 export function create(req, res) {
-	var response = {};
+	var response = { status: 'ok'};
 	var queue_data = req.body;
 	var queue_data_status = validateQueueData(queue_data);
 
@@ -183,7 +184,7 @@ export function create(req, res) {
 
 	var queue_object = {
 		user: decoded_token._id,
-		status: 0,
+		status: 'Searching',
 		search_parameters: {
 			tags: req.body.tags,
 			event_search_dt_start: req.body.event_start,
@@ -194,17 +195,19 @@ export function create(req, res) {
 	};
 
 	return Queue.create(queue_object)
-		.then(function(result) {
-			response.status = 'ok';
-			response.result = result;
-			return res.json({ response: response });
+		.then(function() {
+			return User.findById(decoded_token._id).exec()
+			.then(function(user) {
+				user.event_status = 'Pending';
+				return user.save()
+				.then(function() {
+					res.json({ response: response });
+				})
+				.catch(()=>handleError(res));
+			})
+			.catch(()=>handleError(res));
 		})
-		.catch(function(err, result) {
-			response.status = 'error';
-			response.errors = err;
-			response.result = result;
-			return res.json({ response: response });
-		});
+		.catch(()=>handleError(res));
 }
 /*=====================================*/
 
@@ -218,20 +221,26 @@ export function cancelEventSearch(req, res) {
 	return Queue.findOne({ user: token._id }).exec()
 		.then(function(queue) {
 			if (!queue) {
-				return null;
+				return res.status(403).send('unauthorized');
 			}
 			var queue_id = queue._id;
-			console.log('queue id', queue_id);
 			return Queue.remove({ _id: queue_id }).exec()
 				.then(function() {
-					res.json({ response: response });
-				});
+					// change user event_status = null
+					return User.findById(token._id).exec()
+					.then(function(user) {
+						user.event_status = null;
+						return user.save()
+						.then(function() {
+							return res.json({ response: response });
+						})
+						.catch(handleError(res));
+					})
+					.catch(handleError(res));
+				})
+				.catch(handleError(res));
 		})
-		.catch(function(err) {
-			response.status = 'error';
-			response.errors = err;
-			res.json({ response: response });
-		});
+		.catch(handleError(res));
 }
 
 /*======================================*/

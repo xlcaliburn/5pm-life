@@ -87,9 +87,6 @@
 				get : function() {
 					return $http.get('/api/events');
 				},
-				sendConfirmation: function(event_id) {
-
-				},
 				getById : function(id) {
 					return $http.get('/api/events/' + id);
 				},
