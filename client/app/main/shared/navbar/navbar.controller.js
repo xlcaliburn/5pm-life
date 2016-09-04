@@ -93,7 +93,7 @@
             if (!token) { $state.go('login'); }
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
-                
+
                 var queue_status = res.data.response.queue_status;
                 var event_link = res.data.response.event_link;
                 vm.queue_status = queue_status;
@@ -143,7 +143,9 @@
 
         // reset queue so users can queue again
         function reset_queue() {
-            vm.toggle_confirm_information();
+            if (vm.confirm) {
+                vm.toggle_confirm_information();
+            }
             vm.status_title = 'QUEUE FOR EVENT';
             vm.nav_open = false;
             vm.modal_open = false;
