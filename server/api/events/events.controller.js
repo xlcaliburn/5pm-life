@@ -3,11 +3,16 @@
 import _ from 'lodash';
 import Events from './events.model';
 import User from '../user/user.model';
+import Queue from '../queue/queue.model';
+
 var userController = require('../user/user.controller');
+var EmailTemplate = require('../email/templates/email.global');
+var emailCtrl = require('../email/email.controller');
 
 function handleError(res, statusCode) {
 	statusCode = statusCode || 500;
 	return function(err) {
+		console.log('error is', err);
 		res.status(statusCode).send(err);
 	};
 }
@@ -35,7 +40,6 @@ function saveUpdates(updates) {
 	return function(entity) {
 		var updated = _.merge(entity, updates);
 		updated.queue = updates.queue;
-		console.log(updated);
 		return updated.save({new : true})
 			.then(updated => {
 				return updated;
@@ -126,6 +130,53 @@ export function destroy(req, res) {
 		.catch(handleError(res));
 }
 
+// user confirms event inside event confirmation
+export function confirmEvent(req, res) {
+	var response = {};
+	var email_data = req.body;
+	var token = req.cookies.token;
+	var token_result = userController.getDecodedToken(token);
+
+	// remove user from queue
+	return Queue.find({ user: token_result._id }).remove().exec()
+	.then(function(queue) {
+
+		// update user event_status to 'Confirmed'
+		return User.findById(token_result._id).exec()
+		.then(function(user) {
+			user.event_status = 'Confirmed';
+			return user.save()
+			.then(function() {
+
+				// send email to user with event details
+				return Events.findById(email_data.id).exec()
+				.then(function(event) {
+					email_data.template = 'event-confirmation-accept';
+					email_data.first_name = user.first_name;
+					email_data.event_link = req.headers.origin + '/home/event/' + email_data.id;
+
+					var text_version = EmailTemplate.get_text_version(email_data);
+					var html_version = EmailTemplate.get_html_version(email_data);
+					var email_content = {
+						to: user.email,
+						subject: '[5PMLIFE]' + email_data.activity + ' at ' + email_data.venue,
+						text: text_version,
+						html: html_version
+					};
+
+					emailCtrl.sendEmail(email_content);
+					response.status = 'ok';
+					return res.json({ response: response });
+				})
+				.catch(handleError(res));
+			})
+			.catch(handleError(res));
+		})
+		.catch(handleError(res));
+	})
+	.catch(handleError(res));
+}
+
 // get attendees based on event_id
 export function getAttendees(req, res) {
 	var response = {};
@@ -148,15 +199,24 @@ export function getAttendees(req, res) {
 				.then(function(users) {
 					var confirmed_users = [];
 					var isAllowed = false;
+					var current_user;
 
 					// check if user is allowed to view event
 					for (var i = 0; i < users.length; i++) {
-						if (users[i]._id === token_result._id) {
+						var user_id = users[i]._id.toString();
+						if (user_id === token_result._id) {
 							isAllowed = true;
+							current_user = {
+								name: users[i].first_name + ' ' + users[i].last_name,
+								profile_picture: users[i].profile_picture.current,
+								status: users[i].event_status
+							};
+							confirmed_users.push(current_user);
+							continue;
 						}
 
 						if (users[i].event_status === 'Confirmed') {
-							var current_user = {
+							current_user = {
 								name: users[i].first_name + ' ' + users[i].last_name,
 								profile_picture: users[i].profile_picture.current
 							};

@@ -113,14 +113,19 @@ export function getUserStatus(req, res) {
 
 	// check queue to see if user is in queue
 	// and return status
-	return Queue.findOne({ user: token._id }).exec()
-		.then(function(queue) {
-			if (!queue) {
+	return User.findOne({ _id: token._id }).exec()
+		.then(function(user) {
+			if (!user.event_status) {
 				response.queue = -1;
 				return res.json({ response: response });
 			}
 
-			response.queue = queue.status;
+			if (user.current_event) {
+				response.event_link = user.current_event;
+			}
+
+			response.status = 'ok';
+			response.queue_status = user.event_status;
 			return res.json({ response: response });
 		})
 		.catch(function(err) {
@@ -231,6 +236,14 @@ export function cancelEventSearch(req, res) {
 
 /*======================================*/
 
+function saveUserEventStatus(user, event_id) {
+	user.event_status = 'Pending User Confirmation';
+	user.current_event = event_id;
+	return user.save(function(err) {
+		console.log(err);
+	});
+}
+
 // send confirmation email + add users to event
 export function triggerEvent(req, res) {
 	var response = {};
@@ -277,6 +290,8 @@ export function triggerEvent(req, res) {
 						// add users to event
 						var user_obj = new User(users[k]);
 						users_array.push(user_obj);
+
+						saveUserEventStatus(user_obj, event_id);
 					}
 
 					return Events.findById(event_id).exec()
@@ -285,7 +300,8 @@ export function triggerEvent(req, res) {
 							event.users = users_array;
 							event.save()
 								.then(function() {
-									return null;
+									response.status = 'ok';
+									return res.json({ response: response });
 								})
 								.catch(function(err) {
 									return res.json({error: err});

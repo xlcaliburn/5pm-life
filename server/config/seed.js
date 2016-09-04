@@ -64,7 +64,7 @@ import Queue from '../api/queue/queue.model';
 // 		});
 // 	});
 
-Queue.find({}).remove()
+/*Queue.find({}).remove()
 	.then(() => {
 		Queue.create({
 			user : "57b675bfb921140c3ab275c3",
@@ -82,7 +82,7 @@ Queue.find({}).remove()
 			}
 		});
 	});
-
+*/
 Enums.find({}).remove()
 	.then(() => {
 		Enums.create({

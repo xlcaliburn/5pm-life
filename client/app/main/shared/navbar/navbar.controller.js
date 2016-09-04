@@ -48,6 +48,8 @@
         vm.overlay = angular.element('.queue-modal-overlay');
         vm.modal = angular.element('#queue-modal');
         vm.datetime = angular.element('.datetime-stage');
+        vm.event_link;
+        vm.on_event_page = false;
 
         // variables
         vm.queue_status;
@@ -74,10 +76,8 @@
             Users.getMe()
                 .success(function(data) {
                     vm.user = data;
-                    console.log(vm.user);
                 })
                 .error(function(data) {
-                    console.log("error: "+ data);
                 })
 
             // init datetime picker
@@ -95,14 +95,21 @@
             if (!token) { $state.go('login'); }
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
-                var queue_status = res.data.response.queue;
+                var queue_status = res.data.response.queue_status;
+                var event_link = res.data.response.event_link;
                 vm.queue_status = queue_status;
+
+                if (event_link) {
+                    vm.event_link = event_link;
+                }
 
                 if (!vm.queue_status) {
                     vm.queue_status = -1;
                 }
 
-                console.log(vm.queue_status);
+                if ($state.current.name === 'home.event') {
+                    vm.on_event_page = true;
+                }
 
                 $timeout(function() {
                     var modals = angular.element('.modal-trigger');

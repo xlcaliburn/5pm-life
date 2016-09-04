@@ -31,9 +31,9 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 						});
 					}
 					return SettingsService.getUserSettings(token).then(function(res) {
-						if (res.data.response.status == 'ok') {
+						if (res.data.response.status === 'ok') {
 							return res.data.response.user;
-						} else if (res.data.response.status == 'error') {
+						} else if (res.data.response.status === 'error') {
 							return res.data.response.error;
 						}
 						return $q.reject().catch(function() {
@@ -48,7 +48,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			url: '/event/:id',
 			templateUrl: 'app/main/event/event.html',
 			controller: 'EventController',
-			controllerAs: 'event',
+			controllerAs: 'vm',
 			resolve: {
 				event_data: function($q, $state, $stateParams, EventService) {
 					var event_id = $stateParams.id;
@@ -61,7 +61,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 					return EventService.getEventModel(event_id).then(function(res) {
 						var status = res.data.response.status;
-						if (status != 'ok') {
+						if (status !== 'ok') {
 							return $q.reject().catch(function() {
 								$state.go('home');
 							});
@@ -70,16 +70,21 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 						return res.data.response.event_model;
 					});
 				},
-				attendees: function($stateParams, EventService) {
+				attendees: function($q, $state, $stateParams, EventService) {
 					var event_id = $stateParams.id;
 
 					return EventService.getEventAttendees(event_id).then(function(res) {
-						if (res.data.response.status == 'ok') {
-							console.log(res.data);
-							return res.data.attendees;
+						if (res.data.response.status === 'ok') {
+							return res.data.response.attendees;
 						} else {
-							return $state.go('home');
+							return $q.reject().catch(function() {
+								$state.go('home');
+							});
 						}
+					}).catch(function() {
+						return $q.reject().catch(function() {
+							$state.go('login');
+						});
 					});
 				}
 			}
@@ -95,9 +100,9 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 				user: function($cookies, $q, $state, $timeout, SettingsService) {
 					var token = $cookies.get('token');
 					return SettingsService.getUserSettings(token).then(function(res) {
-						if (res.data.response.status == 'ok') {
+						if (res.data.response.status === 'ok') {
 							return res.data.response.user;
-						} else if (res.data.response.status == 'error') {
+						} else if (res.data.response.status === 'error') {
 							console.log(res.data.response.error);
 							return $q.reject().catch(function() {
 								$state.go('login');

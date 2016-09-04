@@ -1,169 +1,83 @@
 <div id="event-container">
     <div class="container">
-        <div class="row">
 
-            <!-- event images -->
-            <div class="col l8 m8" ng-if="event.event_data.images">
-                <div id="carousel">
-                    <div class="current-image"></div>
-                    <div class="image-list-container">
-                        <ul class="image-list">
-                            <li ng-repeat="image in event.carousel">
-                                <div class="image-item image-{{$index}}" ng-click="event.change_image($event, image.src)" ng-style="event.get_background(image.src)"></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- confirmation header -->
+        <div class="row confirmation-row" ng-if="vm.get_self_status() == 'Pending User Confirmation'">
+            <div class="col m8 s12 confirmation-description">
+                Please confirm your event attendance to ensure a spot
             </div>
 
-            <!-- has event images -->
-            <div class="col m4" ng-if="event.event_data.images">
-                <div class="event-detail-card">
-                    <!-- Event Header -->
-                    <div class="event-card-header">
-                        <a class="btn-floating btn-small waves-effect waves-light event-options"><i class="material-icons small">more_vert</i></a>
-                        <div class="event-title">{{ event.event_data.activity.activity_name }}</div>
-                        <div class="event-venue">@{{ event.event_data.venue.venue_name }}</div>
-                    </div>
-
-                    <!-- Event Details -->
-                    <div class="event-card-body">
-                        <!-- Status -->
-                        <table width="100%">
-                            <tbody><tr>
-                                <td class="event-icons"><i class="material-icons">person</i></td>
-                                <td>
-                                    <a class="waves-effect waves-light btn event-status" href='#' ng-class="{attend: 'attend', maybe: 'maybe', 'not-attend': 'not-attend'}[event.status]" onclick="return false;">
-                                        <span ng-show="event.status == 'attend'">
-                                            <i class="material-icons tiny">done_all</i> Confirmed
-                                        </span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="event-icons"><i class="material-icons">event</i></td>
-                                <td>{{ event.venue.date }}</td>
-                            </tr>
-                            <tr>
-                                <td class="event-icons"><i class="material-icons">access_time</i></td>
-                                <td>{{ event.venue.time }}</td>
-                            </tr>
-                            <tr>
-                                <td class="event-icons"><i class="material-icons">location_on</i></td>
-                                <td>
-                                    {{ event.event_data.venue.address.street }}<br />
-                                    {{ event.event_data.venue.address.city }},
-                                    {{ event.event_data.venue.address.province }}<br />
-                                    {{ event.event_data.venue.address.postal_code }}
-                                </td>
-                            </tr>
-                        </tbody></table>
-                    </div>
-
-                    <!-- Google Maps -->
-                    <div id="event-map"></div>
-                    <div class="event-card-footer"><a href="http://maps.google.com/?q={{event.event_data.venue.venue_name}},{{ event.event_data.venue.address.city }}" class="waves-effect waves-light btn" target="_blank">VIEW LARGER MAP</a></div>
-                </div>
+            <!-- confirm -->
+            <div class="col m2 s6 align-center">
+                <a class="event-confirm-button" ng-click="vm.confirm_event()">Confirm</a>
             </div>
 
-            <!-- no event images -->
-            <div class="col s12" ng-if="!event.event_data.images">
-                <div class="event-detail-card">
-                    <!-- Event Header -->
-                    <div class="event-card-header">
-                        <a class="btn-floating btn-small waves-effect waves-light event-options"><i class="material-icons small">more_vert</i></a>
-                        <div class="event-title">{{ event.event_data.activity.activity_name }}</div>
-                        <div class="event-venue">@{{ event.event_data.venue.venue_name }}</div>
-                    </div>
-
-                    <!-- Event Details -->
-                    <div class="event-card-body">
-                        <!-- Status -->
-                        <table width="100%">
-                            <tbody><tr>
-                                <td class="event-icons"><i class="material-icons">person</i></td>
-                                <td>
-                                    <a class="waves-effect waves-light btn event-status" href='#' ng-class="{attend: 'attend', maybe: 'maybe', 'not-attend': 'not-attend'}[event.status]" onclick="return false;">
-                                        <span ng-show="event.status == 'attend'">
-                                            <i class="material-icons tiny">done_all</i> Confirmed
-                                        </span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="event-icons"><i class="material-icons">event</i></td>
-                                <td>{{ event.venue.date }}</td>
-                            </tr>
-                            <tr>
-                                <td class="event-icons"><i class="material-icons">access_time</i></td>
-                                <td>{{ event.venue.time }}</td>
-                            </tr>
-                            <tr>
-                                <td class="event-icons"><i class="material-icons">location_on</i></td>
-                                <td>
-                                    {{ event.event_data.venue.address.street }}<br />
-                                    {{ event.event_data.venue.address.city }},
-                                    {{ event.event_data.venue.address.province }}<br />
-                                    {{ event.event_data.venue.address.postal_code }}
-                                </td>
-                            </tr>
-                        </tbody></table>
-                    </div>
-
-                    <!-- Google Maps -->
-                    <div id="event-map"></div>
-                    <div class="event-card-footer"><a href="http://maps.google.com/?q={{event.event_data.venue.venue_name}},{{ event.event_data.venue.address.city }}" class="waves-effect waves-light btn" target="_blank">VIEW LARGER MAP</a></div>
-                </div>
+            <!-- decline -->
+            <div class="col m2 s6 align-center">
+                <a class="event-decline-button" ng-click="vm.decline_event()">Decline</a>
             </div>
         </div>
-    </div>
 
-    <!-- Event lower section -->
-    <div class="attendees-chat-section">
-        <div class="container">
-            <div class="row">
-                <div class="col l8 m8" id="event-attendees">
-                    <div class="attendees-title">Attendees</div>
-                    <div class="attendees-list">
-                        <div class="row">
-                            <div class="col s6 attendee-card" ng-repeat="person in event.attendees">
-                                <div class="row valign-wrapper">
-                                    <div class="col s3"><img class="responsive-img circle" src="{{person.thumb}}"></div>
-                                    <div class="col s9">
-                                        <div class="attendee-name">{{person.name}}</div>
-                                        <div class="attendee-props">
-                                            {{ event.display_props(person.props) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row events-row">
+
+            <!-- no event images -->
+            <div class="col s9">
+                <div class="event-detail-card">
+                    <!-- Event Header -->
+                    <div class="event-card-header">
+                        <a class="btn-floating btn-small waves-effect waves-light event-options"><i class="material-icons small">more_vert</i></a>
+                        <div class="event-title">{{ vm.event_data.activity.activity_name }}</div>
+                        <div class="event-venue">@{{ vm.event_data.venue.venue_name }}</div>
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="event-card-body row">
+                        <div class="col s4">
+                            <!-- Status -->
+                            <table width="100%">
+                                <tbody><tr>
+                                    <td class="event-icons"><i class="material-icons" data-position="left" data-delay="0" data-tooltip="Your Attendance">person</i></td>
+                                    <td ng-class="{'pending': vm.get_self_status() == 'Pending User Confirmation', 'confirmed': vm.get_self_status() == 'Confirmed'}">{{ vm.get_self_status() }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="event-icons"><i class="material-icons" data-position="left" data-delay="0" data-tooltip="Event Date">event</i></td>
+                                    <td>{{ vm.get_event_date() }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="event-icons"><i class="material-icons" data-position="left" data-delay="0" data-tooltip="Event Time">access_time</i></td>
+                                    <td>{{ vm.get_event_time() }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="event-icons"><i class="material-icons" data-position="left" data-delay="0" data-tooltip="Event Location">location_on</i></td>
+                                    <td>
+                                        {{ vm.event_data.venue.address.street }}<br />
+                                        {{ vm.event_data.venue.address.city }},
+                                        {{ vm.event_data.venue.address.province }}<br />
+                                        {{ vm.event_data.venue.address.postal_code }}
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                        </div>
+
+                        <div class="col s8">
+                            <!-- Google Maps -->
+                            <div id="event-map"></div>
+                            <div class="event-card-footer"><a href="{{ vm.get_googlemaps_link() }}" class="waves-effect waves-light btn" target="_blank">VIEW LARGER MAP</a></div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col l4 m4" id="event-chat">
-                    <div class="chat-title">Event Chat</div>
-                    <div id="chat-box">
-                        <!-- Chat Message Template -->
-                        <div class="row" ng-repeat="message in event.chat_messages">
-                            <div class="col s2"><img class="responsive-img circle" src="{{message.thumb}}"></div>
-                            <div class="col s9">
-                                <div class="message-name">
-                                    <span ng-style="{'color': '{{message.colour}}'}">{{message.name}}</span>
-                                </div>
-                                <div class="message-text pre-wrap">{{message.text}}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-textarea">
-                        <div class="row valign-wrapper">
-                            <div class="col s10">
-                                <textarea ng-keydown="$event.keyCode == 13 && event.send_message($event)" ng-model="event.textarea" placeholder="Enter your message..." id="chatarea" class="materialize-textarea"></textarea>
-                            </div>
-                            <div class="col s2 align-right">
-                                <a class="btn-small waves-effect waves-light send-button">
-                                    <i class="material-icons">arrow_forward</i>
-                                </a>
+            <!-- attendees -->
+            <div class="col s3" id="event-attendees">
+                <div class="attendees-title">Attendees</div>
+                <div class="attendees-list">
+                    <div class="row valign-wrapper" ng-repeat="person in vm.get_confirmed_attendees()">
+                        <div class="col s3"><img class="responsive-img circle" src="{{ vm.get_profile_img(person.profile_picture) }}"></div>
+                        <div class="col s9">
+                            <div class="attendee-name">{{person.name}}</div>
+                            <div class="attendee-props">
+                                {{ vm.display_props(person.props) }}
                             </div>
                         </div>
                     </div>

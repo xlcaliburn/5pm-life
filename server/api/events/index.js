@@ -11,6 +11,7 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.get('/admin/:id', auth.isAuthenticated(), controller.admin_show);
 router.get('/attendees/:event_id', auth.isAuthenticated(), controller.getAttendees);
 router.post('/', auth.isAuthenticated(), controller.create);
+router.post('/confirm', auth.isAuthenticated(), controller.confirmEvent);
 router.put('/:id', auth.isAuthenticated(), controller.update);
 router.patch('/:id', auth.isAuthenticated(), controller.update);
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);

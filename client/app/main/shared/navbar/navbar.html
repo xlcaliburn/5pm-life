@@ -124,11 +124,6 @@
                                 <label for="social-checkbox" class="social-cb-label">Social</label>
                             </div>
 
-                            <!-- Both checkbox -->
-                            <!--<div class="col l4 m4 s4">
-                                <input type="checkbox" class="filled-in" id="both-checkbox" ng-model="navbar.both" ng-change="navbar.toggle_activity('both')">
-                                <label for="both-checkbox" class="both-cb-label">Both</label>
-                            </div>-->
                         </div>
                     </div>
 
@@ -177,7 +172,7 @@
 
             <!-- Logo -->
             <div class="nav-left col l4 m4 s6 valign">
-                <a href="/home" target="_self">
+                <a href="/home">
                     <img class="nav-logo" src="assets/images/5pm-logo-blue.png">
                 </a>
             </div>
@@ -190,8 +185,12 @@
                 </a>
 
                 <!-- cancel queue -->
-                <a id="cancel-button" class="btn waves-light waves-effect modal-trigger" ng-if="navbar.queue_status == 0" title="Cancel search" href="#cancel-search">
+                <a id="cancel-button" class="btn waves-light waves-effect modal-trigger" ng-if="navbar.queue_status == 'Pending'" title="Cancel search" href="#cancel-search">
                     CANCEL SEARCH <i class="tiny material-icons">close</i>
+                </a>
+
+                <a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed') && !navbar.on_event_page" title="Go to event" href="home/event/{{ navbar.event_link }}">
+                    VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
                 </a>
 
 

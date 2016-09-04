@@ -8,192 +8,163 @@
     /** @ngInject */
     /*global google */
     /* jshint expr: true */
-    function EventController($cookies, $timeout, NavbarService, event_data) {
+    function EventController($cookies, $rootScope, $timeout, attendees, event_data, EventService) {
 
         var vm = this;
 
         // model
+        vm.attendees = attendees;
         vm.event_data = event_data;
 
-        vm.attendees = [
-            {
-                name: 'Henry Klay',
-                thumb: 'assets/images/attendees/klay-thumb.png',
-                props: ['Designer', 'Developer', 'Playboy']
-            },
-            {
-                name: 'Cecelia Hei',
-                thumb: 'assets/images/attendees/hei-thumb.png',
-                props: ['Model', 'Actress', 'Developer']
-            },
-            {
-                name: 'Scott Helms',
-                thumb: 'assets/images/attendees/helms-thumb.png',
-                props: ['Skater', 'Gamer', 'Creative Designer']
-            },
-            {
-                name: 'Jennifer Grey',
-                thumb: 'assets/images/attendees/grey-thumb.png',
-                props: ['Drama Queen', 'Jesus Lover', 'vmie-taker']
-            },
-            {
-                name: 'Monica Wells',
-                thumb: 'assets/images/attendees/wells-thumb.png',
-                props: ['Fashion Artist', 'Photographer', 'Wedding Planner']
-            },
-            {
-                name: 'Michael Wong',
-                thumb: 'assets/images/attendees/wong-thumb.png',
-                props: ['Computer Scientist', 'Realist', 'Gamer']
-            },
-        ];
-
-        vm.chat_messages = [
-            {
-                name: 'Jennifer Grey', colour: '#2ab9bb',
-                thumb: 'assets/images/attendees/grey-thumb.png',
-                text: 'Hey guys! I can’t wait for this event to go down!'
-            },
-            {
-                name: 'Cecelia Hei', colour: '#7d619c',
-                thumb: 'assets/images/attendees/hei-thumb.png',
-                text: 'lol, what a weird event... a pillow fight? I’ve never been to that before xD'
-            },
-            {
-                name: 'Henry Klay', colour: '#ff7241',
-                thumb: 'assets/images/attendees/klay-thumb.png',
-                text: 'yoo, i’ve been to this event before. wanna get drinks after? I know a great place nearby'
-            },
-            {
-                name: 'Scott Helms', colour: '#196ea5',
-                thumb: 'assets/images/attendees/helms-thumb.png',
-                text: 'i’ll have to check my schedule but it should be okay. i live nearby anyway so you guys can come chill afterwards'
-            },
-            {
-                name: 'Monica Wells', colour: '#e43c5c',
-                thumb: 'assets/images/attendees/wells-thumb.png',
-                text: 'ooo sounds great guys!'
-            },
-        ];
-        vm.status = 'attend';
-
-        // views
-        //vm.image_container = angular.element('.current-image');
-        //vm.image_list = angular.element('.image-list');
-        vm.map;
-        vm.chatbox = angular.element('#chat-box');
-        vm.textarea;
-
         // variables
-        vm.lat;
-        vm.lng;
+        var map, marker, infowindow, lat, lng;
 
-        vm.init = function() {
-            // setup initial image first
-            //vm.image_container.css('background-image', 'url("' + vm.carousel[0].src + '")');
-            $timeout(function() {
-                angular.element('.image-0').addClass('image-selected');
-                vm.init_map();
+        // functions
+        vm.confirm_event = confirmEvent;
+        vm.decline_event = declineEvent;
+        vm.get_confirmed_attendees = getConfirmedAttendees;
+        vm.get_event_date = getEventDate;
+        vm.get_event_time = getEventTime;
+        vm.get_googlemaps_link = getGoogleMapsLink;
+        vm.get_profile_img = getProfileImg;
+        vm.get_self_status = getSelfStatus;
+
+        _init();
+
+        function _init() {
+            // set page title
+            $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
+
+            getLatLng();
+            initPlugins();
+        }
+
+        // confirm event confirmation
+        function confirmEvent() {
+            var event_details = {
+                id: vm.event_data._id,
+                activity: vm.event_data.activity.activity_name,
+                venue: vm.event_data.venue.venue_name,
+                date: getEventDate(),
+                time: getEventTime(),
+                street: vm.event_data.venue.address.street,
+                city: vm.event_data.venue.address.city,
+                province: vm.event_data.venue.address.province,
+                postal_code: vm.event_data.venue.address.postal_code,
+                gmaps_link: getGoogleMapsLink(),
+                attendees: getConfirmedAttendees()
+            };
+            console.log(event_details);
+            EventService.confirmEvent(event_details).then(function(data) {
+                console.log(data);
+                if (data.response.status === 'ok') {
+                    alert('Event confirmed!');
+                }
             });
+        }
 
-            // set image list width
-            //var width = (vm.carousel.length * 160) + 30;
-            //vm.image_list.css('width', width);
+        // decline event confirmation
+        function declineEvent() {
 
-            // setup chat
-            $timeout(function() { vm.chatbox.scrollTop(vm.chatbox[0].scrollHeight);});
-        };
+        }
 
-        vm.init_map = function() {
-            // get lat and lng
-            var coords = vm.venue.lat_lng.split(',');
-            vm.lat = parseFloat(coords[0]);
-            vm.lng = parseFloat(coords[1]);
+        // get latitude and longitude based on event address
+        function getLatLng() {
+            var venue_address = vm.event_data.venue.address;
+            var geocoder = new google.maps.Geocoder();
+            var address = venue_address.street + ', ' + venue_address.city + ', ' + venue_address.province;
 
+            geocoder.geocode({ 'address': address }, function(res, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    lat = res[0].geometry.location.lat();
+                    lng = res[0].geometry.location.lng();
+                    initMap();
+                }
+            });
+        }
+
+        // init google maps using coordinates from address
+        function initMap() {
             var myOptions = {
                 zoom: 14,
-                center: {lat: vm.lat, lng: vm.lng},
+                center: {lat: lat, lng: lng},
                 streetViewControl: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 scrollwheel: false
             };
 
-            vm.map = new google.maps.Map(document.getElementById('event-map'), {
-                center: {lat: vm.lat, lng: vm.lng},
+            map = new google.maps.Map(document.getElementById('event-map'), {
+                center: {lat: lat, lng: lng},
                 zoom: 14,
                 options: myOptions
             });
 
-            new google.maps.Marker({
-                position: {lat: vm.lat, lng: vm.lng},
-                map: vm.map,
-                title: vm.venue.venue
+            infowindow = new google.maps.InfoWindow({
+                content: vm.event_data.venue.venue_name
             });
-        };
 
-        vm.display_props = function(prop_list) {
-            var prop_string = '';
-            for (var i = 0; i < prop_list.length; i++) {
-                if (i !== 0) {
-                    prop_string += ' . ';
+            marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+                map: map,
+                title: vm.event_data.venue.venue_name
+            });
+
+            marker.addListener('click', function() {
+                if (infowindow) { infowindow.close(); }
+                infowindow.open(map, marker);
+            });
+        }
+
+        // returns your status
+        function getSelfStatus() {
+            for (var i = 0; i < vm.attendees.length; i++) {
+                if (vm.attendees[i].status) {
+                    return vm.attendees[i].status;
                 }
-                prop_string += prop_list[i];
             }
-            return prop_string;
-        };
+        }
 
-        vm.send_message = function(event) {
-            if (event.shiftKey) { return false; }
-
-            event.preventDefault();
-            if (!vm.textarea || vm.textarea.trim() === '') {
-                return false;
+        // gets list of confirmed attendees
+        function getConfirmedAttendees() {
+            var attendees_array = [];
+            for (var i = 0; i < vm.attendees.length; i++) {
+                if (!vm.attendees[i].status || vm.attendees[i].status === 'Confirmed') {
+                    attendees_array.push(vm.attendees[i]);
+                }
             }
-            var user = 'Michael Wong',
-                message = vm.textarea.trim();
-            vm.textarea = '';
+            return attendees_array;
+        }
 
-            if (vm.chat_messages[vm.chat_messages.length - 1].name === user) {
-                vm.chat_messages[vm.chat_messages.length -1].text += '\n' + message;
-            } else {
-                message = {
-                    name: user, colour: '#000000',
-                    thumb: 'assets/images/attendees/wong-thumb.png',
-                    text: message
-                };
-                vm.chat_messages.push(message);
-            }
+        // return user profile image
+        function getProfileImg(image_name) {
+            return 'uploads/profile/' + image_name;
+        }
 
-            // append message
-            $timeout(function() {
-                vm.chatbox.scrollTop(vm.chatbox[0].scrollHeight);
-            });
+        // extract date from event date
+        function getEventDate() {
+            var date = new Date(vm.event_data.dt_start);
+            return moment(date).format('dddd, MMMM D, YYYY');
+        }
 
-            return true;
-        };
+        // extract event start and end time
+        function getEventTime() {
+            var start_date = new Date(vm.event_data.dt_start);
+            var end_date = new Date(vm.event_data.dt_end);
+            var start_time = moment(start_date).format('h:mmA');
+            var end_time = moment(end_date).format('h:mmA');
+            return start_time + ' to ' + end_time;
+        }
 
-        vm.change_image = function(event, image_path) {
-            angular.element('.image-selected').removeClass('image-selected');
-            angular.element(event.currentTarget).addClass('image-selected');
-            vm.image_container.css('background-image', 'url("' + image_path + '")');
-        };
+        // init materialize plugins
+        function initPlugins() {
+            // tooltips
+            angular.element('i[data-tooltip]').tooltip();
+        }
 
-        vm.get_background = function(image_path) {
-            return {
-                'background-image': 'url(' + image_path + ')'
-            };
-        };
+        function getGoogleMapsLink() {
+            return 'http://maps.google.com/?q=' + vm.event_data.venue.venue_name + ',' + vm.event_data.venue.address.city;
+        }
 
-        vm.toggle_dropdown = function() {
-            angular.element('.dropdown-content').toggleClass('active');
-        };
-
-        vm.select_status = function(status) {
-            vm.status = status;
-            vm.toggle_dropdown();
-        };
-
-        vm.init();
     }
 
 })();

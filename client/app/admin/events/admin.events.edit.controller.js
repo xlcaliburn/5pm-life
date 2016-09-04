@@ -147,21 +147,8 @@
 		function eventFound() {
 			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
 
-			// TODO: Send event found email
-			// TODO: Update each user.event_status to vm.enum_status.PENDING_USER_CONFIRM
-			// TODO: Update each user.current_event to eventId
-
-			var queue_data = {
-				event_id: vm.event_id,
-				queues: vm.queues_to_add
-			};
-
-			Queue.triggerEventStart(queue_data).then(function(res) {
-				console.log(res.data);
-			});
-
 			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
-			saveAndClose('Event started');
+			saveAndClose('Event started', true);
 		}
 
 		function submit() {
@@ -172,9 +159,22 @@
 			saveAndClose('Event saved');
 		}
 
-		function saveAndClose(notificationString) {
+		function saveAndClose(notificationString, trigger) {
 			Events.put(vm.selected_event._id, vm.selected_event)
 				.success(function() {
+					/* I had to put trigger event here, otherwise it'll break */
+					if (trigger) {
+						var queue_data = {
+							event_id: vm.event_id,
+							queues: vm.queues_to_add
+						};
+
+						Queue.triggerEventStart(queue_data).then(function(res) {
+							console.log(res.data);
+
+						});
+					}
+
 					$state.go('admin.events', {}, { reload: true });
 					Materialize.toast(notificationString, 2000); // jshint ignore:line
 				});
