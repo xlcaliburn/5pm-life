@@ -59,10 +59,14 @@
     border-bottom: 1px solid @BGcolor;
 }
 
-a.event-options {
-    position: absolute;
+.event-options-dropdown {
+    position: relative;
+    float: right;
     right: 25px;
     top: 25px;
+}
+
+a.event-options {
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -83,6 +87,63 @@ a.event-options>i {
 
 a.event-options:hover>i {
     color: @uppergrey !important;
+}
+
+a.modal-trigger[href='#leave-modal'] {
+    padding: 10px 20px;
+}
+
+#event-options.dropdown-menu {
+    padding: 0;
+    border-radius: 0;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+#leave-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    background-color: @white;
+    padding: 0;
+    max-height: 70%;
+    width: 500px;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+    top: 10% !important;
+    transform: initial !important;
+}
+
+#leave-modal .modal-content {
+    position: relative;
+    background-color: @white;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: @darkgrey;
+    font-size: 15px;
+    padding: 15px 30px;
+}
+
+#leave-modal .modal-footer {
+    padding: 8px 15px;
+}
+
+#leave-modal .modal-action {
+    font-weight: 700;
+    color: @middlegrey;
+    letter-spacing: 0.5px;
+}
+
+#leave-modal .modal-action:hover {
+    color: @darkgrey;
+}
+
+#leave-modal .modal-action[ng-click] {
+    font-weight: 700;
+    color: @pink;
 }
 
 .event-title {

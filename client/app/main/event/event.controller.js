@@ -27,6 +27,7 @@
         vm.get_event_date = getEventDate;
         vm.get_event_time = getEventTime;
         vm.get_googlemaps_link = getGoogleMapsLink;
+        vm.leave_event = leaveEvent;
         vm.get_profile_img = getProfileImg;
         vm.get_self_status = getSelfStatus;
 
@@ -195,6 +196,20 @@
 
         function getGoogleMapsLink() {
             return 'http://maps.google.com/?q=' + vm.event_data.venue.venue_name + ',' + vm.event_data.venue.address.city;
+        }
+
+        // leave event because they cannot make it
+        function leaveEvent() {
+            var event_details = {
+                id: vm.event_data._id
+            };
+
+            EventService.leaveEvent(event_details).then(function(data) {
+                if (data.response.status === 'ok') {
+                    $state.go('home');
+                    Materialize.toast('You have left the event.', 6000);
+                }
+            }).catch(function() { $state.go('home'); });
         }
 
     }

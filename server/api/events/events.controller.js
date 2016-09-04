@@ -137,37 +137,52 @@ export function confirmEvent(req, res) {
 	var email_data = req.body;
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
+	var user_id = new mongoose.Types.ObjectId(token_result._id);
 
 	// remove user from queue
-	return Queue.find({ user: token_result._id }).remove().exec()
+	return Queue.findOne({ user: user_id }).exec()
 	.then(function(queue) {
+		var queue_id = queue._id;
 
-		// update user event_status to 'Confirmed'
-		return User.findById(token_result._id).exec()
-		.then(function(user) {
-			user.event_status = 'Confirmed';
-			return user.save()
-			.then(function() {
+		// remove queue
+		return Queue.remove({ _id: queue_id }).exec()
+		.then(()=>{
+			// update user event_status to 'Confirmed'
+			return User.findById(token_result._id).exec()
+			.then((user)=>{
+				user.event_status = 'Confirmed';
+				return user.save()
+				.then(function() {
 
-				// send email to user with event details
-				return Events.findById(email_data.id).exec()
-				.then(function(event) {
-					email_data.template = 'event-confirmation-accept';
-					email_data.first_name = user.first_name;
-					email_data.event_link = req.headers.origin + '/home/event/' + email_data.id;
+					return Events.findById(email_data.id).exec()
+					.then((event)=>{
 
-					var text_version = EmailTemplate.get_text_version(email_data);
-					var html_version = EmailTemplate.get_html_version(email_data);
-					var email_content = {
-						to: user.email,
-						subject: '[5PMLIFE]' + email_data.activity + ' at ' + email_data.venue,
-						text: text_version,
-						html: html_version
-					};
+						// remove corresponding queue from event
+						event.queue.remove(queue_id);
+						return event.save()
+						.then(()=>{
 
-					emailCtrl.sendEmail(email_content);
-					response.status = 'ok';
-					return res.json({ response: response });
+						// send email to user with event details
+							email_data.template = 'event-confirmation-accept';
+							email_data.first_name = user.first_name;
+							email_data.event_link = req.headers.origin + '/home/event/' + email_data.id;
+
+							var text_version = EmailTemplate.get_text_version(email_data);
+							var html_version = EmailTemplate.get_html_version(email_data);
+							var email_content = {
+								to: user.email,
+								subject: '[5PMLIFE]' + email_data.activity + ' at ' + email_data.venue,
+								text: text_version,
+								html: html_version
+							};
+
+							emailCtrl.sendEmail(email_content);
+							response.status = 'ok';
+							return res.json({ response: response });
+						})
+						.catch(handleError(res));
+					})
+					.catch(handleError(res));
 				})
 				.catch(handleError(res));
 			})
@@ -182,7 +197,6 @@ export function confirmEvent(req, res) {
 export function declineEvent(req, res) {
 	var response = {};
 	var event_id = req.body.id;
-	console.log('event id is', event_id);
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
 
@@ -221,6 +235,39 @@ export function declineEvent(req, res) {
 						.catch(handleError(res));
 					})
 					.catch(handleError(res));
+				})
+				.catch(handleError(res));
+			})
+			.catch(handleError(res));
+		})
+		.catch(handleError(res));
+	})
+	.catch(handleError(res));
+}
+
+// leave event after accepting
+export function leaveEvent(req, res) {
+	var response = { status: 'ok' };
+	var event_id = req.body.id;
+	var token = req.cookies.token;
+	var user_id = userController.getDecodedToken(token)._id;
+	var user_obj_id = new mongoose.Types.ObjectId(user_id);
+
+	// User - change event_status = null
+	// User - change current_event = null
+	return User.findById(user_id).exec()
+	.then((user)=> {
+		user.event_status = null;
+		user.current_event = null;
+		return user.save()
+		.then(()=>{
+			// Event - remove user from event
+			return Events.findById(event_id).exec()
+			.then((event)=>{
+				event.users.remove(user_obj_id);
+				return event.save()
+				.then(()=>{
+					return res.json({ response: response });
 				})
 				.catch(handleError(res));
 			})

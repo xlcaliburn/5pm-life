@@ -83,7 +83,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 						}
 					}).catch(function() {
 						return $q.reject().catch(function() {
-							$state.go('login');
+							$state.go('home');
 						});
 					});
 				}
