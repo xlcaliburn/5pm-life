@@ -6,6 +6,11 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Enums = require('../enums/enums.controller');
 
+function valid_email(email_address) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email_address);
+}
+
 function validate_user(data) {
     // back-end validation
     /* data-fields:
@@ -21,6 +26,7 @@ function validate_user(data) {
 
     var error_message;
     var response = {};
+    var i;
 
     /* Personal Information
     ************************************************/
@@ -35,10 +41,10 @@ function validate_user(data) {
     var valid_ranges = [
         { type: 'day', min: 1, max: 31 },
         { type: 'month', min:1, max: 12 },
-        { type: 'year', min: new Date().getFullYear() - 100, max: new Date().getFullYear() }
+        { type: 'year', min: new Date().getFullYear() - 100, max: new Date().getFullYear() - 1 }
     ];
 
-    for (var i = 0; i < valid_ranges.length; i++) {
+    for (i = 0; i < valid_ranges.length; i++) {
         var birth_date = parseInt(data.birthday[valid_ranges[i].type]);
         if (birth_date < valid_ranges[i].min || birth_date > valid_ranges[i].max) {
             error_message = "Please enter a valid birthday " + valid_ranges[i].type;
@@ -54,16 +60,15 @@ function validate_user(data) {
 
     /* Personal Details
     ************************************************/
-    var valid_ethnicity = ['Caucasian', 'Latino/Hispanic', 'African', 'Caribbean', 'South Asian', 'East Asian', 'Mixed', 'Other'];
+    //var valid_ethnicity = ['Caucasian', 'Latino/Hispanic', 'African', 'Caribbean', 'South Asian', 'East Asian', 'Mixed', 'Other'];
     var valid_gender = ['Male', 'Female'];
-    var i;
 
     // check blank inputs
     if (!data.ethnicity) { error_message = "Please select an ethnicity";}
     else if (!data.gender) { error_message = "Please select a gender"; }
 
     //check ethnicity
-    if (valid_ethnicity.indexOf(data.ethnicity) < 0) { error_message = "Please select an ethnicity"; }
+    //if (valid_ethnicity.indexOf(data.ethnicity) < 0) { error_message = "Please select an ethnicity"; }
 
     // check gender
     if (valid_gender.indexOf(data.gender) < 0) { error_message = "Please select a gender"; }
@@ -79,14 +84,14 @@ function validate_user(data) {
     ************************************************/
     // blank inputs
     if (!data.email_address) { error_message = "Please enter an email address"; }
-    else if (!data.password) { error_message = "Please enter a password with a minimum length of 8"; }
+    else if (!data.password) { error_message = "Please enter a password with a minimum length of 8 characters"; }
     else if (!data.confirm_password) { error_message = "Please re-type your password"; }
 
     // invalid email address
     else if (!valid_email(data.email_address)) { error_message = "Please enter a valid email address"; }
 
     // short password length
-    else if (data.password.length < 8) { error_message = "Please enter a password with a minimum length of 8"; }
+    else if (data.password.length < 8) { error_message = "Please enter a password with a minimum length of 8 characters"; }
 
     // password mismatch
     else if (data.password !== data.confirm_password) { error_message = "Your passwords do not match"; }
@@ -117,15 +122,10 @@ function validate_user(data) {
     return response;
 }
 
-function valid_email(email_address) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email_address);
-}
-
 export function validate_save(req, res) {
     // validate first
     var response = validate_user(req.body);
-    if (response.status == 'ok') {
+    if (response.status === 'ok') {
         response.user.verified = false;
 
         var newUser = new User(response.user);
@@ -135,7 +135,8 @@ export function validate_save(req, res) {
                 id: user.id,
                 first_name: user.first_name,
                 verification_link: req.headers.origin + '/signup/verify/' + user.id
-            }
+            };
+
             var email_content = {
                 to: req.body.email_address,
                 subject: '[5PMLIFE] Thank you for signing up!',

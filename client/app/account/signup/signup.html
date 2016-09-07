@@ -31,19 +31,16 @@
                 <div class="step-1">
                     <a href="#personal-information" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(1)">
                         <span class="steps">1</span>
-                        <div class="steps-description">Personal Information</div>
                     </a>
                 </div>
                 <div class="step-2 disabled">
                     <a href="#personal-details" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(2)">
                         <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 2]">2</span>
-                        <div class="steps-description">Personal Details</div>
                     </a>
                 </div>
                 <div class="step-3 disabled">
                     <a href="#account-settings" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(3)">
                         <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 3]">3</span>
-                        <div class="steps-description">Account Settings</div>
                     </a>
                 </div>
                 <div class="disabled hidden">
@@ -65,7 +62,9 @@
                 <!-- personal information -->
                 <div id="personal-information" class="tab-pane fade in active">
                     <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 1">
-                        <div class="col l2 m3 s12 offset-l2 offset-m1 align-right signup-label valign">{{ stage.value }}</div>
+                        <div class="col l2 m3 s12 offset-l2 offset-m1 align-right signup-label valign">{{ stage.value }}
+                            <i class="material-icons tooltipped birthday-tooltip" data-position="bottom" data-tooltip="In order for you to be matched with the right people, we require that you enter your real birthday" ng-if="stage.value == 'birthday'">info</i>
+                        </div>
                         <div class="col l4 m7 s12 valign signup-inputs">
 
                             <!-- first and last name -->
@@ -129,7 +128,7 @@
                             <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]" stage="{{stage.key}}">
 
                             <!-- password, confirm password -->
-                            <input ng-if="stage.type == 'password'" type="password" class="signup-input" ng-model="signup[stage.key]">
+                            <input ng-if="stage.type == 'password'" type="password" class="signup-input" ng-model="signup[stage.key]" ng-keypress="($event.which === 13 || $event.which === 32) && signup.validate('true')">
 
                         </div>
                     </div>

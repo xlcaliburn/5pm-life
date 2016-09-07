@@ -84,9 +84,9 @@
         vm.first_name;
         vm.last_name;
         vm.birthday = {
-            day: "",
-            month: "",
-            year: ""
+            day: '',
+            month: '',
+            year: ''
         };
         vm.ethnicity;
         vm.gender;
@@ -104,7 +104,10 @@
             // white background for this section
             angular.element('html').css('background-color','#ffffff');
             angular.element('body').css('background-color','#ffffff');
-        }
+            $timeout(function() {
+                angular.element('.tooltipped').tooltip({delay: 50});
+            }, 500);
+        };
 
         vm.get_days = function(days) {
             var day_array = [];
@@ -116,27 +119,28 @@
 
         // validating inputs
         vm.validate = function(full_validation) {
-            vm.error_message = "";
+            vm.error_message = '';
+            var i;
 
-            if (vm.current_stage == 1 || full_validation) {
+            if (vm.current_stage === 1 || full_validation) {
                 // check for empty inputs
-                if (!vm.first_name) { vm.error_message = "Please enter your first name"; }
-                else if (!vm.last_name) { vm.error_message = "Please enter your last name"; }
-                else if (!vm.birthday.day) { vm.error_message = "Please enter your birth day"; }
-                else if (!vm.birthday.month) { vm.error_message = "Please select your birth month"; }
-                else if (!vm.birthday.year) { vm.error_message = "Please enter your birth year"; }
+                if (!vm.first_name) { vm.error_message = 'Please enter your first name'; }
+                else if (!vm.last_name) { vm.error_message = 'Please enter your last name'; }
+                else if (!vm.birthday.day) { vm.error_message = 'Please enter your birth day'; }
+                else if (!vm.birthday.month) { vm.error_message = 'Please select your birth month'; }
+                else if (!vm.birthday.year) { vm.error_message = 'Please enter your birth year'; }
 
                 // check for correct date
                 var valid_ranges = [
                     { type: 'day', min: 1, max: 31 },
                     { type: 'month', min:1, max: 12 },
-                    { type: 'year', min: new Date().getFullYear() - 100, max: new Date().getFullYear() }
+                    { type: 'year', min: new Date().getFullYear() - 100, max: new Date().getFullYear() - 1 }
                 ];
 
-                for (var i = 0; i < valid_ranges.length; i++) {
+                for (i = 0; i < valid_ranges.length; i++) {
                     var birth_date = parseInt(vm.birthday[valid_ranges[i].type]);
                     if (birth_date < valid_ranges[i].min || birth_date > valid_ranges[i].max) {
-                        vm.error_message = "Please enter a valid birthday " + valid_ranges[i].type;
+                        vm.error_message = 'Please enter a valid birthday ' + valid_ranges[i].type;
                     }
                 }
 
@@ -147,23 +151,22 @@
                 }
             }
 
-            if (vm.current_stage == 2 || full_validation) {
+            if (vm.current_stage === 2 || full_validation) {
                 // check for blank inputs
-                var i;
-                if (!vm.ethnicity) { vm.error_message = "Please select an ethnicity";}
-                else if (!vm.gender) { vm.error_message = "Please select a gender"; }
+                if (!vm.ethnicity) { vm.error_message = 'Please select an ethnicity';}
+                else if (!vm.gender) { vm.error_message = 'Please select a gender'; }
                 for (i = 0; i < vm.steps.length; i++) {
-                    if (vm.steps[i].value == 'ethnicity') {
+                    if (vm.steps[i].value === 'ethnicity') {
                         if (vm.steps[i].data.indexOf(vm.ethnicity) < 0) {
-                            vm.error_message = "Please select an ethnicity";
+                            vm.error_message = 'Please select an ethnicity';
                             break;
                         }
                     }
                 }
                 for (i = 0; i < vm.steps.length; i++) {
-                    if (vm.steps[i].value == 'gender') {
+                    if (vm.steps[i].value === 'gender') {
                         if (vm.steps[i].data.indexOf(vm.gender) < 0) {
-                            vm.error_message = "Please select a gender";
+                            vm.error_message = 'Please select a gender';
                             break;
                         }
                     }
@@ -176,20 +179,35 @@
                 }
             }
 
-            if (vm.current_stage == 3 || full_validation) {
+            if (vm.current_stage === 3 || full_validation) {
                 // blank inputs
-                if (!vm.email_address) { vm.error_message = "Please enter an email address"; }
-                else if (!vm.password) { vm.error_message = "Please enter a password with a minimum length of 8"; }
-                else if (!vm.confirm_password) { vm.error_message = "Please re-type your password"; }
+                if (!vm.email_address) { vm.error_message = 'Please enter an email address'; }
+                else if (!vm.password) { vm.error_message = 'Please enter a password with a minimum length of 8'; }
+                else if (!vm.confirm_password) { vm.error_message = 'Please re-type your password'; }
 
                 // invalid email address
-                else if (!valid_email(vm.email_address)) { vm.error_message = "Please enter a valid email address"; }
+                else if (!valid_email(vm.email_address)) {
+                    vm.error_message = 'Please enter a valid email address';
+                    $timeout(function() {
+                        angular.element('input[stage="email_address"]').focus();
+                    }, 300);
+                }
 
                 // short password length
-                else if (vm.password.length < 8) { vm.error_message = "Please enter a password with a minimum length of 8"; }
+                else if (vm.password.length < 8) {
+                    vm.error_message = 'Please enter a password with a minimum length of 8';
+                    $timeout(function() {
+                        angular.element('input[type="password"]').focus();
+                    }, 300);
+                }
 
                 // password mismatch
-                else if (vm.password !== vm.confirm_password) { vm.error_message = "Your passwords do not match"; }
+                else if (vm.password !== vm.confirm_password) {
+                    vm.error_message = 'Your passwords do not match';
+                    $timeout(function() {
+                        angular.element('input[type="password"]').focus();
+                    }, 300);
+                }
 
                 // return if there are any errors
                 if (vm.error_message) {
@@ -206,7 +224,7 @@
                     }
                     vm.current_stage++;
                     vm.go_to_stage(vm.current_stage);
-                } else if (vm.current_stage == 3) {
+                } else if (vm.current_stage === 3) {
                     // final front-end-validation
                     vm.validate(true);
                 }
@@ -226,7 +244,7 @@
                 SignupService.submitSignup(data).then(function(res) {
                     console.log(res);
                     var response = res.data.response;
-                    if (response.status == 'ok') {
+                    if (response.status === 'ok') {
                         // good data
                         $timeout(function() {
                             angular.element('.fade-me-hard').addClass('invis');
@@ -249,25 +267,22 @@
                     }
                 });
             }
-        }
+        };
 
         vm.go_to_stage = function(stage, allow_error) {
             if (stage < 1 || stage > 3) { return; }
 
-            if (!allow_error) { vm.error_message = ""; }
+            if (!allow_error) { vm.error_message = ''; }
 
             vm.current_stage = stage;
             var tab_button;
 
-            if (stage == 1) {
+            if (stage === 1) {
                 tab_button = angular.element('a[href="#personal-information"]');
-            } else if (stage == 2) {
+            } else if (stage === 2) {
                 tab_button = angular.element('a[href="#personal-details"]');
-            } else if (stage == 3) {
+            } else if (stage === 3) {
                 tab_button = angular.element('a[href="#account-settings"]');
-                $timeout(function() {
-                    angular.element('input[stage="email_address"]').focus();
-                }, 300);
             }
             if (tab_button) {
                 tab_button.parent().removeClass('disabled');
@@ -277,7 +292,7 @@
             for (var i = 3; i > stage; i--) {
                 angular.element('.step-' + i).addClass('disabled');
             }
-        }
+        };
 
         // validate email address
         function valid_email(email) {
