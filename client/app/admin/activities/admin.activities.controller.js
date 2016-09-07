@@ -1,5 +1,4 @@
-	(function () {
-	'use strict';
+(function () {	'use strict';
 
 	angular
 		.module('fivepmApp.admin')
@@ -7,10 +6,10 @@
 
 	function AdminActivitiesController ($scope, $http, $uibModal, Enums, Activities) {
 		var vm = this;
-		vm.activities = {};
-		vm.formData = {};
 		vm.createModal = createModal;
 		vm.deleteActivity = deleteActivity;
+		vm.activities = {};
+		vm.formData = {};
 
 		var validTags = [];
 		var newTags;
@@ -21,7 +20,7 @@
 			Enums.getByType('activity_tag')
 				.success(function(data) {
 					for(var tag in data) {
-						validTags.push(data[tag].key);
+						validTags.push(data[tag]);
 					}
 					newTags = $('#activity_tags').tags({
 						suggestions: validTags,
@@ -67,7 +66,7 @@
 
 			modalInstance.result.then(function(data) {
 				vm.activities = data;
-			}, function () {});			
+			}, function () {});
 		}
 	}
 })();

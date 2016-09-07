@@ -1,5 +1,4 @@
-(function() {
-	'use strict';
+(function() { 'use strict';
 
 	angular
 		.module('fivepmApp.admin')
@@ -19,7 +18,7 @@
 			Enums.getByType('activity_tag')
 				.success(function(data) {
 					for(var tag in data) {
-						vm.validTags.push(data[tag].key);
+						vm.validTags.push(data[tag]);
 					}
 					newTags = $('#activity_tags').tags({
 						suggestions: vm.validTags,
@@ -40,7 +39,7 @@
 				.success(function(data) {
 					vm.create_form = {};
 					vm.activities = data;
-					
+
 					var len = $('#activity_tags').tags().getTags().length;
 					for(var i=0; i<len; i++) {
 						$('#activity_tags').tags().removeLastTag();
@@ -48,8 +47,8 @@
 
 					$uibModalInstance.close(data);
 			});
-			
-		}		
+
+		}
 	}
 
 })();

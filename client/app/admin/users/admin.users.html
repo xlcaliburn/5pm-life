@@ -23,7 +23,7 @@
 						{{user.verified}}
 					</td>
 					<td>
-						<a ui-sref="admin.users.edit({ user_id: user.user_id })"><i class="small material-icons">mode_edit</i></a>
+						<a ng-click="vm.edit_user(user._id)"><i class="small material-icons">mode_edit</i></a>
 					</td>
 				</tr>
 			</tbody>
