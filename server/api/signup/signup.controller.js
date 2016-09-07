@@ -129,6 +129,9 @@ export function validate_save(req, res) {
         response.user.verified = false;
 
         var newUser = new User(response.user);
+
+        // set default profile picture
+        newUser.profile_picture.current = 'default_profile.png';
         newUser.save()
         .then(function(user) {
             var temp_user = {

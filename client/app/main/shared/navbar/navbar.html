@@ -22,7 +22,7 @@
                     <div class="queue-modal-title">{{ step.title }}</div>
 
                     <!-- Datetime -->
-                    <div ng-if="step.stage == 'datetime'" class="confirm-step-container valign-wrapper">
+                    <div id="date-and-time" ng-if="step.stage == 'datetime'" class="confirm-step-container valign-wrapper">
                         <i class="material-icons queue-icons">event</i>
                         <div class="confirm-text">
                             I am available to meet up on
@@ -40,7 +40,7 @@
                     </div>
 
                     <!-- Activity Type -->
-                    <div ng-if="step.stage == 'activity_type'" class="confirm-step-container valign-wrapper">
+                    <div id="activity-type" ng-if="step.stage == 'activity_type'" class="confirm-step-container valign-wrapper">
                         <i ng-if="navbar.active && !navbar.social" class="material-icons queue-icons">pool</i>
                         <i ng-if="navbar.social && !navbar.active" class="material-icons queue-icons">local_bar</i>
                         <i ng-if="navbar.social && navbar.active" class="material-icons queue-icons">beach_access</i>
@@ -62,7 +62,7 @@
                     </div>
 
                     <!-- Location Preference -->
-                    <div ng-if="step.stage == 'location_pref'" class="confirm-step-container valign-wrapper">
+                    <div id="location-preference" ng-if="step.stage == 'location_pref'" class="confirm-step-container valign-wrapper">
                         <i class="material-icons queue-icons">location_on</i>
                         <div class="confirm-text">
                             I prefer meeting up for events in
@@ -173,7 +173,7 @@
             <!-- Logo -->
             <div class="nav-left col l4 m4 s6 valign">
                 <a href="/home">
-                    <img class="nav-logo" src="assets/images/5pm-logo-blue.png">
+                    <img class="nav-logo" src="assets/images/5pm-icon.png">
                 </a>
             </div>
 

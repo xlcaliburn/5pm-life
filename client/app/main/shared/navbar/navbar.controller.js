@@ -160,6 +160,12 @@
             angular.element('.picker__day--selected').removeClass('picker__day--selected');
         }
 
+        function scroll_to(stage) {
+            angular.element('#queue-modal').animate({
+				scrollTop: angular.element(stage).offset().top - 50
+			}, 750);
+        }
+
         vm.confirm_queue = function() {
         // validate information
             vm.clear_errors('all');
@@ -170,19 +176,24 @@
 
             // check if date is empty
             if (!vm.queue_date) {
-                vm.add_errors('datetime', '#datepicker', 'Please select a date below'); return;
+                vm.add_errors('datetime', '#datepicker', 'Please select a date below');
+                scroll_to('#date-and-time');
+                return;
             }
 
             // check if date is valid
             var selected_date = new Date(vm.queue_date);
             if (selected_date === 'Invalid Date') {
-                vm.add_errors('datetime', '#datepicker', 'Please enter a valid date'); return;
+                vm.add_errors('datetime', '#datepicker', 'Please enter a valid date');
+                scroll_to('#date-and-time');
+                return;
             }
 
             // check if selected date is in the past
             var today = new Date(); today.setHours(0,0,0,0);
             if (selected_date < today) {
                 vm.add_errors('datetime', '#datepicker', 'The date you have chosen is in the past');
+                scroll_to('#date-and-time');
                 return;
             }
 
@@ -193,9 +204,11 @@
             // check for empty inputs
             if (!vm.queue_start_time) {
                 vm.add_errors('datetime', '.start-timepicker', 'Please select a starting time below');
+                scroll_to('#date-and-time');
                 return;
             } else if (!vm.queue_end_time) {
                 vm.add_errors('datetime', '.end-timepicker', 'Please select an ending time below');
+                scroll_to('#date-and-time');
                 return;
             }
 
@@ -207,12 +220,14 @@
 
             if (start_time >= 2100) {
                 vm.add_errors('datetime', '.start-timepicker', 'Please select an earlier start time');
+                scroll_to('#date-and-time');
                 return;
             }
 
             if (modified_start_time > end_time) {
                 vm.add_errors('datetime', '.start-timepicker', 'Your available time range needs to be at least 3 hours');
                 vm.add_errors('datetime', '.end-timepicker', 'Your available time range needs to be at least 3 hours');
+                scroll_to('#date-and-time');
                 return;
             }
 
@@ -223,11 +238,13 @@
             // check if activity type is selected
             if (!vm.active && !vm.social) {
                 vm.add_errors('activity_type', null, 'Please select an activity type');
+                scroll_to('#activity-type');
                 return;
             }
 
             if (!vm.location) {
                 vm.add_errors('location_pref', '.location-select', 'Please select a location preference');
+                scroll_to('#location-preference');
                 return;
             }
 
@@ -252,7 +269,7 @@
             angular.element('.confirmation').toggleClass('confirm');
             angular.element('.queue-modal-header').toggleClass('confirm');
             angular.element('.queue-modal-title').toggleClass('confirm');
-
+            scroll_to('.queue-modal');
         };
 
         // add them to queue
