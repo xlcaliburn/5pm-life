@@ -1,3 +1,57 @@
+/* Date picker
+========================================*/
+.picker__date-display {
+    display: none;
+}
+
+.picker__holder {
+    overflow: visible;
+}
+
+.picker__day.picker__day--today,
+.picker__close, .picker__today {
+    color: @babyblue;
+}
+
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
+    background-color: @babyblue;
+}
+
+.picker--opened .picker__frame,
+.picker__frame {
+    top: 5% !important;
+}
+
+.btn-floating.btn-flat.active,
+.clockpicker-tick.active,
+.clockpicker-tick:hover {
+    background-color: rgb(188, 229, 255) !important;
+}
+
+.clockpicker-canvas-bg,
+.clockpicker-canvas-bearing {
+    fill: rgb(188, 229, 255) !important;
+}
+
+.clockpicker-am-pm-block {
+    transform: translateY(20px);
+}
+
+.picker__footer {
+    padding: 0;
+}
+
+.picker__footer .clockpicker-button {
+    margin-top: 0 !important;
+    transform: translateY(-25px);
+}
+
+#datepicker_root>.picker__holder {
+    display: none;
+}
+
 /*=======================================
     Queue Modal
 ========================================*/
@@ -8,7 +62,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 5% 0;
+    padding: 2% 0;
     overflow-y: auto;
     opacity: 0;
     z-index: 999;
@@ -92,10 +146,7 @@
 }
 
 .confirmation {
-    pointer-events:none;
     padding-right: 35px;
-    opacity: 0;
-    position: absolute;
     transition: opacity 0.25s ease-out 0s;
 }
 
@@ -127,8 +178,8 @@
 }
 
 .queue-modal-header {
-    background-color: @turq;
-    padding: 25px 30px 25px 30px;
+    background-color: @babyblue;
+    padding: 20px 30px 20px 30px;
     color: @white;
     text-transform: uppercase;
     font-weight: 300;
@@ -147,9 +198,8 @@
 }
 
 .queue-modal-body {
-    padding: 35px 30px;
+    padding: 35px 30px 10px;
     background-color: @white;
-    overflow: hidden;
     -webkit-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
     box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
@@ -166,7 +216,7 @@
 .queue-modal-title {
     font-weight: 700;
     font-size: 18px;
-    color: @turq;
+    color: @babyblue;
     text-transform: uppercase;
     transition: color 0.35s ease-out;
 }
@@ -247,7 +297,7 @@ select.queue-input-error {
 }
 
 .time-text {
-    color: @turq;
+    color: @babyblue;
     font-weight: 700;
     font-size: 14px;
 }
@@ -282,17 +332,48 @@ label.both-cb-label {
     font-size: 16px;
 }
 
+.queue-modal-footer {
+    padding-bottom: 25px;
+}
+
 .queue-confirm-container {
-    text-align: center;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.queue-confirm-container::after {
+    content: '';
+    clear: both;
+}
+
+.queue-next-button {
+    background-color: @babyblue;
+    height: 35px;
+    line-height: 35px;
+    padding-right: 20px;
+    color: @white;
+    float: right;
+    font-size: 11px;
+}
+
+.queue-prev-button {
+    background-color: @babyblue;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 20px;
+    color: @white;
+    float: left;
+    font-size: 11px;
 }
 
 .queue-confirm-button {
     background-color: @pink;
-    transform: translateY(-50%);
 }
 
+.queue-prev-button:hover,
+.queue-next-button:hover,
 .queue-confirm-button:hover {
-    background-color: @pinkred;
+    color: @white;
 }
 
 .confirm-instructions {
@@ -307,6 +388,10 @@ label.both-cb-label {
 .confirm-text {
     display: inline-block;
     font-size: 16px;
+}
+
+.queue-modal-footer {
+    background-color: @white;
 }
 
 @media screen and (max-width: 991px) {

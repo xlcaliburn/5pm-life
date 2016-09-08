@@ -11,8 +11,8 @@
         </div>
 
         <!-- Modal Body -->
-        <div class="queue-modal-body">
-            <div class="confirmation">
+        <div class="queue-modal-body tab-content">
+            <div class="confirmation tab-pane" role="tabpanel" id="queue-step-4"  ng-class="{'active': navbar.current_stage == 4}">
                 <div class="confirm-instructions">
                     Please confirm the following information. If it all looks correct, press the queue button!
                 </div>
@@ -72,73 +72,70 @@
                 </div>
             </div>
 
-            <div class="stages">
-                <div class="stage" ng-repeat="step in navbar.steps">
-                    <hr ng-if="$index != 0">
-                    <div class="queue-modal-title">
-                        {{ step.title }}
-                        <a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>
-                    </div>
-                    <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
-
-                    <!-- Errors -->
-                    <div class="queue-errors" type="{{ step.stage }}"></div>
-
-                    <!-- Datetime picker -->
-                    <div class="datetime-stage" ng-if="step.stage == 'datetime'">
-
-                        <!-- Date Input -->
-                        <div class="datetime-input-container valign-wrapper">
-                            <i class="material-icons queue-icons">event</i>
-                            <div class="input-field date-input">
-                                <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
-                            </div>
-                        </div>
-
-                        <!-- Time Input -->
-                        <div class="datetime-input-container valign-wrapper">
-                            <i class="material-icons queue-icons">access_time</i>
-                            <span class="time-text">From</span>
-                            <div class="input-field times-input">
-                                <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
-                            </div>
-                            <span class="time-text">to</span>
-                            <div class="input-field times-input">
-                                <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Activity Types -->
-                    <div class="activity-stage" ng-if="step.stage == 'activity_type'">
-                        <div class="row">
-                            <!-- Active checkbox -->
-                            <div class="col l4 m4 s4">
-                                <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="navbar.active" ng-change="navbar.toggle_activity('active')">
-                                <label for="active-checkbox" class="active-cb-label">Active</label>
-                            </div>
-
-                            <!-- Social checkbox -->
-                            <div class="col l4 m4 s4">
-                                <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="navbar.social" ng-change="navbar.toggle_activity('social')">
-                                <label for="social-checkbox" class="social-cb-label">Social</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Location Preferences -->
-                    <div class="location-stage" ng-if="step.stage == 'location_pref'">
-                        <i class="material-icons queue-icons">location_on</i>
-                        <div class="location-select-wrapper">
-                            <select class="location-select" ng-model="navbar.location">
-                                <option value="" disabled selected>Select a location</option>
-                                <option ng-repeat="location in step.locations" value="{{location.city}}">{{location.city}}</option>
-                            </select>
-                        </div>
-                    </div>
-
+            <div class="stage tab-pane" rol"tab-pane" id="queue-step-{{$index + 1}}" ng-repeat="step in navbar.steps" ng-class="{'active': $index+1 == navbar.current_stage}">
+                <div class="queue-modal-title">
+                    {{ step.title }}
+                    <!--<a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>-->
                 </div>
+                <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
+
+                <!-- Errors -->
+                <div class="queue-errors" type="{{ step.stage }}"></div>
+
+                <!-- Datetime picker -->
+                <div class="datetime-stage" ng-if="step.stage == 'datetime'">
+
+                    <!-- Date Input -->
+                    <div class="datetime-input-container valign-wrapper">
+                        <i class="material-icons queue-icons">event</i>
+                        <div class="input-field date-input">
+                            <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
+                        </div>
+                    </div>
+
+                    <!-- Time Input -->
+                    <div class="datetime-input-container valign-wrapper">
+                        <i class="material-icons queue-icons">access_time</i>
+                        <span class="time-text">From</span>
+                        <div class="input-field times-input">
+                            <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
+                        </div>
+                        <span class="time-text">to</span>
+                        <div class="input-field times-input">
+                            <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Types -->
+                <div class="activity-stage" ng-if="step.stage == 'activity_type'">
+                    <div class="row">
+                        <!-- Active checkbox -->
+                        <div class="col l4 m4 s4">
+                            <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="navbar.active" ng-change="navbar.toggle_activity('active')">
+                            <label for="active-checkbox" class="active-cb-label">Active</label>
+                        </div>
+
+                        <!-- Social checkbox -->
+                        <div class="col l4 m4 s4">
+                            <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="navbar.social" ng-change="navbar.toggle_activity('social')">
+                            <label for="social-checkbox" class="social-cb-label">Social</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Location Preferences -->
+                <div class="location-stage" ng-if="step.stage == 'location_pref'">
+                    <i class="material-icons queue-icons">location_on</i>
+                    <div class="location-select-wrapper">
+                        <select class="location-select" ng-model="navbar.location">
+                            <option value="" disabled selected>Select a location</option>
+                            <option ng-repeat="location in step.locations" value="{{location.city}}">{{location.city}}</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -146,10 +143,17 @@
         <div class="queue-modal-footer">
             <!-- Submit button -->
             <div class="queue-confirm-container">
-                <a class="btn-floating btn-large waves-effect waves-light queue-confirm-button" ng-click="navbar.confirm_queue()">
-                    <i class="material-icons">chevron_right</i>
+                <!-- previous button -->
+                <a ng-show="navbar.current_stage > 1" class="btn queue-prev-button" ng-click="navbar.prev_stage()">
+                    <i class="material-icons">chevron_left</i> PREVIOUS
+                </a>
+
+                <!-- next button -->
+                <a class="btn queue-next-button" ng-click="navbar.next_stage()" ng-class="{'queue-confirm-button': navbar.current_stage == 4}">
+                    {{ navbar.next_or_queue }} <i class="material-icons">chevron_right</i>
                 </a>
             </div>
+            <div class="clear"></div>
         </div>
     </div>
 </div>
