@@ -3,9 +3,6 @@
     <div class="queue-modal">
         <!-- Modal Header -->
         <div class="queue-modal-header valign-wrapper">
-            <a ng-click="navbar.toggle_confirm_information()" class="toggle-confirm-button" ng-if="navbar.confirm">
-                <i class="material-icons valign">chevron_left</i>
-            </a>
             {{ navbar.status_title }}
             <i class="material-icons close-queue-modal-button" ng-click="navbar.close_queue_modal()">close</i>
         </div>
@@ -199,7 +196,7 @@
 
 
                 <div id="mobile-nav">
-                    <div class="nav-menu" data-toggle="dropdown" id="home-mobile-menu">
+                     <div class="nav-menu" data-toggle="dropdown" id="home-mobile-menu">
                         <img class="profile-image" src="uploads/profile/{{navbar.user.profile_picture.current}}">
                         <i class="tiny material-icons drop-indicator">expand_more</i>
                     </div>
@@ -208,6 +205,20 @@
                         <div class="dropdown-name">{{navbar.user.first_name + " " + navbar.user.last_name}}</div>
                         <hr class="dropdown-hr">
                         <ul class="dropdown-ul">
+                            <li class="dropdown-li">
+                                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()" ng-if="navbar.queue_status == -1">
+                                    Explore <i class="tiny material-icons">arrow_forward</i>
+                                </a>
+
+                                <!-- cancel queue -->
+                                <a id="cancel-button" class="btn waves-light waves-effect modal-trigger" ng-if="navbar.queue_status == 'Pending'" title="Cancel search" href="#cancel-search">
+                                    CANCEL SEARCH <i class="tiny material-icons">close</i>
+                                </a>
+
+                                <a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed') && !navbar.on_event_page" title="Go to event" href="home/event/{{ navbar.event_link }}">
+                                    VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
+                                </a>
+                            </li>
                             <li class="dropdown-li">
                                 <a href="/home/settings">
                                     <i class="material-icons tiny">person</i>

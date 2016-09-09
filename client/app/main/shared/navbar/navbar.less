@@ -637,7 +637,8 @@ label.both-cb-label {
         padding-right: 0;
     }
 
-    #explore-button {
+    #explore-button,
+    #cancel-button {
         display: none;
     }
 
@@ -657,6 +658,15 @@ label.both-cb-label {
         display: block;
     }
 
+    #mobile-nav #explore-button,
+    #mobile-nav #cancel-button {
+        display: block;
+    }
+
+    #cancel-search {
+        width: 100%;
+    }
+
     .mobile-menu {
         position: absolute;
         text-align: center;
@@ -665,5 +675,6 @@ label.both-cb-label {
         width: 100%;
         padding: 20px;
         background-color: @white;
+        z-index:999999;
     }
 }
