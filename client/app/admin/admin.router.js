@@ -14,6 +14,13 @@
 				controllerAs: 'vm',
 				authenticate: 'admin'
 			})
+			.state('admin.users.edit', {
+				url: '/:user_id',
+				templateUrl: 'app/admin/users/admin.users.edit.html',
+				controller: 'EditUserController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
+			})
 			.state('admin.enums', {
 				url: '/enums',
 				templateUrl: 'app/admin/enums/admin.enums.html',

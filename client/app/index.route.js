@@ -164,10 +164,10 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('admin', {
 			url: '/admin',
-			templateUrl: 'app/admin/admin.html'
+			templateUrl: 'app/admin/admin.html',
 			//controller: 'DashboardController',
 			//controllerAs: 'admin',
-			//authenticate: 'admin'
+			authenticate: 'admin'
 		})
 	;
 

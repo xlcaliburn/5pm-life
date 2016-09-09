@@ -26,8 +26,8 @@
 					<td>
 						{{user.event_status ? user.event_status : "None"}}
 					</td>
-					<td>
-						<a ng-click="vm.edit_user(user._id)"><i class="small material-icons">mode_edit</i></a>
+					<td
+						<a ui-sref="admin.users.edit({ user_id: user._id })"><i class="small material-icons">mode_edit</i></a>
 					</td>
 				</tr>
 			</tbody>
