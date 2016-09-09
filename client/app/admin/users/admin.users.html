@@ -8,19 +8,23 @@
 					<th>Email</th>
 					<th>Age</th>
 					<th>Role</th>
+					<th>Verified</th>
 					<th>
-						Verified
+						Event Status
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="user in vm.users">
-					<td>{{ user.first_name + " " + user.last_name }}</td>
+					<td>{{ user.first_name + " " + user.last_name}}</td>
 					<td>{{ user.email }}</td>
 					<td>{{ vm.age(user.birthday) }}</td>
 					<td>{{ user.role }}</td>
 					<td>
 						{{user.verified}}
+					</td>
+					<td>
+						{{user.event_status ? user.event_status : "None"}}
 					</td>
 					<td>
 						<a ng-click="vm.edit_user(user._id)"><i class="small material-icons">mode_edit</i></a>
