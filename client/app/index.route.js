@@ -10,7 +10,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider
 		.state('welcome', {
 			url: '/',
-			title: 'Welcome to 5pm.life',
+			title: '5PM.LIFE - Meet, Share, Experience',
 			templateUrl: 'app/main/welcome/welcome.html',
 			controller: 'WelcomeController',
 			controllerAs: 'welcome'
@@ -18,7 +18,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('home', {
 			url: '/home',
-			title: '5pm.life Home',
+			title: '5PM.LIFE - Meet, Share, Experience',
 			templateUrl: 'app/main/home/home.html',
 			controller: 'HomeController',
 			controllerAs: 'home',
@@ -46,6 +46,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('home.event', {
 			url: '/event/:id',
+			title: '5PM.LIFE Event',
 			templateUrl: 'app/main/event/event.html',
 			controller: 'EventController',
 			controllerAs: 'vm',
@@ -91,7 +92,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 
 		.state('home.settings', {
-			title: '5pm Settings',
+			title: 'Settings',
 			url: '/settings',
 			templateUrl: 'app/main/settings/settings.html',
 			controller: 'SettingsController',
@@ -118,7 +119,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('login', {
 			url: '/login',
-			title: '5PM Login',
+			title: '5PM.LIFE Login',
 			templateUrl: 'app/account/login/login.html',
 			controller: 'LoginController',
 			controllerAs: 'login'
@@ -126,7 +127,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('signup', {
 			url: '/signup',
-			title: '5PM Signup',
+			title: '5PM.LIFE Signup',
 			templateUrl: 'app/account/signup/signup.html',
 			controller: 'SignupController',
 			controllerAs: 'signup'
@@ -134,7 +135,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('verify', {
 			url: '/signup/verify/:id',
-			title: 'Verify Email',
+			title: '5PM.LIFE Verify Email',
 			templateUrl: 'app/account/signup/verify.html',
 			controller: 'VerifyController',
 			controllerAs: 'verify'
@@ -142,7 +143,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('recovery', {
 			url: '/recovery',
-			title: 'Forgot Password',
+			title: '5PM.LIFE Forgot Password',
 			templateUrl: 'app/account/recovery/recovery.html',
 			controller: 'RecoveryController',
 			controllerAs: 'recovery'
@@ -150,7 +151,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('resetpassword', {
 			url: '/passwordreset/:id',
-			title: 'Reset Password',
+			title: '5PM.LIFE Reset Password',
 			templateUrl: 'app/account/resetpassword/resetpassword.html',
 			controller: 'ResetPasswordController',
 			controllerAs: 'reset'
@@ -158,7 +159,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		.state('logoutsuccess', {
 			url: '/logoutsuccess',
-			title: '5PM Logout',
+			title: '5PM.LIFE Logout',
 			templateUrl: 'app/account/logout/logout.html'
 		})
 

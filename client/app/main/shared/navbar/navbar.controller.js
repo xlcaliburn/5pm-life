@@ -37,7 +37,7 @@
                 locations: [
                     {
                         id: 12345,
-                        city: 'Richmond Hill'
+                        city: 'Toronto'
                     }
                 ]
             }
