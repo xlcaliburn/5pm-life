@@ -97,7 +97,9 @@ export function show(req, res) {
 // Admin level GetById
 export function admin_show(req, res) {
 	var response = {};
-	return Events.findById(req.params.id).exec()
+	return Events.findById(req.params.id)
+		.populate('queue')
+		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
 		.catch(handleError(res));

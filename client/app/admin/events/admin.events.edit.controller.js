@@ -3,7 +3,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Venues) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues) {
 		var vm = this;
 		vm.event_id = $stateParams.event_id;
 		vm.add_users = addUsersModal;
@@ -39,17 +39,27 @@
 				.catch(function(err) {console.log(err);});
 
 			Events.getByIdAdmin(vm.event_id)
-				.success(function(data) {
-					vm.selected_event = data;
+				.then(function(res) {
+					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
-
 					var start_date = new Date(vm.selected_event.dt_start);
 					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
 					vm.form_start_time = moment(start_date).format('hh:mmA');
 					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
 				})
-				.error(function(data) { console.log('Error: ' + data); });
-
+				.then(function() {
+					for (var add_id in vm.queues_to_add) {
+					Queue
+						.getById(vm.queues_to_add[add_id]._id)
+						.then(
+							function(res){
+								vm.queues_to_add[add_id].user = res.data.user;
+							}
+						)
+						.then(function() {console.log(vm.queues_to_add);})
+					}
+				})
+				.catch(function(data) { console.log('Error: ' + data); });
 
 			Enums.getByType('queue_status')
 				.success(function(data) {
@@ -71,6 +81,7 @@
 					}
 				},
 				onOpen: function() {
+					$('#datepicker_root>.picker__holder').show();
 					angular.element('.picker__today').remove();
 				}
 			});
@@ -115,7 +126,8 @@
 		function updateQueueStatus(newStatus) {
 			// TODO: Make this a single call
 			for (var add_id in vm.queues_to_add) {
-				Queue.put(vm.queues_to_add[add_id], {status : newStatus})
+				console.log(vm.queues_to_add[add_id]._id);
+				Queue.put(vm.queues_to_add[add_id]._id, {status : newStatus})
 				.catch(function(err) { console.log(err); }); // jshint ignore:line
 			}
 
@@ -123,6 +135,11 @@
 				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
 				.catch(function(err) { console.log(err); }); // jshint ignore:line
 			}
+			//
+			// for (var i = 0; i < vm.queues_to_add.length; i++) {
+			// 	Queue.getById(vm.queues_to_add[i])
+			// 	.then(function(res) { console.log(res.data)});
+			// }
 			vm.selected_event.queue = vm.queues_to_add;
 		}
 
