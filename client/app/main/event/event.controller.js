@@ -8,12 +8,40 @@
     /** @ngInject */
     /*global google */
     /* jshint expr: true */
-    function EventController($cookies, $rootScope, $state, $timeout, attendees, event_data, EventService) {
+    function EventController($cookies, $rootScope, $state, $stateParams, $timeout, attendees, event_data, EventService, socket) {
 
         var vm = this;
 
+        // chat shit
+        var eventSocket = socket.socket;
+
+        var room = $stateParams.id;
+
+
+        eventSocket.on('receive', function(message) {
+            var chat_message = {
+                text: message.text,
+                user: message.user
+            };
+            vm.chat_messages.push(chat_message);
+        });
+
+        vm.chat_messages = [];
+        vm.message_input = '';
+
+        vm.submit_message = function() {
+            var data = {
+                user: getSelfInfo(),
+                room: room,
+                message: vm.message_input
+            };
+            eventSocket.emit('message', data);
+            vm.message_input = '';
+        };
+
         // model
         vm.attendees = attendees;
+
         vm.event_data = event_data;
         vm.user_status;
 
@@ -153,6 +181,18 @@
                          vm.user_status = vm.attendees[i].status;
                          return;
                     }
+                }
+            }
+        }
+
+        // get self info
+        function getSelfInfo() {
+            for (var i = 0; i < vm.attendees.length;i++) {
+                if (vm.attendees[i].status) {
+                    return {
+                        name: vm.attendees[i].name,
+                        profile_picture: vm.attendees[i].profile_picture
+                    };
                 }
             }
         }

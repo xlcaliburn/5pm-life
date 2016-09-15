@@ -39,6 +39,7 @@ function startServer() {
     });
 }
 
+
 setImmediate(startServer);
 
 // Expose app

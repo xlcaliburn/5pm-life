@@ -104,6 +104,13 @@
                 </div>
             </div>
         </div>
+
+        <div>
+            <ul>
+                <li ng-repeat="message in vm.chat_messages">{{ message.user.name }}: {{ message.text }}</li>
+            </ul>
+            <input ng-model="vm.message_input" type="text"><button ng-click="vm.submit_message()">Submit</button>
+        </div>
     </div>
 
 </div>
