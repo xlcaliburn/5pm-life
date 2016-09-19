@@ -31,6 +31,9 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     width: 100%;
     height: 100%;
     pointer-events: none;
+    -webkit-box-shadow: inset 0px -3px 10px -1px rgba(0,0,0,0.15);
+    -moz-box-shadow: inset 0px -3px 10px -1px rgba(0,0,0,0.15);
+    box-shadow: inset 0px -3px 10px -1px rgba(0,0,0,0.15);
 }
 
 .overlay-text-container {
@@ -117,6 +120,15 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     color: @white;
 }
 
+#event-chat>.event-chat-card>.event-card-header {
+    background-color: @white;
+    border-bottom: 1px solid @faintgrey;
+}
+
+#event-chat>.event-chat-card>.event-card-header>.event-title {
+    color: @middlegrey;
+}
+
 .event-options-dropdown {
     position: relative;
     float: right;
@@ -175,7 +187,7 @@ a.event-options>i {
 }
 
 a.event-options:hover>i {
-    color: @lightgrey !important;
+    color: rgba(255,255,255,0.7) !important;
 }
 
 a.modal-trigger[href='#leave-modal'] {
@@ -270,7 +282,7 @@ a.modal-trigger[href='#leave-modal'] {
 }
 
 .event-card-body td.confirmed {
-    color: @babyblue;
+    color: @pink;
     font-weight: 500;
 }
 
