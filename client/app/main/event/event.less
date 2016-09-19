@@ -1,5 +1,65 @@
-#event-container {
-    margin-top: 30px;
+.event-gmap-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+#event-gmap {
+    width: 100%;
+    height: 100%;
+}
+
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gm-style .gm-style-iw {
+    font-weight: 700;
+}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    display: none;
+    background:none !important;
+}
+
+.event-overlay-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.overlay-text-container {
+    position: relative;
+    height: 100%;
+}
+
+.map-title, .map-venue {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.65);
+    padding: 5px 30px 5px 15px;
+}
+
+.map-title {
+    color: @white;
+    font-size: 50px;
+    font-weight: 200;
+}
+
+.map-venue {
+    color: @pink;
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.event-title-venue {
+    position: absolute;
+    top: 30%;
+    left: 0;
 }
 
 .confirmation-row {
@@ -36,37 +96,67 @@
 }
 
 .events-row {
+    overflow: hidden;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.event-detail-card,
+.event-chat-card {
     background: @white;
-    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
-    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
-    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
-}
-
-.events-row>.col {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.event-detail-card {
-    margin-top: 30px;
-    margin-bottom: 15px;
-    border-right: 1px solid @BGcolor;
+    -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .event-card-header {
     position: relative;
-    padding: 0px 25px 15px 35px;
-    border-bottom: 1px solid @BGcolor;
+    padding: 15px 2px 15px 25px;
+    //border-bottom: 1px solid @BGcolor;
+    background-color: @pink;
+    color: @white;
 }
 
 .event-options-dropdown {
     position: relative;
     float: right;
-    right: 25px;
-    top: 25px;
+    right: 0;
+    top: 0;
+}
+
+.chat-area {
+    min-height: 350px;
+    padding: 20px 25px;
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+.chat-area::-webkit-scrollbar-track,
+.chat-box::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+	border-radius: 20px !important;
+	background-color: #f5f5f5 !important;
+}
+
+.chat-area::-webkit-scrollbar,
+.chat-box::-webkit-scrollbar {
+    width: 5px !important;
+	background-color: #F5F5F5 !important;
+}
+
+.chat-area::-webkit-scrollbar-thumb,
+.chat-box::-webkit-scrollbar-thumb {
+	border-radius: 20px !important;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1) !important;
+	background-color: #7f7f7f !important;
+}
+
+.chat-user-message {
+    word-break: break-all;
 }
 
 a.event-options {
+    color: @white;
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -81,12 +171,11 @@ a.event-options:hover {
 }
 
 a.event-options>i {
-    color: @lightgrey !important;
-    transition: color 0.2s ease-out;
+    color: @white !important;
 }
 
 a.event-options:hover>i {
-    color: @uppergrey !important;
+    color: @lightgrey !important;
 }
 
 a.modal-trigger[href='#leave-modal'] {
@@ -147,8 +236,9 @@ a.modal-trigger[href='#leave-modal'] {
 }
 
 .event-title {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 300;
+    padding-top: 5px;
 }
 
 .event-venue {
@@ -158,13 +248,15 @@ a.modal-trigger[href='#leave-modal'] {
 }
 
 .event-card-body {
-    padding: 15px 35px;
+    padding: 15px 25px;
+    overflow: hidden;
 }
 
 .event-card-body td {
     padding: 10px 0;
-    color: @uppergrey;
+    color: @darkgrey;
     font-size: 15px;
+    font-weight: 300;
     vertical-align: top;
     cursor: default;
 }
@@ -178,7 +270,8 @@ a.modal-trigger[href='#leave-modal'] {
 }
 
 .event-card-body td.confirmed {
-    color: @teal;
+    color: @babyblue;
+    font-weight: 500;
 }
 
 td.event-icons {
@@ -208,70 +301,84 @@ a.event-status:active {
     text-decoration: none !important;
 }
 
-#event-map {
-    width: 100%;
-    height: 250px;
+.no-chat-messages {
+    font-weight: 300;
+    color: @lightgrey;
+    .user-select-none;
 }
 
-a[href^="http://maps.google.com/maps"]{display:none !important}
-a[href^="https://maps.google.com/maps"]{display:none !important}
-
-.gm-style .gm-style-iw {
-    font-weight: 700;
+.message-name {
+    font-weight: 500;
+    font-size: 16px;
 }
 
-.gmnoprint a, .gmnoprint span, .gm-style-cc {
-    display:none;
-}
-.gmnoprint div {
-    display: none;
-    background:none !important;
-}
-
-.event-card-footer {
-    text-align: center;
-    padding: 20px 0;
-}
-
-.event-card-footer>a {
-    font-size: 12px;
-    background-color: @pink;
-    color: @white;
-}
-
-.event-card-footer>a:hover {
-    background-color: @green;
-    color: @white;
-}
-
-.attendees-chat-section>.container>.row {
-    margin-bottom: 0;
-}
-
-#event-attendees {
-    padding-left: 3%;
-    padding: 10px 40px;
-}
-
-.attendees-title {
-    padding: 30px 0;
-    font-size: 23px;
-    font-weight: 400;
-    letter-spacing: 1px;
+.message-text {
+    font-size: 15px;
+    color: @uppergrey;
+    display: inline;
+    background: none;
+    border: none;
+    font-family: inherit;
 }
 
 .attendee-card {
     margin-bottom: 10px;
 }
 
-.attendee-name {
-    color: @green;
-    font-size: 15px;
-    letter-spacing: 1.5px;
+.attendees-list {
+    padding: 20px;
+    min-height: 348px;
+    border-left: 1px solid @faintgrey;
+    /*background-color: @white;
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);*/
 }
 
+.attendee-name {
+    color: @uppergrey;
+    font-weight: 500;
+    font-size: 15px;
+    word-break: break-word;
+    letter-spacing: 0.5px;
+}
+
+.message-box {
+    padding: 5px 15px;
+    border-top: 1px solid @BGcolor;
+}
+
+.event-profile-pic {
+    height: 35px;
+    border-radius: 50%;
+}
+
+textarea.message-input {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: @uppergrey;
+    border: none;
+    height: auto;
+    max-height: 100px !important;
+    max-height: 200px;
+    padding: 0;
+    margin: 15px;
+    outline: none;
+    resize: none;
+}
+
+textarea.message-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.event-attendees-card>.event-card-header {
+    background-color: @babyblue;
+}
 
 @media screen and (max-width: 992px) {
     // use mobile here
     // at < 992px, mobile will show up
+
+    .event-gmap-container {
+        height: 300px;
+    }
 }

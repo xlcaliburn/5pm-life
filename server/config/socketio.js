@@ -1,6 +1,6 @@
 /**
- * Socket.io configuration
- */
+* Socket.io configuration
+*/
 'use strict';
 
 import config from './environment';
@@ -11,63 +11,67 @@ function onDisconnect(socket) {
 
 // When the user connects.. perform this
 function onConnect(socket) {
-  // When the client emits 'info', this listens and executes
-  socket.on('info', data => {
-    socket.log(JSON.stringify(data, null, 2));
-  });
+    // When the client emits 'info', this listens and executes
+    socket.on('info', data => {
+        socket.log(JSON.stringify(data, null, 2));
+    });
 
-  // Insert sockets below
-  require('../api/thing/thing.socket').register(socket);
+    // Insert sockets below
+    require('../api/thing/thing.socket').register(socket);
 
 }
 
 export default function(socketio) {
-  // socket.io (v1.x.x) is powered by debug.
-  // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
-  //
-  // ex: DEBUG: "http*,socket.io:socket"
+    // socket.io (v1.x.x) is powered by debug.
+    // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
+    //
+    // ex: DEBUG: "http*,socket.io:socket"
 
-  // We can authenticate socket.io users and access their token through socket.decoded_token
-  //
-  // 1. You will need to send the token in `client/components/socket/socket.service.js`
-  //
-  // 2. Require authentication here:
-  /*socketio.use(require('socketio-jwt').authorize({
-     secret: config.secrets.session,
-     handshake: true
- }));*/
+    // We can authenticate socket.io users and access their token through socket.decoded_token
+    //
+    // 1. You will need to send the token in `client/components/socket/socket.service.js`
+    //
+    // 2. Require authentication here:
+    /*socketio.use(require('socketio-jwt').authorize({
+    secret: config.secrets.session,
+    handshake: true
+}));*/
 
-  socketio.on('connection', function(socket) {
+socketio.on('connection', function(socket) {
     socket.address = socket.request.connection.remoteAddress +
-      ':' + socket.request.connection.remotePort;
+    ':' + socket.request.connection.remotePort;
 
     socket.connectedAt = new Date();
 
     socket.log = function(...data) {
         console.log('=====================================================');
-      console.log(`SocketIO ${socket.nsp.name} [${socket.address}]`, ...data);
-      console.log('=====================================================');
+        console.log(`SocketIO ${socket.nsp.name} [${socket.address}]`, ...data);
+        console.log('=====================================================');
     };
 
-    socket.on('message', function(data) {
-        console.log(data);
-        socket.join(data.room);
+    socket.on('join_event', function(eventRoom) {
+        socket.join(eventRoom);
+    });
+
+    // receiving message from client
+    socket.on('send_message', function(data) {
         var message_data = {
             text: data.message,
             user: data.user
         };
-        console.log(message_data);
-        socketio.sockets.in(data.room).emit('receive', message_data);
+
+        // emit message to clients
+        socketio.sockets.in(data.room).emit('receive_message', message_data);
     });
 
     // Call onDisconnect.
     socket.on('disconnect', () => {
-      onDisconnect(socket);
-      socket.log('DISCONNECTED');
+        onDisconnect(socket);
+        socket.log('DISCONNECTED');
     });
 
     // Call onConnect.
     onConnect(socket);
     socket.log('CONNECTED');
-  });
+});
 }

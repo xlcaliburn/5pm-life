@@ -5,48 +5,24 @@
     .module('fivepmApp')
     .controller('EventController', EventController);
 
-    /** @ngInject */
-    /*global google */
-    /* jshint expr: true */
-    function EventController($cookies, $rootScope, $state, $stateParams, $timeout, attendees, event_data, EventService, socket) {
-
+    function EventController($cookies, $rootScope, $state, $stateParams, $timeout, $window, attendees, event_data, EventService, socket) {
         var vm = this;
-
-        // chat shit
-        var eventSocket = socket.socket;
-
-        var room = $stateParams.id;
-
-
-        eventSocket.on('receive', function(message) {
-            var chat_message = {
-                text: message.text,
-                user: message.user
-            };
-            vm.chat_messages.push(chat_message);
-        });
-
-        vm.chat_messages = [];
-        vm.message_input = '';
-
-        vm.submit_message = function() {
-            var data = {
-                user: getSelfInfo(),
-                room: room,
-                message: vm.message_input
-            };
-            eventSocket.emit('message', data);
-            vm.message_input = '';
-        };
 
         // model
         vm.attendees = attendees;
-
         vm.event_data = event_data;
-        vm.user_status;
 
         // variables
         var map, marker, infowindow, lat, lng;
+        var eventSocket, eventRoom;
+        var chatbox = angular.element('.chat-area');
+        var selfInfo = getSelfInfo();
+        var textarea = angular.element('#message-input');
+
+        // view
+        vm.chat_messages = [];
+        vm.message_input = '';
+        vm.profile_picture = getProfileImg(selfInfo.profile_picture);
 
         // functions
         vm.confirm_event = confirmEvent;
@@ -57,17 +33,32 @@
         vm.get_googlemaps_link = getGoogleMapsLink;
         vm.leave_event = leaveEvent;
         vm.get_profile_img = getProfileImg;
-        vm.get_self_status = getSelfStatus;
+        vm.send_message = sendMessage;
 
-        _init();
+        init();
 
-        function _init() {
+        function init() {
             // set page title
             $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
 
+            // remove bg
+            angular.element('.wrap').css('background', 'none');
+
+            // make text-area resizable
+            textarea.on('keydown', autosize);
+
+            initSockets();
             getLatLng();
             getSelfStatus();
             initPlugins();
+        }
+
+        // auto resize textarea based on height
+        function autosize() {
+            setTimeout(function(){
+                textarea.css('height', 'auto');
+                textarea.css('height', textarea.prop('scrollHeight') + 'px');
+            },0);
         }
 
         // confirm event confirmation
@@ -128,15 +119,19 @@
 
         // init google maps using coordinates from address
         function initMap() {
+            var draggable = ($window.innerWidth > 992);
+
             var myOptions = {
                 zoom: 14,
                 center: {lat: lat, lng: lng},
                 streetViewControl: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                scrollwheel: false
+                draggable: draggable,
+                scrollwheel: false,
+                disableDoubleClickZoom: true
             };
 
-            map = new google.maps.Map(document.getElementById('event-map'), {
+            map = new google.maps.Map(document.getElementById('event-gmap'), {
                 center: {lat: lat, lng: lng},
                 zoom: 14,
                 options: myOptions
@@ -250,6 +245,49 @@
                     Materialize.toast('You have left the event.', 6000);
                 }
             }).catch(function() { $state.go('home'); });
+        }
+
+        // initialize sockets;
+        function initSockets() {
+            eventSocket = socket.socket;
+            eventRoom = $stateParams.id;
+
+            eventSocket.emit('join_event', eventRoom);
+            eventSocket.on('receive_message', function(message) {
+                receiveMessage(message);
+            });
+        }
+
+        // receive message from server
+        function receiveMessage(message) {
+            var chat_message = {
+                text: message.text,
+                user: message.user
+            };
+            vm.chat_messages.push(chat_message);
+
+            $timeout(function() {
+                chatbox.scrollTop(chatbox[0].scrollHeight);
+            });
+        }
+
+        // send chat message
+        function sendMessage(event) {
+            if (event.shiftKey) { return false; }
+
+            event.preventDefault();
+
+            if (!vm.message_input || vm.message_input.trim() === '') {
+                return false;
+            }
+            console.log(vm.message_input);
+            var data = {
+                user: getSelfInfo(),
+                room: eventRoom,
+                message: vm.message_input
+            };
+            eventSocket.emit('send_message', data);
+            vm.message_input = '';
         }
 
     }
