@@ -92,7 +92,7 @@ function handleEntityNotFound(res) {
 
 // Gets a list of enums
 export function index(req, res) {
-	return Enums.find().exec()
+	return Enums.find().sort({type : 1}).exec()		
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }

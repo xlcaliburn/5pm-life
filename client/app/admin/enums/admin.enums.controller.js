@@ -1,5 +1,4 @@
-(function () {
-	'use strict';
+(function () { 'use strict';
 
 	angular
 		.module('fivepmApp.admin')
@@ -45,7 +44,7 @@
 
 			modalInstance.result.then(function(data) {
 				vm.enums = data;
-			});			
+			});
 		}
 	}
 })();
