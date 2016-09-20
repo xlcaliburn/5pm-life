@@ -56,7 +56,7 @@ export function getUsersById(req, res) {
  */
 export function create(req, res, next) {
 	var newUser = new User(req.body);
-	console.log('newUser is', newUser);
+
 	newUser.provider = 'local';
 	newUser.role = 'user';
 	newUser.save()
@@ -118,7 +118,7 @@ export function changePassword(req, res, next) {
 }
 
 function saveUpdates(updates) {
-	console.log(updates);
+
 	return function(entity) {
 		var updated = _.merge(entity, updates);
 		return updated.save({new : true})

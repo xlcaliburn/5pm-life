@@ -256,6 +256,9 @@
             eventSocket.on('receive_message', function(message) {
                 receiveMessage(message);
             });
+            eventSocket.on('message_error', function() {
+                console.log('Unauthorized');
+            });
         }
 
         // receive message from server
@@ -264,7 +267,18 @@
                 text: message.text,
                 user: message.user
             };
-            vm.chat_messages.push(chat_message);
+
+            if (vm.chat_messages.length > 0) {
+                // check to see if it's the same person typing the message
+                if (vm.chat_messages[vm.chat_messages.length - 1].user._id === message.user._id) {
+                    // append to end of message
+                    vm.chat_messages[vm.chat_messages.length - 1].text += '\n' + message.text;
+                } else {
+                    vm.chat_messages.push(chat_message);
+                }
+            } else {
+                vm.chat_messages.push(chat_message);
+            }
 
             $timeout(function() {
                 chatbox.scrollTop(chatbox[0].scrollHeight);
@@ -282,7 +296,6 @@
             }
 
             var data = {
-                user: getSelfInfo(),
                 room: eventRoom,
                 message: vm.message_input
             };
