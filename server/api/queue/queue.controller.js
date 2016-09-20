@@ -261,8 +261,9 @@ export function triggerEvent(req, res) {
 	var query_array = [];
 
 	for (var i = 0; i < queue.length; i++) {
-		var query_obj = new mongoose.Types.ObjectId(queue[i]);
-		query_array.push(query_obj);
+		//var query_obj = new mongoose.Types.ObjectId(queue[i]);
+		//query_array.push(query_obj);
+		query_array.push(queue[i]);
 	}
 
 	return Queue.find({ _id : { $in: query_array }}).exec()

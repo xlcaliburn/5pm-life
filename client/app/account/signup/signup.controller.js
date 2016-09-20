@@ -241,6 +241,8 @@
                     data[key] = vm[key];
                 }
 
+                data.email_address = data.email_address.toLowerCase();
+
                 SignupService.submitSignup(data).then(function(res) {
                     console.log(res);
                     var response = res.data.response;

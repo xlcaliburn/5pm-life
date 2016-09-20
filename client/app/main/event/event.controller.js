@@ -280,7 +280,7 @@
             if (!vm.message_input || vm.message_input.trim() === '') {
                 return false;
             }
-            console.log(vm.message_input);
+
             var data = {
                 user: getSelfInfo(),
                 room: eventRoom,
