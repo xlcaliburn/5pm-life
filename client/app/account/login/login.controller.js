@@ -56,10 +56,11 @@
             vm.Auth.login({
                 email: vm.email_address,
                 password: vm.password
-            }).then((res) => {
+            }).then(() => {
                 // Logged in, redirect to home
                 window.location.href = '/home';
             }).catch((err) => {
+                console.log(err);
                 vm.status = err.message;
             });
         };

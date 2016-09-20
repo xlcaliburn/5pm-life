@@ -13,7 +13,21 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			title: '5PM.LIFE - Meet, Share, Experience',
 			templateUrl: 'app/main/welcome/welcome.html',
 			controller: 'WelcomeController',
-			controllerAs: 'welcome'
+			controllerAs: 'welcome',
+			resolve: {
+				// if users has token, log them in
+				user: function($cookies, $state, $q) {
+					var token = $cookies.get('token');
+
+					if (!token) {
+						return;
+					} else {
+						return $q.reject().catch(function() {
+							$state.go('home');
+						});
+					}
+				}
+			}
 		})
 
 		.state('home', {
@@ -122,7 +136,21 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			title: '5PM.LIFE Login',
 			templateUrl: 'app/account/login/login.html',
 			controller: 'LoginController',
-			controllerAs: 'login'
+			controllerAs: 'login',
+			resolve: {
+				// if users has token, log them in
+				user: function($cookies, $state, $q) {
+					var token = $cookies.get('token');
+
+					if (!token) {
+						return;
+					} else {
+						return $q.reject().catch(function() {
+							$state.go('home');
+						});
+					}
+				}
+			}
 		})
 
 		.state('signup', {
