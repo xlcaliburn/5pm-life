@@ -13,7 +13,6 @@
 		Users.get()
 			.success(function(data) {
 				vm.users = data;
-				console.log(data);
 			});
 
 		function editUser(userid) {

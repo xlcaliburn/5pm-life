@@ -1,110 +1,60 @@
 <div class="container" id="admin-events-edit">
 	<h2>Edit User</h2>
 	<section>
-		<a ui-sref="admin.users">Users</a> > {{vm._id}}
+		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
 
 	<div class="row right-align">
-		<button class="btn waves-effect waves-light" ng-click="vm.event_found()">Trigger Event
-		</button>
-
-		<button class="btn red darken-4" name="Delete" value="Delete" ng-click="vm.delete_event()">Delete
-		</button>
+		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
 	</div>
 
 	<h3>General</h3>
 	<form class="col s12" name="createForm" ng-submit="vm.submit()">
 		<div class="row">
-			<div class="input-field col s12">
-				<h5>Event Status: </h5>
-				<p>{{vm.selected_event.status}}</p>
-
-				<!-- Date Input -->
-				<div class="datetime-input-container valign-wrapper">
-					<i class="material-icons queue-icons">event</i>
-					<div class="input-field date-input">
-						<input ng-model="vm.form_date" id="datepicker" class="datepicker" placeholder="Select a date">
-					</div>
-				</div>
-
-				<!-- Time Input -->
-				<div class="datetime-input-container valign-wrapper">
-					<i class="material-icons queue-icons">access_time</i>
-					<span class="time-text">From</span>
-					<div class="input-field times-input">
-						<input id="start_timepicker" class="start-timepicker" ng-model="vm.form_start_time" placeholder="Select a time">
-					</div>
-					<span class="time-text">to</span>
-					<div class="input-field times-input">
-						<input id="end_timepicker" class="end-timepicker" ng-model="vm.form_end_time" placeholder="Select a time">
-					</div>
-				</div>
+			<div class="input-field col s6">
+				<input ng-model="vm.user.first_name" name="first_name" type="text" class="validate">
+				<label class="active" for="first_name">First Name</label>
+			</div>
+			<div class="input-field col s6">
+				<input ng-model="vm.user.last_name" name="last_name" type="text" class="validate">
+				<label class="active" for="last_name">Last Name</label>
 			</div>
 		</div>
-
+		<div class="row">
+			<div class="input-field col s9">
+				<input ng-model="vm.user.email" name="email" type="email" class="validate">
+				<label class="active" for="email">Email</label>
+			</div>
+			<div class="input-field col s3">
+				{{vm.user.verified ? "Verified" : "Not verified"}}
+			</div>
+		</div>
 		<div class="row">
 			<div class="input-field col s12">
-				<select ng-model="vm.selected_event.activity" ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name">
-				</select>
-
-				<label>Activity</label>
+				<input ng-model="vm.user.gender" name="gender" type="text" class="validate">
+				<label class="active" for="gender">Gender</label>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="input-field col s12">
-				<select ng-model="vm.selected_event.venue" ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
+				<input ng-model="vm.user.birthday" name="birthday">
+				<label class="active" for="birthday">Birthday</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<select
+					ng-model="vm.user.role"
+					ng-options="role for role in vm.allowed_roles">
 				</select>
-				<label>Venue</label>
 			</div>
 		</div>
 
-		<div class="divider"></div>
-
-		<h3>Users</h3>
-		<div class="table-container">
-			<div class="section">
-				<h5>Activity Capacity: {{vm.selected_event.activity.allowed_capacity}}</h5>
-				<div style="float:right">
-					<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
-						<i class="material-icons">add</i>
-					</a>
-				</div>
-			</div>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Time in Queue</th>
-						<th></th>
-						<th></th>
-						<th width="10%"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="queue in vm.queues_to_add">
-						<td>{{queue.first_name + " " + queue.last_name}}</td>
-						<td>{{queue}}</td>
-						<td></td>
-						<td></td>
-						<td>
-							<a href="" ng-click="vm.remove_queue_from_event(queue)"><i class="small material-icons">delete</i></a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="row right-align">
+			<button class="btn waves-effect waves-light" type="submit" name="action">Save
+				<i class="material-icons right">send</i>
+			</button>
 		</div>
 
-
-		<div class="divider"></div>
-
-		<div class="section">
-
-			<div class="row right-align">
-				<button class="btn waves-effect waves-light" type="submit" name="action">Save
-					<i class="material-icons right">send</i>
-				</button>
-			</div>
-		</div>
 	</form>
 </div>

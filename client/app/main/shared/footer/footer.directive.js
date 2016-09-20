@@ -1,10 +1,8 @@
-'use strict';
-
-(function() {
+(function() { 'use strict';
     /*jslint latedef:false*/
     angular
-    .module('fivepmApp')
-    .directive('stickyFooter', FooterDirective);
+        .module('fivepmApp')
+        .directive('stickyFooter', FooterDirective);
 
     function FooterDirective() {
         return {
@@ -17,5 +15,4 @@
             controllerAs: 'footer'
         };
     }
-
 })();

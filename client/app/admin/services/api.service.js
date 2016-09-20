@@ -1,5 +1,4 @@
-(function() {
-	'use strict';
+(function() { 'use strict';
 
 	angular.module('ApiService', [])
 		.factory('Users', function($http) {
@@ -12,6 +11,13 @@
 				},
 				getMe : function() {
 					return $http.get('/api/users/me');
+				},
+				getById : function(id) {
+					return $http.get('/api/users/' + id);
+				},
+				updateById : function(id, data) {
+					console.log(data);
+					return $http.put('/api/users/' + id, data);
 				}
 			};
 		})

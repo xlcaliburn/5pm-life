@@ -1,5 +1,6 @@
 'use strict';
 
+import _ from 'lodash';
 import User from './user.model';
 import passport from 'passport';
 import config from '../../config/environment';
@@ -76,10 +77,7 @@ export function show(req, res, next) {
 
 	return User.findById(userId).exec()
 		.then(user => {
-			if (!user) {
-				return res.status(404).end();
-			}
-			res.json(user.profile);
+			return res.status(200).json(user);
 		})
 		.catch(err => next(err));
 }
@@ -118,6 +116,29 @@ export function changePassword(req, res, next) {
 			}
 		});
 }
+
+function saveUpdates(updates) {
+	console.log(updates);
+	return function(entity) {
+		var updated = _.merge(entity, updates);
+		return updated.save({new : true})
+			.then(updated => {
+				return updated;
+			});
+	};
+}
+
+export function updateById(req, res, next) {
+	if (req.body._id) {
+		delete req.body._id;
+	}
+	return User.findById(req.params.id)
+		.exec()
+		.then(saveUpdates(req.body))
+		.then(function(){return res.status(204).end();})
+		.catch(handleError(res));
+}
+
 
 /**
  * Get my info
