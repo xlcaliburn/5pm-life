@@ -55,7 +55,8 @@
         vm.submit_login = function() {
             vm.Auth.login({
                 email: vm.email_address,
-                password: vm.password
+                password: vm.password,
+                remember: vm.remember_login
             }).then(() => {
                 // Logged in, redirect to home
                 window.location.href = '/home';
