@@ -107,6 +107,7 @@ function getDecodedToken(token) {
 
 export function getUserStatus(req, res) {
 	var response = { status: 'ok' };
+
 	var token = getDecodedToken(req.params.token);
 	if (!token) {
 		return res.json({ response: 'unauthorized' });
@@ -177,7 +178,7 @@ export function create(req, res) {
 	// extract user_id from token
 	var token = req.body.token;
 	if (!token) {
-		return res.json({ response: 'unauthorized' });
+		return res.status(403).send('unauthorized');
 	}
 
 	var decoded_token = jwt.verify(token, config.secrets.session);
@@ -246,11 +247,8 @@ export function cancelEventSearch(req, res) {
 /*======================================*/
 
 function saveUserEventStatus(user, event_id) {
-	user.event_status = 'Pending User Confirmation';
-	user.current_event = event_id;
-	return user.save(function(err) {
-		console.log(err);
-	});
+	console.log('User is', user);
+	return User.update({_id: user._id }, { $set: { event_status: 'Pending User Confirmation', current_event: event_id }}).exec();
 }
 
 // send confirmation email + add users to event
@@ -312,19 +310,10 @@ export function triggerEvent(req, res) {
 								.then(function() {
 									response.status = 'ok';
 									return res.json({ response: response });
-								})
-								.catch(function(err) {
-									return res.json({error: err});
 								});
 							return null;
-						})
-						.catch(function(err) {
-							return res.json({error: err});
 						});
 
-				})
-				.catch(function(err) {
-					return res.json({error: err});
 				});
 		})
 		.catch(function(err) {
