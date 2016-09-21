@@ -294,7 +294,7 @@ export function triggerEvent(req, res) {
 			                html: html_version
 			            };
 
-			            //emailCtrl.sendEmail(email_content);
+			            emailCtrl.sendEmail(email_content);
 
 						// add users to event
 						var user_obj = new User(users[k]);
