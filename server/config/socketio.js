@@ -58,11 +58,35 @@ socketio.on('connection', function(socket) {
         console.log('=====================================================');
     };
 
+	// user confirms event
+	socket.on('confirm_event', function(eventRoom) {
+		var user_token = socket.request._query.token;
+		var user_id = getDecodedToken(user_token)._id;
+		var error;
+
+		// get user id, name, and profile picture
+		User.findOne({ _id: user_id }, '_id first_name last_name profile_picture.current').exec()
+		.then((user)=> {
+			if (!user) { error = true; }
+			var data = {
+				user: user
+			};
+
+			// emit message to clients
+			socketio.sockets.in(eventRoom).emit('user_join', data);
+		})
+		.catch((err)=> {
+			// emit error
+			socketio.sockets.in(eventRoom).emit('message_error');
+		});
+	});
+
+	// join event when user enters an event page
     socket.on('join_event', function(eventRoom) {
         socket.join(eventRoom);
     });
 
-    // receiving message from client
+    // receiving message from client via event
     socket.on('send_message', function(data) {
         var user_token = socket.request._query.token;
         var user_id = getDecodedToken(user_token)._id;

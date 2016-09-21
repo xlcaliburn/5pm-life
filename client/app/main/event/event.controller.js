@@ -47,7 +47,6 @@
             // make text-area resizable
             textarea.on('keydown', autosize);
 
-            initSockets();
             getLatLng();
             getSelfStatus();
             initPlugins();
@@ -81,6 +80,7 @@
                 if (data.response.status === 'ok') {
                     getSelfStatus(true);
                     Materialize.toast('You\'ve accepted the invitation!', 6000);
+                    $timeout(function() { angular.element('.modal-trigger').leanModal(); }, 50);
                 }
             });
         }
@@ -162,6 +162,9 @@
                         for (var i = 0; i < vm.attendees.length; i++) {
                             if (vm.attendees[i].status) {
                                  vm.user_status = vm.attendees[i].status;
+                                 if (vm.user_status === 'Confirmed') {
+                                     initSockets();
+                                 }
                                  return;
                             }
                         }
@@ -249,16 +252,19 @@
 
         // initialize sockets;
         function initSockets() {
-            eventSocket = socket.socket;
-            eventRoom = $stateParams.id;
+            console.log(vm.user_status);
+            if (vm.user_status === 'Confirmed') {
+                eventSocket = socket.socket;
+                eventRoom = $stateParams.id;
 
-            eventSocket.emit('join_event', eventRoom);
-            eventSocket.on('receive_message', function(message) {
-                receiveMessage(message);
-            });
-            eventSocket.on('message_error', function() {
-                console.log('Unauthorized');
-            });
+                eventSocket.emit('join_event', eventRoom);
+                eventSocket.on('receive_message', function(message) {
+                    receiveMessage(message);
+                });
+                eventSocket.on('message_error', function() {
+                    console.log('Unauthorized');
+                });
+            }
         }
 
         // receive message from server

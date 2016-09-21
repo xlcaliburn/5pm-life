@@ -33,23 +33,6 @@
 
     <div class="container">
 
-        <!-- confirmation header -->
-        <div class="row confirmation-row" ng-if="vm.user_status == 'Pending User Confirmation'">
-            <div class="col m8 s12 confirmation-description">
-                Please confirm your event attendance to ensure a spot
-            </div>
-
-            <!-- confirm -->
-            <div class="col m2 s6 align-center">
-                <a class="event-confirm-button" ng-click="vm.confirm_event()">Confirm</a>
-            </div>
-
-            <!-- decline -->
-            <div class="col m2 s6 align-center">
-                <a class="event-decline-button" ng-click="vm.decline_event()">Decline</a>
-            </div>
-        </div>
-
         <div class="row events-row">
 
             <!-- event details -->
@@ -103,7 +86,24 @@
 
             <!-- chat -->
             <div class="col s6" id="event-chat">
-                <div class="event-chat-card">
+                <!-- confirmation header -->
+                <div class="row confirmation-row" ng-if="vm.user_status == 'Pending User Confirmation'">
+                    <div class="col s12 align-center confirmation-description">
+                        Please confirm your event attendance to ensure a spot
+                    </div>
+
+                    <!-- confirm -->
+                    <div class="col s6 align-center">
+                        <a class="event-confirm-button" ng-click="vm.confirm_event()">Confirm</a>
+                    </div>
+
+                    <!-- decline -->
+                    <div class="col s6 align-center">
+                        <a class="event-decline-button" ng-click="vm.decline_event()">Decline</a>
+                    </div>
+                </div>
+
+                <div class="event-chat-card" ng-if="vm.user_status == 'Confirmed'">
                     <!-- title -->
                     <div class="event-card-header" style="background: #ffffff">
                         <div class="event-title">{{ vm.event_data.activity.activity_name }} @ {{ vm.event_data.venue.venue_name }} Chat</div>
