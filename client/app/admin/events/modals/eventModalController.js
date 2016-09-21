@@ -33,6 +33,7 @@
 
 		function submit() {
 			vm.selected_event.dt_search_start = new Date().getTime();
+			vm.selected_event.status = 'New';
 			Events.create(vm.selected_event)
 				.success(function(data) {
 					vm.selected_event = {};

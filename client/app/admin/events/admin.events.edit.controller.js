@@ -8,8 +8,9 @@
 		vm.event_id = $stateParams.event_id;
 		vm.add_users = addUsersModal;
 		vm.delete_event = deleteEvent;
+		vm.end_event = endEvent;
 		vm.remove_queue_from_event = removeQueueFromEvent;
-		vm.event_found = eventFound;
+		vm.trigger_event = triggerEvent;
 		vm.submit = submit;
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
@@ -20,6 +21,7 @@
 		vm.queues_to_add = [];
 		vm.queues_to_remove = [];
 		vm.selected_event = {};
+
 
 		init();
 
@@ -40,6 +42,7 @@
 
 			Events.getByIdAdmin(vm.event_id)
 				.then(function(res) {
+					console.log(res.data);
 					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
 					var start_date = new Date(vm.selected_event.dt_start);
@@ -115,26 +118,56 @@
 
 			modalInstance.result.then(function(data) {
 				for (var queue_id in data) {
-					if (data[queue_id] && vm.queues_to_add.indexOf(queue_id) === -1) {
-						vm.queues_to_add.push(queue_id);
-
-					}
+					if (data[queue_id] && !vm.queues_to_add.find(x => x._id === queue_id))
+					{
+						Queue
+							.getById(queue_id)
+							.then(
+								function(res){
+									console.log(res.data);
+									vm.queues_to_add.push(res.data);
+								});
+						}
 				}
 			}, function () {});
 		}
 
-		function updateQueueStatus(newStatus) {
-			// TODO: Make this a single call
-			for (var add_id in vm.queues_to_add) {
-				console.log('for add_id in ', vm.queues_to_add[add_id]);
-				var user_add_id = vm.queues_to_add[add_id];
-				if (vm.queues_to_add[add_id]._id) {
-					user_add_id = vm.queues_to_add[add_id]._id;
-				}
+		// TODO: Add warning before calling this function
+		function triggerEvent() {
+			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
 
-				Queue.put(user_add_id, {status : newStatus})
-				.catch(function(err) { console.log(err); }); // jshint ignore:line
+			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
+			saveAndClose('Event started', true);
+		}
+
+		function submit() {
+			updateQueueStatus(vm.enum_status.PENDING);
+			vm.selected_event.dt_start = createDate(vm.form_date, vm.form_start_time);
+			vm.selected_event.dt_end = createDate(vm.form_date, vm.form_end_time);
+
+			saveAndClose('Event saved');
+		}
+
+		function updateQueueStatus(newStatus) {
+			for (var i=0; i < vm.queues_to_add.length; i++) {
+				console.log(vm.queues_to_add[i]);
+
+				Queue.put(vm.queues_to_add[i]._id, {status : newStatus})
+					.catch(function(err) { console.log(err); }); // jshint ignore:line
+
 			}
+
+			// TODO: Make this a single call
+			// for (var add_id in vm.queues_to_add) {
+			// 	console.log('for add_id in ', vm.queues_to_add[add_id]);
+			// 	var user_add_id = vm.queues_to_add[add_id];
+			// 	if (vm.queues_to_add[add_id]._id) {
+			// 		user_add_id = vm.queues_to_add[add_id]._id;
+			// 	}
+			//
+			// 	Queue.put(user_add_id, {status : newStatus})
+			// 	.catch(function(err) { console.log(err); }); // jshint ignore:line
+			// }
 
 			if (vm.queues_to_remove.length > 0) {
 				for (var remove_id in vm.queues_to_remove) {
@@ -173,20 +206,9 @@
 			return new Date(date + ' ' + moment(time_string, 'hh:mmA').format('HH:mm:00'));
 		}
 
-		// TODO: Add warning before calling this function
-		function eventFound() {
-			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
-
-			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
-			saveAndClose('Event started', true);
-		}
-
-		function submit() {
-			updateQueueStatus(vm.enum_status.PENDING);
-			vm.selected_event.dt_start = createDate(vm.form_date, vm.form_start_time);
-			vm.selected_event.dt_end = createDate(vm.form_date, vm.form_end_time);
-
-			saveAndClose('Event saved');
+		function endEvent() {
+			vm.selected_event.status = vm.enum_status.ENDED;
+			console.log(vm.selected_event);
 		}
 
 		function saveAndClose(notificationString, trigger) {

@@ -21,7 +21,6 @@
 		function init() {
 			Queue.getByStatus('Searching')
 				.success(function(data) {
-					console.log(data);
 					vm.queues = data;
 				})
 				.error(function(data) {

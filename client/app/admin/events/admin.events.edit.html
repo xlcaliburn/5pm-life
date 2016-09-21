@@ -5,7 +5,10 @@
 	</section>
 
 	<div class="row right-align">
-		<button class="btn waves-effect waves-light" ng-click="vm.event_found()">Trigger Event
+		<button class="btn red darken-4" name="End Event" value="End Event" ng-click="vm.end_event()">End Event
+		</button>
+
+		<button class="btn waves-effect waves-light" ng-click="vm.trigger_event()">Trigger Event
 		</button>
 
 		<button class="btn red darken-4" name="Delete" value="Delete" ng-click="vm.delete_event()">Delete
@@ -77,6 +80,18 @@
 						<th>Name</th>
 						<th>Age</th>
 						<th>Gender</th>
+						<th>
+							City
+						</th>
+						<th>
+							DT Start
+						</th>
+						<th>
+							DT End
+						</th>
+						<th>
+							Status
+						</th>
 						<th width="10%"></th>
 					</tr>
 				</thead>
@@ -84,7 +99,19 @@
 					<tr ng-repeat="queue in vm.queues_to_add">
 						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
 						<td>{{queue.age}}</td>
-						<td>{{queue.gender}}</td>
+						<td>{{queue.user.gender}}</td>
+						<td>
+							{{queue.search_parameters.city}}
+						</td>
+						<td>
+							{{queue.search_parameters.event_search_dt_start}}
+						</td>
+						<td>
+							{{queue.search_parameters.event_search_dt_end}}
+						</td>
+						<td>
+							{{queue.status}}
+						</td>
 						<td>
 							<a href="" ng-click="vm.remove_queue_from_event(queue)"><i class="small material-icons">delete</i></a>
 						</td>
