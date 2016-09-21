@@ -126,15 +126,28 @@
 		function updateQueueStatus(newStatus) {
 			// TODO: Make this a single call
 			for (var add_id in vm.queues_to_add) {
-				console.log(vm.queues_to_add[add_id]._id);
-				Queue.put(vm.queues_to_add[add_id]._id, {status : newStatus})
+				console.log('for add_id in ', vm.queues_to_add[add_id]);
+				var user_add_id = vm.queues_to_add[add_id];
+				if (vm.queues_to_add[add_id]._id) {
+					user_add_id = vm.queues_to_add[add_id]._id;
+				}
+
+				Queue.put(user_add_id, {status : newStatus})
 				.catch(function(err) { console.log(err); }); // jshint ignore:line
 			}
 
-			for (var remove_id in vm.queues_to_remove) {
-				Queue.put(vm.queues_to_remove[remove_id], {status : vm.enum_status.SEARCHING})
-				.catch(function(err) { console.log(err); }); // jshint ignore:line
+			if (vm.queues_to_remove.length > 0) {
+				for (var remove_id in vm.queues_to_remove) {
+					var user_remove_id = vm.queues_to_remove[remove_id];
+					if (vm.queues_to_remove[remove_id]._id) {
+						user_remove_id = vm.queues_to_remove[remove_id]._id;
+					}
+
+					Queue.put(user_remove_id, {status : vm.enum_status.SEARCHING})
+					.catch(function(err) { console.log(err); }); // jshint ignore:line
+				}
 			}
+
 			//
 			// for (var i = 0; i < vm.queues_to_add.length; i++) {
 			// 	Queue.getById(vm.queues_to_add[i])
@@ -188,7 +201,6 @@
 
 						Queue.triggerEventStart(queue_data).then(function(res) {
 							console.log(res.data);
-
 						});
 					}
 
