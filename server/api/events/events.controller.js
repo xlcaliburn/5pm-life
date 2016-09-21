@@ -181,16 +181,11 @@ export function confirmEvent(req, res) {
 							emailCtrl.sendEmail(email_content);
 							response.status = 'ok';
 							return res.json({ response: response });
-						})
-						.catch(handleError(res));
-					})
-					.catch(handleError(res));
-				})
-				.catch(handleError(res));
-			})
-			.catch(handleError(res));
-		})
-		.catch(handleError(res));
+						});
+					});
+				});
+			});
+		});
 	})
 	.catch(handleError(res));
 }

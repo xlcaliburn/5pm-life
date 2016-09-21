@@ -15,12 +15,14 @@
             controllerAs: 'navbar',
             link: function(scope) {
                 $rootScope.$on('$stateChangeSuccess', function() {
-                    scope.navbar.get_queue_status();
                     if ($state.current.name === 'home.event') {
+                        scope.navbar.get_queue_status();
                         scope.navbar.on_event_page = true;
                     } else {
+                        scope.navbar.get_queue_status();
                         scope.navbar.on_event_page = false;
                     }
+                    return;
                 });
             }
         };

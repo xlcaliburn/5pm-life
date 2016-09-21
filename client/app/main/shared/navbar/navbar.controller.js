@@ -94,10 +94,11 @@
         // get user's queue status
         function get_queue_status() {
             var token = $cookies.get('token');
-            if (!token) { $state.go('login'); }
+            if (!token) { window.location.href = '/logout'; }
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
 
+                console.log(res);
                 var queue_status = res.data.response.queue_status;
                 var event_link = res.data.response.event_link;
                 vm.queue_status = queue_status;
@@ -123,6 +124,10 @@
                         ending_top: '10%'
                     });
                 });
+            })
+            .catch(function(err) {
+                console.log(err);
+                window.location.href = '/login';
             });
         }
 
