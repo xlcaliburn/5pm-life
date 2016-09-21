@@ -252,7 +252,6 @@
 
         // initialize sockets;
         function initSockets() {
-            console.log(vm.user_status);
             if (vm.user_status === 'Confirmed') {
                 eventSocket = socket.socket;
                 eventRoom = $stateParams.id;
@@ -262,7 +261,7 @@
                     receiveMessage(message);
                 });
                 eventSocket.on('message_error', function() {
-                    console.log('Unauthorized');
+                    window.location.href = '/logout';
                 });
             }
         }
