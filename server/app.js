@@ -28,9 +28,11 @@ var socketio = require('socket.io')(server, {
     serveClient: config.env !== 'production',
     path: '/socket.io-client'
 });
+app.socketio = socketio;
 require('./config/socketio').default(socketio);
 require('./config/express').default(app);
 require('./routes').default(app);
+require('./api/queue/queue.controller').default(socketio);
 
 // Start server
 function startServer() {
@@ -38,7 +40,6 @@ function startServer() {
         console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
     });
 }
-
 
 setImmediate(startServer);
 

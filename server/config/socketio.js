@@ -58,6 +58,13 @@ socketio.on('connection', function(socket) {
         console.log('=====================================================');
     };
 
+	// user logs into 5pm
+	socket.on('join', function () {
+		var user_token = socket.request._query.token;
+		var user_id = getDecodedToken(user_token)._id;
+		socket.join(user_id);
+	});
+
 	// user confirms event
 	socket.on('confirm_event', function(eventRoom) {
 		var user_token = socket.request._query.token;

@@ -6,7 +6,7 @@
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
 
-    function NavbarController($cookies, $sce, $state, $timeout, NavbarService, Users) {
+    function NavbarController($cookies, $sce, $state, $timeout, NavbarService, socket, Users) {
 
         /* jshint expr: true */
         var vm = this;
@@ -69,6 +69,7 @@
         vm.get_queue_status = get_queue_status;
         vm.prev_stage = prevStage;
         vm.next_stage = nextStage;
+        var eventSocket;
 
         /*======================================
             Functions
@@ -98,7 +99,6 @@
 
             NavbarService.getUserQueueStatus(token).then(function(res) {
 
-                console.log(res);
                 var queue_status = res.data.response.queue_status;
                 var event_link = res.data.response.event_link;
                 vm.queue_status = queue_status;
@@ -124,10 +124,25 @@
                         ending_top: '10%'
                     });
                 });
+
+                if (vm.queue_status) {
+                    initSockets();
+                }
             })
-            .catch(function(err) {
-                console.log(err);
-                window.location.href = '/login';
+            .catch(function() {
+                window.location.href = '/logout';
+            });
+        }
+
+        function initSockets() {
+            eventSocket = socket.socket;
+            eventSocket.emit('join');
+            eventSocket.on('update_status', function() {
+                console.log('updating status');
+                get_queue_status();
+            });
+            eventSocket.on('message_error', function() {
+                window.location.href = '/logout';
             });
         }
 

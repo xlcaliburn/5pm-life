@@ -220,35 +220,37 @@ export function cancelEventSearch(req, res) {
 	var token = getDecodedToken(req.params.token);
 
 	return Queue.findOne({ user: token._id }).exec()
-		.then(function(queue) {
-			if (!queue) {
-				return res.status(403).send('unauthorized');
-			}
-			var queue_id = queue._id;
-			return Queue.remove({ _id: queue_id }).exec()
+	.then(function(queue) {
+		if (!queue) {
+			return res.status(403).send('unauthorized');
+		}
+		var queue_id = queue._id;
+		return Queue.remove({ _id: queue_id }).exec()
+		.then(function() {
+			// change user event_status = null
+			return User.findById(token._id).exec()
+			.then(function(user) {
+				user.event_status = null;
+				return user.save()
 				.then(function() {
-					// change user event_status = null
-					return User.findById(token._id).exec()
-					.then(function(user) {
-						user.event_status = null;
-						return user.save()
-						.then(function() {
-							return res.json({ response: response });
-						})
-						.catch(handleError(res));
-					})
-					.catch(handleError(res));
-				})
-				.catch(handleError(res));
-		})
-		.catch(handleError(res));
+					return res.json({ response: response });
+				});
+			});
+		});
+	}).catch(handleError(res));
 }
 
 /*======================================*/
+var io;
+export default function(socketio) {
+	io = socketio;
+}
 
 function saveUserEventStatus(user, event_id) {
-	console.log('User is', user);
-	return User.update({_id: user._id }, { $set: { event_status: 'Pending User Confirmation', current_event: event_id }}).exec();
+	return User.update({_id: user._id }, { $set: { event_status: 'Pending User Confirmation', current_event: event_id }}).exec()
+	.then(()=> {
+		io.sockets.in(user._id).emit('update_status');
+	});
 }
 
 // send confirmation email + add users to event
@@ -267,7 +269,6 @@ export function triggerEvent(req, res) {
 	return Queue.find({ _id : { $in: query_array }}).exec()
 	 	.then(function(queue_items) {
 			var user_array = [];
-
 			for (var j = 0; j < queue_items.length; j++) {
 				user_array.push(queue_items[j].user);
 			}
@@ -293,7 +294,7 @@ export function triggerEvent(req, res) {
 			                html: html_version
 			            };
 
-			            emailCtrl.sendEmail(email_content);
+			            //emailCtrl.sendEmail(email_content);
 
 						// add users to event
 						var user_obj = new User(users[k]);
@@ -304,7 +305,6 @@ export function triggerEvent(req, res) {
 
 					return Events.findById(event_id).exec()
 						.then(function(event) {
-
 							event.users = users_array;
 							event.save()
 								.then(function() {
@@ -324,6 +324,7 @@ export function triggerEvent(req, res) {
 
 // Updates an existing Queue in the DB
 export function update(req, res) {
+	console.log('Updating...', req.params.id, req.body);
 	if (req.body._id) {
 		delete req.body._id;
 	}
