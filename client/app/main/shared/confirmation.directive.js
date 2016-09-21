@@ -8,7 +8,7 @@
                 link: function(scope, element, attrs) {
                     element.bind('click', function() {
                         var message = attrs.ngReallyMessage;
-                        if (message && confirm(message)) {
+                        if (message && window.confirm(message)) {
                             scope.$apply(attrs.ngReallyClick);
                         }
                     });
