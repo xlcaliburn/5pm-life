@@ -59,7 +59,7 @@
 								vm.queues_to_add[add_id].user = res.data.user;
 							}
 						)
-						.then(function() {console.log(vm.queues_to_add);})
+						.then(function() {console.log(vm.queues_to_add);});
 					}
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
@@ -124,7 +124,6 @@
 							.getById(queue_id)
 							.then(
 								function(res){
-									console.log(res.data);
 									vm.queues_to_add.push(res.data);
 								});
 						}
@@ -135,7 +134,6 @@
 		// TODO: Add warning before calling this function
 		function triggerEvent() {
 			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
-
 			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
 			saveAndClose('Event started', true);
 		}
@@ -208,7 +206,7 @@
 
 		function endEvent() {
 			vm.selected_event.status = vm.enum_status.ENDED;
-			console.log(vm.selected_event);
+			saveAndClose('Event ended', false);
 		}
 
 		function saveAndClose(notificationString, trigger) {

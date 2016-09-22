@@ -5,13 +5,13 @@
 	</section>
 
 	<div class="row right-align">
-		<button class="btn red darken-4" name="End Event" value="End Event" ng-click="vm.end_event()">End Event
+		<button class="btn yellow darken-4" name="End Event" value="End Event" ng-disabled="vm.selected_event.status == 'Ended'" ng-click="vm.end_event()">End
 		</button>
 
-		<button class="btn waves-effect waves-light" ng-click="vm.trigger_event()">Trigger Event
+		<button class="btn waves-effect waves-light" ng-show="vm.selected_event.status == 'New'" ng-click="vm.trigger_event()">Trigger
 		</button>
 
-		<button class="btn red darken-4" name="Delete" value="Delete" ng-click="vm.delete_event()">Delete
+		<button class="btn red darken-4" name="Delete" value="Delete" ng-show="vm.selected_event.status == 'New'" ng-click="vm.delete_event()">Delete
 		</button>
 	</div>
 
@@ -125,7 +125,7 @@
 
 		<div class="section">
 			<div class="row right-align">
-				<button class="btn waves-effect waves-light" type="submit" name="action">Save
+				<button class="btn waves-effect waves-light" type="submit" ng-disabled="vm.selected_event.status == 'Ended'" name="action">Save
 					<i class="material-icons right">send</i>
 				</button>
 			</div>
