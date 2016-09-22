@@ -160,6 +160,7 @@ export function confirmEvent(req, res) {
 					.then((event)=>{
 
 						// remove corresponding queue from event
+						console.log('Queue id is', queue_id);
 						event.queue.remove(queue_id);
 						return event.save()
 						.then(()=>{
@@ -248,7 +249,6 @@ export function leaveEvent(req, res) {
 	var event_id = req.body.id;
 	var token = req.cookies.token;
 	var user_id = userController.getDecodedToken(token)._id;
-	var user_obj_id = new mongoose.Types.ObjectId(user_id);
 
 	// User - change event_status = null
 	// User - change current_event = null
@@ -261,18 +261,15 @@ export function leaveEvent(req, res) {
 			// Event - remove user from event
 			return Events.findById(event_id).exec()
 			.then((event)=>{
-				event.users.remove(user_obj_id);
+				event.users.remove(user_id);
 				return event.save()
-				.then(()=>{
+				.then((new_event)=>{
+					console.log('new event is', new_event);
 					return res.json({ response: response });
-				})
-				.catch(handleError(res));
-			})
-			.catch(handleError(res));
-		})
-		.catch(handleError(res));
-	})
-	.catch(handleError(res));
+				});
+			});
+		});
+	}).catch(handleError(res));
 }
 
 // get attendees based on event_id
