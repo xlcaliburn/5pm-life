@@ -22,7 +22,6 @@
 		vm.queues_to_remove = [];
 		vm.selected_event = {};
 
-
 		init();
 
 		function init() {
@@ -42,7 +41,6 @@
 
 			Events.getByIdAdmin(vm.event_id)
 				.then(function(res) {
-					console.log(res.data);
 					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
 					var start_date = new Date(vm.selected_event.dt_start);

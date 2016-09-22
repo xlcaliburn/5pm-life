@@ -5,7 +5,7 @@
 	</section>
 
 	<div class="row right-align">
-		<button class="btn yellow darken-4" name="End Event" value="End Event" ng-disabled="vm.selected_event.status == 'Ended'" ng-click="vm.end_event()">End
+		<button class="btn yellow darken-4" name="End Event" value="End Event" ng-hide="vm.selected_event.status == 'New'" ng-disabled="vm.selected_event.status == 'Ended'" ng-click="vm.end_event()">End
 		</button>
 
 		<button class="btn waves-effect waves-light" ng-show="vm.selected_event.status == 'New'" ng-click="vm.trigger_event()">Trigger
@@ -84,6 +84,9 @@
 							City
 						</th>
 						<th>
+							Tags
+						</th>
+						<th>
 							DT Start
 						</th>
 						<th>
@@ -100,6 +103,9 @@
 						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
 						<td>{{queue.age}}</td>
 						<td>{{queue.user.gender}}</td>
+						<td>
+							{{queue.search_parameters.tags}}
+						</td>
 						<td>
 							{{queue.search_parameters.city}}
 						</td>
