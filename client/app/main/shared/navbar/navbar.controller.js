@@ -6,7 +6,7 @@
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
 
-    function NavbarController($cookies, $sce, $state, $timeout, NavbarService, socket, Users) {
+    function NavbarController($cookies, $rootScope, $sce, $state, $timeout, NavbarService, socket, Users) {
 
         /* jshint expr: true */
         var vm = this;
@@ -85,6 +85,9 @@
 
             // init datetime picker
             init_datetimepicker();
+
+            // reset queue parameters when necessary
+            $rootScope.$on('reset_queue_search', reset_queue.bind(vm));
 
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');

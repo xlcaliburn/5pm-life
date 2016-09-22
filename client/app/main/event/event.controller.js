@@ -246,6 +246,9 @@
                 if (data.response.status === 'ok') {
                     $state.go('home');
                     Materialize.toast('You have left the event.', 6000);
+
+                    // reset navbar search settings
+                    $rootScope.$emit('reset_queue_search');
                 }
             }).catch(function() { $state.go('home'); });
         }

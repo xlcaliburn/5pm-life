@@ -30,7 +30,6 @@
             leaveEvent: function(event_details) {
                 var url = 'api/events/leave';
                 return $http.post(url, event_details).then(function(res) {
-                    console.log(res);
                     return res.data;
                 });
             }
