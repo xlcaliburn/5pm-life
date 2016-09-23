@@ -14,6 +14,9 @@
 							<th>Enum</th>
 							<th>Key</th>
 							<th>Value</th>
+							<th>
+								Order
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -21,6 +24,9 @@
 							<td>{{ enum.type }}</td>
 							<td>{{ enum.key }}</td>
 							<td>{{ enum.value }}</td>
+							<td>
+								{{enum.order}}</td>
+							</td>
 							<td>
 								<a href="" ng-click="vm.delete_enum(enum._id)"><i class="small material-icons">delete</i></a>
 							</td>

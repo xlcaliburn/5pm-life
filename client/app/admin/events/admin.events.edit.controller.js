@@ -54,12 +54,9 @@
 					for (var add_id in vm.queues_to_add) {
 					Queue
 						.getById(vm.queues_to_add[add_id]._id)
-						.then(
-							function(res){
-								vm.queues_to_add[add_id].user = res.data.user;
-							}
-						)
-						.then(function() {console.log(vm.queues_to_add);});
+						.then(function(res){
+							vm.queues_to_add[add_id].user = res.data.user;
+						});
 					}
 				})
 				.catch(function(data) { console.log('Error: ' + data); });

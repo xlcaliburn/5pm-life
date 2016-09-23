@@ -1,5 +1,4 @@
 (function() { 'use strict';
-
 	angular
 		.module('fivepmApp.admin')
 		.controller('CreateEnumModalController', CreateEnumModalController);
