@@ -11,7 +11,12 @@
 					<th>Activity Tags</th>
 					<th>Age</th>
 					<th>Gender</th>
-					<th>Queue Time (mins)</th>
+					<th>
+						DT Start
+					</th>
+					<th>
+						DT End
+					</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -19,9 +24,14 @@
 				<tr ng-repeat="queue in vm.queues">
 					<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
 					<td>{{queue.search_parameters.tags}}</td>
-					<td>{{vm.getAge(queue.user.birthday)}}</td>
+					<td>{{vm.get_age(queue.user.birthday)}}</td>
 					<td>{{queue.user.gender}}</td>
-					<td>15</td>
+					<td>
+						{{vm.get_formatted_date(queue.search_parameters.event_search_dt_start)}}
+					</td>
+					<td>
+						{{vm.get_formatted_date(queue.search_parameters.event_search_dt_end)}}
+					</td>
 					<td><input type="checkbox" ng-model="vm.selected_queue[queue._id]" id="{{queue._id}}" />
 					<label for="{{queue._id}}"></label></td>
 				</tr>

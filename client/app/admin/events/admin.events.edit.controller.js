@@ -12,6 +12,8 @@
 		vm.remove_queue_from_event = removeQueueFromEvent;
 		vm.trigger_event = triggerEvent;
 		vm.submit = submit;
+		vm.get_age = function(date){ return moment().diff(date, 'years');};
+		vm.get_formatted_date = function(date) { return moment(date).format('MMM DD, YY | h:mm a');};
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
 		vm.enum_status = [];

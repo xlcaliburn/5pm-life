@@ -101,7 +101,7 @@
 				<tbody>
 					<tr ng-repeat="queue in vm.queues_to_add">
 						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
-						<td>{{queue.age}}</td>
+						<td>{{vm.get_age(queue.user.birthday)}}</td>
 						<td>{{queue.user.gender}}</td>
 						<td>
 							{{queue.search_parameters.tags}}
@@ -110,10 +110,10 @@
 							{{queue.search_parameters.city}}
 						</td>
 						<td>
-							{{queue.search_parameters.event_search_dt_start}}
+							{{vm.get_formatted_date(queue.search_parameters.event_search_dt_start)}}
 						</td>
 						<td>
-							{{queue.search_parameters.event_search_dt_end}}
+							{{vm.get_formatted_date(queue.search_parameters.event_search_dt_end)}}
 						</td>
 						<td>
 							{{queue.status}}
