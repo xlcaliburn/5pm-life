@@ -278,10 +278,12 @@ export function triggerEvent(req, res) {
 					var users_array = [];
 					for (var k = 0; k < users.length; k++) {
 						// send emails to all users
+						var url_origin = req.headers.origin;
+						url_origin = url_origin.replace('http://', 'http://www.');
 						var email_data = {
 			                first_name: users[k].first_name,
 							template: 'event-confirmation',
-			                event_link: req.headers.origin + '/home/event/' + event_id
+			                event_link: url_origin + '/home/event/' + event_id
 			            };
 
 						var text_version = EmailTemplate.get_text_version(email_data);

@@ -165,10 +165,11 @@ export function confirmEvent(req, res) {
 						return event.save()
 						.then(()=>{
 
-						// send email to user with event details
+							// send email to user with event details
+							var url_origin = req.headers.origin.replace('http://', 'http://www.');
 							email_data.template = 'event-confirmation-accept';
 							email_data.first_name = user.first_name;
-							email_data.event_link = req.headers.origin + '/home/event/' + email_data.id;
+							email_data.event_link = url_origin + '/home/event/' + email_data.id;
 
 							var text_version = EmailTemplate.get_text_version(email_data);
 							var html_version = EmailTemplate.get_html_version(email_data);

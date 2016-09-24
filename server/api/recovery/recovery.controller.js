@@ -50,9 +50,10 @@ export function send_reset_link(req, res) {
                     response.status = 'ok';
 
                     // send email to user with new link
+                    var url_origin = req.headers.origin.replace('http://', 'http://www.');
                     var user_details = {
                         first_name: user.first_name,
-                        password_recovery_link: req.headers.origin + '/passwordreset/' + user.id
+                        password_recovery_link: url_origin + '/passwordreset/' + user.id
                     };
                     var email_content = {
                         to: user.email,

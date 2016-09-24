@@ -134,10 +134,11 @@ export function validate_save(req, res) {
         newUser.profile_picture.current = 'default_profile.png';
         newUser.save()
         .then(function(user) {
+            var url_origin = req.headers.origin.replace('http://', 'http://www.');
             var temp_user = {
                 id: user.id,
                 first_name: user.first_name,
-                verification_link: req.headers.origin + '/signup/verify/' + user.id
+                verification_link: url_origin + '/signup/verify/' + user.id
             };
 
             var email_content = {
