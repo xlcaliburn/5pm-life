@@ -160,7 +160,6 @@ export function confirmEvent(req, res) {
 					.then((event)=>{
 
 						// remove corresponding queue from event
-						console.log('Queue id is', queue_id);
 						event.queue.remove(queue_id);
 						return event.save()
 						.then(()=>{
@@ -230,18 +229,12 @@ export function declineEvent(req, res) {
 						.then(function() {
 							response.status = 'ok';
 							return res.json({ response: response });
-						})
-						.catch(handleError(res));
-					})
-					.catch(handleError(res));
-				})
-				.catch(handleError(res));
-			})
-			.catch(handleError(res));
-		})
-		.catch(handleError(res));
-	})
-	.catch(handleError(res));
+						});
+					});
+				});
+			});
+		});
+	}).catch(handleError(res));
 }
 
 // leave event after accepting
