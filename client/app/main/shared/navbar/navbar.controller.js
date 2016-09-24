@@ -104,6 +104,7 @@
 
                 var queue_status = res.data.response.queue_status;
                 var event_link = res.data.response.event_link;
+                var prev_queue_status = vm.queue_status;
                 vm.queue_status = queue_status;
 
                 if (event_link) {
@@ -116,6 +117,11 @@
 
                 if ($state.current.name === 'home.event') {
                     vm.on_event_page = true;
+                }
+
+                if (prev_queue_status === 'Pending' && vm.queue_status === 'Pending User Confirmation') {
+                    // open modal
+                    angular.element('#event-found-modal').openModal();
                 }
 
                 $timeout(function() {
@@ -138,15 +144,16 @@
         }
 
         function initSockets() {
-            eventSocket = socket.socket;
-            eventSocket.emit('join');
-            eventSocket.on('update_status', function() {
-                console.log('updating status');
-                get_queue_status();
-            });
-            eventSocket.on('message_error', function() {
-                window.location.href = '/logout';
-            });
+            if (!eventSocket) {
+                eventSocket = socket.socket;
+                eventSocket.emit('join');
+                eventSocket.on('update_status', function() {
+                    get_queue_status();
+                });
+                eventSocket.on('message_error', function() {
+                    window.location.href = '/logout';
+                });
+            }
         }
 
         function nextStage() {

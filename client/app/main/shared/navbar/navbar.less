@@ -437,7 +437,8 @@ label.both-cb-label {
     will-change: opacity;
 }
 
-.cancel-queue-modal {
+.cancel-queue-modal,
+.event-found-modal {
     display: none;
     position: fixed;
     left: 0;
@@ -454,7 +455,8 @@ label.both-cb-label {
     will-change: top, opacity;
 }
 
-.cancel-queue-modal-content {
+.cancel-queue-modal-content,
+.event-found-modal-content {
     padding: 24px;
     position: relative;
     background-color: #fff;
@@ -465,8 +467,38 @@ label.both-cb-label {
     outline: 0;
 }
 
-#cancel-search {
+#cancel-search,
+#event-found-modal {
     width: 35%;
+}
+
+.event-found-title {
+    color: @pink;
+    font-weight: 700;
+}
+
+.view-event-btn {
+    font-size: 12px;
+    background-color: @pink;
+    color: @white;
+    text-decoration: none;
+    opacity: 1;
+}
+
+.view-event-btn:hover {
+    background-color: @pink;
+    color: @white;
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+.ok-event-btn {
+    font-size: 12px;
+    color: @darkgrey;
+}
+
+.ok-event-btn:hover {
+    color: @darkgrey;
 }
 
 /*==================================
