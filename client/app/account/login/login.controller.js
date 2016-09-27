@@ -7,7 +7,7 @@
 
     /** @ngInject */
     /* jshint expr: true */
-    function LoginController(Auth) {
+    function LoginController($cookies, Auth) {
         var vm = this;
 
         vm.email_address;
@@ -58,8 +58,14 @@
                 password: vm.password,
                 remember: vm.remember_login
             }).then(() => {
-                // Logged in, redirect to home
-                window.location.href = '/home';
+                // Logged in, redirect to url or home
+                if ($cookies.get('req_page')) {
+                    var page_redirect = $cookies.get('req_page');
+                    $cookies.remove('req_page');
+                    window.location.href = page_redirect;
+                } else {
+                    window.location.href = '/home';
+                }
             }).catch((err) => {
                 console.log(err);
                 vm.status = err.message;
