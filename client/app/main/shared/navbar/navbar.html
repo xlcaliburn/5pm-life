@@ -204,7 +204,9 @@
                         <span class="subtext">You will be notified via email</span>
                     </div>
                     <div class="cancel-button-spinner"></div>
-                    <a id="cancel-button" title="Cancel event search" class="cancel-button modal-trigger" href="#cancel-search"><i class="material-icons">close</i></a>
+                    <a id="cancel-button" class="cancel-button modal-trigger queue-tooltip" data-position="bottom" data-tooltip="Cancel event search" href="#cancel-search">
+                        <i class="material-icons">close</i>
+                    </a>
                 </div>
 
                 <a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed') && !navbar.on_event_page" title="Go to event" href="home/event/{{ navbar.event_link }}">

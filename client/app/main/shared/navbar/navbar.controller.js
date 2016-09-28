@@ -91,7 +91,7 @@
 
             $timeout(function() {
                 var tooltips = angular.element('.queue-tooltip');
-                tooltips.tooltip();
+                tooltips.tooltip({delay: 0});
             });
         }
 
