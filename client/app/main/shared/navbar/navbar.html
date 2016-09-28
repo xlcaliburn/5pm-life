@@ -198,9 +198,14 @@
                 </a>
 
                 <!-- cancel queue -->
-                <a id="cancel-button" class="btn waves-light waves-effect modal-trigger" ng-if="navbar.queue_status == 'Pending'" title="Cancel search" href="#cancel-search">
-                    CANCEL SEARCH <i class="tiny material-icons">close</i>
-                </a>
+                <div class="cancel-queue"  ng-if="navbar.queue_status == 'Pending'">
+                    <div class="searching-text">
+                        Searching for event<br />
+                        <span class="subtext">You will be notified via email</span>
+                    </div>
+                    <div class="spinner"></div>
+                    <a id="cancel-button" title="Cancel event search" class="cancel-button modal-trigger" href="#cancel-search"><i class="material-icons">close</i></a>
+                </div>
 
                 <a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed') && !navbar.on_event_page" title="Go to event" href="home/event/{{ navbar.event_link }}">
                     VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
