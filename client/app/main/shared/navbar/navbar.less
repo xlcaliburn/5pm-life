@@ -469,7 +469,8 @@ label.both-cb-label {
 
 #cancel-search,
 #event-found-modal {
-    width: 35%;
+    width: 400px;
+    max-width: 100%;
 }
 
 .event-found-title {
@@ -571,44 +572,23 @@ label.both-cb-label {
 /* Cancel button
 ====================================*/
 
-.cancel-queue .spinner {
+.cancel-queue .cancel-button-spinner {
     border: 2px solid rgba(228, 60, 92, 0.3);
     border-bottom-color: @pink;
     -webkit-animation: rotate 2s linear 0s infinite;
     animation: rotate 3s linear 0s infinite;
 }
 
-.spinner {
-  width: 45px;
-  height: 45px;
-  border-radius: 100%;
-  margin: auto;
-  position: absolute;
-  right: ~"calc(30% - 5px)";
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+.cancel-button-spinner {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    margin: auto;
+    position: absolute;
+    right: ~"calc(30% - 5px)";
+    top: 0;
+    bottom: 0;
+    margin: auto;
 }
 
 .cancel-button {
@@ -667,6 +647,40 @@ label.both-cb-label {
     letter-spacing: 0.25px;
     font-size: 13px;
     text-transform: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .searching-text { left: 0; }
+    .cancel-button { right: 20%; }
+    .cancel-button-spinner { right: ~"calc(20% - 5px)"; }
+}
+
+@media screen and (max-width: 992px) {
+    .searching-text { left: 0; }
+    .cancel-button { right: 0%; }
+    .cancel-button-spinner { right: ~"calc(0% - 5px)"; }
+}
+
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 /*====================================*/
@@ -762,20 +776,24 @@ label.both-cb-label {
     display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
     .navbar>.container {
         padding-left: 0;
         padding-right: 0;
     }
 
     #explore-button,
-    #cancel-button,
+    .cancel-queue,
     #go-to-event-button {
         display: none;
     }
 
     #mobile-nav {
         display: block;
+    }
+
+    .nav-left {
+        margin-left: 0 !important;
     }
 
     .nav-right {
@@ -805,8 +823,8 @@ label.both-cb-label {
         position: absolute;
         text-align: center;
         top: 70px;
-        left: 0;
-        width: 100%;
+        left: -100%;
+        width: 200%;
         padding: 20px;
         background-color: @white;
         z-index:999999;
