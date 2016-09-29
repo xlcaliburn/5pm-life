@@ -15,9 +15,10 @@
         // variables
         var map, marker, infowindow, lat, lng;
         var eventSocket, eventRoom;
-        var chatbox = angular.element('.chat-area');
+        var chatbox;
         var selfInfo = getSelfInfo();
-        var textarea = angular.element('#message-input');
+        var textarea;
+        var just_confirmed = false;
 
         // view
         vm.chat_messages = [];
@@ -43,9 +44,6 @@
 
             // remove bg
             angular.element('.wrap').css('background', 'none');
-
-            // make text-area resizable
-            textarea.on('keydown', autosize);
 
             getLatLng();
             getSelfStatus(true);
@@ -78,6 +76,7 @@
 
             EventService.confirmEvent(event_details).then(function(data) {
                 if (data.response.status === 'ok') {
+                    just_confirmed = true;
                     getSelfStatus(true);
                     Materialize.toast('You\'ve accepted the invitation!', 6000);
                     $timeout(function() { angular.element('.modal-trigger').leanModal(); }, 50);
@@ -161,7 +160,6 @@
                         vm.attendees = res.data.response.attendees;
                         for (var i = 0; i < vm.attendees.length; i++) {
                             if (vm.attendees[i].status) {
-                                console.log(vm.user_status);
                                  vm.user_status = vm.attendees[i].status;
                                  if (vm.user_status === 'Confirmed') {
                                      initSockets();
@@ -170,7 +168,6 @@
                             }
                         }
                     } else {
-                        console.log(res.data);
                         $state.go('home');
                     }
                 });
@@ -248,6 +245,10 @@
                     $state.go('home');
                     Materialize.toast('You have left the event.', 6000);
 
+                    eventSocket.emit('leave_event', eventRoom);
+                    eventSocket = null;
+                    eventRoom = null;
+
                     // reset navbar search settings
                     $rootScope.$emit('reset_queue_search');
                 }
@@ -264,16 +265,44 @@
                 eventSocket.on('receive_message', function(message) {
                     receiveMessage(message);
                 });
+
+                eventSocket.on('user_join_leave', function(data) {
+
+                    EventService.getEventAttendees(eventRoom).then(function(res) {
+                        vm.attendees = res.data.response.attendees;
+                    });
+
+                    // send person has joined event
+                    var chat_message = {
+                        user: data.user,
+                        status: data.status
+                    };
+                    vm.chat_messages.push(chat_message);
+                });
+
                 eventSocket.on('message_error', function() {
                     window.location.href = '/logout';
                 });
+
+                $timeout(function() {
+                    // init textarea
+                     textarea = angular.element('#message-input');
+                     textarea.on('keydown', autosize);
+                });
+
+                // if just confirmed, let everyone know
+                if (just_confirmed) {
+                    just_confirmed = false;
+                    eventSocket.emit('confirm_event', eventRoom);
+                }
             }
         }
 
         // receive message from server
         function receiveMessage(message) {
+            var message_text = message.text.trim().replace(/ +/g, '');
             var chat_message = {
-                text: message.text,
+                text: message_text,
                 user: message.user
             };
 
@@ -281,7 +310,7 @@
                 // check to see if it's the same person typing the message
                 if (vm.chat_messages[vm.chat_messages.length - 1].user._id === message.user._id) {
                     // append to end of message
-                    vm.chat_messages[vm.chat_messages.length - 1].text += '\n' + message.text;
+                    vm.chat_messages[vm.chat_messages.length - 1].text += '\n' + message_text;
                 } else {
                     vm.chat_messages.push(chat_message);
                 }
@@ -290,7 +319,10 @@
             }
 
             $timeout(function() {
-                chatbox.scrollTop(chatbox[0].scrollHeight);
+                if (!chatbox) {
+                    chatbox = angular.element('.chat-area');
+                }
+                chatbox.scrollTop(chatbox.prop('scrollHeight'));
             });
         }
 
