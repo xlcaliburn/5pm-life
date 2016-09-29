@@ -48,7 +48,7 @@
             textarea.on('keydown', autosize);
 
             getLatLng();
-            getSelfStatus();
+            getSelfStatus(true);
             initPlugins();
         }
 
@@ -161,6 +161,7 @@
                         vm.attendees = res.data.response.attendees;
                         for (var i = 0; i < vm.attendees.length; i++) {
                             if (vm.attendees[i].status) {
+                                console.log(vm.user_status);
                                  vm.user_status = vm.attendees[i].status;
                                  if (vm.user_status === 'Confirmed') {
                                      initSockets();
