@@ -6,7 +6,7 @@
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
 
-    function NavbarController($cookies, $rootScope, $sce, $state, $timeout, NavbarService, socket, Users) {
+    function NavbarController($cookies, $rootScope, $sce, $state, $timeout, $window, NavbarService, socket, Users) {
 
         /* jshint expr: true */
         var vm = this;
@@ -49,6 +49,7 @@
         vm.modal = angular.element('#queue-modal');
         vm.datetime = angular.element('.datetime-stage');
         vm.event_link;
+        vm.event;
         vm.on_event_page = false;
         vm.current_stage = 1;
         vm.next_or_queue = 'NEXT';
@@ -65,10 +66,13 @@
         vm.social = false;
         vm.both = false;
         vm.confirm = false;
+        vm.mobile_nav_open = false;
         vm.location;
+        vm.toggle_mobile_nav = toggleMobileNav;
         vm.get_queue_status = get_queue_status;
         vm.prev_stage = prevStage;
         vm.next_stage = nextStage;
+        vm.get_current_statename = getCurrentStateName;
         var eventSocket;
 
         /*======================================
@@ -104,11 +108,16 @@
 
                 var queue_status = res.data.response.queue_status;
                 var event_link = res.data.response.event_link;
+                var event = res.data.response.event;
                 var prev_queue_status = vm.queue_status;
                 vm.queue_status = queue_status;
 
                 if (event_link) {
                     vm.event_link = event_link;
+                }
+
+                if (event) {
+                    vm.event = event;
                 }
 
                 if (!vm.queue_status) {
@@ -528,6 +537,15 @@
             }
 
             return hour + ':' + minute + ':00 EDT';
+        }
+
+        function toggleMobileNav() {
+            vm.mobile_nav_open = !vm.mobile_nav_open;
+        }
+
+        function getCurrentStateName() {
+            console.log($state.current.name);
+            return $state.current.name;
         }
 
     }

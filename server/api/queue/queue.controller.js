@@ -126,9 +126,21 @@ export function getUserStatus(req, res) {
 				response.event_link = user.current_event;
 			}
 
-			response.status = 'ok';
-			response.queue_status = user.event_status;
-			return res.json({ response: response });
+			return Events.findOne({ _id: user.current_event }).exec()
+			.then((event)=> {
+				if (!event) {
+					return res.json({ response: 'unauthorized' });
+				}
+				response.event = {
+					activity: event.activity.activity_name,
+					venue: event.venue.venue_name
+				};
+				response.status = 'ok';
+				response.queue_status = user.event_status;
+				return res.json({ response: response });
+			});
+
+
 		})
 		.catch(function(err) {
 			response.status = 'error';
