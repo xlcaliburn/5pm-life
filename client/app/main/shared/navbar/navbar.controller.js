@@ -6,7 +6,7 @@
     .module('fivepmApp')
     .controller('NavbarController', NavbarController);
 
-    function NavbarController($cookies, $rootScope, $sce, $state, $timeout, $window, NavbarService, socket, Users) {
+    function NavbarController($cookies, $rootScope, $sce, $scope, $state, $timeout, $window, NavbarService, socket, Users) {
 
         /* jshint expr: true */
         var vm = this;
@@ -83,9 +83,9 @@
         function init() {
             get_queue_status();
 
-            Users.getMe().success(function(data) {
-                vm.user = data;
-            });
+            updateUserInfo();
+            // detect when user info needs to be updated
+            $scope.$on('updateUser', updateUserInfo);
 
             // init datetime picker
             init_datetimepicker();
@@ -541,11 +541,21 @@
 
         function toggleMobileNav() {
             vm.mobile_nav_open = !vm.mobile_nav_open;
+            if (vm.mobile_nav_open) {
+                angular.element('body').css('overflow', 'hidden');
+            } else {
+                angular.element('body').css('overflow', '');
+            }
         }
 
         function getCurrentStateName() {
-            console.log($state.current.name);
             return $state.current.name;
+        }
+
+        function updateUserInfo() {
+            Users.getMe().success(function(data) {
+                vm.user = data;
+            });
         }
 
     }
