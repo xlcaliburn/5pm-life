@@ -5,6 +5,30 @@ var ResetPasswordEmail = require('../../email/templates/email.passwordrecovery')
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+function validate_passwords(client) {
+    var result = {};
+
+    // check password is empty
+    if (!client.password) {
+        result.status = 'empty_password';
+        return result;
+    }
+
+    // check if passwords match
+    if (client.password !== client.confirm_password) {
+        result.status = 'password_mismatch';
+        return result;
+    }
+
+    // check if password is at least 8 characters
+    if (client.password.length < 8) {
+        result.status = 'short_password';
+        return result;
+    }
+
+    return false;
+}
+
 export function validate_user_id(req, res, next) {
     var response = {};
     var client = req.body;
@@ -89,28 +113,4 @@ export function reset_password(req, res, next) {
         });
 
     return null;
-}
-
-function validate_passwords(client) {
-    var result = {};
-
-    // check password is empty
-    if (!client.password) {
-        result.status = 'empty_password';
-        return result;
-    }
-
-    // check if passwords match
-    if (client.password != client.confirm_password) {
-        result.status = 'password_mismatch';
-        return result;
-    }
-
-    // check if password is at least 8 characters
-    if (client.password.length < 8) {
-        result.status = 'short_password';
-        return result;
-    }
-
-    return false;
 }

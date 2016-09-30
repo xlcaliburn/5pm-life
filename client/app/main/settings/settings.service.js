@@ -8,7 +8,7 @@
     function SettingsService($http) {
         return {
             getUserSettings: function(token) {
-                var url = "/api/users/settings/" + token;
+                var url = '/api/users/settings/' + token;
                 return $http.get(url);
             },
             uploadProfilePicture: function(formData) {
@@ -25,6 +25,6 @@
                     return res;
                 });
             }
-        }
+        };
     }
 })();

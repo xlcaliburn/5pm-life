@@ -236,7 +236,7 @@
 
                 // backend validation + submit
                 var data = {};
-                for (var i = 0; i < vm.steps.length; i++) {
+                for (i = 0; i < vm.steps.length; i++) {
                     var key = vm.steps[i].key;
                     data[key] = vm[key];
                 }

@@ -37,7 +37,7 @@
                 var response = res.data.response;
                 if (response.status) {
                     vm.status = response.status;
-                    if (vm.status == 'unauthorized') {
+                    if (vm.status === 'unauthorized') {
                         vm.error_message = 'You are not authorized to change your password at this time.';
                         vm.authorized = false;
                     }
@@ -47,8 +47,8 @@
 
         // reset password
         function reset_password() {
-            vm.error_message = "";
-            vm.status = "";
+            vm.error_message = '';
+            vm.status = '';
 
             var reset_button = angular.element('.reset-password-button');
             reset_button.html(loading_spinner);
@@ -64,17 +64,17 @@
             PasswordResetService.changePassword(data).then(function(res) {
                 var response = res.data.response;
                 vm.status = response.status;
-                if (response.status == 'ok') {
+                if (response.status === 'ok') {
                     vm.verified = true;
                     return;
-                } else if (response.status == 'empty_password') {
+                } else if (response.status === 'empty_password') {
                     vm.error_message = 'Please enter your new password.';
-                } else if (response.status == 'unauthorized') {
+                } else if (response.status === 'unauthorized') {
                     vm.error_message = 'You are not authorized to change your password at this time.';
                     vm.authorized = false;
-                } else if (response.status == 'password_mismatch') {
+                } else if (response.status === 'password_mismatch') {
                     vm.error_message = 'Your password does not match';
-                } else if (response.status == 'short_password') {
+                } else if (response.status === 'short_password') {
                     vm.error_message = 'Your password must be at least 8 characters long.';
                 } else {
                     vm.error_message = 'You are not authorized to change your password at this time.';
@@ -84,14 +84,6 @@
                 reset_button.html('RESET PASSWORD');
             });
 
-        }
-
-        /* helper functions
-        *************************************************/
-        // validate email address
-        function valid_email(email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
         }
 
         vm.init();

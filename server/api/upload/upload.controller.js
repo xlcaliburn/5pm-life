@@ -66,7 +66,7 @@ export function saveUserImage(req, res) {
                 if (old_image) {
                     fs.unlink('client/uploads/profile/' + old_image);
                 }
-                
+
                 // save new one
                 user.profile_picture.current = req.file.filename;
                 user.save()
@@ -74,13 +74,13 @@ export function saveUserImage(req, res) {
                         response.status = 'ok';
                         response.file = req.file.filename;
                         return res.json({ response: response });
-                    })
+                    });
                 return null;
             })
             .catch(function(err) {
                 response.status = 'error';
                 response.error = err;
                 return res.json({ response: response });
-            })
-    })
+            });
+    });
 }

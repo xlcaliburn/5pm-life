@@ -46,9 +46,9 @@
                 reset_button.attr('disabled', '');
 
                 var res_data = res.data.response;
-                if (res_data.status == 'error') {
+                if (res_data.status === 'error') {
                     vm.error_message = res_data.error_message;
-                } else if (res_data.status == 'ok') {
+                } else if (res_data.status === 'ok') {
                     vm.verified = true;
                 }
             });
