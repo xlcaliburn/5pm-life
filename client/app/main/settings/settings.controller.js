@@ -3,7 +3,7 @@
         .module('fivepmApp')
         .controller('SettingsController', SettingsController);
 
-    function SettingsController(user, Months, SettingsService) {
+    function SettingsController($scope, user, Months, SettingsService) {
         var vm = this;
         vm.user = user;
         vm.format_birthday = function() { return moment(vm.user.birthday).utc().format('MMMM DD, YYYY'); };
@@ -30,6 +30,9 @@
                         } else {
                             vm.user.profile_picture.current = response.file;
                         }
+
+                        // update user info for navbar
+                        $scope.$emit('updateUser');
                     }
                 });
         }
