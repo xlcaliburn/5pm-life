@@ -257,7 +257,7 @@
                 angular.element('.tooltipped').tooltip();
                 angular.element('ul.tabs').tabs();
                 angular.element('.footer').css('display', 'none');
-            });
+            }, 500);
         }
 
         function getGoogleMapsLink() {

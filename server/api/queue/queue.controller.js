@@ -128,13 +128,12 @@ export function getUserStatus(req, res) {
 
 			return Events.findOne({ _id: user.current_event }).exec()
 			.then((event)=> {
-				if (!event) {
-					return res.json({ response: 'unauthorized' });
+				if (event) {
+					response.event = {
+						activity: event.activity.activity_name,
+						venue: event.venue.venue_name
+					};
 				}
-				response.event = {
-					activity: event.activity.activity_name,
-					venue: event.venue.venue_name
-				};
 				response.status = 'ok';
 				response.queue_status = user.event_status;
 				return res.json({ response: response });

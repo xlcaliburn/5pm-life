@@ -180,6 +180,23 @@
 
         <!-- details -->
         <div id="mobile-event-details" class="col s12">
+            <!-- confirmation header -->
+            <div class="row confirmation-row" ng-if="vm.user_status == 'Pending User Confirmation'">
+                <div class="col s12 align-center confirmation-description">
+                    Please confirm your event attendance to ensure a spot
+                </div>
+
+                <!-- confirm -->
+                <div class="col s6 align-center">
+                    <a class="event-confirm-button" ng-click="vm.confirm_event()">Confirm</a>
+                </div>
+
+                <!-- decline -->
+                <div class="col s6 align-center">
+                    <a class="event-decline-button" ng-click="vm.decline_event()">Decline</a>
+                </div>
+            </div>
+
             <!-- google maps -->
             <div class="mobile-gmaps-container">
                 <div id="mobile-event-gmap"></div>
@@ -187,6 +204,17 @@
 
             <!-- event details -->
             <div class="mobile-event-details">
+                <div class="event-options-dropdown dropdown"  ng-if="vm.user_status == 'Confirmed'">
+                    <a class="btn-floating btn-small waves-effect waves-light event-options dropdown-toggle" data-toggle="dropdown" id="event-dropdown"><i class="material-icons small">more_vert</i></a>
+
+                    <ul id='event-options' class='dropdown-menu dropdown-menu-right' aria-labelledby="event-dropdown">
+                        <li>
+                            <a class="modal-trigger" href="#leave-modal">
+                                Leave event
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="mobile-event-activity">{{ vm.event_data.activity.activity_name }}</div>
                 <div class="mobile-event-venue">@ {{ vm.event_data.venue.venue_name }}</div>
 
@@ -246,7 +274,7 @@
         <!-- chat -->
         <div id="mobile-event-chat" class="col s12">
             <!-- title -->
-            <div class="event-card-header" style="background: #ffffff">
+            <div class="event-card-header" style="background: #ffffff; display: none;" ng-class="{'hidden': vm.textarea_focus}">
                 <div class="event-title">{{ vm.event_data.activity.activity_name }} @ {{ vm.event_data.venue.venue_name }} Chat</div>
             </div>
 

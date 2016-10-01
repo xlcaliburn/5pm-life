@@ -210,6 +210,7 @@ a.modal-trigger[href='#leave-modal'] {
     padding: 0;
     max-height: 70%;
     width: 500px;
+    max-width: 100%;
     margin: auto;
     overflow-y: auto;
     border-radius: 2px;
@@ -460,8 +461,17 @@ textarea.message-input:focus {
     }
 
     .mobile-event-details {
+        position: relative;
         padding: 25px;
         background-color: @white;
+    }
+
+    .event-options-dropdown {
+        right: 0;
+    }
+
+    .mobile-event-details a.event-options>i {
+        color: @middlegrey !important;
     }
 
     .mobile-event-activity {
@@ -520,6 +530,10 @@ textarea.message-input:focus {
         border: none;
     }
 
+    ul.attendees-list li {
+        margin-bottom: 30px;
+    }
+
     ul.attendees-list img {
         max-width: 50px;
         margin-right: 20px
@@ -570,7 +584,7 @@ textarea.message-input:focus {
         min-height: initial;
         padding: 20px 25px 0;
         overflow-y: auto;
-        max-height: ~"calc(100% - 125px)";
+        max-height: ~"calc(100% - 65px)";
     }
 
     .chat-message-area {
