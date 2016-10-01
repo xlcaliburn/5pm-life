@@ -278,6 +278,10 @@ a.modal-trigger[href='#leave-modal'] {
     cursor: pointer;
 }
 
+.event-icons>i {
+    .user-select-none;
+}
+
 .event-card-body td.pending {
     color: @pink;
 }
@@ -387,11 +391,200 @@ textarea.message-input:focus {
     background-color: @babyblue;
 }
 
+#event-mobile-container {
+    display: none;
+}
+
 @media screen and (max-width: 992px) {
     // use mobile here
     // at < 992px, mobile will show up
 
     .event-gmap-container {
         height: 300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #event-container {
+        display: none;
+    }
+
+    #event-mobile-container {
+        display: block;
+    }
+
+    #event-mobile-container>.row {
+        margin: 0;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    #event-mobile-container>.row .col {
+        padding: 0;
+    }
+
+    .mobile-event-tabs {
+        height: 40px;
+        .dropshadow;
+    }
+
+    .mobile-event-tabs .tab {
+        line-height: 40px;
+        height: 40px;
+    }
+
+    .mobile-event-tabs .tab a {
+        color: @teal;
+        font-weight: 500;
+    }
+
+    .mobile-event-tabs .tab a.active {
+        color: @pink;
+    }
+
+    .mobile-event-tabs .tab a:hover {
+        color: @pink;
+    }
+
+    .mobile-event-tabs .tab.disabled a {
+        color: rgba(70, 173, 174, 0.5);
+    }
+
+    .mobile-event-tabs .indicator {
+        background-color: @pink;
+    }
+
+    #mobile-event-gmap {
+        height: 250px;
+        width: 100%;
+    }
+
+    .mobile-event-details {
+        padding: 25px;
+        background-color: @white;
+    }
+
+    .mobile-event-activity {
+        font-size: 30px;
+        font-weight: 300;
+        color: @darkgrey;
+    }
+
+    .mobile-event-venue {
+        font-size: 25px;
+        font-weight: 300;
+        color: @pink;
+    }
+
+    .mobile-event-info {
+        padding: 20px 0;
+    }
+
+    .mobile-event-info td {
+        padding: 10px 0;
+        color: #434343;
+        font-size: 15px;
+        font-weight: 300;
+        vertical-align: top;
+        cursor: default;
+    }
+
+    .mobile-event-info td.pending {
+        color: @pink;
+    }
+
+    .mobile-event-info td.confirmed {
+        color: @pink;
+        font-weight: 500;
+    }
+
+    .view-gmaps {
+        margin-top: 15px;
+        font-size: 12px;
+        background-color: @pink;
+        color: @white !important;
+    }
+
+    .view-gmaps:hover {
+        color: @white;
+        background-color: @pink;
+    }
+
+    .attendees-list-container {
+        .attendees-list;
+        border: none;
+    }
+
+    ul.attendees-list {
+        text-align: center;
+        border: none;
+    }
+
+    ul.attendees-list img {
+        max-width: 50px;
+        margin-right: 20px
+    }
+
+    .attendee-name {
+        font-size: 18px;
+    }
+
+    .no-attendees-text {
+        width: 100%;
+        font-size: 16px;
+        color: @uppergrey;
+    }
+
+    .confirm-event-button {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: @teal;
+        height: 35px;
+        font-size: 14px;
+        padding: 0 20px;
+        line-height: 35px;
+        cursor: pointer;
+        outline: none;
+        border-radius: 2px;
+        color: @white !important;
+    }
+
+    .confirm-event-button:hover {
+        background-color: @teal;
+    }
+
+    #mobile-event-chat {
+        position: relative;
+        height: ~"calc(100vh - 105px)";
+    }
+
+    #mobile-event-chat .event-title {
+        color: @middlegrey;
+    }
+
+    #mobile-event-chat .event-card-header {
+        border-bottom: 1px solid @faintgrey;
+    }
+
+    .mobile-chat-area {
+        min-height: initial;
+        padding: 20px 25px 0;
+        overflow-y: auto;
+        max-height: ~"calc(100% - 125px)";
+    }
+
+    .chat-message-area {
+        list-style: none;
+        background: none;
+        margin: 0;
+        padding: 0 0 50px 0;
+        margin-top: 60px;
+        margin-bottom: 10px;
+    }
+
+    #mobile-event-chat .message-box {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
     }
 }

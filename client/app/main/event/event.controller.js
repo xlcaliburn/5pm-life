@@ -13,9 +13,9 @@
         vm.event_data = event_data;
 
         // variables
-        var map, marker, infowindow, lat, lng;
+        var map, mobile_map, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
         var eventSocket, eventRoom;
-        var chatbox;
+        var chatbox, chatbox_mobile;
         var selfInfo = getSelfInfo();
         var textarea;
         var just_confirmed = false;
@@ -43,7 +43,9 @@
             $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
 
             // remove bg
-            angular.element('.wrap').css('background', 'none');
+            angular.element('body').css('background', '#ffffff');
+            angular.element('.wrap').css('background', '#ffffff');
+            angular.element('.wrap').css('padding-bottom', '0');
 
             getLatLng();
             getSelfStatus(true);
@@ -118,7 +120,7 @@
 
         // init google maps using coordinates from address
         function initMap() {
-            var draggable = ($window.innerWidth > 992);
+            var draggable = ($window.innerWidth > 768);
 
             var myOptions = {
                 zoom: 14,
@@ -130,7 +132,15 @@
                 disableDoubleClickZoom: true
             };
 
+            // desktop
             map = new google.maps.Map(document.getElementById('event-gmap'), {
+                center: {lat: lat, lng: lng},
+                zoom: 14,
+                options: myOptions
+            });
+
+            // mobile
+            mobile_map = new google.maps.Map(document.getElementById('mobile-event-gmap'), {
                 center: {lat: lat, lng: lng},
                 zoom: 14,
                 options: myOptions
@@ -140,15 +150,30 @@
                 content: vm.event_data.venue.venue_name
             });
 
+            mobile_infowindow = new google.maps.InfoWindow({
+                content: vm.event_data.venue.venue_name
+            });
+
             marker = new google.maps.Marker({
                 position: {lat: lat, lng: lng},
                 map: map,
                 title: vm.event_data.venue.venue_name
             });
 
+            mobile_marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+                map: mobile_map,
+                title: vm.event_data.venue.venue_name
+            });
+
             marker.addListener('click', function() {
                 if (infowindow) { infowindow.close(); }
                 infowindow.open(map, marker);
+            });
+
+            mobile_marker.addListener('click', function() {
+                if (mobile_infowindow) { mobile_infowindow.close(); }
+                mobile_infowindow.open(mobile_map, mobile_marker);
             });
         }
 
@@ -227,7 +252,12 @@
         // init materialize plugins
         function initPlugins() {
             // tooltips
-            angular.element('i[data-tooltip]').tooltip();
+            $timeout(function() {
+                angular.element('i[data-tooltip]').tooltip();
+                angular.element('.tooltipped').tooltip();
+                angular.element('ul.tabs').tabs();
+                angular.element('.footer').css('display', 'none');
+            });
         }
 
         function getGoogleMapsLink() {
@@ -322,7 +352,12 @@
                 if (!chatbox) {
                     chatbox = angular.element('.chat-area');
                 }
+
+                if (!chatbox_mobile) {
+                    chatbox_mobile = angular.element('.mobile-chat-area');
+                }
                 chatbox.scrollTop(chatbox.prop('scrollHeight'));
+                chatbox_mobile.scrollTop(chatbox_mobile.prop('scrollHeight'));
             });
         }
 
