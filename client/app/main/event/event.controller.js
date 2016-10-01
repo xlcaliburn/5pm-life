@@ -330,7 +330,7 @@
 
         // receive message from server
         function receiveMessage(message) {
-            var message_text = message.text.trim().replace(/ +/g, '');
+            var message_text = message.text.trim().replace(/ +/g, ' ');
             var chat_message = {
                 text: message_text,
                 user: message.user
