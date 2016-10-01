@@ -81,7 +81,10 @@
                     just_confirmed = true;
                     getSelfStatus(true);
                     Materialize.toast('You\'ve accepted the invitation!', 6000);
-                    $timeout(function() { angular.element('.modal-trigger').leanModal(); }, 50);
+                    $timeout(function() {
+                        angular.element('.modal-trigger').leanModal();
+                        angular.element('.tooltipped').off('mouseenter mouseleave');
+                    }, 50);
                 }
             });
         }

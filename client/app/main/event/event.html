@@ -172,8 +172,8 @@
                 <li class="tab col s4">
                     <a href="#mobile-event-attendees">Going</a>
                 </li>
-                <li class="tab col s4" ng-class="{'pending': vm.user_status == 'Pending User Confirmation', 'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="left" data-delay="0" data-tooltip="Confirm event to chat!">
-                    <a href="#mobile-event-chat" >Chat</a>
+                <li class="tab col s4" ng-class="{'disabled': vm.user_status == 'Pending User Confirmation'}">
+                    <a href="#mobile-event-chat" ng-class="{'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="bottom" data-delay="0" data-tooltip="Confirm event to chat!">Chat</a>
                 </li>
             </ul>
         </div>

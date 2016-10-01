@@ -111,7 +111,7 @@
                 var event = res.data.response.event;
                 var prev_queue_status = vm.queue_status;
                 vm.queue_status = queue_status;
-                console.log(res.data);
+                
                 if (event_link) {
                     vm.event_link = event_link;
                 }
