@@ -83,70 +83,70 @@ import Queue from '../api/queue/queue.model';
 		});
 	});
 */
-Enums.find({}).remove()
-	.then(() => {
-		Enums.create({
-			type : 'activity_tag',
-			key : 'ACTIVE',
-			value : 'Active'
-		}, {
-			type : 'activity_tag',
-			key : 'SOCIAL',
-			value : 'Social'
-		}, {
-			type : 'queue_status',
-			key : 'SEARCHING',
-			value : 'Searching'
-		}, {
-			type : 'queue_status',
-			key : 'PENDING',
-			value : 'Pending'
-		}, {
-			type : 'queue_status',
-			key : 'PENDING_USER_CONFIRM',
-			value : 'Pending User Confirmation',
-		}, {
-			type : 'event_status',
-			key : 'CONFIRMED',
-			value : 'Confirmed'
-		}, {
-			type : 'ethnicity',
-			key : 'CAUCASIAN',
-			value : 'Caucasian'
-		}, {
-			type : 'ethnicity',
-			key : 'LATINO',
-			value : 'Latino/Hispanic'
-		}, {
-			type : 'ethnicity',
-			key : 'AFRICAN',
-			value : 'African'
-		}, {
-			type : 'ethnicity',
-			key : 'CARIBBEAN',
-			value : 'Caribbean'
-		}, {
-			type : 'ethnicity',
-			key : 'SOUTH_ASIAN',
-			value :  'South Asian'
-		}, {
-			type : 'ethnicity',
-			key : 'EAST_ASIAN',
-			value : 'East Asian'
-		}, {
-			type : 'ethnicity',
-			key : 'MIXED',
-			value : 'Mixed'
-		}, {
-			type : 'ethnicity',
-			key : 'OTHER',
-			value : 'Other'
-		}, {
-			type : 'location',
-			key : 'CA_ON_RICHMOND_HILL',
-			value : 'Richmond Hill'
-		})
-		.then(() => {
-			console.log('Finished populating enums');
-		});
-	});
+// Enums.find({}).remove()
+// 	.then(() => {
+// 		Enums.create({
+// 			type : 'activity_tag',
+// 			key : 'ACTIVE',
+// 			value : 'Active'
+// 		}, {
+// 			type : 'activity_tag',
+// 			key : 'SOCIAL',
+// 			value : 'Social'
+// 		}, {
+// 			type : 'queue_status',
+// 			key : 'SEARCHING',
+// 			value : 'Searching'
+// 		}, {
+// 			type : 'queue_status',
+// 			key : 'PENDING',
+// 			value : 'Pending'
+// 		}, {
+// 			type : 'queue_status',
+// 			key : 'PENDING_USER_CONFIRM',
+// 			value : 'Pending User Confirmation',
+// 		}, {
+// 			type : 'event_status',
+// 			key : 'CONFIRMED',
+// 			value : 'Confirmed'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'CAUCASIAN',
+// 			value : 'Caucasian'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'LATINO',
+// 			value : 'Latino/Hispanic'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'AFRICAN',
+// 			value : 'African'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'CARIBBEAN',
+// 			value : 'Caribbean'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'SOUTH_ASIAN',
+// 			value :  'South Asian'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'EAST_ASIAN',
+// 			value : 'East Asian'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'MIXED',
+// 			value : 'Mixed'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'OTHER',
+// 			value : 'Other'
+// 		}, {
+// 			type : 'location',
+// 			key : 'CA_ON_RICHMOND_HILL',
+// 			value : 'Richmond Hill'
+// 		})
+// 		.then(() => {
+// 			console.log('Finished populating enums');
+// 		});
+// 	});
