@@ -191,6 +191,7 @@
                                  vm.user_status = vm.attendees[i].status;
                                  if (vm.user_status === 'Confirmed') {
                                      initSockets();
+                                     angular.element('.modal-trigger').leanModal();
                                  }
                                  return;
                             }
