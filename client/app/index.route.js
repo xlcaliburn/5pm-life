@@ -46,17 +46,18 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 							$cookies.put('req_page', current_url, {'expires': expireDate});
 							$state.go('login');
 						});
-					}
-					return SettingsService.getUserSettings(token).then(function(res) {
-						if (res.data.response.status === 'ok') {
-							return res.data.response.user;
-						} else if (res.data.response.status === 'error') {
-							return res.data.response.error;
-						}
-						return $q.reject().catch(function() {
-							$state.go('login');
+					} else {
+						return SettingsService.getUserSettings(token).then(function(res) {
+							if (res.data.response.status === 'ok') {
+								return res.data.response.user;
+							} else if (res.data.response.status === 'error') {
+								return res.data.response.error;
+							}
+							return $q.reject().catch(function() {
+								$state.go('login');
+							});
 						});
-					});
+					}
 				}
 			}
 		})
@@ -121,7 +122,6 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 						if (res.data.response.status === 'ok') {
 							return res.data.response.user;
 						} else if (res.data.response.status === 'error') {
-							console.log(res.data.response.error);
 							return $q.reject().catch(function() {
 								$state.go('login');
 							});
