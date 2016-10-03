@@ -41,9 +41,11 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 					var token = $cookies.get('token');
 					if (!token) {
 						return $q.reject().catch(function() {
-							var current_url = window.location.href;
-							var expireDate = new Date(Date.now() + 10000); // cookie expires in 10 minutes
-							$cookies.put('req_page', current_url, {'expires': expireDate});
+							if (!$cookies.get('req_page')) {
+								var current_url = window.location.href;
+								var expireDate = new Date(Date.now() + 10000); // cookie expires in 10 minutes
+								$cookies.put('req_page', current_url, {'expires': expireDate});
+							}
 							$state.go('login');
 						});
 					} else {

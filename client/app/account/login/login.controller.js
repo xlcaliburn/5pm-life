@@ -7,7 +7,7 @@
 
     /** @ngInject */
     /* jshint expr: true */
-    function LoginController($cookies, Auth) {
+    function LoginController($cookies, $state, Auth) {
         var vm = this;
 
         vm.email_address;
@@ -15,6 +15,7 @@
         vm.remember_login = false;
         vm.status = '';
         vm.Auth = Auth;
+        var page_redirect = $cookies.get('req_page');
 
         // try submitting form
         vm.login = function() {
@@ -59,12 +60,11 @@
                 remember: vm.remember_login
             }).then(() => {
                 // Logged in, redirect to url or home
-                if ($cookies.get('req_page')) {
-                    var page_redirect = $cookies.get('req_page');
+                if (page_redirect) {
                     $cookies.remove('req_page');
                     window.location.href = page_redirect;
                 } else {
-                    window.location.href = '/home';
+                    $state.go('home');
                 }
             }).catch((err) => {
                 console.log(err);
