@@ -67,35 +67,60 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 .confirmation-row {
     .dropshadow;
-    background-color: @turq;
-    color: @white;
-    padding: 10px 25px;
+    background-color: @white;
+    font-weight: 500;
+    padding: 20px 25px;
+    position: absolute;
+    z-index: 99;
+    margin-left: auto;
+    margin-right: auto;
+    top: 20px;
+    left: 0;
+    right: 0;
+    width: 500px;
+    max-width: 100%;
 }
 
 .confirmation-description {
-    font-size: 15px;
+    color: @darkgrey;
+    font-weight: 400;
+    font-size: 16px;
     line-height: 36px;
+    padding-bottom: 15px !important;
 }
 
 .event-confirm-button,
 .event-decline-button {
     display: inline-block;
-    background-color: transparent;
-    color: @white;
     cursor: pointer;
+    color: @white;
     height: 40px;
     padding: 0 2em;
     line-height: 40px;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-size: 13px;
     .user-select-none;
+    .dropshadow;
 }
 
-.event-confirm-button:hover,
-.event-decline-button:hover {
-    background-color: rgba(0,0,0,0.08);
+.event-confirm-button {
+    background-color: @pink;
+}
+
+.event-decline-button {
+    background-color: @turq;
+}
+
+.event-confirm-button:hover {
     color: @white;
+    background-color: rgba(228, 60, 92, 0.75);
+}
+
+.event-decline-button:hover {
+    color: @white;
+    background-color: rgba(0, 189, 184, 0.75);
 }
 
 .events-row {
@@ -403,9 +428,7 @@ textarea.message-input:focus {
     .event-gmap-container {
         height: 300px;
     }
-}
 
-@media screen and (max-width: 768px) {
     #event-container {
         display: none;
     }
@@ -472,6 +495,11 @@ textarea.message-input:focus {
 
     #mobile-event-details>.confirmation-row {
         margin: 0;
+    }
+
+    .confirmation-row {
+        position: static;
+        width: 100%;
     }
 
     .event-options-dropdown {
@@ -557,13 +585,19 @@ textarea.message-input:focus {
         color: @uppergrey;
     }
 
+    .confirmation-description {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
     .confirm-event-button {
         display: inline-block;
         margin-top: 20px;
         background-color: @teal;
         height: 35px;
-        font-size: 14px;
+        font-size: 13px;
         padding: 0 20px;
+        font-weight: 400;
         line-height: 35px;
         cursor: pointer;
         outline: none;

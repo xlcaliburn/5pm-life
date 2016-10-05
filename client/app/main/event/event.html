@@ -16,6 +16,22 @@
 
     <!-- google maps (for now) -->
     <div class="event-gmap-container">
+        <!-- confirmation header -->
+        <div class="row confirmation-row" ng-if="vm.user_status == 'Pending User Confirmation'">
+            <div class="col s12 align-center confirmation-description">
+                Please confirm your event attendance to ensure a spot
+            </div>
+
+            <!-- confirm -->
+            <div class="col s6 align-center">
+                <a class="event-confirm-button" ng-click="vm.confirm_event()">Confirm</a>
+            </div>
+
+            <!-- decline -->
+            <div class="col s6 align-center">
+                <a class="event-decline-button" ng-click="vm.decline_event()">Decline</a>
+            </div>
+        </div>
         <div id="event-gmap"></div>
         <div class="event-overlay-info">
             <div class="container overlay-text-container">
@@ -86,22 +102,6 @@
 
             <!-- chat -->
             <div class="col s6" id="event-chat">
-                <!-- confirmation header -->
-                <div class="row confirmation-row" ng-if="vm.user_status == 'Pending User Confirmation'">
-                    <div class="col s12 align-center confirmation-description">
-                        Please confirm your event attendance to ensure a spot
-                    </div>
-
-                    <!-- confirm -->
-                    <div class="col s6 align-center">
-                        <a class="event-confirm-button" ng-click="vm.confirm_event()">Confirm</a>
-                    </div>
-
-                    <!-- decline -->
-                    <div class="col s6 align-center">
-                        <a class="event-decline-button" ng-click="vm.decline_event()">Decline</a>
-                    </div>
-                </div>
 
                 <div class="event-chat-card" ng-if="vm.user_status == 'Confirmed'">
                     <!-- title -->
@@ -143,7 +143,7 @@
             <!-- going -->
             <div class="col s3" id="event-attendees">
                 <div class="event-attendees-card">
-                    <div class="attendees-list">
+                    <div class="attendees-list" ng-show="vm.get_confirmed_attendess().length > 0">
                         <div class="row valign-wrapper" ng-repeat="person in vm.get_confirmed_attendees()">
                             <div class="col s3"><img class="responsive-img circle" src="{{ vm.get_profile_img(person.profile_picture) }}"></div>
                             <div class="col s9">
