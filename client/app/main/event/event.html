@@ -143,7 +143,7 @@
             <!-- going -->
             <div class="col s3" id="event-attendees">
                 <div class="event-attendees-card">
-                    <div class="attendees-list" ng-show="vm.get_confirmed_attendess().length > 0">
+                    <div class="attendees-list" ng-show="vm.attendees.length > 0">
                         <div class="row valign-wrapper" ng-repeat="person in vm.get_confirmed_attendees()">
                             <div class="col s3"><img class="responsive-img circle" src="{{ vm.get_profile_img(person.profile_picture) }}"></div>
                             <div class="col s9">
@@ -164,20 +164,19 @@
 
 <div id="event-mobile-container">
     <div class="row">
-        <div class="col s12">
-            <ul class="tabs mobile-event-tabs">
-                <li class="tab col s4">
-                    <a class="active" href="#mobile-event-details">Details</a>
-                </li>
-                <li class="tab col s4">
-                    <a href="#mobile-event-attendees">Going</a>
-                </li>
-                <li class="tab col s4" ng-class="{'disabled': vm.user_status == 'Pending User Confirmation'}">
-                    <a href="#mobile-event-chat" ng-class="{'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="bottom" data-delay="0" data-tooltip="Confirm event to chat!">Chat</a>
-                </li>
-            </ul>
-        </div>
-
+        <ul class="tabs mobile-event-tabs" style="display: block;">
+            <li class="tab col s4">
+                <a class="active" href="#mobile-event-details">Details</a>
+            </li>
+            <li class="tab col s4">
+                <a href="#mobile-event-attendees">Going</a>
+            </li>
+            <li class="tab col s4" ng-class="{'disabled': vm.user_status == 'Pending User Confirmation'}">
+                <a href="#mobile-event-chat" ng-class="{'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="bottom" data-delay="0" data-tooltip="Confirm event to chat!">Chat</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
         <!-- details -->
         <div id="mobile-event-details" class="col s12">
             <!-- confirmation header -->

@@ -513,9 +513,9 @@ label.both-cb-label {
     border: none;
     margin: 0;
     border-radius: 0;
-    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
-    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
-    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     z-index: 10;
 }
 
@@ -542,8 +542,6 @@ label.both-cb-label {
     position: relative;
     text-align: center;
 }
-
-
 
 #explore-button {
     height: 40px;
@@ -701,26 +699,43 @@ label.both-cb-label {
     .user-select-none;
 }
 
-.nav-menu {
-    cursor: pointer;
-}
-
 .dropdown-hr {
     margin-top: 10px;
 }
 
 .profile-image {
-    max-height: 45px;
+    max-height: 40px;
     border-radius: 50%;
 }
 
+.nav-name {
+    font-size: 16px;
+    color: @uppergrey;
+    font-weight: 500;
+    margin-left: 12px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
 .drop-indicator {
-    background-color: #26a69a;
     border-radius: 50%;
-    color: #ffffff;
+    color: @uppergrey;
     padding: 2px;
     float: right;
-    transform: translate(-10px, 30px);
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.drop-indicator:hover {
+    color: @darkgrey;
+}
+
+ul.dropdown-ul {
+    margin-bottom: 0;
+}
+
+.dropdown-menu {
+    padding: 0;
 }
 
 .nav-dropdown {
@@ -728,16 +743,14 @@ label.both-cb-label {
     background-color: #ffffff;
     text-align: left;
     z-index: 99;
-    top: 50px;
+    top: 45px;
     right: 0;
     border: none;
     left: auto;
-    border-radius: 2px;
-    padding: 10px 30px;
-    width: 200px;
-    -webkit-box-shadow: 0px 20px 35px 3px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: 0px 20px 35px 3px rgba(0, 0, 0, 0.05);
-    box-shadow: 0px 20px 35px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 0;
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0 ,0.1);
+    -moz-box-shadow: 0 0 20px rgba(0, 0, 0 ,0.1);;
+    box-shadow: 0 0 20px rgba(0, 0, 0 ,0.1);;
 }
 
 .nav-dropdown.show {
@@ -753,22 +766,26 @@ label.both-cb-label {
 .dropdown-li>a:link,
 .dropdown-li>a:visited,
 .dropdown-li>a:active {
-    color: @uppergrey;
+    color: @darkgrey;
     display: block;
     margin: 10px 0;
     text-decoration: none;
     font-size: 15px;
-    transition: color 0.25s ease-out;
+    letter-spacing: 0.25px;
+    padding: 10px 15px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857;
+    white-space: nowrap;
 }
 
 .dropdown-li>a:hover {
-    color: @green;
+    color: @darkgrey;
+    background-color: @faintgrey;
 }
 
 .nav-link-text {
-    margin-left: 10px;
     vertical-align: middle;
-    transform: translateY(2px);
 }
 
 #mobile-nav {
@@ -783,6 +800,14 @@ label.both-cb-label {
 
     .mobile-navbar {
         display: block;
+        position: fixed;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 99;
+    }
+
+    .mobile-navbar.no-shadow {
+        box-shadow: none;
     }
 
     .mobile-nav-container .container,
@@ -800,22 +825,35 @@ label.both-cb-label {
         margin-bottom: 0;
     }
 
-    @mobile-nav-height: 65px;
+    @mobile-nav-height: 50px;
     @mobile-logo-height: calc(@mobile-nav-height - 20px);
 
     .mobile-nav-container {
-        background-color: @teal;
+        background-color: @white;
         height: @mobile-nav-height;
-        .dropshadow;
+    }
+
+    .mobile-logo-link {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .mobile-logo {
-        height: @mobile-logo-height;
+        height:@mobile-logo-height;
     }
 
     .mobile-menu-col {
         margin-left: auto;
         color: @white;
+    }
+
+    .scope-title {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 18px;
+        color: @darkgrey;
+        font-weight: 500;
     }
 
     .mobile-nav-menu-button {
@@ -832,10 +870,10 @@ label.both-cb-label {
     .hamburger::after {
         content: '';
         display: block;
-        width: 30px;
-        margin: 7px;
-        height: 3px;
-        background-color: #ffffff;
+        width: 22px;
+        margin: 5px;
+        height: 2px;
+        background-color: @pink;
         border-radius: 5px;
     }
 
@@ -853,7 +891,7 @@ label.both-cb-label {
         position: fixed;
         top: 0;
         left: 0;
-        width: 350px;
+        width: 300px;
         max-width: 90%;
         background-color: @white;
         min-height: 100%;
@@ -887,18 +925,17 @@ label.both-cb-label {
 
     .close-drawer-button>i {
         color: @white;
-        font-size: 30px;
+        font-size: 22px;
     }
 
     .drawer-profile {
         overflow: hidden;
-        margin-top: 15px;
         text-align: center;
     }
 
     .drawer-profile>img {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 75px;
+        max-height: 75px;
         max-width: 50%;
         border-radius: 50%;
     }
@@ -906,7 +943,7 @@ label.both-cb-label {
     .drawer-name {
         margin-top: 10px;
         color: @white;
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 300;
         text-overflow: ellipsis;
     }
@@ -921,12 +958,12 @@ label.both-cb-label {
         display: inline-block;
         margin-top: 5px;
         font-weight: 300;
-        width: 125px;
-        height: 40px;
+        width: 115px;
+        height: 35px;
         letter-spacing: 0.5px;
-        line-height: 40px;
+        line-height: 35px;
         border-radius: 2px;
-        font-size: 16px;
+        font-size: 13px;
         color: @white !important;
         cursor: pointer;
         background-color: rgba(255, 255, 255, 0.2)
@@ -1007,7 +1044,7 @@ label.both-cb-label {
     }
 
     .drawer-menu-list li {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 500;
         margin: 15% 0;
     }

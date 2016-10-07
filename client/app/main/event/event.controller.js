@@ -5,7 +5,7 @@
     .module('fivepmApp')
     .controller('EventController', EventController);
 
-    function EventController($cookies, $rootScope, $state, $stateParams, $timeout, $window, attendees, event_data, EventService, socket) {
+    function EventController($cookies, $rootScope, $scope, $state, $stateParams, $timeout, $window, attendees, event_data, EventService, socket) {
         var vm = this;
 
         // model
@@ -37,6 +37,8 @@
         vm.send_message = sendMessage;
 
         init();
+
+        $scope.$on('$destroy', destroy);
 
         function init() {
             // set page title
@@ -104,6 +106,16 @@
             .catch(function() {
                 $state.go('home');
             });
+        }
+
+        // revert everything back to before event
+        function destroy() {
+            // re-eanble bg
+            angular.element('body').css('background', '#f2f5f7');
+            angular.element('.wrap').css('background', '#f2f5f7');
+            angular.element('.wrap').css('padding-bottom', '95px');
+            angular.element('.footer').css('display', 'block');
+            angular.element('.mobile-navbar').removeClass('no-shadow');
         }
 
         // get latitude and longitude based on event address

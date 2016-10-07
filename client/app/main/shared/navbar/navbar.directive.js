@@ -22,6 +22,7 @@
                         scope.navbar.get_queue_status();
                         scope.navbar.on_event_page = false;
                     }
+                    scope.navbar.current_scope = $state.current.scopeTitle;
                     return;
                 });
             }

@@ -47,6 +47,7 @@
         vm.body = angular.element('body');
         vm.overlay = angular.element('.queue-modal-overlay');
         vm.modal = angular.element('#queue-modal');
+        vm.current_scope = $state.current.scopeTitle;
         vm.datetime = angular.element('.datetime-stage');
         vm.event_link;
         vm.event;
@@ -111,7 +112,7 @@
                 var event = res.data.response.event;
                 var prev_queue_status = vm.queue_status;
                 vm.queue_status = queue_status;
-                
+
                 if (event_link) {
                     vm.event_link = event_link;
                 }

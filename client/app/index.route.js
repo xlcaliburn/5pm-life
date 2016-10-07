@@ -33,6 +33,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		.state('home', {
 			url: '/home',
 			title: '5PM.LIFE - Meet, Share, Experience',
+			scopeTitle: 'Home',
 			templateUrl: 'app/main/home/home.html',
 			controller: 'HomeController',
 			controllerAs: 'home',
@@ -67,6 +68,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		.state('home.event', {
 			url: '/event/:id',
 			title: '5PM.LIFE Event',
+			scopeTitle: 'Event',
 			templateUrl: 'app/main/event/event.html',
 			controller: 'EventController',
 			controllerAs: 'vm',
@@ -114,6 +116,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		.state('home.settings', {
 			title: 'Settings',
 			url: '/settings',
+			scopeTitle: 'Settings',
 			templateUrl: 'app/main/settings/settings.html',
 			controller: 'SettingsController',
 			controllerAs: 'settings',

@@ -257,29 +257,28 @@
 
             <!-- Dropdown menu -->
             <div class="nav-right col m4">
-                <div class="nav-dropdown-container dropdown">
-                    <div class="nav-menu" data-toggle="dropdown" id="home-menu-button">
+                <div class="nav-dropdown-container">
+                    <div class="nav-menu valign-wrapper dropdown">
                         <img class="profile-image" src="uploads/profile/{{ navbar.user.profile_picture.current}}">
-                        <i class="tiny material-icons drop-indicator">expand_more</i>
-                    </div>
-                    <!-- Dropdown menu -->
-                    <div class="nav-dropdown dropdown-menu" aria-labelledby="home-menu-button">
-                        <div class="dropdown-name">{{navbar.user.first_name + " " + navbar.user.last_name}}</div>
-                        <hr class="dropdown-hr">
-                        <ul class="dropdown-ul">
-                            <li class="dropdown-li">
-                                <a href="/home/settings">
-                                    <i class="material-icons tiny">person</i>
-                                    <span class="nav-link-text">Profile</span>
-                                </a>
-                            </li>
-                            <li class="dropdown-li">
-                                <a href="/logout">
-                                    <i class="material-icons tiny">exit_to_app</i>
-                                    <span class="nav-link-text">Logout</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <span class="nav-name">{{navbar.user.first_name}}</span>
+                        <i class="material-icons drop-indicator" data-toggle="dropdown" id="home-menu-button">more_vert</i>
+
+                        <!-- Dropdown menu -->
+                        <div class="nav-dropdown dropdown-menu" aria-labelledby="home-menu-button">
+                            <!--<div class="dropdown-name">{{navbar.user.first_name + " " + navbar.user.last_name}}</div>-->
+                            <ul class="dropdown-ul">
+                                <li class="dropdown-li">
+                                    <a href="/home/settings">
+                                        <span class="nav-link-text">Settings</span>
+                                    </a>
+                                </li>
+                                <li class="dropdown-li">
+                                    <a href="/logout">
+                                        <span class="nav-link-text">Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -288,18 +287,23 @@
     </div>
 </div>
 
-<div class="mobile-navbar">
+<div class="mobile-navbar" ng-class="{'no-shadow': navbar.on_event_page}">
     <div class="mobile-nav-container">
         <div class="container">
             <div class="row">
                 <!-- logo -->
-                <div class="col s6 valign-wrapper">
-                    <a href="/home">
-                        <img class="mobile-logo" src="assets/images/5pm-icon-white.png" />
+                <div class="col s3 valign-wrapper align-center">
+                    <a href="/home" class="mobile-logo-link">
+                        <img class="mobile-logo" src="assets/images/5pm-icon.png" />
                     </a>
                 </div>
+                <div class="col s6 valign-wrapper">
+                    <div class="scope-title">
+                        {{navbar.current_scope}}
+                    </div>
+                </div>
                 <!-- menu button -->
-                <div class="col s6 valign-wrapper mobile-menu-col">
+                <div class="col s3 valign-wrapper mobile-menu-col">
                     <button class="mobile-nav-menu-button" ng-click="navbar.toggle_mobile_nav()">
                         <span class="hamburger"></span>
                         <span class="hamburger"></span>
