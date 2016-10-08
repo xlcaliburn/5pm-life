@@ -166,7 +166,7 @@
     <div class="row">
         <ul class="tabs mobile-event-tabs" style="display: block;">
             <li class="tab col s4">
-                <a class="active" href="#mobile-event-details">Details</a>
+                <a class="active" href="#mobile-event-details" ng-click="vm.resize_map()">Details</a>
             </li>
             <li class="tab col s4">
                 <a href="#mobile-event-attendees">Going</a>
@@ -303,7 +303,7 @@
             <!-- message box -->
             <div class="message-box valign-wrapper">
                 <img class="event-profile-pic" src="{{ vm.profile_picture }}">
-                <textarea ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
+                <textarea ng-focus="vm.hide_navbar(true)" ng-blur="vm.hide_navbar(false)" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
             </div>
         </div>
     </div>

@@ -542,11 +542,6 @@
 
         function toggleMobileNav() {
             vm.mobile_nav_open = !vm.mobile_nav_open;
-            if (vm.mobile_nav_open) {
-                angular.element('body').css('overflow', 'hidden');
-            } else {
-                angular.element('body').css('overflow', '');
-            }
         }
 
         function getCurrentStateName() {

@@ -34,7 +34,9 @@
         vm.get_googlemaps_link = getGoogleMapsLink;
         vm.leave_event = leaveEvent;
         vm.get_profile_img = getProfileImg;
+        vm.resize_map = resizeMap;
         vm.send_message = sendMessage;
+        vm.hide_navbar = hideNavbar;
 
         init();
 
@@ -377,6 +379,13 @@
             });
         }
 
+        // resize google maps on details page
+        function resizeMap() {
+            $timeout(function() {
+                google.maps.event.trigger(mobile_map, 'resize');
+            });
+        }
+
         // send chat message
         function sendMessage(event) {
             if (event.shiftKey) { return false; }
@@ -393,6 +402,24 @@
             };
             eventSocket.emit('send_message', data);
             vm.message_input = '';
+        }
+
+        // toggle navbar based on if chat input is focused
+        function hideNavbar(hide) {
+            if (hide) {
+                // ngFocus
+                angular.element('.mobile-navbar').hide();
+                angular.element('.wrap').css('padding-top', '0');
+                angular.element('.mobile-chat-area').css('max-height', '100%');
+            } else {
+                //ngBlur
+                $timeout(function() {
+                    angular.element('.mobile-navbar').show();
+                    angular.element('.wrap').css('padding-top', '65px');
+                    angular.element('.mobile-chat-area').css('max-height', 'calc(100% - 65px)');
+                    chatbox.scrollTop(chatbox.prop('scrollHeight'));
+                });
+            }
         }
 
     }
