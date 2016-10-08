@@ -54,7 +54,7 @@
     height: auto;
     margin-bottom: -@footerheight;
     padding-bottom: @footerheight;
-    padding-top: 65px;
+    padding-top: 0;
     background-image: url(../../assets/images/home-logo-bg.png);
     background-repeat: no-repeat;
     background-size: contain;
@@ -246,7 +246,11 @@ input::-webkit-inner-spin-button {
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
 }
 
-@media(max-width:767px) {
+@media(max-width:768px) {
+    .wrap {
+        padding-top: 65px;
+    }
+
     .intro-message {
         padding-bottom: 15%;
     }
