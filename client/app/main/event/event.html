@@ -136,6 +136,7 @@
                     <div class="message-box valign-wrapper">
                         <img class="event-profile-pic" src="{{ vm.profile_picture }}">
                         <textarea ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
+                        <a ng-click="vm.send_message($event)" class="btn">Send</a>
                     </div>
                 </div>
             </div>
@@ -304,6 +305,7 @@
             <div class="message-box valign-wrapper">
                 <img class="event-profile-pic" src="{{ vm.profile_picture }}">
                 <textarea ng-focus="vm.hide_navbar(true)" ng-blur="vm.hide_navbar(false)" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
+                <a ng-click="vm.send_message($event)" class="btn">Send</a>
             </div>
         </div>
     </div>
