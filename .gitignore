@@ -7,7 +7,7 @@ dist/
 #/server/config/local.env.js
 client/uploads
 !client/uploads/default-*
-.gitignore
+#.gitignore
 .tmp
 npm-debug.log
 server/config/environment/development.js
