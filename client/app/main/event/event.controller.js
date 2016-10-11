@@ -113,6 +113,7 @@
         // revert everything back to before event
         function destroy() {
             // re-eanble bg
+            hideNavbar(false);
             angular.element('body').css('background', '#f2f5f7');
             angular.element('.wrap').css('background', '#f2f5f7');
             angular.element('.wrap').css('padding-bottom', '95px');
