@@ -19,6 +19,7 @@
         var selfInfo = getSelfInfo();
         var textarea;
         var just_confirmed = false;
+        var focus_timeout;
 
         // view
         vm.chat_messages = [];
@@ -32,11 +33,12 @@
         vm.get_event_date = getEventDate;
         vm.get_event_time = getEventTime;
         vm.get_googlemaps_link = getGoogleMapsLink;
+        vm.hide_navbar = hideNavbar;
         vm.leave_event = leaveEvent;
         vm.get_profile_img = getProfileImg;
         vm.resize_map = resizeMap;
         vm.send_message = sendMessage;
-        vm.hide_navbar = hideNavbar;
+
 
         init();
 
@@ -389,6 +391,8 @@
 
         // send chat message
         function sendMessage(event) {
+            document.getElementById('message-input').focus();
+            $timeout.cancel(focus_timeout);
             if (event.shiftKey) { return false; }
 
             event.preventDefault();
@@ -409,16 +413,22 @@
         function hideNavbar(hide) {
             if (hide) {
                 // ngFocus
-                angular.element('.mobile-navbar').hide();
+                angular.element('.mobile-navbar').css('display', 'none');
                 angular.element('.wrap').css('padding-top', '0');
                 angular.element('.mobile-chat-area').css('max-height', '100%');
             } else {
                 //ngBlur
-                $timeout(function() {
-                    angular.element('.mobile-navbar').show();
+                focus_timeout = $timeout(function() {
+                    if (angular.element('.mobile-event-tabs').is(':visible')) {
+                        angular.element('.mobile-navbar').css('display', 'initial');
+                    }
                     angular.element('.wrap').css('padding-top', '65px');
                     angular.element('.mobile-chat-area').css('max-height', 'calc(100% - 65px)');
-                    chatbox.scrollTop(chatbox.prop('scrollHeight'));
+                    if (chatbox) {
+                        chatbox.scrollTop(chatbox.prop('scrollHeight'));
+                    } else if (chatbox_mobile) {
+                        chatbox_mobile.scrollTop(chatbox_mobile.prop('scrollHeight'));
+                    }
                 });
             }
         }

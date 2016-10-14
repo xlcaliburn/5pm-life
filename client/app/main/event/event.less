@@ -397,6 +397,7 @@ a.event-status:active {
 textarea.message-input {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
+    width: 80%;
     color: @uppergrey;
     border: none;
     height: auto;
@@ -415,9 +416,16 @@ textarea.message-input:focus {
 
 button.event-chat-send-button {
     background-color: @pink !important;
-    height: 50px;
-    width: 50px;
-    min-width: 50px;
+    height: 35px;
+    width: 35px;
+    min-width: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+button.event-chat-send-button>i {
+    font-size: 14px;
 }
 
 .event-attendees-card>.event-card-header {
@@ -580,21 +588,25 @@ button.event-chat-send-button {
     }
 
     ul.attendees-list {
+        padding-top: 0;
+    }
+
+    ul.attendees-list {
         text-align: center;
         border: none;
     }
 
     ul.attendees-list li {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     ul.attendees-list img {
-        max-width: 50px;
+        max-width: 35px;
         margin-right: 20px
     }
 
     .attendee-name {
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .no-attendees-text {
@@ -659,5 +671,9 @@ button.event-chat-send-button {
         position: fixed;
         width: 100%;
         bottom: 0;
+    }
+
+    textarea#message-input {
+        width: 75%;
     }
 }
