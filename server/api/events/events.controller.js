@@ -345,7 +345,7 @@ export function getUsers(req, res){
 	})
 	.catch(function(err){
 		if(err){
-			return res.json({response: {status: 'error'}});
+			return res.json({response: {status: 'error', error: err}});
 		}
 	});
 }
