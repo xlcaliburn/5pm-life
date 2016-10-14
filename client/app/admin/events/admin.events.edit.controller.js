@@ -3,7 +3,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues, EventService) {
 		var vm = this;
 		vm.event_id = $stateParams.event_id;
 		vm.add_users = addUsersModal;
@@ -23,6 +23,7 @@
 		vm.queues_to_add = [];
 		vm.queues_to_remove = [];
 		vm.selected_event = {};
+		vm.event_users = [];
 
 		init();
 
@@ -98,6 +99,15 @@
 			end_timepicker.pickatime({
 				autoclose: true,
 				twelvehour: true
+			});
+
+
+			EventService.getEventUsers(vm.event_id).success(function(data){
+				console.log(data);
+				vm.event_users = data;
+			})
+			.error(function(err){
+				console.log('Error: ' + err);
 			});
 		}
 

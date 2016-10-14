@@ -68,6 +68,34 @@
 		<div class="table-container">
 			<div class="section">
 				<h5>Activity Capacity: {{vm.selected_event.activity.allowed_capacity}}</h5>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Gender</th>
+						<th>Ethnicity</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in vm.event_users">
+						<td>{{user.first_name}} {{user.last_name}}</td>
+						<td>{{vm.get_age(user.birthday)}}</td>
+						<td>{{user.gender}}</td>
+						<td>{{user.ethnicity}}</td>
+						<td>{{user.event_status}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="divider"></div>
+
+		<h3>Queues</h3>
+		<div class="table-container">
+			<div class="section">
 				<div style="float:right">
 					<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
 						<i class="material-icons">add</i>
@@ -125,7 +153,6 @@
 				</tbody>
 			</table>
 		</div>
-
 
 		<div class="divider"></div>
 
