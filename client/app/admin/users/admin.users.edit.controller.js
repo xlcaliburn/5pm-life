@@ -17,6 +17,7 @@
 			Users.getById(vm.user_id)
 				.then(function(res) {
 					vm.user = res.data;
+					vm.user.birthday = moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
 				})
 				.then(function() {
 					$timeout(function() {materialize_select();});

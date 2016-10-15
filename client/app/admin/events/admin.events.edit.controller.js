@@ -27,6 +27,8 @@
 
 		init();
 
+		/*jshint loopfunc: true */
+
 		function init() {
 			Venues.get()
 				.then(function(res) {
@@ -53,18 +55,27 @@
 				})
 				.then(function() {
 					for (var add_id in vm.queues_to_add) {
-					Queue
-						.getById(vm.queues_to_add[add_id]._id)
-						.then(function(res){
-							vm.queues_to_add[add_id].user = res.data.user;
-						});
+						Queue
+							.getById(vm.queues_to_add[add_id]._id)
+							.then(function(res){
+								vm.queues_to_add[add_id].user = res.data.user;
+							});
 					}
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
 
 			Enums.getByType('queue_status')
-				.success(function(data) {
-					vm.enum_status = data;
+				.then(function(res) {
+					vm.enum_status = res.data;
+				})
+				.catch(function(data) { console.log('Error: ' + data); });
+
+			// TODO: This should probably be refactored
+			EventService.getEventUsers(vm.event_id).success(function(data){
+					vm.event_users = data;
+				})
+				.error(function(err){
+					console.log('Error: ' + err);
 				});
 
 			// init date
@@ -87,27 +98,15 @@
 				}
 			});
 
-			// init start time
 			var start_timepicker = angular.element('#start_timepicker');
 			start_timepicker.pickatime({
 				autoclose: true,
 				twelvehour: true
 			});
-
-			// init end time
 			var end_timepicker = angular.element('#end_timepicker');
 			end_timepicker.pickatime({
 				autoclose: true,
 				twelvehour: true
-			});
-
-
-			EventService.getEventUsers(vm.event_id).success(function(data){
-				console.log(data);
-				vm.event_users = data;
-			})
-			.error(function(err){
-				console.log('Error: ' + err);
 			});
 		}
 
@@ -125,21 +124,19 @@
 
 			modalInstance.result.then(function(data) {
 				for (var queue_id in data) {
-					if (data[queue_id] && !vm.queues_to_add.find(x => x._id === queue_id))
-					{
-						Queue
-							.getById(queue_id)
+					if (data[queue_id] && !vm.queues_to_add.find(x => x._id === queue_id)) {
+						Queue.getById(queue_id)
 							.then(
 								function(res){
 									vm.queues_to_add.push(res.data);
 								});
-						}
+					}
 				}
 			}, function () {});
 		}
 
-		// TODO: Add warning before calling this function
 		function triggerEvent() {
+			// TODO: Add warning before calling this function
 			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
 			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
 			saveAndClose('Event started', true);
@@ -147,8 +144,8 @@
 
 		function submit() {
 			updateQueueStatus(vm.enum_status.PENDING);
-			vm.selected_event.dt_start = createDate(vm.form_date, vm.form_start_time);
-			vm.selected_event.dt_end = createDate(vm.form_date, vm.form_end_time);
+			vm.selected_event.dt_start = new Date(vm.form_date + ' ' + moment(vm.form_start_time, 'hh:mmA').format('HH:mm:00'));
+			vm.selected_event.dt_end =  new Date(vm.form_date + ' ' + moment(vm.form_end_time, 'hh:mmA').format('HH:mm:00'));
 
 			saveAndClose('Event saved');
 		}
@@ -159,21 +156,9 @@
 
 				Queue.put(vm.queues_to_add[i]._id, {status : newStatus})
 					.catch(function(err) { console.log(err); }); // jshint ignore:line
-
 			}
 
 			// TODO: Make this a single call
-			// for (var add_id in vm.queues_to_add) {
-			// 	console.log('for add_id in ', vm.queues_to_add[add_id]);
-			// 	var user_add_id = vm.queues_to_add[add_id];
-			// 	if (vm.queues_to_add[add_id]._id) {
-			// 		user_add_id = vm.queues_to_add[add_id]._id;
-			// 	}
-			//
-			// 	Queue.put(user_add_id, {status : newStatus})
-			// 	.catch(function(err) { console.log(err); }); // jshint ignore:line
-			// }
-
 			if (vm.queues_to_remove.length > 0) {
 				for (var remove_id in vm.queues_to_remove) {
 					var user_remove_id = vm.queues_to_remove[remove_id];
@@ -185,12 +170,6 @@
 					.catch(function(err) { console.log(err); }); // jshint ignore:line
 				}
 			}
-
-			//
-			// for (var i = 0; i < vm.queues_to_add.length; i++) {
-			// 	Queue.getById(vm.queues_to_add[i])
-			// 	.then(function(res) { console.log(res.data)});
-			// }
 			vm.selected_event.queue = vm.queues_to_add;
 		}
 
@@ -207,11 +186,21 @@
 			});
 		}
 
-		function createDate(date, time_string) {
-			return new Date(date + ' ' + moment(time_string, 'hh:mmA').format('HH:mm:00'));
-		}
-
 		function endEvent() {
+			for (var user in vm.selected_event.users)
+			{
+				// TODO: Very bad way of writing this, this should be addressed on the refactor. Move the code to server side
+				var user_data;
+				Users.getById(vm.selected_event.users[user])
+					.then(function(res){
+					user_data = res.data;
+					user_data.event_status = null;
+					user_data.event_history.push(vm.selected_event._id);
+				}).then(function() {
+					Users.updateById(vm.selected_event.users[user], user_data);
+				});
+			}
+
 			vm.selected_event.status = vm.enum_status.ENDED;
 			saveAndClose('Event ended', false);
 		}

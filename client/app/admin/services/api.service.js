@@ -16,7 +16,6 @@
 					return $http.get('/api/users/' + id);
 				},
 				updateById : function(id, data) {
-					console.log(data);
 					return $http.put('/api/users/' + id, data);
 				}
 			};

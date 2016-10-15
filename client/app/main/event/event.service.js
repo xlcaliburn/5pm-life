@@ -1,9 +1,7 @@
-(function() {
-
-    'use strict';
+(function() { 'use strict';
     angular
-    .module('EventService', [])
-    .factory('EventService', EventService);
+        .module('EventService', [])
+        .factory('EventService', EventService);
 
     function EventService($http) {
         return {
