@@ -196,6 +196,7 @@
 					user_data = res.data;
 					user_data.event_status = null;
 					user_data.event_history.push(vm.selected_event._id);
+					user_data.current_event = null;
 				}).then(function() {
 					Users.updateById(vm.selected_event.users[user], user_data);
 				});
