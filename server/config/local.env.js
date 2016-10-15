@@ -6,11 +6,11 @@
 // You will need to set these on the server you deploy to.
 
 module.exports = {
-  DOMAIN: 'http://localhost:9000',
+  DOMAIN: 'http://localhost:3000',
   SESSION_SECRET: 'fivepm-secret',
 
-  FACEBOOK_ID: 'app-id',
-  FACEBOOK_SECRET: 'secret',
+  FACEBOOK_ID: '1270748296308656',
+  FACEBOOK_SECRET: '5faf97872583c524af9b44db607743e4',
   // Control debug level for modules using visionmedia/debug
   DEBUG: ''
 };

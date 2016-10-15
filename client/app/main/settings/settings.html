@@ -27,13 +27,7 @@
                 <div class="col l6 m6 s12 setting-card setting-border-right">
                     <div class="settings-title">PROFILE PICTURE</div>
                     <div class="valign-wrapper">
-                        <img src="uploads/profile/{{ settings.user.profile_picture.current || settings.profile_picture }}" class="settings-profile-pic valign">
-                        <div class="settings-edit valign">
-                            <a href="#" title="Change profile picture" ng-click="settings.select_image()">
-                                <i class="material-icons">edit</i> Edit
-                            </a>
-                            <input accept="image/*" type="file" class="hidden" name="userImage" onchange="angular.element(this).scope().settings.upload(this)">
-                        </div>
+                        <img src="{{ settings.user.profile_picture.current || settings.profile_picture }}" class="settings-profile-pic valign">
                     </div>
                 </div>
 

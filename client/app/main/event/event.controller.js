@@ -252,7 +252,7 @@
 
         // return user profile image
         function getProfileImg(image_name) {
-            return 'uploads/profile/' + image_name;
+            return image_name;
         }
 
         // extract date from event date

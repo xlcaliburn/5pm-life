@@ -1,27 +1,23 @@
 @login-margins: 5px;
 
-#login-container,
-.full {
-    display: flex;
+#login-container {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     max-width: 100%;
     margin: 0;
     padding: 0;
 }
 
 .login-background {
-    display: inline-block;
     background-image: url('../assets/images/login-bg.jpg');
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
     background-size: cover;
-    width: 65%;
+    width: 100%;
     height: 100%;
 }
 
 .login-background-description {
-    position: relative;
     top: 15%;
     text-align: center;
     font-size: 40px;
@@ -30,26 +26,20 @@
     text-shadow: 0px 2px 2px rgba(150, 150, 150, 0.7);
 }
 
-.login-container {
-    display: inline-block;
-    height: 100vh;
-    min-height: 500px;
-    width: 35%;
-    background-color: @white;
+.login-box {
     text-align: center;
-    -webkit-box-shadow: 5px 0px 15px 0px rgba(0,0,0,0.15);
-    -moz-box-shadow: 5px 0px 15px 0px rgba(0,0,0,0.15);
-    box-shadow: 5px 0px 15px 0px rgba(0,0,0,0.15);
-    z-index: 1;
+    margin: 0 auto;
+    position: relative;
+    top: 35%;
+    transform: translateY(-50%);
+    width: 400px;
 }
 
-.login-box {
-    text-align: left;
-    display: inline-block;
-    position: relative;
-    top: 50%;
-    transform: translateY(-175px);
-    width: 70%;
+.login-text {
+    color: @pink;
+    font-weight: 300;
+    font-size: 30px;
+    margin: 25px 0 40px;
 }
 
 .login-title {
@@ -58,140 +48,41 @@
     color: @babyblue;
 }
 
-.login-description {
-    color: @middlegrey;
-}
-
-.login-status {
-    margin: 10px 10px 10px 0;
-    height: 25px;
-    opacity: 0;
-    pointer-events: none;
-    color: @pink;
-    transition: opacity 0.2s ease-out;
-}
-
-.login-status.show-error {
-    opacity: 0.8;
-    pointer-events: all;
-}
-
-.login-icon {
-    color: @middlegrey;
-    margin-top: 2px;
-}
-
-.login-form input {
-    width: 85%;
+.btn-facebook {
     display: inline-block;
-    margin: 10px 0px 10px 10px;
-    height: auto;
-    padding: 7px 0;
-    border-bottom: 1px solid @lightgrey;
+    background-color: @loginblue;
+    padding: 16px 22px;
+    border-radius: 2px;
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    cursor: pointer;
+    outline: none;
+    .user-select-none;
 }
 
-.login-form input[type='text']:focus,
-.login-form input[type='password']:focus {
-    border-bottom: 1px solid @babyblue;
-    box-shadow: 0 1px 0 0 transparent;
-}
-
-.login-form input::-webkit-input-placeholder {
-    font-family: 'Roboto', sans-serif;
-    color: #b8b8b8;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-}
-
-.login-form input::-moz-placeholder {
-    font-family: 'Roboto', sans-serif;
-    color: #b8b8b8;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-}
-
-.login-form input:-ms-input-placeholder {
-    font-family: 'Roboto', sans-serif;
-    color: #b8b8b8;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-}
-
-.login-checkbox {
-    margin-top: 20px;
-    margin-left: @login-margins;
-}
-
-button.login-button {
-    background-color: @pink !important;
-    margin-left: auto;
-    margin-right: 10px;
-    opacity: 0.7;
-    width: 50px !important;
-    height: 50px !important;
-    line-height: 50px !important;
-}
-
-button.login-button:hover {
-    opacity: 1;
-}
-
-button.login-button>i {
-    line-height: 50px !important;
+.btn-facebook>i {
     font-size: 20px;
+    margin-right: 10px;
 }
 
-label[for='keep-signed-in'] {
-    font-weight: 400;
+.back-home {
+    margin: 20px 0;
 }
 
-[type="checkbox"].filled-in:not(:checked) + label[for='keep-signed-in']:after {
-    margin-top: 2px;
-}
-
-[type="checkbox"].filled-in:checked + label[for='keep-signed-in']:before {
-    top: 2px;
-}
-
-[type="checkbox"].filled-in:checked + label[for='keep-signed-in']:after {
-    border: 2px solid @babyblue !important;
-    background-color: @babyblue !important;
-    margin-top: 2px;
-}
-
-.login-forgot {
-    margin-left: @login-margins;
-}
-
-.login-register-container {
-    margin-top: 30px;
-}
-
-@media screen and (max-width: 1300px) {
-    .login-background,
-    .login-container {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 991px) {
-    .login-background {
-        display: none;
-    }
-
-    .login-container {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 600px) {
+@media screen and (max-height: 768px) {
     .login-box {
-        width:80%;
+        top: 40%;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .login-box {
+        top: 50%;
+    }
+}
+
+@media screen and (max-height: 435px) {
+    .login-box {
+        top: 0;
+        transform: translateY(0);
     }
 }

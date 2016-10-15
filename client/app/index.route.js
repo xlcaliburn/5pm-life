@@ -144,7 +144,7 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			title: '5PM.LIFE Login',
 			templateUrl: 'app/account/login/login.html',
 			controller: 'LoginController',
-			controllerAs: 'login',
+			controllerAs: 'vm',
 			resolve: {
 				// if users has token, log them in
 				user: function($cookies, $state, $q) {
