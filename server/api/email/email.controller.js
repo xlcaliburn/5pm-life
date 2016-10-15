@@ -1,11 +1,17 @@
 'use strict';
 
 import Email from './email.model';
+import config from '../../config/environment';
 var nodemailer = require("nodemailer");
 var smtp_transport = require('nodemailer-smtp-transport');
 
 export function sendEmail(email_content) {
     console.log('Attempting to send email to', email_content.to, '...');
+
+    if (config.env === 'development') {
+        console.log('Email would have been sent to', email_content.to);
+        return;
+    }
 
     // trying nodemailer
     var transporter = nodemailer.createTransport(smtp_transport({
@@ -39,6 +45,7 @@ export function sendEmail(email_content) {
 }
 
 export function send_email(req, res) {
+
     sendEmail(req.body.email_address);
     return res.json({ status: "success" });
 }

@@ -258,7 +258,6 @@ export function leaveEvent(req, res) {
 				event.users.remove(user_id);
 				return event.save()
 				.then((new_event)=>{
-					console.log('new event is', new_event);
 					return res.json({ response: response });
 				});
 			});
