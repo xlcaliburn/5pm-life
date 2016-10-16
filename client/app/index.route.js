@@ -166,7 +166,14 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			title: '5PM.LIFE Signup',
 			templateUrl: 'app/account/signup/signup.html',
 			controller: 'SignupController',
-			controllerAs: 'signup'
+			controllerAs: 'signup',
+			resolve: {
+				redirect: function($q, $state) {
+					return $q.reject().catch(function() {
+						$state.go('login');
+					});
+				}
+			}
 		})
 
 		.state('verify', {
@@ -196,7 +203,9 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 		.state('logoutsuccess', {
 			url: '/logoutsuccess',
 			title: '5PM.LIFE Logout',
-			templateUrl: 'app/account/logout/logout.html'
+			templateUrl: 'app/account/logout/logout.html',
+			controller: 'LogoutController',
+			controllerAs: 'vm'
 		})
 
 		.state('admin', {
