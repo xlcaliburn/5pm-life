@@ -29,9 +29,24 @@
                     return res.data;
                 });
             },
+            fetchEventChat: function(event_id, offset_id) {
+                if (!offset_id) { offset_id = ''; }
+                var url = 'api/chat/history/' + event_id + '?offset_id=' + offset_id;
+                return $http.get(url).then(function(res) {
+                    console.log(res.data);
+                    return res.data;
+                });
+            },
             leaveEvent: function(event_details) {
                 var url = 'api/events/leave';
                 return $http.post(url, event_details).then(function(res) {
+                    return res.data;
+                });
+            },
+            sendChatMessage: function(data, eventSocket) {
+                var url = 'api/chat';
+                return $http.post(url, data).then(function(res) {
+                    eventSocket.emit('send_message', data);
                     return res.data;
                 });
             }

@@ -16,6 +16,7 @@
         var map, mobile_map, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
         var eventSocket, eventRoom;
         var chatbox, chatbox_mobile;
+        var offset_id;
         var selfInfo = getSelfInfo();
         var textarea;
         var just_confirmed = false;
@@ -64,6 +65,22 @@
                 textarea.css('height', 'auto');
                 textarea.css('height', textarea.prop('scrollHeight') + 'px');
             },0);
+        }
+
+        // make chat look pretty
+        function beautifyChatMessages() {
+            var beautiful_chat_messages = [vm.chat_messages[0]];
+            var previous_message = vm.chat_messages[0];
+            for (var i = 1; i < vm.chat_messages.length; i++) {
+                if (vm.chat_messages[i].user._id === previous_message.user._id) {
+                    // append current message to  the end of the previous message
+                    previous_message.message += '\n' + vm.chat_messages[i].message;
+                } else {
+                    beautiful_chat_messages.push(previous_message);
+                    previous_message = vm.chat_messages[i];
+                }
+            }
+            vm.chat_messages = beautiful_chat_messages;
         }
 
         // confirm event confirmation
@@ -313,6 +330,19 @@
                 eventRoom = $stateParams.id;
 
                 eventSocket.emit('join_event', eventRoom);
+
+                // fetch chat
+                eventSocket.on('fetch_chat', function() {
+                    EventService.fetchEventChat(eventRoom).then(function(res) {
+                        vm.chat_messages = res.messages;
+                        if (vm.chat_messages.length > 0) {
+                            offset_id = vm.chat_messages[0].offset;
+                        }
+                        beautifyChatMessages();
+                        scrollChatbox();
+                    });
+                });
+
                 eventSocket.on('receive_message', function(message) {
                     receiveMessage(message);
                 });
@@ -351,9 +381,9 @@
 
         // receive message from server
         function receiveMessage(message) {
-            var message_text = message.text.trim().replace(/ +/g, ' ');
+            var message_text = message.message.trim().replace(/ +/g, ' ');
             var chat_message = {
-                text: message_text,
+                message: message_text,
                 user: message.user
             };
 
@@ -361,7 +391,7 @@
                 // check to see if it's the same person typing the message
                 if (vm.chat_messages[vm.chat_messages.length - 1].user._id === message.user._id) {
                     // append to end of message
-                    vm.chat_messages[vm.chat_messages.length - 1].text += '\n' + message_text;
+                    vm.chat_messages[vm.chat_messages.length - 1].message += '\n' + message_text;
                 } else {
                     vm.chat_messages.push(chat_message);
                 }
@@ -369,17 +399,7 @@
                 vm.chat_messages.push(chat_message);
             }
 
-            $timeout(function() {
-                if (!chatbox) {
-                    chatbox = angular.element('.chat-area');
-                }
-
-                if (!chatbox_mobile) {
-                    chatbox_mobile = angular.element('.mobile-chat-area');
-                }
-                chatbox.scrollTop(chatbox.prop('scrollHeight'));
-                chatbox_mobile.scrollTop(chatbox_mobile.prop('scrollHeight'));
-            });
+            scrollChatbox();
         }
 
         // resize google maps on details page
@@ -402,10 +422,13 @@
             }
 
             var data = {
-                room: eventRoom,
+                event_id: eventRoom,
                 message: vm.message_input
             };
-            eventSocket.emit('send_message', data);
+
+            EventService.sendChatMessage(data, eventSocket).then(function(res) {
+                console.log(res);
+            });
             vm.message_input = '';
         }
 
@@ -431,6 +454,21 @@
                     }
                 });
             }
+        }
+
+        // scroll chatbox to bottom
+        function scrollChatbox() {
+            $timeout(function() {
+                if (!chatbox) {
+                    chatbox = angular.element('.chat-area');
+                }
+
+                if (!chatbox_mobile) {
+                    chatbox_mobile = angular.element('.mobile-chat-area');
+                }
+                chatbox.scrollTop(chatbox.prop('scrollHeight'));
+                chatbox_mobile.scrollTop(chatbox_mobile.prop('scrollHeight'));
+            });
         }
 
     }

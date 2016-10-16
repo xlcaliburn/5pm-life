@@ -8,11 +8,8 @@ var ObjectId = Schema.ObjectId;
 module.exports = function (mongoose) {
     var ChatSchema = new Schema({
         eventId: String,
-        message: [{
-            user: {
-                ObjectId: String,
-                FacebookId: String
-            },
+        messages: [{
+            user: { type: Schema.Types.ObjectId, ref : 'User' },
             message: String,
             timestamp: Date
         }]

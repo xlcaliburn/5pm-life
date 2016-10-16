@@ -125,9 +125,9 @@
                                     has <span ng-if="message.status == 'join'">joined</span> <span ng-if="message.status == 'leave'">left</span> the event
                                 </div>
                             </div>
-                            <div class="col s11 chat-user-message" ng-if="message.text">
+                            <div class="col s11 chat-user-message" ng-if="message.message">
                                 <div class="babyblue-font message-name">{{message.user.first_name}} {{message.user.last_name}}</div>
-                                <div class="message-text pre-wrap">{{message.text}}</div>
+                                <div class="message-text pre-wrap">{{message.message}}</div>
                             </div>
                         </div>
                     </div>
@@ -294,9 +294,9 @@
                             has <span ng-if="message.status == 'join'">joined</span> <span ng-if="message.status == 'leave'">left</span> the event
                         </div>
                     </div>
-                    <div class="col s11 chat-user-message" ng-if="message.text">
+                    <div class="col s11 chat-user-message" ng-if="message.message">
                         <div class="babyblue-font message-name">{{message.user.first_name}} {{message.user.last_name}}</div>
-                        <div class="message-text pre-wrap">{{message.text}}</div>
+                        <div class="message-text pre-wrap">{{message.message}}</div>
                     </div>
                 </div>
             </div>

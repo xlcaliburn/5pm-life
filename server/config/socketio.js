@@ -92,6 +92,7 @@ socketio.on('connection', function(socket) {
 	// join event when user enters an event page
     socket.on('join_event', function(eventRoom) {
         socket.join(eventRoom);
+		socket.emit('fetch_chat');
     });
 
 	socket.on('leave_event', function(eventRoom) {
@@ -120,6 +121,7 @@ socketio.on('connection', function(socket) {
 
     // receiving message from client via event
     socket.on('send_message', function(data) {
+		console.log('Socket data', data);
         var user_token = socket.request._query.token;
         var user_id = getDecodedToken(user_token)._id;
         var error;
@@ -130,15 +132,15 @@ socketio.on('connection', function(socket) {
             if (!user) { error = true; }
             var message_data = {
                 user: user,
-                text: data.message
+                message: data.message
             };
 
             // emit message to clients
-            socketio.sockets.in(data.room).emit('receive_message', message_data);
+            socketio.sockets.in(data.event_id).emit('receive_message', message_data);
         })
         .catch((err)=> {
             // emit error
-            socketio.sockets.in(data.room).emit('message_error');
+            socketio.sockets.in(data.event_id).emit('message_error');
         });
 
     });
