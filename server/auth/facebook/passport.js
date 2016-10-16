@@ -30,7 +30,7 @@ export function setup(User, config) {
           role: 'user',
           provider: 'facebook',
           profile_picture: {
-              current: 'https://graph.facebook.com/' + profile.id + '/picture?type=large'
+              current: 'https://graph.facebook.com/' + profile.id + '/picture?width=250&height=250'
           },
           account_create_date: new Date(),
           facebook: profile._json
