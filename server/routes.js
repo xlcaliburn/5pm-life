@@ -11,6 +11,7 @@ export default function(app) {
 
 	var mongoose = require('mongoose');
 	var models = require('./api/model.js')(mongoose);
+	var chatmodel = require('./api/chat/chat.model')(mongoose);
 
 	// Insert routes below
 	app.use('/api/things', require('./api/thing')); // to delete
@@ -31,6 +32,7 @@ export default function(app) {
 	app.use('/api/admin', require('./api/admin/admin.routes.js'));
 	app.use('/api/events', require('./api/events'));
 	app.use('/api/queue', require('./api/queue'));
+	app.use('/api/chat', require('./api/chat'));
 
 	app.use('/auth', require('./auth').default);
 
