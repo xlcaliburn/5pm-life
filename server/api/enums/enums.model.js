@@ -1,8 +1,9 @@
 'use strict';
 
 import mongoose from 'mongoose';
+import {Schema} from 'mongoose';
 
-var EnumsSchema = new mongoose.Schema({
+var EnumsSchema = new Schema({
 	type : String,
 	key : String,
 	value : String,

@@ -10,10 +10,8 @@ import path from 'path';
 export default function(app) {
 
 	var mongoose = require('mongoose');
-	var models = require('./api/model.js')(mongoose);
 	var chatmodel = require('./api/chat/chat.model')(mongoose);
 
-	// Insert routes below
 	app.use('/api/things', require('./api/thing')); // to delete
 	app.use('/api/users', require('./api/user'));
 	app.use('/api/email', require('./api/email')); // generic send email
@@ -25,11 +23,10 @@ export default function(app) {
 	// upload images
 	app.use('/api/upload/avatar', require('./api/upload'));
 
-	//app.use('/api/enums', require('./api/enums/enums.routes.js'));
 	app.use('/api/enums', require('./api/enums'));
-	app.use('/api/activities', require('./api/activities/activities.routes.js'));
-	app.use('/api/venues', require('./api/venues/venues.routes.js'));
-	app.use('/api/admin', require('./api/admin/admin.routes.js'));
+	app.use('/api/activities', require('./api/activities'));
+	app.use('/api/venues', require('./api/venues'));
+	app.use('/api/adminsettings', require('./api/adminsettings'));
 	app.use('/api/events', require('./api/events'));
 	app.use('/api/queue', require('./api/queue'));
 	app.use('/api/chat', require('./api/chat'));
