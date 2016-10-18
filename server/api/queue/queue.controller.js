@@ -214,10 +214,9 @@ export function create(req, res) {
 				return user.save()
 				.then(function() {
 					res.json({ response: response });
-				})
-				.catch(()=>handleError(res));
-			})
-			.catch(()=>handleError(res));
+					return res;
+				});
+			});
 		})
 		.catch(()=>handleError(res));
 }
@@ -344,14 +343,6 @@ export function update(req, res) {
 	return Queue.findById(req.params.id).exec()
 		.then(handleEntityNotFound(res))
 		.then(saveUpdates(req.body))
-		.then(respondWithResult(res))
-		.catch(handleError(res));
-}
-
-export function updateMultipleStatus(req, res) {
-	return Queue.find()
-		.populate('user', 'email first_name last_name role birthday gender')
-		.exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }
