@@ -3,6 +3,8 @@
 import _ from 'lodash';
 import Queue from './queue.model';
 import Events from '../events/events.model';
+import Activities from '../activities/activities.model';
+import Venues from '../venues/venues.model';
 import mongoose from 'mongoose';
 
 function handleError(res, statusCode) {
@@ -26,11 +28,17 @@ function saveUpdates(updates) {
 // ========================================
 
 function pickActivity(param) {
-	// TODO: Hook up with actual activities
-	return {
-		activity_name : 'testactivity',
-		allowed_capacity : 999
-	};
+	Activities
+		.find({
+			tags : {$in : param.tags}
+		})
+		.then(function(activities){
+			if (activities.length > 0) {
+				var index = Math.floor((Math.random() * activities.length));
+				return activities[index];
+			}
+		})
+	;
 }
 
 function pickVenue(activity, param) {
@@ -59,6 +67,7 @@ function findEvent(queue) {
 		}).exec()
 		// More Conditions
 		.then(function(events) {
+			// If no eligible events
 			if (events.length === 0) {
 				var activity = pickActivity(queue.search_parameters);
 				var venue = pickVenue(activity, queue.search_parameters);
@@ -93,6 +102,12 @@ function clearEmptyEvents() {
 		}).exec()
 		.catch(function(err) {console.log(err);})
 	;
+}
+
+export function test(req, res) {
+	pickActivity({tags:['Social']});
+
+	return res.sendStatus(200);
 }
 
 export function matchmake(req, res) {
