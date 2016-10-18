@@ -6,8 +6,7 @@
 
 	function AdminEventsController ($scope, $http, $interval, $uibModal, Events) {
 		var vm = this;
-		vm.getEvents = getEvents;
-		vm.openModal = openModal;
+		vm.eventModal = eventModal;
 		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
 		vm.events = {};
@@ -15,7 +14,11 @@
 		init();
 
 		function init() {
-			getEvents();
+			Events.get()
+				.then(function(res) {
+					vm.events = updateTime(res.data);
+				})
+				.catch(function(err) {console.log(err);});
 
 			var tick = function() {
 				vm.currentTime = new Date(Date.now()).getTime();
@@ -38,25 +41,6 @@
 			}, function () {});
 		}
 
-		function getEvents() {
-			Events.get()
-				.success(function(data) {
-					vm.events = updateTime(data);
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
-		}
-
-		function openModal(id) {
-			if (id) {
-				Events.getEvent(id)
-					.success(function(data) { (data[0]); });
-			}
-			else {
-				eventModal();
-			}
-		}
 
 		function updateTime(data) {
 			$.each(data, function(index, event) {
