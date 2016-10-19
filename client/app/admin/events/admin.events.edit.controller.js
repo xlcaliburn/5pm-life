@@ -3,7 +3,7 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues, EventService) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues) {
 		var vm = this;
 		vm.event_id = $stateParams.event_id;
 		vm.add_users = addUsersModal;
@@ -23,7 +23,6 @@
 		vm.queues_to_add = [];
 		vm.queues_to_remove = [];
 		vm.selected_event = {};
-		vm.event_users = [];
 
 		init();
 
@@ -52,7 +51,6 @@
 					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
 					vm.form_start_time = moment(start_date).format('hh:mmA');
 					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
-					vm.event_users = vm.selected_event.users;
 				})
 				.then(function() {
 					for (var add_id in vm.queues_to_add) {

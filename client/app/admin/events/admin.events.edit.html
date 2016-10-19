@@ -79,7 +79,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in vm.event_users">
+					<tr ng-repeat="user in vm.selected_event.users">
 						<td>{{user.first_name}} {{user.last_name}}</td>
 						<td>{{vm.get_age(user.birthday)}}</td>
 						<td>{{user.gender}}</td>
