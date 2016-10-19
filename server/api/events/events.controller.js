@@ -99,6 +99,7 @@ export function admin_show(req, res) {
 	var response = {};
 	return Events.findById(req.params.id)
 		.populate('queue')
+		.populate('users','first_name last_name gender birthday ethnicity')
 		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
@@ -331,20 +332,4 @@ export function getAttendees(req, res) {
 			response.error = err;
 			return res.json({ response: response });
 		});
-}
-
-// gets all the users linked to the event regardless of status
-export function getUsers(req, res){
-	Events.findById(req.params.event_id).exec()
-	.then(function(event){
-		return User.find({_id: {$in: event.users}});
-	})
-	.then(function(users){
-	  return res.json(users);
-	})
-	.catch(function(err){
-		if(err){
-			return res.json({response: {status: 'error'}});
-		}
-	});
 }

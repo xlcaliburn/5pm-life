@@ -52,6 +52,7 @@
 					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
 					vm.form_start_time = moment(start_date).format('hh:mmA');
 					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
+					vm.event_users = vm.selected_event.users;
 				})
 				.then(function() {
 					for (var add_id in vm.queues_to_add) {
@@ -69,14 +70,6 @@
 					vm.enum_status = res.data;
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
-
-			// TODO: This should probably be refactored
-			EventService.getEventUsers(vm.event_id).success(function(data){
-					vm.event_users = data;
-				})
-				.error(function(err){
-					console.log('Error: ' + err);
-				});
 
 			// init date
 			var datepicker = angular.element('#datepicker');

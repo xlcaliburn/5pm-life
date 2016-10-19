@@ -12,7 +12,6 @@ router.post('/', auth.isAuthenticated(), controller.create);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.get('/admin/:id', auth.isAuthenticated(), controller.admin_show);
 router.get('/attendees/:event_id', auth.isAuthenticated(), controller.getAttendees);
-router.get('/users/:event_id', auth.isAuthenticated(), controller.getUsers);
 router.post('/confirm', auth.isAuthenticated(), controller.confirmEvent);
 router.post('/decline', auth.isAuthenticated(), controller.declineEvent);
 router.post('/leave', auth.isAuthenticated(), controller.leaveEvent);

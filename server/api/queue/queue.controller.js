@@ -269,6 +269,7 @@ export function triggerEvent(req, res) {
 	var queue = req.body.queues;
 	var event_id = req.body.event_id;
 	var query_array = [];
+	var users_array = [];
 
 	for (var i = 0; i < queue.length; i++) {
 		//var query_obj = new mongoose.Types.ObjectId(queue[i]);
@@ -283,50 +284,47 @@ export function triggerEvent(req, res) {
 				user_array.push(queue_items[j].user);
 			}
 
-			return User.find({_id: { $in: user_array }}).exec()
-				.then(function(users) {
-					var users_array = [];
-					for (var k = 0; k < users.length; k++) {
-						// send emails to all users
-						var url_origin = req.headers.origin;
-						url_origin = url_origin.replace('http://', 'http://www.');
-						var email_data = {
-			                first_name: users[k].first_name,
-							template: 'event-confirmation',
-			                event_link: url_origin + '/home/event/' + event_id
-			            };
+			return User.find({_id: { $in: user_array }});
+		})
+		.then(function(users) {
+			for (var k = 0; k < users.length; k++) {
+				// send emails to all users
+				var url_origin = req.headers.origin;
+				url_origin = url_origin.replace('http://', 'http://www.');
+				var email_data = {
+	                first_name: users[k].first_name,
+									template: 'event-confirmation',
+	                event_link: url_origin + '/home/event/' + event_id
+	            };
 
-						var text_version = EmailTemplate.get_text_version(email_data);
-						var html_version = EmailTemplate.get_html_version(email_data);
+				var text_version = EmailTemplate.get_text_version(email_data);
+				var html_version = EmailTemplate.get_html_version(email_data);
 
-			            var email_content = {
-			                to: users[k].email,
-			                subject: '[5PMLIFE] An event has been found!',
-			                text: text_version,
-			                html: html_version
-			            };
+	            var email_content = {
+	                to: users[k].email,
+	                subject: '[5PMLIFE] An event has been found!',
+	                text: text_version,
+	                html: html_version
+	            };
 
-			            emailCtrl.sendEmail(email_content);
+	            emailCtrl.sendEmail(email_content);
 
-						// add users to event
-						var user_obj = new User(users[k]);
-						users_array.push(user_obj);
+				// add users to event
+				var user_obj = new User(users[k]);
+				users_array.push(user_obj);
 
-						saveUserEventStatus(user_obj, event_id);
-					}
-
-					return Events.findById(event_id).exec()
-						.then(function(event) {
-							event.users = users_array;
-							event.save()
-								.then(function() {
-									response.status = 'ok';
-									return res.json({ response: response });
-								});
-							return null;
-						});
-
+				saveUserEventStatus(user_obj, event_id);
+			}
+			return Events.findById(event_id);
+		})
+		.then(function(event) {
+			event.users = users_array;
+			event.save()
+				.then(function() {
+					response.status = 'ok';
+					return res.json({ response: response });
 				});
+			return null;
 		})
 		.catch(function(err) {
 			return res.json({ error: err });
