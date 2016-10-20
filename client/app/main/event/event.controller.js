@@ -14,7 +14,8 @@
 
         // variables
         var map, mobile_map, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
-        var eventSocket, eventRoom;
+        var eventSocket;
+        var eventRoom = $stateParams.id;
         var chatbox, chatbox_mobile;
         var offset_id;
         var selfInfo = getSelfInfo();
@@ -69,17 +70,30 @@
 
         // make chat look pretty
         function beautifyChatMessages() {
-            var beautiful_chat_messages = [vm.chat_messages[0]];
-            var previous_message = vm.chat_messages[0];
+            var beautiful_chat_messages = [];
+            var message = vm.chat_messages[0];
+            var buffer = vm.chat_messages[0].message;
+
             for (var i = 1; i < vm.chat_messages.length; i++) {
-                if (vm.chat_messages[i].user._id === previous_message.user._id) {
+                if (vm.chat_messages[i].user._id === message.user._id) {
                     // append current message to  the end of the previous message
-                    previous_message.message += '\n' + vm.chat_messages[i].message;
+                    if (buffer !== '') { buffer += '\n'; }
+                        buffer += vm.chat_messages[i].message;
                 } else {
-                    beautiful_chat_messages.push(previous_message);
-                    previous_message = vm.chat_messages[i];
+                    message.message = buffer;
+                    buffer = '';
+                    beautiful_chat_messages.push(message);
+                    message = vm.chat_messages[i];
                 }
             }
+
+            if (buffer !== '') {
+                message.message = buffer;
+                beautiful_chat_messages.push(message);
+            }
+
+            console.log('origin', vm.chat_messages);
+            console.log('beautiful', beautiful_chat_messages);
             vm.chat_messages = beautiful_chat_messages;
         }
 
@@ -327,7 +341,6 @@
         function initSockets() {
             if (vm.user_status === 'Confirmed') {
                 eventSocket = socket.socket;
-                eventRoom = $stateParams.id;
 
                 eventSocket.emit('join_event', eventRoom);
 
@@ -348,17 +361,19 @@
                 });
 
                 eventSocket.on('user_join_leave', function(data) {
-
                     EventService.getEventAttendees(eventRoom).then(function(res) {
                         vm.attendees = res.data.response.attendees;
                     });
 
                     // send person has joined event
+                    var status_msg = (data.status === 'join' ? 'has joined the event!' : 'has left the event');
                     var chat_message = {
                         user: data.user,
+                        message: status_msg,
                         status: data.status
                     };
                     vm.chat_messages.push(chat_message);
+                    scrollChatbox();
                 });
 
                 eventSocket.on('message_error', function() {
@@ -382,6 +397,7 @@
         // receive message from server
         function receiveMessage(message) {
             var message_text = message.message.trim().replace(/ +/g, ' ');
+            if (!message) { return; }
             var chat_message = {
                 message: message_text,
                 user: message.user

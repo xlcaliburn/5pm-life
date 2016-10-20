@@ -6,6 +6,9 @@ import User from '../user/user.model';
 import Queue from '../queue/queue.model';
 import mongoose from 'mongoose';
 
+var Chat = mongoose.model('Chat');
+var Message = mongoose.model('Message');
+
 var userController = require('../user/user.controller');
 var EmailTemplate = require('../email/templates/email.global');
 var emailCtrl = require('../email/email.controller');
@@ -13,7 +16,7 @@ var emailCtrl = require('../email/email.controller');
 function handleError(res, statusCode) {
 	statusCode = statusCode || 500;
 	return function(err) {
-		console.log('error is', err);
+		console.log('Error is', err);
 		res.status(statusCode).send(err);
 	};
 }
@@ -42,9 +45,9 @@ function saveUpdates(updates) {
 		var updated = _.merge(entity, updates);
 		updated.queue = updates.queue;
 		return updated.save({new : true})
-			.then(updated => {
-				return updated;
-			});
+		.then(updated => {
+			return updated;
+		});
 	};
 }
 
@@ -52,7 +55,7 @@ function removeEntity(res) {
 	return function(entity) {
 		if (entity) {
 			return entity.remove()
-				.then(respondWithAll(res, 200));
+			.then(respondWithAll(res, 200));
 		}
 	};
 }
@@ -70,47 +73,42 @@ function handleEntityNotFound(res) {
 // Gets a list of Events
 export function index(req, res) {
 	return Events.find().exec()
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	.then(respondWithResult(res))
+	.catch(handleError(res));
 }
 
 // Gets a single event from the DB
 export function show(req, res) {
 	var response = {};
-	return Events.findById(req.params.id, 'activity venue dt_start dt_end status').exec()
-		.then(function(event) {
-			if (!event) {
-				response.status = 'error';
-				return res.json({ response: response });
-			}
-			response.status = 'ok';
-			response.event_model = event;
-			return res.json({ response: response });
-		})
-		.catch(function(err) {
-			response.status = 'error';
-			response.error = err;
-			return res.json({ response: response });
-		});
+	return Promise.resolve(Events.findById(req.params.id, 'activity venue dt_start dt_end status').exec())
+	.then(function(event) {
+		if (!event) {
+			throw('No event found');
+		}
+		response.status = 'ok';
+		response.event_model = event;
+		return res.json({ response: response });
+	})
+	.catch(handleError(res));
 }
 
 // Admin level GetById
 export function admin_show(req, res) {
 	var response = {};
 	return Events.findById(req.params.id)
-		.populate('queue')
-		.populate('users','first_name last_name gender birthday ethnicity')
-		.exec()
-		.then(handleEntityNotFound(res))
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	.populate('queue')
+	.populate('users','first_name last_name gender birthday ethnicity')
+	.exec()
+	.then(handleEntityNotFound(res))
+	.then(respondWithResult(res))
+	.catch(handleError(res));
 }
 
 // Creates a new Events in the DB
 export function create(req, res) {
 	return Events.create(req.body)
-		.then(respondWithAll(res, 201))
-		.catch(handleError(res));
+	.then(respondWithAll(res, 201))
+	.catch(handleError(res));
 }
 
 // Updates an existing Events in the DB
@@ -119,19 +117,19 @@ export function update(req, res) {
 		delete req.body._id;
 	}
 	return Events.findById(req.params.id)
-		.exec()
-		.then(handleEntityNotFound(res))
-		.then(saveUpdates(req.body))
-		.then(respondWithResult(res))
-		.catch(handleError(res));
+	.exec()
+	.then(handleEntityNotFound(res))
+	.then(saveUpdates(req.body))
+	.then(respondWithResult(res))
+	.catch(handleError(res));
 }
 
 // Deletes a Events from the DB
 export function destroy(req, res) {
 	return Events.findById(req.params.id).exec()
-		.then(handleEntityNotFound(res))
-		.then(removeEntity(res))
-		.catch(handleError(res));
+	.then(handleEntityNotFound(res))
+	.then(removeEntity(res))
+	.catch(handleError(res));
 }
 
 // user confirms event inside event confirmation
@@ -141,55 +139,87 @@ export function confirmEvent(req, res) {
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
 	var user_id = new mongoose.Types.ObjectId(token_result._id);
+	var current_event;
+	var queue_id;
+	var current_user;
 
 	// remove user from queue
-	return Queue.findOne({ user: user_id }).exec()
-	.then(function(queue) {
-		var queue_id = queue._id;
-
-		// remove queue
-		return Queue.remove({ _id: queue_id }).exec()
-		.then(()=>{
-			// update user event_status to 'Confirmed'
-			return User.findById(token_result._id).exec()
-			.then((user)=>{
-				user.event_status = 'Confirmed';
-				return user.save()
-				.then(function() {
-
-					return Events.findById(email_data.id).exec()
-					.then((event)=>{
-
-						// remove corresponding queue from event
-						event.queue.remove(queue_id);
-						return event.save()
-						.then(()=>{
-
-							// send email to user with event details
-							var url_origin = req.headers.origin.replace('http://', 'http://www.');
-							email_data.template = 'event-confirmation-accept';
-							email_data.first_name = user.first_name;
-							email_data.event_link = url_origin + '/home/event/' + email_data.id;
-
-							var text_version = EmailTemplate.get_text_version(email_data);
-							var html_version = EmailTemplate.get_html_version(email_data);
-							var email_content = {
-								to: user.email,
-								subject: '[5PMLIFE]' + email_data.activity + ' at ' + email_data.venue,
-								text: text_version,
-								html: html_version
-							};
-
-							emailCtrl.sendEmail(email_content);
-							response.status = 'ok';
-							return res.json({ response: response });
-						});
-					});
-				});
+	return Promise.resolve(Queue.findOne({ user: user_id }).exec())
+	.then((queue) => {
+		if (!queue) { throw ('You have already confirmed this event!'); }
+		queue_id = queue._id;
+		return Promise.resolve(Queue.remove({ _id: queue_id }).exec()); // remove queue
+	})
+	.then(() => {
+		return Promise.resolve(User.findById(token_result._id).exec());
+	})
+	.then((user) => {
+		current_user = user;
+		user.event_status = 'Confirmed';
+		return user.save();
+	})
+	.then(() => {
+		return Promise.resolve(Events.findById(email_data.id).exec());
+	})
+	.then((event) => {
+		// remove corresponding queue from event
+		if (!event) { throw ('No event found'); }
+		current_event = event._id;
+		event.queue.remove(queue_id);
+		return event.save();
+	})
+	.then(() => {
+		// find chat that corresponds to event, if none, create one
+		return Promise.resolve(Chat.findOne({eventId: current_event }));
+	})
+	.then((chat) => {
+		var message;
+		if (!chat) {
+			// create new chat
+			message = new Message({
+				user: current_user._id,
+				message: 'has joined the event!',
+				timestamp: new Date()
 			});
-		});
+
+			var chatroom = new Chat({
+				eventId: current_event,
+				messages: [message]
+			});
+			chatroom.save();
+		} else {
+			message = new Message({
+			   	user: current_user._id,
+			   	message: 'has joined the event!',
+			   	timestamp: new Date()
+			});
+			chat.messages.push(message);
+			chat.save();
+		}
+	})
+	.then(() => {
+		// send email to user with event details
+		var url_origin = (req.headers.origin ? req.headers.origin.replace('http://', 'http://www.') : 'http://www.' + req.headers.host);
+
+		email_data.template = 'event-confirmation-accept';
+		email_data.first_name = current_user.first_name;
+		email_data.event_link = url_origin + '/home/event/' + email_data.id;
+
+		var text_version = EmailTemplate.get_text_version(email_data);
+		var html_version = EmailTemplate.get_html_version(email_data);
+		var email_content = {
+			to: current_user.email,
+			subject: '[5PMLIFE]' + email_data.activity + ' at ' + email_data.venue,
+			text: text_version,
+			html: html_version
+		};
+
+		emailCtrl.sendEmail(email_content);
+		response.status = 'ok';
+		return res.json({ response: response });
 	})
 	.catch(handleError(res));
+
 }
 
 // user declines an event inside event confirmation
@@ -198,44 +228,43 @@ export function declineEvent(req, res) {
 	var event_id = req.body.id;
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
+	var queue_id;
 
 	// Queue table - change user status to 'Pending'
 	var user_id = new mongoose.Types.ObjectId(token_result._id);
-	return Queue.findOne({ user: user_id }).exec()
-	.then(function(queue) {
+
+	return Promise.resolve(Queue.findOne({ user: user_id }).exec())
+	.then((queue) => {
 		if (!queue) {
-			return res.status(403).send('unauthorized');
+			throw('Unauthorized');
 		}
-		var queue_id = queue._id;
+		queue_id = queue._id;
 		queue.status = 'Searching';
-		return queue.save()
-		.then(function() {
-
-
-			return Events.findById(event_id).exec()
-			.then(function(event) {
-
-				// Event table - remove user and queue from event
-				event.users.remove(user_id);
-				event.queue.remove(queue_id);
-				return event.save()
-				.then(function() {
-
-					// User table - Change event_status and current_event to null
-					return User.findById(token_result._id).exec()
-					.then(function(user) {
-						user.event_status = 'Pending';
-						user.current_event = null;
-						return user.save()
-						.then(function() {
-							response.status = 'ok';
-							return res.json({ response: response });
-						});
-					});
-				});
-			});
-		});
-	}).catch(handleError(res));
+		queue.save();
+	})
+	.then(function() {
+		return Promise.resolve(Events.findById(event_id).exec());
+	})
+	.then((event) => {
+		// Event table - remove user and queue from event
+		event.users.remove(user_id);
+		event.queue.remove(queue_id);
+		event.save();
+	})
+	.then(() => {
+		// User table - Change event_status and current_event to null
+		return Promise.resolve(User.findById(token_result._id).exec());
+	})
+	.then((user) => {
+		user.event_status = 'Pending';
+		user.current_event = null;
+		user.save();
+	})
+	.then(function() {
+		response.status = 'ok';
+		return res.json({ response: response });
+	})
+	.catch(handleError(res));
 }
 
 // leave event after accepting
@@ -247,22 +276,37 @@ export function leaveEvent(req, res) {
 
 	// User - change event_status = null
 	// User - change current_event = null
-	return User.findById(user_id).exec()
+	return Promise.resolve(User.findById(user_id).exec())
 	.then((user)=> {
 		user.event_status = null;
 		user.current_event = null;
-		return user.save()
-		.then(()=>{
-			// Event - remove user from event
-			return Events.findById(event_id).exec()
-			.then((event)=>{
-				event.users.remove(user_id);
-				return event.save()
-				.then((new_event)=>{
-					return res.json({ response: response });
-				});
-			});
+		user.save();
+	})
+	.then(() => {
+		// Event - remove user from event
+		return Promise.resolve(Events.findById(event_id).exec());
+	})
+	.then((event) => {
+		event.users.remove(user_id);
+		return event.save();
+	})
+	.then(() => {
+		// send chat message
+		var eventId = new mongoose.Types.ObjectId(event_id);
+		return Promise.resolve(Chat.findOne({eventId: eventId}).exec());
+	})
+	.then((chat) => {
+		var current_user = new mongoose.Types.ObjectId(user_id);
+		var leave_message = new Message({
+			user: current_user,
+			message: 'has left the event.',
+			timestamp: new Date()
 		});
+		chat.messages.push(leave_message);
+		chat.save();
+	})
+	.then(()=>{
+		return res.json({ response: response });
 	}).catch(handleError(res));
 }
 
@@ -279,57 +323,48 @@ export function getAttendees(req, res) {
 		var token_result = userController.getDecodedToken(token);
 	}
 
-	return Events.findById(event_id).exec()
-		.then(function(event) {
+	return Promise.resolve(Events.findById(event_id).exec())
+	.then((event) => {
+		// fetch all of the users based on their ObjectId
+		var user_array = event.users;
+		return Promise.resolve(User.find({ _id: { $in: user_array }}).exec());
+	})
+	.then(function(users) {
+		var confirmed_users = [];
+		var isAllowed = false;
+		var current_user;
 
-			// fetch all of the users based on their ObjectId
-			var user_array = event.users;
-			return User.find({ _id: { $in: user_array }}).exec()
-				.then(function(users) {
-					var confirmed_users = [];
-					var isAllowed = false;
-					var current_user;
+		// check if user is allowed to view event
+		for (var i = 0; i < users.length; i++) {
+			var user_id = users[i]._id.toString();
+			if (user_id === token_result._id) {
+				isAllowed = true;
+				current_user = {
+					name: users[i].first_name + ' ' + users[i].last_name,
+					profile_picture: users[i].profile_picture.current,
+					status: users[i].event_status
+				};
+				confirmed_users.push(current_user);
+				continue;
+			}
 
-					// check if user is allowed to view event
-					for (var i = 0; i < users.length; i++) {
-						var user_id = users[i]._id.toString();
-						if (user_id === token_result._id) {
-							isAllowed = true;
-							current_user = {
-								name: users[i].first_name + ' ' + users[i].last_name,
-								profile_picture: users[i].profile_picture.current,
-								status: users[i].event_status
-							};
-							confirmed_users.push(current_user);
-							continue;
-						}
+			if (users[i].event_status === 'Confirmed') {
+				current_user = {
+					name: users[i].first_name + ' ' + users[i].last_name,
+					profile_picture: users[i].profile_picture.current
+				};
+				confirmed_users.push(current_user);
+			}
+		}
 
-						if (users[i].event_status === 'Confirmed') {
-							current_user = {
-								name: users[i].first_name + ' ' + users[i].last_name,
-								profile_picture: users[i].profile_picture.current
-							};
-							confirmed_users.push(current_user);
-						}
-					}
+		if (!isAllowed) {
+			throw('Unauthorized');
+		}
 
-					if (!isAllowed) {
-						return res.status(403).send('Unauthorized');
-					}
-
-					// everything is good, return the attendees
-					response.status = 'ok';
-					response.attendees = confirmed_users;
-					return res.json({ response: response });
-				})
-				.catch(function(err) {
-					response.status = 'error';
-					return res.json({ response: response });
-				});
-		})
-		.catch(function(err) {
-			response.status = 'error';
-			response.error = err;
-			return res.json({ response: response });
-		});
+		// everything is good, return the attendees
+		response.status = 'ok';
+		response.attendees = confirmed_users;
+		return res.json({ response: response });
+	})
+	.catch(handleError(res));
 }

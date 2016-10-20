@@ -58,7 +58,7 @@ export function store(req, res) {
             // create chat
             chatroom = new Chat({
                 eventId: params.event_id,
-                message: []
+                messages: []
             });
         } else if (current_event && chat) {
             chatroom = chat;
