@@ -143,8 +143,6 @@
 
 		function updateQueueStatus(newStatus) {
 			for (var i=0; i < vm.queues_to_add.length; i++) {
-				console.log(vm.queues_to_add[i]);
-
 				Queue.put(vm.queues_to_add[i]._id, {status : newStatus})
 					.catch(function(err) { console.log(err); }); // jshint ignore:line
 			}
@@ -182,15 +180,16 @@
 			{
 				// TODO: Very bad way of writing this, this should be addressed on the refactor. Move the code to server side
 				var user_data;
-				Users.getById(vm.selected_event.users[user])
+				Users.getById(vm.selected_event.users[user]._id)
 					.then(function(res){
-					user_data = res.data;
-					user_data.event_status = null;
-					user_data.event_history.push(vm.selected_event._id);
-					user_data.current_event = null;
-				}).then(function() {
-					Users.updateById(vm.selected_event.users[user], user_data);
-				});
+						user_data = res.data;
+						user_data.event_status = null;
+						user_data.event_history.push(vm.selected_event._id);
+						user_data.current_event = null;
+					}).then(function() {
+						Users.updateById(vm.selected_event.users[user]._id, user_data);
+					})
+				;
 			}
 
 			vm.selected_event.status = vm.enum_status.ENDED;
@@ -207,9 +206,7 @@
 							queues: vm.queues_to_add
 						};
 
-						Queue.triggerEventStart(queue_data).then(function(res) {
-							console.log(res.data);
-						});
+						Queue.triggerEventStart(queue_data);
 					}
 
 					$state.go('admin.events', {}, { reload: true });

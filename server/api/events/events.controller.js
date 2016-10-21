@@ -70,9 +70,11 @@ function handleEntityNotFound(res) {
 	};
 }
 
-// Gets a list of Events
+// Gets a list of live events
+// TODO: Make this more generic on refactor
 export function index(req, res) {
-	return Events.find().exec()
+	return Events.find({'status' : {$ne : 'Ended'}})
+	.exec()
 	.then(respondWithResult(res))
 	.catch(handleError(res));
 }
