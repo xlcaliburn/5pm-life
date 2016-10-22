@@ -42,10 +42,18 @@ function pickActivity(param) {
 }
 
 function pickVenue(activity, param) {
-	// TODO: Hook up with actual Venues
-	return {venue_name: 'test'};
+	Venues
+		.find({
+			tags : {$in : param.tags}
+		})
+		.then(function(activities){
+			if (activities.length > 0) {
+				var index = Math.floor((Math.random() * activities.length));
+				return activities[index];
+			}
+		})
+	;
 }
-
 
 function addQueueToEvent(queueId, ev) {
 	ev.queue.push(queueId);
@@ -104,14 +112,13 @@ function clearEmptyEvents() {
 	;
 }
 
-export function test(req, res) {
-	pickActivity({tags:['Social']});
-
-	return res.sendStatus(200);
+function rebalance() {
+	// TODO
 }
 
 export function matchmake(req, res) {
 	clearEmptyEvents();
+	rebalance();
 
 	Queue
 		.find({'status' : 'Searching'}).exec()

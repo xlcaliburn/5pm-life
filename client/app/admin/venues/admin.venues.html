@@ -21,7 +21,11 @@
 				<tbody>
 					<tr ng-repeat="venue in vm.venues">
 						<td>{{ venue.venue_name }}</td>
-						<td></td>
+						<td>
+							<div ng-repeat="activity in venue.allowed_activities" class="chip">
+								{{activity.activity_name}}
+							</div
+						</td>
 						<td>{{ venue.address.street }}</td>
 						<td>{{ venue.address.city }}</td>
 						<td>

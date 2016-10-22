@@ -28,10 +28,9 @@
 				})
 				.error(function(data) {
 					console.log('Error: ' + data);
-				});
-
+				})
+			;
 		}
-
 
 		function submit() {
 			vm.create_form.tags = newTags.getTags();
@@ -45,10 +44,8 @@
 						$('#activity_tags').tags().removeLastTag();
 					}
 
-					$uibModalInstance.close(data);
+					$uibModalInstance.close();
 			});
-
 		}
 	}
-
 })();

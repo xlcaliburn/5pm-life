@@ -1,5 +1,4 @@
 (function () {	'use strict';
-
 	angular
 		.module('fivepmApp.admin')
 		.controller('AdminActivitiesController', AdminActivitiesController);
@@ -18,9 +17,9 @@
 
 		function init() {
 			Enums.getByType('activity_tag')
-				.success(function(data) {
-					for(var tag in data) {
-						validTags.push(data[tag]);
+				.then(function(res) {
+					for(var tag in res.data) {
+						validTags.push(res.data[tag]);
 					}
 					newTags = $('#activity_tags').tags({
 						suggestions: validTags,
@@ -28,29 +27,19 @@
 						suggestOnClick: true
 					});
 				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
-
-				getActivities();
-		}
-
-		function getActivities() {
+				.catch((err)=>console.log('Error: ' + err));
 
 			Activities.get()
-				.success(function(data) {
-					vm.activities = data;
+				.then(function(res) {
+					vm.activities = res.data;
 				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
+				.catch((err)=>console.log('Error: ' + err))
+			;
 		}
 
 		function deleteActivity(id) {
 			Activities.delete(id)
-				.success(function(data) {
-					vm.activities = data;
-				});
+				.then(()=>init());
 		}
 
 		function createModal() {
@@ -60,13 +49,9 @@
 				controller: 'ActivityModalController',
 				controllerAs: 'vm',
 				size: 'lg',
-				resolve: {
-				}
+				resolve: {}
 			});
-
-			modalInstance.result.then(function(data) {
-				vm.activities = data;
-			}, function () {});
+			modalInstance.result.then(()=>init());
 		}
 	}
 })();

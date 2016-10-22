@@ -15,10 +15,8 @@ router.get('/cancel/:token', controller.cancelEventSearch);
 router.post('/', controller.create);
 router.post('/triggerEvent', controller.triggerEvent);
 router.post('/matchmake', matchmake.matchmake);
-router.post('/test', matchmake.test);
 
 router.put('/:id', controller.update);
-
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 

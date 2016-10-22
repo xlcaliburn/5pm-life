@@ -53,7 +53,9 @@ function handleEntityNotFound(res) {
 
 // Gets a list of venues
 export function index(req, res) {
-	return venues.find().sort({type : 1}).exec()
+	return venues.find()
+		.populate('allowed_activities')
+		.sort({type : 1}).exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
 }

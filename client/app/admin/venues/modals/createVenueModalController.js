@@ -1,6 +1,4 @@
-(function() {
-	'use strict';
-
+(function() { 'use strict';
 	angular
 		.module('fivepmApp.admin')
 		.controller('CreateVenueModalController', CreateVenueModalController);
@@ -15,17 +13,24 @@
 
 		function init() {
 			Activities.get()
-				.success(function(data) {
-					vm.valid_activities = data;
-				});
+				.then(function(res) {
+					vm.valid_activities = res.data;
+				})
+			;
 		}
 
 		function submit() {
+			var valid = [];
+			for (var id in vm.form_data.valid_activities)
+			{
+				if(vm.form_data.valid_activities[id])
+				{
+					valid.push(id);
+				}
+			}
+			vm.form_data.allowed_activities = valid;
 			Venues.create(vm.form_data)
-				.success(function(data) {
-					$uibModalInstance.close(data);
-				});
+				.then(()=>$uibModalInstance.close());
 		}
 	}
-
 })();

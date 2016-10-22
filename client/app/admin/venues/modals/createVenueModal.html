@@ -10,20 +10,42 @@
 			</div>
 			<div class="form-group">
 				<label>Street</label>
-				<input type="text" class="form-control" ng-model="vm.form_data.street" required>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.street" required>
 			</div>
 			<div class="form-group">
 				<label>City</label>
-				<input type="text" class="form-control" ng-model="vm.form_data.city" required>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.city" required>
 			</div>
 			<div class="form-group">
 				<label>Province/State</label>
-				<input type="text" class="form-control" ng-model="vm.form_data.province" required>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.province" required>
 			</div>
 			<div class="form-group">
 				<label>Postal Code</label>
-				<input type="text" class="form-control" ng-model="vm.form_data.postal_code">                                         
+				<input type="text" class="form-control" ng-model="vm.form_data.address.postal_code">
 			</div>
+			<div class="form-group">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="activity in vm.valid_activities">
+							<td>{{activity.activity_name}}</td>
+							<td>
+								<div ng-repeat="tag in activity.tags" class="chip">
+									{{tag}}
+								</div>
+							</td>
+							<td>vm.
+							<td><input type="checkbox" ng-model="vm.form_data.valid_activities[activity._id]" id="{{activity._id}}" />
+							<label for="{{activity._id}}"></label></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
 			<div class="row right-align">
 				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 					<i class="material-icons right">send</i>

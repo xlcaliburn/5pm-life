@@ -10,19 +10,22 @@
 		vm.delete_venue = deleteVenue;
 		vm.create_modal = create_modal;
 
-		Venues.get()
-			.success(function(data) {
-				vm.venues = data;
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
+		init();
+
+		function init() {
+			Venues.get()
+				.then(function(res) {
+					vm.venues = res.data;
+					console.log(vm.venues);
+				})
+				.catch((err)=>console.log('Error: ' + err))
+			;
+		}
 
 		function deleteVenue(id) {
 			Venues.delete(id)
-				.success(function(data) {
-					vm.venues = data;
-				});
+				.then(()=>init())
+			;
 		}
 
 		function create_modal() {
@@ -35,9 +38,7 @@
 				resolve: {}
 			});
 
-			modalInstance.result.then(function(data) {
-				vm.venues = data;
-			});			
-		}		
+			modalInstance.result.then(()=>init());
+		}
 	}
 })();
