@@ -14,7 +14,10 @@
     "OTHER": {"order": 8, "value": "Other"}
   },
   "event_status":{
-    "CONFIRMED": {"order": 1, "value": "Confirmed"}
+    "ATTENDED": { "order": 1, "value": "Attended"},
+    "CONFIRMED": {"order": 2, "value": "Confirmed"},
+    "DECLINED": {"order": 3, "value": "Declined"},
+    "LEFT": {"order": 4, "value": "Left"},
   },
   "location":{
     "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}
