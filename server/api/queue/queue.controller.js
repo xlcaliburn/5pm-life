@@ -162,9 +162,9 @@ function validateQueueData(queue_data) {
 
 	// TODO: check if user already is in a queue
 
-	// TODO: check if start date is on a saturday
+	// TODO: check if start date is on a friday or saturday
 
-	// TODO: check if end date is on the same saturday
+	// TODO: check if end date is on the same friday or saturday
 
 	// TODO: check if the times are at least x amount of hours apart with start time < end time
 

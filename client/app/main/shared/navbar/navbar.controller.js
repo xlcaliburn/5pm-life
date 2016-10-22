@@ -432,7 +432,7 @@
                         format: 'mmmm dd, yyyy',
                         disable: [
                           { from: [0,0,0], to: yesterday },
-                          1,2,3,4,5,6
+                          1,2,3,4,5
                         ],
                         onSet: function( arg ){
                             if ( 'select' in arg ){ //prevent closing on selecting month/year
