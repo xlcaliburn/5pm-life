@@ -9,6 +9,10 @@ import mongoose from 'mongoose';
 var Chat = mongoose.model('Chat');
 var Message = mongoose.model('Message');
 
+var fs = require('fs');
+var enumsJSON = fs.readFileSync(__dirname + '/../enums/enums.json');
+var enums = JSON.parse(enumsJSON);
+
 var userController = require('../user/user.controller');
 var EmailTemplate = require('../email/templates/email.global');
 var emailCtrl = require('../email/email.controller');
@@ -260,6 +264,13 @@ export function declineEvent(req, res) {
 	.then((user) => {
 		user.event_status = 'Pending';
 		user.current_event = null;
+
+		var event_object_id = new mongoose.Types.ObjectId(event_id);
+		var past_event = {
+			event: event_object_id,
+			status: enums.event_status.DECLINED.value
+		};
+		user.event_history.push(past_event);
 		user.save();
 	})
 	.then(function() {
@@ -282,6 +293,11 @@ export function leaveEvent(req, res) {
 	.then((user)=> {
 		user.event_status = null;
 		user.current_event = null;
+		var past_event = {
+			event: new mongoose.Types.ObjectId(event_id),
+			status: enums.event_status.LEFT.value
+		};
+		user.event_history.push(past_event);
 		user.save();
 	})
 	.then(() => {

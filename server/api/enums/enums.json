@@ -1,31 +1,31 @@
 {
-  "activity_tag": {
-    "ACTIVE": {"order": 1, "value": "Active"},
-    "SOCIAL": {"order": 2, "value": "Social"}
-  },
-  "ethnicity":{
-    "CAUCASIAN": {"order": 1, "value": "Caucasian"},
-    "LATINO": {"order": 2, "value": "Latino/Hispanic"},
-    "AFRICAN": {"order": 3, "value": "African"},
-    "CARIBBEAN": {"order": 4, "value": "Caribbean"},
-    "SOUTH_ASIAN": {"order": 5, "value": "South Asian"},
-    "EAST_ASIAN":{"order": 6, "value": "East Asian"},
-    "MIXED": {"order": 7, "value": "Mixed"},
-    "OTHER": {"order": 8, "value": "Other"}
-  },
-  "event_status":{
-    "ATTENDED": { "order": 1, "value": "Attended"},
-    "CONFIRMED": {"order": 2, "value": "Confirmed"},
-    "DECLINED": {"order": 3, "value": "Declined"},
-    "LEFT": {"order": 4, "value": "Left"},
-  },
-  "location":{
-    "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}
-  },
-  "queue_status": {
-    "SEARCHING": {"order": 1, "value": "Searching"},
-    "PENDING": {"order": 2, "value": "Pending"},
-    "PENDING_USER_CONFIRM": {"order": 3, "value": "Pending User Confirmation"},
-    "ENDED": {"order": 4, "value": "Ended"}
-  }
+    "activity_tag": {
+        "ACTIVE": {"order": 1, "value": "Active"},
+        "SOCIAL": {"order": 2, "value": "Social"}
+    },
+    "ethnicity":{
+        "CAUCASIAN": {"order": 1, "value": "Caucasian"},
+        "LATINO": {"order": 2, "value": "Latino/Hispanic"},
+        "AFRICAN": {"order": 3, "value": "African"},
+        "CARIBBEAN": {"order": 4, "value": "Caribbean"},
+        "SOUTH_ASIAN": {"order": 5, "value": "South Asian"},
+        "EAST_ASIAN":{"order": 6, "value": "East Asian"},
+        "MIXED": {"order": 7, "value": "Mixed"},
+        "OTHER": {"order": 8, "value": "Other"}
+    },
+    "event_status":{
+        "ATTENDED": { "order": 1, "value": "Attended"},
+        "CONFIRMED": {"order": 2, "value": "Confirmed"},
+        "DECLINED": {"order": 3, "value": "Declined"},
+        "LEFT": {"order": 4, "value": "Left"}
+    },
+    "location":{
+        "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}
+    },
+    "queue_status": {
+        "SEARCHING": {"order": 1, "value": "Searching"},
+        "PENDING": {"order": 2, "value": "Pending"},
+        "PENDING_USER_CONFIRM": {"order": 3, "value": "Pending User Confirmation"},
+        "ENDED": {"order": 4, "value": "Ended"}
+    }
 }

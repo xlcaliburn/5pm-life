@@ -44,8 +44,11 @@ var UserSchema = new Schema({
 	salt: String,
 	facebook: {},
 	event_status : String,
-	current_event : ObjectId,
-	event_history : [ObjectId],
+	current_event : { type : Schema.Types.ObjectId, ref : 'Events'},
+	event_history : [{
+		event: { type : Schema.Types.ObjectId, ref : 'Events'},
+		status: String
+	}],
 	account_create_date : Date,
 	profile_picture: {
 		current : String,
