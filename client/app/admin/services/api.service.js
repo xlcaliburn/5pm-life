@@ -81,12 +81,6 @@
 				},
 				getByTypeAll : function(type) {
 					return $http.get('/api/enums/all/' + type);
-				},
-				create : function(data) {
-					return $http.post('/api/enums', data);
-				},
-				delete : function(id) {
-					return $http.delete('/api/enums/' + id);
 				}
 			};
 		})

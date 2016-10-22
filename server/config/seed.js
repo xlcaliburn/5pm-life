@@ -5,7 +5,6 @@
 
 'use strict';
 import User from '../api/user/user.model';
-import Enums from '../api/enums/enums.model';
 import Queue from '../api/queue/queue.model';
 
 // User.find({}).remove()

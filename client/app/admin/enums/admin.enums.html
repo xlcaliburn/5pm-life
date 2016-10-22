@@ -2,34 +2,21 @@
 	<h2>Enum Management</h2>
 	<div class="section">
 		<div class="row">
-				<div class="right-align">
-					<a class="btn-floating btn-small waves-effect waves-light green" ng-click="vm.create_modal()">
-						<i class="material-icons">add</i>
-					</a>
-				</div>
-
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Enum</th>
 							<th>Key</th>
 							<th>Value</th>
-							<th>
-								Order
-							</th>
+							<th>Order</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="enum in vm.enums">
-							<td>{{ enum.type }}</td>
-							<td>{{ enum.key }}</td>
-							<td>{{ enum.value }}</td>
-							<td>
-								{{enum.order}}</td>
-							</td>
-							<td>
-								<a href="" ng-click="vm.delete_enum(enum._id)"><i class="small material-icons">delete</i></a>
-							</td>
+							<td>{{enum.type}}</td>
+							<td>{{enum.key}}</td>
+							<td>{{enum.value}}</td>
+							<td>{{enum.order}}</td>
 						</tr>
 					</tbody>
 				</table>
