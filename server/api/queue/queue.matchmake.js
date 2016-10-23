@@ -27,29 +27,15 @@ function saveUpdates(updates) {
 
 // ========================================
 
-function pickActivity(param) {
-	Activities
-		.find({
-			tags : {$in : param.tags}
-		})
-		.then(function(activities){
-			if (activities.length > 0) {
-				var index = Math.floor((Math.random() * activities.length));
-				return activities[index];
-			}
-		})
-	;
-}
-
-function pickVenue(activity, param) {
+function pickVenue(activityId, param) {
 	Venues
 		.find({
-			tags : {$in : param.tags}
-		})
-		.then(function(activities){
-			if (activities.length > 0) {
-				var index = Math.floor((Math.random() * activities.length));
-				return activities[index];
+			allowed_activities : activityId
+		}).exec()
+		.then(function(venues){
+			if (venues.length > 0) {
+				var index = Math.floor((Math.random() * venues.length));
+				return venues[index];
 			}
 		})
 	;
@@ -65,6 +51,55 @@ function addQueueToEvent(queueId, ev) {
 	Events.findByIdAndUpdate(ev._id, { queue : ev.queue }).exec();
 }
 
+/////////////////////
+
+function createNewEvent(queue) {
+	var activity, venue;
+	return Activities.find({
+			tags : {$in : queue.search_parameters.tags}
+		}).exec()
+		.then(activities=>{
+			if (activities.length > 0) {
+				var index = Math.floor((Math.random() * activities.length));
+				activity = activities[index];
+				return activity;
+			}
+
+		})
+		.then(activity=>{
+			return Venues
+				.find({
+					allowed_activities : activity._id
+				}).exec()
+				.then(function(venues){
+					if (venues.length > 0) {
+						var index = Math.floor((Math.random() * venues.length));
+						venue = venues[index];
+						return venue;
+					}
+				})
+			;
+		})
+		.then(()=>{
+			var newEvent = {
+				dt_start : queue.search_parameters.event_search_dt_start,
+				dt_end : queue.search_parameters.event_search_dt_end,
+				dt_search_start : new Date(),
+				activity : activity,
+				venue : venue,
+				status : 'New'
+			};
+			console.log(newEvent);
+			return Events.create(newEvent)
+				.then(function(ev){
+					addQueueToEvent(queue._id, ev);
+					return ev;
+				})
+			;
+		})
+	;
+}
+
 function findEvent(queue) {
 	Events
 		.find({
@@ -72,30 +107,15 @@ function findEvent(queue) {
 			dt_start : { $lte : queue.search_parameters.event_search_dt_start },
 			dt_end : { $gte : queue.search_parameters.event_search_dt_end }
 			// TODO: Length of Queue < Venue.Allowed_Capacity
-		}).exec()
+		})
 		// More Conditions
 		.then(function(events) {
 			// If no eligible events
 			if (events.length === 0) {
-				var activity = pickActivity(queue.search_parameters);
-				var venue = pickVenue(activity, queue.search_parameters);
-
-				var newEvent = {
-					dt_start : queue.search_parameters.event_search_dt_start,
-					dt_end : queue.search_parameters.event_search_dt_end,
-					activity : activity,
-					venue : venue,
-					status : 'New'
-				};
-
-				Events.create(newEvent)
-					.then(function(ev){
-						addQueueToEvent(queue._id, ev);
-					})
-				;
+				return createNewEvent(queue);
 			}
 			else {
-				addQueueToEvent(queue._id, events[0]);
+				return addQueueToEvent(queue._id, events[0]);
 			}
 		})
 		.catch(function(err) {console.log(err);})
@@ -112,7 +132,7 @@ function clearEmptyEvents() {
 	;
 }
 
-function rebalance() {
+export function rebalance(req, res) {
 	// TODO
 }
 

@@ -365,8 +365,8 @@
 
             // tags
             var tags = [];
-            if (vm.social) { tags.push('social'); }
-            if (vm.active) { tags.push('active'); }
+            if (vm.social) { tags.push('Social'); }
+            if (vm.active) { tags.push('Active'); }
 
             // event start
             var start_date_string = vm.queue_date + ' ' + get_time(vm.queue_start_time);
