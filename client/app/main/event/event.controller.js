@@ -442,9 +442,8 @@
                 message: vm.message_input
             };
 
-            EventService.sendChatMessage(data, eventSocket).then(function(res) {
-                console.log(res);
-            });
+            eventSocket.emit('send_message', data);
+
             vm.message_input = '';
         }
 

@@ -38,13 +38,6 @@
                 return $http.post(url, event_details).then(function(res) {
                     return res.data;
                 });
-            },
-            sendChatMessage: function(data, eventSocket) {
-                var url = 'api/chat';
-                return $http.post(url, data).then(function(res) {
-                    eventSocket.emit('send_message', data);
-                    return res.data;
-                });
             }
         };
     }

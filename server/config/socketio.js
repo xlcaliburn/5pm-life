@@ -5,7 +5,11 @@
 
 import config from './environment';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 import User from '../api/user/user.model';
+
+var Chat = mongoose.model('Chat');
+var Message = mongoose.model('Message');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
@@ -126,18 +130,31 @@ socketio.on('connection', function(socket) {
         var user_id = getDecodedToken(user_token)._id;
         var error;
 
-        // get user id, name, and profile picture
-        User.findOne({ _id: user_id }, '_id first_name last_name profile_picture.current').exec()
-        .then((user)=> {
-            if (!user) { error = true; }
-            var message_data = {
-                user: user,
-                message: data.message
-            };
+		// store user message
+		return Chat.findOne({ eventId: data.event_id }).exec()
+		.then((chat) => {
+			// store user message
+			var message = new Message({
+				user: new mongoose.Types.ObjectId(user_id),
+				message: data.message,
+				timestamp: new Date()
+			});
+			chat.messages.push(message);
+			return chat.save();
+		}).then(() => {
+			// get user id, name, and profile picture
+			return User.findOne({ _id: user_id }, '_id first_name last_name profile_picture.current').exec();
+		})
+		.then((user) => {
+			if (!user) { error = true; }
+			var message_data = {
+				user: user,
+				message: data.message
+			};
 
-            // emit message to clients
-            socketio.sockets.in(data.event_id).emit('receive_message', message_data);
-        })
+			// emit message to clients
+			socketio.sockets.in(data.event_id).emit('receive_message', message_data);
+		})
         .catch((err)=> {
             // emit error
             socketio.sockets.in(data.event_id).emit('message_error');
