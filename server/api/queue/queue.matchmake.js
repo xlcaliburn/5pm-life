@@ -16,12 +16,9 @@ function handleError(res, statusCode) {
 }
 
 function saveUpdates(updates) {
-	return function(entity) {
+	return (entity) => {
 		var updated = _.merge(entity, updates);
-		return updated.save()
-			.then(updated => {
-				return updated;
-			});
+		return updated.save();
 	};
 }
 
@@ -32,7 +29,7 @@ function pickVenue(activityId, param) {
 		.find({
 			allowed_activities : activityId
 		}).exec()
-		.then(function(venues){
+		.then((venues) => {
 			if (venues.length > 0) {
 				var index = Math.floor((Math.random() * venues.length));
 				return venues[index];
@@ -45,7 +42,7 @@ function addQueueToEvent(queueId, ev) {
 	ev.queue.push(queueId);
 	Queue.findById(queueId).exec()
 		.then(saveUpdates({status : 'Pending'}))
-		.catch(function(err) {console.log(err);})
+		.catch((err) => {console.log(err);})
 	;
 
 	Events.findByIdAndUpdate(ev._id, { queue : ev.queue }).exec();
@@ -58,7 +55,7 @@ function createNewEvent(queue) {
 	return Activities.find({
 			tags : {$in : queue.search_parameters.tags}
 		}).exec()
-		.then(activities=>{
+		.then(activities => {
 			if (activities.length > 0) {
 				var index = Math.floor((Math.random() * activities.length));
 				activity = activities[index];
@@ -66,12 +63,12 @@ function createNewEvent(queue) {
 			}
 
 		})
-		.then(activity=>{
+		.then(activity => {
 			return Venues
 				.find({
 					allowed_activities : activity._id
 				}).exec()
-				.then(function(venues){
+				.then((venues) => {
 					if (venues.length > 0) {
 						var index = Math.floor((Math.random() * venues.length));
 						venue = venues[index];
@@ -80,7 +77,7 @@ function createNewEvent(queue) {
 				})
 			;
 		})
-		.then(()=>{
+		.then(() => {
 			var newEvent = {
 				dt_start : queue.search_parameters.event_search_dt_start,
 				dt_end : queue.search_parameters.event_search_dt_end,
@@ -91,25 +88,24 @@ function createNewEvent(queue) {
 			};
 			console.log(newEvent);
 			return Events.create(newEvent)
-				.then(function(ev){
-					addQueueToEvent(queue._id, ev);
-					return ev;
-				})
+				.then((ev) => {	return addQueueToEvent(queue._id, ev); })
 			;
 		})
 	;
 }
 
 function findEvent(queue) {
+	var param = queue.search_parameters;
+
 	Events
 		.find({
 			'status' : 'New',
-			dt_start : { $lte : queue.search_parameters.event_search_dt_start },
-			dt_end : { $gte : queue.search_parameters.event_search_dt_end }
+			dt_start : { $lte : param.event_search_dt_start },
+			dt_end : { $gte : param.event_search_dt_end }
 			// TODO: Length of Queue < Venue.Allowed_Capacity
 		})
 		// More Conditions
-		.then(function(events) {
+		.then((events) => {
 			// If no eligible events
 			if (events.length === 0) {
 				return createNewEvent(queue);
@@ -118,7 +114,7 @@ function findEvent(queue) {
 				return addQueueToEvent(queue._id, events[0]);
 			}
 		})
-		.catch(function(err) {console.log(err);})
+		.catch((err) => {console.log(err);})
 	;
 }
 
@@ -128,7 +124,7 @@ function clearEmptyEvents() {
 			'users' : { $size: 0 },
 			'queue' : { $size: 0 }
 		}).exec()
-		.catch(function(err) {console.log(err);})
+		.catch((err) => {console.log(err);})
 	;
 }
 
@@ -142,13 +138,13 @@ export function matchmake(req, res) {
 
 	Queue
 		.find({'status' : 'Searching'}).exec()
-		.then(function(queues){
+		.then((queues) => {
 			for (var queue in queues) {
 				findEvent(queues[queue]);
 			}
 			return res;
 		})
-		.catch(()=>handleError(res))
+		.catch(() => handleError(res))
 	;
 
 	return res.sendStatus(200);
