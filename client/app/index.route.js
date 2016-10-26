@@ -61,7 +61,14 @@
 							});
 						});
 					}
-				}
+				},
+				userData: function($state, Users) {
+					return getUser($state, Users).then(function(user) {
+						if (!user.verified) {
+							$state.go('signup');
+						}
+					});
+				},
 			}
 		})
 
