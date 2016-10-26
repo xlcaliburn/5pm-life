@@ -27,7 +27,7 @@
                 <div class="col l6 m6 s12 setting-card setting-border-right">
                     <div class="settings-title">PROFILE PICTURE</div>
                     <div class="valign-wrapper">
-                        <img src="{{ settings.user.profile_picture.current || settings.profile_picture }}" class="settings-profile-pic valign">
+                        <img ng-src="{{ vm.user.profile_picture.current }}" class="settings-profile-pic valign">
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                 <div class="col l6 m6 s12 setting-card">
                     <div class="settings-title">NAME</div>
                     <div class="settings-subtitle">
-                        {{ settings.user.first_name + ' ' + settings.user.last_name }}
+                        {{ vm.user.first_name + ' ' + vm.user.last_name }}
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                     <div class="settings-title">BIRTHDAY</div>
                     <div class="settings-subtitle">
 
-                        {{ settings.format_birthday() }}
-                        <span class="settings-age">({{ settings.get_age() }} years old)</span>
+                        {{ vm.formatBirthday() }}
+                        <span class="settings-age">({{ vm.getAge() }} years old)</span>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                 <div class="col l6 m6 s12 setting-card">
                     <div class="settings-title">EMAIL</div>
                     <div class="settings-subtitle">
-                        {{ settings.user.email }}
+                        {{ vm.user.email }}
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 <div class="col l6 m6 s12 setting-card setting-border-right">
                     <div class="settings-title">GENDER</div>
                     <div class="settings-subtitle">
-                        {{ settings.user.gender }}
+                        {{ vm.getGender() }}
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                 <div class="col l6 m6 s12 setting-card">
                     <div class="settings-title">ETHNICITY</div>
                     <div class="settings-subtitle">
-                        {{ settings.user.ethnicity }}
+                        {{ vm.getEthnicity() }}
                     </div>
                 </div>
             </div>
