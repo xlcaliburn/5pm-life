@@ -9,7 +9,7 @@
     /* jshint expr: true */
     function SignupController($state, $timeout, loading_spinner, SignupService, enumsData, userData) {
         var vm = this;
-        console.log(enumsData);
+
         // view
         vm.user = userData;
         vm.error_message;
@@ -73,10 +73,21 @@
         //vm.age = moment().diff(moment('19900326', 'YYYYMMDD'), 'years');
 
         // variables
+        vm.timeout = null;
         vm.current_stage = 1;
         vm.completed_stages = [];
 
         // functions
+        vm.stopTimeout = stopTimeout;
+
+        // prevent state.go home if link is clicked
+        function stopTimeout() {
+            if (vm.timeout) {
+                $timeout.cancel(vm.timeout);
+            }
+        }
+
+
         vm.init_jquery_elements = function() {
 
             // white background for this section
@@ -215,7 +226,7 @@
                             $timeout(function() {
                                 angular.element('.fade-me-hard').removeClass('invis');
                             }, 1000);
-                            $timeout(function() {
+                            vm.timeout = $timeout(function() {
                                 $state.go('home');
                             }, 10000);
                         }, 1000);
