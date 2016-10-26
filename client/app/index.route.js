@@ -2,12 +2,12 @@
 	'use strict';
 
 	angular
-		.module('fivepmApp')
-		.config(routerConfig);
+	.module('fivepmApp')
+	.config(routerConfig);
 
 	/** @ngInject */
-function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
-	$stateProvider
+	function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+		$stateProvider
 		.state('welcome', {
 			url: '/',
 			title: '5PM.LIFE - Meet, Share, Experience',
@@ -119,22 +119,13 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			scopeTitle: 'Settings',
 			templateUrl: 'app/main/settings/settings.html',
 			controller: 'SettingsController',
-			controllerAs: 'settings',
+			controllerAs: 'vm',
 			resolve: {
-				user: function($cookies, $q, $state, $timeout, SettingsService) {
-					var token = $cookies.get('token');
-					return SettingsService.getUserSettings(token).then(function(res) {
-						if (res.data.response.status === 'ok') {
-							return res.data.response.user;
-						} else if (res.data.response.status === 'error') {
-							return $q.reject().catch(function() {
-								$state.go('login');
-							});
-						}
-						return $q.reject().catch(function() {
-							$state.go('login');
-						});
-					});
+				userData: function($state, Users) {
+					return getUser($state, Users);
+				},
+				enumsData: function(Enums) {
+					return getEnumData(Enums);
 				}
 			}
 		})
@@ -150,9 +141,8 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 				user: function($cookies, $state, $q) {
 					var token = $cookies.get('token');
 
-					if (!token) {
-						return;
-					} else {
+					if (!token) { return; }
+					else {
 						return $q.reject().catch(function() {
 							$state.go('home');
 						});
@@ -168,10 +158,11 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			controller: 'SignupController',
 			controllerAs: 'signup',
 			resolve: {
-				redirect: function($q, $state) {
-					return $q.reject().catch(function() {
-						$state.go('login');
-					});
+				userData: function($state, SignupService) {
+					return getUserInfo($state, SignupService);
+				},
+				enumsData: function(Enums) {
+					return getEnumData(Enums);
 				}
 			}
 		})
@@ -215,16 +206,46 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 			//controllerAs: 'admin',
 			authenticate: 'admin'
 		})
-	;
+		;
 
-	$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/');
 
-	$locationProvider.html5Mode({
-		enabled: true,
-		requireBase: false
-	});
-	//$locationProvider.html5Mode(true).hashPrefix('!');
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
+		});
+		//$locationProvider.html5Mode(true).hashPrefix('!');
 
-  }
+	}
+
+	// get user data
+	getUser.$inject = ['$state', 'Users'];
+	function getUser($state, Users) {
+		return Users.getMe().then(function(res) {
+			var user = res.data;
+			if (!user.verified) { $state.go('signup'); }
+			return user;
+		});
+	}
+
+	// get user data (for signup)
+	getUserInfo.$inject = ['$state', 'SignupService'];
+	function getUserInfo($state, SignupService) {
+		return SignupService.getUserInfo().then(function(res) {
+			var user = res.data;
+			if (user.verified) {
+				$state.go('home');
+			}
+			return user;
+		});
+	}
+
+	// get enums data
+	getEnumData.$inject = ['Enums'];
+	function getEnumData(Enums) {
+		return Enums.get().then(function(res) {
+			return res.data;
+		});
+	}
 
 })();

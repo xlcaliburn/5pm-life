@@ -20,8 +20,9 @@ export function getByType(req, res) {
 // Gets all enums of a certain type and return the name values only
 export function getByTypeNames(req, res) {
 	var enumValues = [];
-	for (var i = 0; i < enums[req.params.type].length; i++){
-		enumValues[i] = enums[req.params.type][i].value;
+	var type = req.params.type;
+	for (var val in enums[type]) {
+		enumValues.push(enums[type][val]);
 	}
 	return res.json(enumValues);
 }

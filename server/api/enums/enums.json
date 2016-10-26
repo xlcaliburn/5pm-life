@@ -27,5 +27,9 @@
         "PENDING": {"order": 2, "value": "Pending"},
         "PENDING_USER_CONFIRM": {"order": 3, "value": "Pending User Confirmation"},
         "ENDED": {"order": 4, "value": "Ended"}
+    },
+    "gender": {
+        "MALE": {"order": 1, "value": "Male"},
+        "FEMALE": {"order": 2, "value": "Female"}
     }
 }

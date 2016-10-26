@@ -5,6 +5,14 @@ var VerificationEmail = require('../email/templates/email.verification');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Enums = require('../enums/enums.controller');
+import enumsJSON from '../enums/enums.json';
+
+function handleError(res, statusCode) {
+	statusCode = statusCode || 500;
+	return function(err) {
+		res.status(statusCode).send(err);
+	};
+}
 
 function valid_email(email_address) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -20,8 +28,6 @@ function validate_user(data) {
         - ethnicity: ['Caucasian', 'African', 'South East Asian', 'Native American', 'Indian', 'Middle East', 'Mixed', 'Other']
         - gender: ['Male', 'Female']
         - email_address
-        - password
-        - confirm password
     */
 
     var error_message;
@@ -61,17 +67,11 @@ function validate_user(data) {
     /* Personal Details
     ************************************************/
     //var valid_ethnicity = ['Caucasian', 'Latino/Hispanic', 'African', 'Caribbean', 'South Asian', 'East Asian', 'Mixed', 'Other'];
-    var valid_gender = ['Male', 'Female'];
 
     // check blank inputs
-    if (!data.ethnicity) { error_message = "Please select an ethnicity";}
-    else if (!data.gender) { error_message = "Please select a gender"; }
+    if (!enumsJSON.ethnicity[data.ethnicity]) { error_message = "Please select an ethnicity";}
+    else if (!enumsJSON.gender[data.gender]) { error_message = "Please select a gender"; }
 
-    //check ethnicity
-    //if (valid_ethnicity.indexOf(data.ethnicity) < 0) { error_message = "Please select an ethnicity"; }
-
-    // check gender
-    if (valid_gender.indexOf(data.gender) < 0) { error_message = "Please select a gender"; }
 
     if (error_message) {
         response.status = 'error';
@@ -84,17 +84,11 @@ function validate_user(data) {
     ************************************************/
     // blank inputs
     if (!data.email_address) { error_message = "Please enter an email address"; }
-    else if (!data.password) { error_message = "Please enter a password with a minimum length of 8 characters"; }
-    else if (!data.confirm_password) { error_message = "Please re-type your password"; }
 
     // invalid email address
-    else if (!valid_email(data.email_address)) { error_message = "Please enter a valid email address"; }
-
-    // short password length
-    else if (data.password.length < 8) { error_message = "Please enter a password with a minimum length of 8 characters"; }
-
-    // password mismatch
-    else if (data.password !== data.confirm_password) { error_message = "Your passwords do not match"; }
+    else if (!valid_email(data.email_address)) {
+        error_message = "Please enter a valid email address";
+    }
 
     if (error_message) {
         response.status = 'error';
@@ -113,7 +107,6 @@ function validate_user(data) {
     response.user.ethnicity = data.ethnicity;
     response.user.gender = data.gender;
     response.user.email = data.email_address.toLowerCase();
-    response.user.password = data.password;
 
     // change birthday to date
     var bday_string = data.birthday.year + '-' + data.birthday.month + '-' + data.birthday.day;
@@ -126,44 +119,22 @@ export function validate_save(req, res) {
     // validate first
     var response = validate_user(req.body);
     if (response.status === 'ok') {
-        response.user.verified = false;
 
-        var newUser = new User(response.user);
-
-        // set default profile picture
-        newUser.profile_picture.current = 'default_profile.png';
-        newUser.save()
-        .then(function(user) {
-            var url_origin = req.headers.origin.replace('http://', 'http://www.');
-            var temp_user = {
-                id: user.id,
-                first_name: user.first_name,
-                verification_link: url_origin + '/signup/verify/' + user.id
-            };
-
-            var email_content = {
-                to: req.body.email_address,
-                subject: '[5PMLIFE] Thank you for signing up!',
-                text: VerificationEmail.get_text_version(temp_user),
-                html: VerificationEmail.get_html_version(temp_user)
-            };
-            email_controller.sendEmail(email_content);
+        return User.findById(req.user._id).exec()
+        .then((user) => {
+            user.first_name = req.body.first_name;
+            user.last_name = req.body.last_name;
+            user.email_address = req.body.email_address.toLowerCase();
+            user.ethnicity = req.body.ethnicity;
+            user.gender = req.body.gender;
+            user.birthday = new Date(req.body.birthday.year + '/' + req.body.birthday.month + '/' + req.body.birthday.day);
+            user.verified = true;
+            return user.save();
+        })
+        .then(() => {
             return res.json({response: response});
         })
-        .catch(function(err) {
-            if (err.errors) {
-                response.status = 'error';
-                if (err.errors.email) {
-                    if (err.errors.email.message) {
-                        response.error_message = err.errors.email.message;
-                        response.stage = 3;
-                    }
-                }
-            }
-            response.error = err;
-            return res.json({response: response});
-        });
-
+        .catch(handleError(res));
     } else {
         return res.json({response: response});
     }

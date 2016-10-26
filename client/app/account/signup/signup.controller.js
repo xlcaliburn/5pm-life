@@ -7,98 +7,76 @@
 
     /** @ngInject */
     /* jshint expr: true */
-    function SignupController($timeout, loading_spinner, SignupService, Enums) {
+    function SignupController($state, $timeout, loading_spinner, SignupService, enumsData, userData) {
         var vm = this;
-        vm.ethnicity_labels = [];
-
-        Enums.getByTypeNames('ethnicity')
-            .then(function(res) {
-                vm.ethnicity_labels = res.data;
-            })
-            .then(function() {
-                // model
-                vm.steps = [
-                    {
-                        stage: 1,
-                        order_id: 1,
-                        key: 'first_name',
-                        value: 'first name',
-                        type: 'input'
-                    },
-                    {
-                        stage: 1,
-                        order_id: 2,
-                        key: 'last_name',
-                        value: 'last name',
-                        type: 'input'
-                    },
-                    {
-                        stage: 1,
-                        order_id: 3,
-                        key: 'birthday',
-                        value: 'birthday',
-                        type: 'date'
-                    },
-                    {
-                        stage: 2,
-                        order_id: 4,
-                        key: 'ethnicity',
-                        value: 'ethnicity',
-                        type: 'select',
-                        data: vm.ethnicity_labels
-                    },
-                    {
-                        stage: 2,
-                        order_id: 5,
-                        key: 'gender',
-                        value: 'gender',
-                        type: 'select',
-                        data: ['Male', 'Female']
-                    },
-                    {
-                        stage: 3,
-                        order_id: 6,
-                        key: 'email_address',
-                        value: 'email address',
-                        type: 'input'
-                    },
-                    {
-                        stage: 3,
-                        order_id: 7,
-                        key: 'password',
-                        value: 'password',
-                        type: 'password'
-                    },
-                    {
-                        stage: 3,
-                        order_id: 8,
-                        key: 'confirm_password',
-                        value: 'confirm password',
-                        type: 'password'
-                    }
-                ];
-            });
-
+        console.log(enumsData);
         // view
+        vm.user = userData;
         vm.error_message;
-        vm.first_name;
-        vm.last_name;
+        vm.first_name = userData.first_name;
+        vm.last_name = userData.last_name;
         vm.birthday = {
-            day: '',
-            month: '',
-            year: ''
+            day: moment(userData.birthday).format('D'),
+            month: moment(userData.birthday).format('MM'),
+            year: moment(userData.birthday).format('YYYY')
         };
         vm.ethnicity;
         vm.gender;
-        vm.email_address;
-        vm.password;
-        vm.confirm_password;
+        vm.email_address = userData.email;
+        vm.steps = [
+            {
+                stage: 1,
+                order_id: 1,
+                key: 'first_name',
+                value: 'first name',
+                type: 'input'
+            },
+            {
+                stage: 1,
+                order_id: 2,
+                key: 'last_name',
+                value: 'last name',
+                type: 'input'
+            },
+            {
+                stage: 1,
+                order_id: 3,
+                key: 'birthday',
+                value: 'birthday',
+                type: 'date'
+            },
+            {
+                stage: 2,
+                order_id: 4,
+                key: 'ethnicity',
+                value: 'ethnicity',
+                type: 'select',
+                data: enumsData.ethnicity
+            },
+            {
+                stage: 2,
+                order_id: 5,
+                key: 'gender',
+                value: 'gender',
+                type: 'select',
+                data: enumsData.gender
+            },
+            {
+                stage: 3,
+                order_id: 6,
+                key: 'email_address',
+                value: 'email address',
+                type: 'input'
+            }
+        ];
 
         //vm.age = moment().diff(moment('19900326', 'YYYYMMDD'), 'years');
 
         // variables
         vm.current_stage = 1;
         vm.completed_stages = [];
+
+        // functions
         vm.init_jquery_elements = function() {
 
             // white background for this section
@@ -157,7 +135,7 @@
                 else if (!vm.gender) { vm.error_message = 'Please select a gender'; }
                 for (i = 0; i < vm.steps.length; i++) {
                     if (vm.steps[i].value === 'ethnicity') {
-                        if (vm.steps[i].data.indexOf(vm.ethnicity) < 0) {
+                        if (!enumsData.ethnicity[vm.ethnicity]) {
                             vm.error_message = 'Please select an ethnicity';
                             break;
                         }
@@ -165,7 +143,7 @@
                 }
                 for (i = 0; i < vm.steps.length; i++) {
                     if (vm.steps[i].value === 'gender') {
-                        if (vm.steps[i].data.indexOf(vm.gender) < 0) {
+                        if (!enumsData.gender[vm.gender]) {
                             vm.error_message = 'Please select a gender';
                             break;
                         }
@@ -182,30 +160,12 @@
             if (vm.current_stage === 3 || full_validation) {
                 // blank inputs
                 if (!vm.email_address) { vm.error_message = 'Please enter an email address'; }
-                else if (!vm.password) { vm.error_message = 'Please enter a password with a minimum length of 8'; }
-                else if (!vm.confirm_password) { vm.error_message = 'Please re-type your password'; }
 
                 // invalid email address
                 else if (!valid_email(vm.email_address)) {
                     vm.error_message = 'Please enter a valid email address';
                     $timeout(function() {
                         angular.element('input[stage="email_address"]').focus();
-                    }, 300);
-                }
-
-                // short password length
-                else if (vm.password.length < 8) {
-                    vm.error_message = 'Please enter a password with a minimum length of 8';
-                    $timeout(function() {
-                        angular.element('input[type="password"]').focus();
-                    }, 300);
-                }
-
-                // password mismatch
-                else if (vm.password !== vm.confirm_password) {
-                    vm.error_message = 'Your passwords do not match';
-                    $timeout(function() {
-                        angular.element('input[type="password"]').focus();
                     }, 300);
                 }
 
@@ -242,9 +202,7 @@
                 }
 
                 data.email_address = data.email_address.toLowerCase();
-
                 SignupService.submitSignup(data).then(function(res) {
-                    console.log(res);
                     var response = res.data.response;
                     if (response.status === 'ok') {
                         // good data
@@ -257,6 +215,9 @@
                             $timeout(function() {
                                 angular.element('.fade-me-hard').removeClass('invis');
                             }, 1000);
+                            $timeout(function() {
+                                $state.go('home');
+                            }, 10000);
                         }, 1000);
                     } else {
                         // bad data - they tampered with our js

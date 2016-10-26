@@ -139,6 +139,21 @@ export function updateById(req, res, next) {
 		.catch(handleError(res));
 }
 
+// get user verification for signup
+export function getUserVerification(req, res) {
+	var token = req.cookies.token;
+	if (!token) { throw 'unauthorized'; }
+	var user_id = getDecodedToken(token)._id;
+
+	return User.findById(user_id).exec()
+	.then((user) => {
+		if (user.verified) {
+			return res.send(true);
+		} else {
+			return res.send(false);
+		}
+	}).catch(handleError(res));
+}
 
 /**
  * Get my info

@@ -30,6 +30,7 @@ export function setup(User, config) {
           gender: profile._json.gender,
           role: 'user',
           provider: 'facebook',
+          verified: false,
           profile_picture: {
               current: 'https://graph.facebook.com/' + profile.id + '/picture?width=250&height=250'
           },

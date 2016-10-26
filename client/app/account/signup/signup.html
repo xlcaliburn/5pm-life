@@ -14,9 +14,13 @@
 
             <!-- signup and login -->
             <div class="signup-navigation align-right col l10 m9 s6">
-                <!-- login -->
-                <span class="signup-nav-text">Have an account?</span>
-                <a href="/login" class="babyblue-font">LOG IN</a>
+                <span class="signup-nav-text">
+                    <img ng-src="{{ signup.user.profile_picture.current}}" height="50px" width="auto" class="signup-profile-img" />
+                    <span>
+                        Logged in as
+                        <strong>{{ signup.first_name }} {{ signup.last_name }}</strong>
+                    </span>
+                </span>
 
             </div>
 
@@ -50,8 +54,8 @@
 
             <!-- instructions -->
             <div class="signup-instructions" ng-if="signup.current_stage < 4">
-                <div class="signup-instructions-title">Fill in your details below.</div>
-                <div class="signup-instructions-subtitle">All of your information is private unless you say so.</div>
+                <div class="signup-instructions-title">Confirm your details.</div>
+                <div class="signup-instructions-subtitle">Just a few more questions before you can start using 5PM!</div>
 
                 <!-- errors -->
                 <div class="signup-errors invis" ng-class="{'appear': signup.error_message}">{{ signup.error_message }}</div>
@@ -110,7 +114,7 @@
                             <div class="valign-wrapper" ng-if="stage.type == 'select'">
                                 <select ng-model="signup[stage.key]" class="browser-default signup-select valign" ng-keypress="($event.which === 13 || $event.which === 32) && signup.validate()">
                                     <option value="" disabled selected>Select {{ stage.value }}</option>
-                                    <option ng-repeat="data in stage.data" value="{{ data }}">{{ data }}</option>
+                                    <option ng-repeat="(key, value) in stage.data" value="{{ key }}">{{ value.value }}</option>
                                 </select>
                             </div>
 
@@ -127,8 +131,9 @@
                             <!-- email -->
                             <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]" stage="{{stage.key}}">
 
-                            <!-- password, confirm password -->
-                            <input ng-if="stage.type == 'password'" type="password" class="signup-input" ng-model="signup[stage.key]" ng-keypress="($event.which === 13 || $event.which === 32) && signup.validate('true')">
+                            <p>
+
+                            </p>
 
                         </div>
                     </div>
@@ -138,8 +143,13 @@
                 <div id="register-success" class="tab-pane fade in">
                     <div class="row signup-success-row valign-wrapper">
                         <div class="col l12 m12 s12 align-center valign">
-                            A new verification email has been sent to <span class="babyblue-font">{{ signup.email_address }}</span>.<br />
-                            Follow the instructions to activate your account in order to <a href="/login">login</a>.
+                            <p>
+                                Your information has been saved! You can now queue up, meet new friends and discover new events all around your city!
+                            </p>
+                            <p>
+                                You will be redirected to the homepage in 5 seconds<br />
+                                <a ui-sref="home">Go there now</a>
+                            </p>
                         </div>
                     </div>
                 </div>
