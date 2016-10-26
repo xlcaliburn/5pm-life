@@ -3,7 +3,7 @@
         .module('fivepmApp')
         .controller('SettingsController', SettingsController);
 
-    function SettingsController($scope, enumsData, Months, SettingsService, userData, Users) {
+    function SettingsController($scope, enumsData, SettingsService, userData, Users) {
         var vm = this;
 
         // model
