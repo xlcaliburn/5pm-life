@@ -160,8 +160,6 @@ function validateQueueData(queue_data) {
 
 	// TODO: check if user has token
 
-	// TODO: check if user already is in a queue
-
 	// TODO: check if start date is on a friday or saturday
 
 	// TODO: check if end date is on the same friday or saturday
@@ -173,19 +171,19 @@ function validateQueueData(queue_data) {
 	// TODO: check if location is in the list location enums
 
 	response.status = 'ok';
-	return response;
+
+	return Queue.findOne({user: queue_data.user_id})
+	.then(function(queue){
+		if(queue){
+			response.status = 'A queue already exists for the user.';
+		}
+		return response;
+	})
+	.catch(()=>handleError(response));
 }
 
 // Creates a new Queue in the DB
 export function create(req, res) {
-	var response = { status: 'ok'};
-	var queue_data = req.body;
-	var queue_data_status = validateQueueData(queue_data);
-
-	if (queue_data_status.status !== 'ok') {
-		return res.json({ response: response });
-	}
-
 	// extract user_id from token
 	var token = req.body.token;
 	if (!token) {
@@ -194,31 +192,45 @@ export function create(req, res) {
 
 	var decoded_token = jwt.verify(token, config.secrets.session);
 
-	var queue_object = {
-		user: decoded_token._id,
-		status: 'Searching',
-		search_parameters: {
-			tags: req.body.tags,
-			event_search_dt_start: req.body.event_start,
-			event_search_dt_end: req.body.event_end,
-			city: req.body.city
-		},
-		queue_start_time: new Date()
-	};
+	var response = { status: 'ok'};
+	var queue_data = req.body;
+	queue_data.user_id = decoded_token._id;
 
-	return Queue.create(queue_object)
-		.then(function() {
-			return User.findById(decoded_token._id).exec()
-			.then(function(user) {
-				user.event_status = 'Pending';
-				return user.save()
-				.then(function() {
-					res.json({ response: response });
-					return res;
-				});
-			});
+	validateQueueData(queue_data)
+	.then(function(result){
+		// return an error when validations do not work
+		if (result.status !== 'ok') {
+			response.status = result.status;
+			return res.json({ response: response });
+		}
+
+		// create the queue after passing the validations
+		var queue_object = {
+			user: decoded_token._id,
+			status: 'Searching',
+			search_parameters: {
+				tags: req.body.tags,
+				event_search_dt_start: req.body.event_start,
+				event_search_dt_end: req.body.event_end,
+				city: req.body.city
+			},
+			queue_start_time: new Date()
+		};
+
+		return Queue.create(queue_object)
+		.then(function(){
+			return User.findById(decoded_token._id);
+		})
+		.then(function(user){
+			user.event_status = 'Pending';
+			return user.save();
+		})
+		.then(function(){
+			res.json({ response: response });
+			return res;
 		})
 		.catch(()=>handleError(res));
+	});
 }
 /*=====================================*/
 

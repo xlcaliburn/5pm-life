@@ -393,7 +393,7 @@
                     Materialize.toast('You have been added to the queue!', 6000);
                     get_queue_status();
                 } else {
-                    Materialize.toast('Something went wrong', 6000);
+                    Materialize.toast(response.status, 6000);
                 }
             });
         };
