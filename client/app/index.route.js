@@ -16,16 +16,8 @@
 			controllerAs: 'welcome',
 			resolve: {
 				// if users has token, log them in
-				user: function($cookies, $state, $q) {
-					var token = $cookies.get('token');
-
-					if (!token) {
-						return;
-					} else {
-						return $q.reject().catch(function() {
-							$state.go('home');
-						});
-					}
+				user: function($state, Auth) {
+					return validateUser($state, Auth);
 				}
 			}
 		})
@@ -36,39 +28,31 @@
 			scopeTitle: 'Home',
 			templateUrl: 'app/main/home/home.html',
 			controller: 'HomeController',
-			controllerAs: 'home',
+			controllerAs: 'vm',
 			resolve: {
-				user: function($cookies, $q, $state, SettingsService) {
-					var token = $cookies.get('token');
-					if (!token) {
-						return $q.reject().catch(function() {
-							if (!$cookies.get('req_page')) {
-								var current_url = window.location.href;
-								var expireDate = new Date(Date.now() + 10000); // cookie expires in 10 minutes
-								$cookies.put('req_page', current_url, {'expires': expireDate});
-							}
-							$state.go('login');
-						});
-					} else {
-						return SettingsService.getUserSettings(token).then(function(res) {
-							if (res.data.response.status === 'ok') {
-								return res.data.response.user;
-							} else if (res.data.response.status === 'error') {
-								return res.data.response.error;
-							}
-							return $q.reject().catch(function() {
-								$state.go('login');
-							});
-						});
-					}
+				userVerification: function($cookies, $location, $state, Auth) {
+					return redirectUser($cookies, $location, $state, Auth);
 				},
 				userData: function($state, Users) {
-					return getUser($state, Users).then(function(user) {
-						if (!user.verified) {
-							$state.go('signup');
-						}
-					});
+					return getUser($state, Users);
 				},
+				sectionData: function() {
+					// will be api call later
+					var data = {
+						banner: 'assets/images/home/default-banner.jpg',
+						sections: [
+							{
+								name: 'News',
+								posts: []
+							},
+							{
+								name: 'About',
+								content: []
+							}
+						]
+					};
+					return data;
+				}
 			}
 		})
 
@@ -145,15 +129,8 @@
 			controllerAs: 'vm',
 			resolve: {
 				// if users has token, log them in
-				user: function($cookies, $state, $q) {
-					var token = $cookies.get('token');
-
-					if (!token) { return; }
-					else {
-						return $q.reject().catch(function() {
-							$state.go('home');
-						});
-					}
+				user: function($state, Auth) {
+					return validateUser($state, Auth);
 				}
 			}
 		})
@@ -212,17 +189,13 @@
 			//controller: 'DashboardController',
 			//controllerAs: 'admin',
 			authenticate: 'admin'
-		})
-		;
+		});
 
 		$urlRouterProvider.otherwise('/');
-
 		$locationProvider.html5Mode({
 			enabled: true,
 			requireBase: false
 		});
-		//$locationProvider.html5Mode(true).hashPrefix('!');
-
 	}
 
 	// get user data
@@ -253,6 +226,32 @@
 		return Enums.get().then(function(res) {
 			return res.data;
 		});
+	}
+
+	// redirect user based on cookie
+	redirectUser.$inject = ['$cookies', '$location', '$state', 'Auth'];
+	function redirectUser($cookies, $location, $state, Auth) {
+		Auth.isLoggedIn(function(isLoggedIn) {
+			if (isLoggedIn) {
+				if ($cookies.get('req_page')) { $location.path($cookies.get('req_page')); }
+			} else {
+				if (!$cookies.get('req_page')) {
+					var expireDate = new Date(Date.now() + 10000); // cookie expires in 10 minutes
+					$cookies.put('req_page', $location.path(), {'expires': expireDate});
+				}
+				$state.go('login');
+			}
+		});
+		return;
+	}
+
+	// validate user on login
+	validateUser.$inject = ['$state', 'Auth'];
+	function validateUser($state, Auth) {
+		Auth.isLoggedIn(function(isLoggedIn) {
+			if (isLoggedIn) { $state.go('home'); }
+		});
+		return;
 	}
 
 })();

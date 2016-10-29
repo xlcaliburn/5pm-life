@@ -22,13 +22,11 @@
             */
             login({
                 email,
-                password,
-                remember
+                password
             }, callback) {
                 return $http.post('/auth/local', {
                     email: email.toLowerCase(),
-                    password: password,
-                    remember: remember
+                    password: password
                 })
                 .then(res => {
                     $cookies.put('token', res.data.token);
