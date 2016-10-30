@@ -81,8 +81,6 @@
 .home-tabs {
     border-bottom: 1px solid @lightgrey;
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .home-tabs .anchor {
@@ -90,6 +88,9 @@
     color: @middlegrey;
     font-weight: 500;
     font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+    .user-select-none;
 }
 
 .home-tabs .anchor:hover {
@@ -107,6 +108,11 @@
 .slick-container {
     max-width: 850px;
     padding-top: 10px;
+}
+
+.slick-container div {
+    -webkit-user-select: initial;
+    user-select: initial;
 }
 
 .post-title {
@@ -279,6 +285,10 @@
         padding-left: 0;
         padding-right: 0;
         width: 100%;
+    }
+
+    .slick-container div {
+        .user-select-none;
     }
 
     .section {

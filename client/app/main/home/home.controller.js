@@ -55,7 +55,6 @@
                     breakpoint: 767,
                     settings: {
                         speed: 350,
-                        draggable: true,
                         method: {}
                     },
                 }
