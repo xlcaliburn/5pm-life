@@ -38,7 +38,6 @@
     "commit": "c176186922b6d17720c9beb9eb9e6cbd8ffced85"
   },
   "_source": "https://github.com/devmark/angular-slick-carousel.git",
-  "_target": "^3.1.7",
-  "_originalSource": "angular-slick-carousel",
-  "_direct": true
+  "_target": "~3.1.7",
+  "_originalSource": "angular-slick-carousel"
 }
