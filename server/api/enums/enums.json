@@ -31,5 +31,10 @@
     "gender": {
         "MALE": {"order": 1, "value": "Male"},
         "FEMALE": {"order": 2, "value": "Female"}
+    },
+    "feedback_type": {
+        "BUG": {"order": 1, "value": "Bug"},
+        "FEATURE": {"order": 2, "value": "Feature"},
+        "COMMENT": {"order": 3, "value": "Comment"}
     }
 }
