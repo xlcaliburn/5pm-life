@@ -19,6 +19,7 @@
 		'PasswordResetService',
 		'NavbarService',
 		'SettingsService',
-		'EventService'
+		'EventService',
+		'slickCarousel'
 	]);
 })();

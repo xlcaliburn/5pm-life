@@ -1,16 +1,80 @@
 <navbar></navbar>
 <div ui-view class="wrap">
-    <div class="container flexible">
-        <div class="row valign-center">
-            <!-- home content -->
-            <div class="col l9 s12">
-                <h1>Welcome to 5PMLIFE!</h1>
-                <p>Thank you for participating in the beta test. To find an event, click the <strong>Explore</strong> button (button is in navigation for mobile users) above to get started!</p>
-                <p class="home-notice">** Please note that due to the small number of testers, only Saturdays between 12 - 8pm are allowed.</p>
-                <br /><br />
-                <p style="font-size: 18px; font-weight: 300;">If you find any bugs or have any question/comments, please contact <strong><a href="mailto:fivepm.life@gmail.com">fivepm.life@gmail.com</a></strong></p>
+
+    <!-- Home Section -->
+    <div id="home-section">
+
+        <!-- banner -->
+        <div class="home-banner" background="{{vm.banner.url}}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="banner-title" ng-bind-html="vm.banner.title | trustHTML"></div>
+                        <div class="banner-subtitle" ng-bind-html="vm.banner.subtitle | trustHTML"></div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="banner-queue">
+                            <button class="banner-queue-button" ng-click="vm.open_queue_modal()">
+                                Queue up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- home info -->
+        <div class="home-info">
+
+            <!-- home tab header -->
+            <div class="home-tabs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4 anchor" ng-repeat="section in vm.sections" ng-click="vm.go_to_section  ($index)" ng-class="{'active': vm.current_section == $index, 'col-md-offset-1': $index == 0}">{{ section.name }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- slick -->
+            <div class="container slick-container">
+                <slick settings="vm.slick_config">
+                    <!-- news -->
+                    <div class="news section">
+                        <div class="post" ng-repeat="post in vm.news_data.posts">
+                            <div class="post-title">{{ post.title }}</div>
+                            <div class="post-date">{{ post.date }}</div>
+                            <div class="post-content" ng-bind-html="post.content | trustHTML"></div>
+                        </div>
+                    </div>
+
+                    <!-- about -->
+                    <div class="about section">
+                        <div ng-bind-html="vm.about_data.content | trustHTML"></div>
+                    </div>
+
+                    <!-- feedback -->
+                    <div class="feedback section">
+                        <div class="feedback-title">Feedback</div>
+                        <div class="feedback-description" ng-bind-html="vm.feedback_data.content | trustHTML "></div>
+
+                        <!-- type -->
+                        <select ng-model="vm.feedback_type" class="browser-default">
+                            <option value="" disabled>Select feedback type</option>
+                            <option value="name" ng-repeat="(name, type) in vm.feedback_data.types">{{ type.value }}</option>
+                        </select>
+
+                        <!-- description -->
+                        <textarea ng-model="vm.feedback_description" placeholder="Your feedback is greatly appreciated!"></textarea>
+
+                        <!-- submit -->
+                        <button class="submit-feedback-button">Submit</button>
+                    </div>
+                </slick>
             </div>
         </div>
     </div>
+<!--                         <div ng-if="i == 0" ng-include="'news.html'"></div>
+                        <div ng-if="i == 1" ng-include="'about.html'"></div>
+                        <div ng-if="i == 2" ng-include="'feedback.html'"></div>-->
 </div>
 <sticky-footer></sticky-footer>

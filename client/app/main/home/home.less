@@ -1,0 +1,250 @@
+#home-section {
+    background-color: @white;
+}
+
+.home-banner {
+    width: 100%;
+    height: 500px;
+    color: @white;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.banner-title {
+    margin-top: 185px;
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0px 1px 5px rgb( 0, 0, 0 );
+}
+
+.banner-subtitle {
+    margin-top: 15px;
+    font-size: 22px;
+    text-shadow: 0px 1px 5px rgb( 0, 0, 0 );
+}
+
+.banner-queue-button {
+    margin-top: 225px;
+    color: @white;
+    background-color: @pink !important;
+    border: none;
+    border-radius: 2px;
+    height: 40px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-weight:700;
+    opacity: 0.85;
+    .dropshadow;
+}
+
+.banner-queue-button:hover {
+    opacity: 1;
+}
+
+.home-tabs {
+    border-bottom: 1px solid @lightgrey;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.home-tabs .anchor {
+    cursor: pointer;
+    color: @middlegrey;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.home-tabs .anchor:hover {
+    color: @pink;
+}
+
+.home-tabs .anchor.active {
+    color: @pink;
+}
+
+.home-tabs .row {
+    margin-bottom: 0;
+}
+
+.slick-container {
+    max-width: 850px;
+    padding-top: 10px;
+}
+
+.post-title {
+    color: @pink;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.post-date {
+    color: @uppergrey;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.post-content {
+    font-size: 16px;
+    font-weight: 300;
+    color: @darkgrey;
+}
+
+.post-content p {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    line-height: 1.75;
+}
+
+.about-title {
+    font-weight: 500;
+    color: @teal;
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+.about-content img {
+    display: inline-block;
+}
+
+.about-content p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+}
+
+.feedback-title {
+    font-size: 20px;
+    color: @pink;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.feedback-description {
+    font-size: 16px;
+    color: @darkgrey;
+    line-height: 1.75;
+    font-weight: 300;
+}
+
+@feedback-width: 325px;
+
+.feedback select,
+.feedback textarea {
+    border: 1px solid @uppergrey;
+    border-radius: 0;
+    max-width: @feedback-width;
+    margin-top: 20px;
+    background-color: @white;
+}
+
+.feedback select {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.feedback select:focus {
+    outline: none;
+}
+
+.feedback textarea {
+    height: 200px;
+    resize: none;
+    padding: 10px 15px;
+    margin-top: 15px;
+}
+
+.submit-feedback-button {
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+    max-width: @feedback-width;
+    height: 45px;
+    line-height: 45px;
+    font-weight: 700;
+    color: @white;
+    background-color: @pink !important;
+    border: none;
+    opacity: 0.8;
+}
+
+.submit-feedback-button:hover {
+    opacity: 1;
+}
+
+.submit-feedback-button:active {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 991px) {
+    .home-banner {
+        text-align: center;
+        height: 350px;
+    }
+
+    .banner-title {
+        margin-top: 125px;
+        font-size: 38px;
+    }
+
+    .banner-subtitle {
+        margin-top: 0px;
+        font-size: 18px;
+    }
+
+    .banner-queue-button {
+        margin-top: 25px;
+    }
+
+    .home-tabs .anchor:hover {
+        color: @middlegrey;
+    }
+
+    .home-tabs .anchor.active {
+        color: @pink;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .banner-title {
+        margin-top: 125px;
+        font-size: 30px;
+    }
+
+    .banner-subtitle {
+        margin-top: 0px;
+        font-size: 16px;
+    }
+
+    .banner-queue-button {
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .home-tabs .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .home-tabs .row>.anchor:nth-child(2) {
+        padding-left: 0;
+    }
+
+    .slick-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .section {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
