@@ -1,6 +1,16 @@
 <navbar></navbar>
 <div ui-view class="wrap">
 
+    <!-- Thank you modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <p>Thanks for your feedback!</p>
+        </div>
+        <div class="modal-footer align-center">
+            <a href="#" ng-click="vm.close_modal()">OK</a>
+        </div>
+    </div>
+
     <!-- Home Section -->
     <div id="home-section">
 
@@ -60,21 +70,19 @@
                         <!-- type -->
                         <select ng-model="vm.feedback_type" class="browser-default">
                             <option value="" disabled>Select feedback type</option>
-                            <option value="name" ng-repeat="(name, type) in vm.feedback_data.types">{{ type.value }}</option>
+                            <option value="{{name}}" ng-repeat="(name, type) in vm.feedback_data.types">{{ type.value }}</option>
                         </select>
 
                         <!-- description -->
                         <textarea ng-model="vm.feedback_description" placeholder="Your feedback is greatly appreciated!"></textarea>
 
                         <!-- submit -->
-                        <button class="submit-feedback-button">Submit</button>
+                        <button class="submit-feedback-button" ng-click="vm.submit_feedback()" ng-class="{'disabled': vm.submitting }">Submit</button>
                     </div>
                 </slick>
             </div>
         </div>
     </div>
-<!--                         <div ng-if="i == 0" ng-include="'news.html'"></div>
-                        <div ng-if="i == 1" ng-include="'about.html'"></div>
-                        <div ng-if="i == 2" ng-include="'feedback.html'"></div>-->
+
 </div>
 <sticky-footer></sticky-footer>

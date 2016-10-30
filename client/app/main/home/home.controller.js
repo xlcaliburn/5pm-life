@@ -16,7 +16,7 @@
 
     /** @ngInject */
     /* jshint expr: true */
-    function HomeController($timeout, sectionData) {
+    function HomeController($timeout, feedbackService, sectionData) {
         var vm = this;
 
         // model
@@ -43,6 +43,9 @@
             arrows: false,
             method: {},
             event: {
+                init: function() {
+                    goToSection(0);
+                },
                 beforeChange: function(event, slick, currentSlide, nextSlide) {
                     vm.current_section = nextSlide;
                 }
@@ -59,38 +62,76 @@
             ]
         };
 
+        // variables
+        vm.submitting = false;
+        var feedback_modal;
+
         // functions
+        vm.close_modal = closeModal;
         vm.go_to_section = goToSection;
         vm.open_queue_modal = openQueueModal;
+        vm.submit_feedback = submitFeedback;
 
         init();
 
         function init() {
-            setHomeInfo();
-            initSlick();
+            setData();
+            $timeout(function() {
+                feedback_modal = angular.element('#feedback-modal');
+            });
+        }
+
+        // close feedback modal
+        function closeModal() {
+            feedback_modal.closeModal();
         }
 
         // go to slick section
         function goToSection(index) {
-            vm.slick_config.method.slickGoTo(index);
-        }
-
-        // initialize slick plugin
-        function initSlick() {
-            /*$timeout(function() {
-                angular.element('slick').slick(vm.slick_config);
-            });*/
+            $timeout(function() {
+                vm.slick_config.method.slickGoTo(index);
+            });
         }
 
         // setup homepage info
-        function setHomeInfo() {
+        function setData() {
             // news
+            // about
+            // feedback
         }
 
         // open queue modal
         function openQueueModal() {
             $timeout(function() {
                 angular.element('#explore-button').click();
+            });
+        }
+
+        // submit feedback
+        function submitFeedback() {
+            if (vm.submitting) { return; }
+            if (!vm.feedback_type) {
+                Materialize.toast('Please select a feedback type.', 6000);
+                return;
+            } else if (!vm.feedback_description.trim()) {
+                Materialize.toast('Please fill in your feedback', 6000);
+                return;
+            }
+
+            vm.submitting = true;
+            var data = {
+                type: vm.feedback_type,
+                description: vm.feedback_description
+            };
+
+            feedbackService.submitFeedback(data).then(function(res) {
+                if (res.data.success) {
+                    vm.feedback_type = '';
+                    vm.feedback_description = '';
+                    vm.submitting = false;
+                    feedback_modal.openModal();
+                    vm.submitting = false;
+                }
             });
         }
 

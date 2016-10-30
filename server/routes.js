@@ -30,6 +30,7 @@ export default function(app) {
 	app.use('/api/events', require('./api/events'));
 	app.use('/api/queue', require('./api/queue'));
 	app.use('/api/chat', require('./api/chat'));
+	app.use('/api/feedback', require('./api/feedback'));
 
 	app.use('/auth', require('./auth').default);
 
