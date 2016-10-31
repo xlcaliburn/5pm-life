@@ -10,6 +10,7 @@
 		'ngSanitize',
 		'btford.socket-io',
 		'720kb.datepicker',
+		'slickCarousel',
 		'ui.router',
 		'ui.bootstrap',
 		'validation.match',

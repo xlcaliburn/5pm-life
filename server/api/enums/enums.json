@@ -8,8 +8,8 @@
         "LATINO": {"order": 2, "value": "Latino/Hispanic"},
         "AFRICAN": {"order": 3, "value": "African"},
         "CARIBBEAN": {"order": 4, "value": "Caribbean"},
-        "SOUTH_ASIAN": {"order": 5, "value": "South Asian"},
-        "EAST_ASIAN":{"order": 6, "value": "East Asian"},
+        "SOUTH_ASIAN": {"order": 5, "value": "South Asian (Afghan, Bangladeshis, Indian, Pakistanis)"},
+        "EAST_ASIAN":{"order": 6, "value": "East Asian (Chinese, Japanese, Korean, Taiwanese)"},
         "MIXED": {"order": 7, "value": "Mixed"},
         "OTHER": {"order": 8, "value": "Other"}
     },
