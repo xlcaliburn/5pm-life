@@ -169,9 +169,14 @@
 
 		function deleteEvent() {
 			Events.delete(vm.selected_event._id)
-			.success(function() {
-				$state.go('admin.events', {}, { reload: true });
-				Materialize.toast('Event deleted', 2000); // jshint ignore:line
+			.success(function(response) {
+				if(response.status === 'ok'){
+					$state.go('admin.events', {}, { reload: true });
+					Materialize.toast('Event deleted', 2000); // jshint ignore:line
+				}
+				else{
+					Materialize.toast(response.status, 2000); // jshint ignore:line
+				}
 			});
 		}
 

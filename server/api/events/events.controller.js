@@ -134,7 +134,18 @@ export function update(req, res) {
 export function destroy(req, res) {
 	return Events.findById(req.params.id).exec()
 	.then(handleEntityNotFound(res))
-	.then(removeEntity(res))
+	.then((event) => {
+		if(event.users.length > 0){
+			return res.json({status: 'An event containing users cannot be deleted.'});
+		}
+		else{
+			console.log(5);
+			return Events.remove({_id: req.params.id})
+			.then(() => {
+				return res.json({status: 'ok'});
+			});
+		}
+	})
 	.catch(handleError(res));
 }
 
