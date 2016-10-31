@@ -9,17 +9,16 @@
 		'ngResource',
 		'ngSanitize',
 		'btford.socket-io',
+		'720kb.datepicker',
 		'ui.router',
 		'ui.bootstrap',
 		'validation.match',
 		'EmailService',
-		'720kb.datepicker',
 		'SignupService',
 		'RecoveryService',
 		'PasswordResetService',
 		'NavbarService',
 		'SettingsService',
-		'EventService',
-		'slickCarousel'
+		'EventService'
 	]);
 })();
