@@ -31,10 +31,10 @@
               if (windowScroll > (elementOffset + offset)) {
                 if (value.done !== true) {
                   if (typeof(callback) === 'function') {
-                    callback.call(this, currentElement);
+                    callback.call(this);
                   } else if (typeof(callback) === 'string') {
                     var callbackFunc = new Function(callback);
-                    callbackFunc(currentElement);
+                    callbackFunc();
                   }
                   value.done = true;
                 }

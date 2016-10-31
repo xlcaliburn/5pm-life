@@ -34,7 +34,7 @@
     // text-decoration: none;
     z-index: 1;
     will-change: opacity, transform;
-    transition: .3s ease-out;
+    transition: all .3s ease-out;
 
     .waves-ripple {
         position: absolute;
@@ -90,10 +90,6 @@
         background: none;
     }
 
-    img {
-        position: relative;
-        z-index: -1;
-    }
 }
 
 .waves-notransition {
@@ -172,6 +168,6 @@
 }
 
 /* Firefox Bug: link not triggered */
-.waves-effect .waves-ripple {
+a.waves-effect .waves-ripple {
     z-index: -1;
 }

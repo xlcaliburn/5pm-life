@@ -8,9 +8,7 @@
         dist: -100, // zoom scale TODO: make this more intuitive as an option
         shift: 0, // spacing for center image
         padding: 0, // Padding between non center items
-        full_width: false, // Change to full width styles
-        indicators: false, // Toggle indicators
-        no_wrap: false // Don't wrap around and cycle through items.
+        full_width: false // Change to full width styles
       };
       options = $.extend(defaults, options);
 
@@ -19,40 +17,21 @@
         var images, offset, center, pressed, dim, count,
             reference, referenceY, amplitude, target, velocity,
             xform, frame, timestamp, ticker, dragged, vertical_dragged;
-        var $indicators = $('<ul class="indicators"></ul>');
-
 
         // Initialize
         var view = $(this);
-        var showIndicators = view.attr('data-indicators') || options.indicators;
-
         // Don't double initialize.
         if (view.hasClass('initialized')) {
-          // Redraw carousel.
-          $(this).trigger('carouselNext', [0.000001]);
           return true;
         }
-
 
         // Options
         if (options.full_width) {
           options.dist = 0;
-          var firstImage = view.find('.carousel-item img').first();
-          if (firstImage.length) {
-            imageHeight = firstImage.on('load', function(){
-              view.css('height', $(this).height());
-            });
-          } else {
-            imageHeight = view.find('.carousel-item').first().height();
-            view.css('height', imageHeight);
-          }
-
-          // Offset fixed items when indicators.
-          if (showIndicators) {
-            view.find('.carousel-fixed-item').addClass('with-indicators');
-          }
+          imageHeight = view.find('.carousel-item img').first().load(function(){
+            view.css('height', $(this).height());
+          });
         }
-
 
         view.addClass('initialized');
         pressed = false;
@@ -61,28 +40,10 @@
         item_width = view.find('.carousel-item').first().innerWidth();
         dim = item_width * 2 + options.padding;
 
-        view.find('.carousel-item').each(function (i) {
+        view.find('.carousel-item').each(function () {
           images.push($(this)[0]);
-          if (showIndicators) {
-            var $indicator = $('<li class="indicator-item"></li>');
-
-            // Add active to first by default.
-            if (i === 0) {
-              $indicator.addClass('active');
-            }
-
-            // Handle clicks on indicators.
-            $indicator.click(function () {
-              var index = $(this).index();
-              cycleTo(index);
-            });
-            $indicators.append($indicator);
-          }
         });
 
-        if (showIndicators) {
-          view.append($indicators);
-        }
         count = images.length;
 
 
@@ -95,7 +56,6 @@
           view[0].addEventListener('mousedown', tap);
           view[0].addEventListener('mousemove', drag);
           view[0].addEventListener('mouseup', release);
-          view[0].addEventListener('mouseleave', release);
           view[0].addEventListener('click', click);
         }
 
@@ -131,7 +91,6 @@
           delta = offset - center * dim;
           dir = (delta < 0) ? 1 : -1;
           tween = -dir * delta * 2 / dim;
-          half = count >> 1;
 
           if (!options.full_width) {
             alignment = 'translateX(' + (view[0].clientWidth - item_width) / 2 + 'px) ';
@@ -140,30 +99,17 @@
             alignment = 'translateX(0)';
           }
 
-          // Set indicator active
-          if (showIndicators) {
-            var diff = (center % count);
-            var activeIndicator = $indicators.find('.indicator-item.active');
-            if (activeIndicator.index() !== diff) {
-              activeIndicator.removeClass('active');
-              $indicators.find('.indicator-item').eq(diff).addClass('active');
-            }
-          }
-
           // center
-          // Don't show wrapped items.
-          if (!options.no_wrap || (center >= 0 && center < count)) {
-            el = images[wrap(center)];
-            el.style[xform] = alignment +
-              ' translateX(' + (-delta / 2) + 'px)' +
-              ' translateX(' + (dir * options.shift * tween * i) + 'px)' +
-              ' translateZ(' + (options.dist * tween) + 'px)';
-            el.style.zIndex = 0;
-            if (options.full_width) { tweenedOpacity = 1; }
-            else { tweenedOpacity = 1 - 0.2 * tween; }
-            el.style.opacity = tweenedOpacity;
-            el.style.display = 'block';
-          }
+          el = images[wrap(center)];
+          el.style[xform] = alignment +
+            ' translateX(' + (-delta / 2) + 'px)' +
+            ' translateX(' + (dir * options.shift * tween * i) + 'px)' +
+            ' translateZ(' + (options.dist * tween) + 'px)';
+          el.style.zIndex = 0;
+          if (options.full_width) { tweenedOpacity = 1; }
+          else { tweenedOpacity = 1 - 0.2 * tween; }
+          el.style.opacity = tweenedOpacity;
+          half = count >> 1;
 
           for (i = 1; i <= half; ++i) {
             // right side
@@ -174,16 +120,12 @@
               zTranslation = options.dist * (i * 2 + tween * dir);
               tweenedOpacity = 1 - 0.2 * (i * 2 + tween * dir);
             }
-            // Don't show wrapped items.
-            if (!options.no_wrap || center + i < count) {
-              el = images[wrap(center + i)];
-              el.style[xform] = alignment +
-                ' translateX(' + (options.shift + (dim * i - delta) / 2) + 'px)' +
-                ' translateZ(' + zTranslation + 'px)';
-              el.style.zIndex = -i;
-              el.style.opacity = tweenedOpacity;
-              el.style.display = 'block';
-            }
+            el = images[wrap(center + i)];
+            el.style[xform] = alignment +
+              ' translateX(' + (options.shift + (dim * i - delta) / 2) + 'px)' +
+              ' translateZ(' + zTranslation + 'px)';
+            el.style.zIndex = -i;
+            el.style.opacity = tweenedOpacity;
 
 
             // left side
@@ -194,32 +136,24 @@
               zTranslation = options.dist * (i * 2 - tween * dir);
               tweenedOpacity = 1 - 0.2 * (i * 2 - tween * dir);
             }
-            // Don't show wrapped items.
-            if (!options.no_wrap || center - i >= 0) {
-              el = images[wrap(center - i)];
-              el.style[xform] = alignment +
-                ' translateX(' + (-options.shift + (-dim * i - delta) / 2) + 'px)' +
-                ' translateZ(' + zTranslation + 'px)';
-              el.style.zIndex = -i;
-              el.style.opacity = tweenedOpacity;
-              el.style.display = 'block';
-            }
+            el = images[wrap(center - i)];
+            el.style[xform] = alignment +
+              ' translateX(' + (-options.shift + (-dim * i - delta) / 2) + 'px)' +
+              ' translateZ(' + zTranslation + 'px)';
+            el.style.zIndex = -i;
+            el.style.opacity = tweenedOpacity;
           }
 
           // center
-          // Don't show wrapped items.
-          if (!options.no_wrap || (center >= 0 && center < count)) {
-            el = images[wrap(center)];
-            el.style[xform] = alignment +
-              ' translateX(' + (-delta / 2) + 'px)' +
-              ' translateX(' + (dir * options.shift * tween) + 'px)' +
-              ' translateZ(' + (options.dist * tween) + 'px)';
-            el.style.zIndex = 0;
-            if (options.full_width) { tweenedOpacity = 1; }
-            else { tweenedOpacity = 1 - 0.2 * tween; }
-            el.style.opacity = tweenedOpacity;
-            el.style.display = 'block';
-          }
+          el = images[wrap(center)];
+          el.style[xform] = alignment +
+            ' translateX(' + (-delta / 2) + 'px)' +
+            ' translateX(' + (dir * options.shift * tween) + 'px)' +
+            ' translateZ(' + (options.dist * tween) + 'px)';
+          el.style.zIndex = 0;
+          if (options.full_width) { tweenedOpacity = 1; }
+          else { tweenedOpacity = 1 - 0.2 * tween; }
+          el.style.opacity = tweenedOpacity;
         }
 
         function track() {
@@ -261,34 +195,21 @@
             var clickedIndex = $(e.target).closest('.carousel-item').index();
             var diff = (center % count) - clickedIndex;
 
-            // Disable clicks if carousel was shifted by click
-            if (diff !== 0) {
-              e.preventDefault();
-              e.stopPropagation();
-            }
-            cycleTo(clickedIndex);
-          }
-        }
-
-        function cycleTo(n) {
-          var diff = (center % count) - n;
-
-          // Account for wraparound.
-          if (!options.no_wrap) {
+            // Account for wraparound.
             if (diff < 0) {
               if (Math.abs(diff + count) < Math.abs(diff)) { diff += count; }
 
             } else if (diff > 0) {
               if (Math.abs(diff - count) < diff) { diff -= count; }
             }
-          }
 
-          // Call prev or next accordingly.
-          if (diff < 0) {
-            view.trigger('carouselNext', [Math.abs(diff)]);
+            // Call prev or next accordingly.
+            if (diff < 0) {
+              $(this).trigger('carouselNext', [Math.abs(diff)]);
 
-          } else if (diff > 0) {
-            view.trigger('carouselPrev', [diff]);
+            } else if (diff > 0) {
+              $(this).trigger('carouselPrev', [diff]);
+            }
           }
         }
 
@@ -343,11 +264,7 @@
         }
 
         function release(e) {
-          if (pressed) {
-            pressed = false;
-          } else {
-            return;
-          }
+          pressed = false;
 
           clearInterval(ticker);
           target = offset;
@@ -356,23 +273,12 @@
             target = offset + amplitude;
           }
           target = Math.round(target / dim) * dim;
-
-          // No wrap of items.
-          if (options.no_wrap) {
-            if (target >= dim * (count - 1)) {
-              target = dim * (count - 1);
-            } else if (target < 0) {
-              target = 0;
-            }
-          }
           amplitude = target - offset;
           timestamp = Date.now();
           requestAnimationFrame(autoScroll);
 
-          if (dragged) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
+          e.preventDefault();
+          e.stopPropagation();
           return false;
         }
 
@@ -417,13 +323,6 @@
           }
         });
 
-        $(this).on('carouselSet', function(e, n) {
-          if (n === undefined) {
-            n = 0;
-          }
-          cycleTo(n);
-        });
-
       });
 
 
@@ -435,9 +334,6 @@
     prev : function(n) {
       $(this).trigger('carouselPrev', [n]);
     },
-    set : function(n) {
-      $(this).trigger('carouselSet', [n]);
-    }
   };
 
 

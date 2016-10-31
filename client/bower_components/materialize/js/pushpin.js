@@ -1,25 +1,12 @@
 (function ($) {
   $.fn.pushpin = function (options) {
-    // Defaults
+
     var defaults = {
       top: 0,
       bottom: Infinity,
       offset: 0
     };
-
-    // Remove pushpin event and classes
-    if (options === "remove") {
-      this.each(function () {
-        if (id = $(this).data('pushpin-id')) {
-          $(window).off('scroll.' + id);
-          $(this).removeData('pushpin-id').removeClass('pin-top pinned pin-bottom').removeAttr('style');
-        }
-      });
-      return false;
-    }
-
     options = $.extend(defaults, options);
-
 
     $index = 0;
     return this.each(function() {
@@ -58,7 +45,6 @@
         });
       }
 
-      $(this).data('pushpin-id', $uniqueId);
       updateElements($this, $(window).scrollTop());
       $(window).on('scroll.' + $uniqueId, function () {
         var $scrolled = $(window).scrollTop() + options.offset;

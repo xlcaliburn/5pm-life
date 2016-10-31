@@ -1,12 +1,7 @@
 (function ($) {
 
   var methods = {
-    init : function(options) {
-      var defaults = {
-        onShow: null
-      };
-      options = $.extend(defaults, options);
-
+    init : function() {
       return this.each(function() {
 
       // For each set of tabs, we want to keep track of
@@ -14,29 +9,18 @@
       var $this = $(this),
           window_width = $(window).width();
 
+      $this.width('100%');
       var $active, $content, $links = $this.find('li.tab a'),
           $tabs_width = $this.width(),
           $tab_width = Math.max($tabs_width, $this[0].scrollWidth) / $links.length,
           $index = 0;
-
-      // Finds right attribute for indicator based on active tab.
-      // el: jQuery Object
-      var calcRightPos = function(el) {
-        return $tabs_width - el.position().left - el.outerWidth() - $this.scrollLeft();
-      };
-
-      // Finds left attribute for indicator based on active tab.
-      // el: jQuery Object
-      var calcLeftPos = function(el) {
-        return el.position().left + $this.scrollLeft();
-      };
 
       // If the location.hash matches one of the links, use that as the active tab.
       $active = $($links.filter('[href="'+location.hash+'"]'));
 
       // If no match is found, use the first link or any with class 'active' as the initial active tab.
       if ($active.length === 0) {
-        $active = $(this).find('li.tab a.active').first();
+          $active = $(this).find('li.tab a.active').first();
       }
       if ($active.length === 0) {
         $active = $(this).find('li.tab a').first();
@@ -56,12 +40,8 @@
       $this.append('<div class="indicator"></div>');
       var $indicator = $this.find('.indicator');
       if ($this.is(":visible")) {
-        // $indicator.css({"right": $tabs_width - (($index + 1) * $tab_width)});
-        // $indicator.css({"left": $index * $tab_width});
-        setTimeout(function() {
-          $indicator.css({"right": calcRightPos($active) });
-          $indicator.css({"left": calcLeftPos($active) });
-        }, 0);
+        $indicator.css({"right": $tabs_width - (($index + 1) * $tab_width)});
+        $indicator.css({"left": $index * $tab_width});
       }
       $(window).resize(function () {
         $tabs_width = $this.width();
@@ -70,14 +50,14 @@
           $index = 0;
         }
         if ($tab_width !== 0 && $tabs_width !== 0) {
-          $indicator.css({"right": calcRightPos($active) });
-          $indicator.css({"left": calcLeftPos($active) });
+          $indicator.css({"right": $tabs_width - (($index + 1) * $tab_width)});
+          $indicator.css({"left": $index * $tab_width});
         }
       });
 
       // Hide the remaining content
       $links.not($active).each(function () {
-        $(Materialize.escapeHash(this.hash)).hide();
+        $(this.hash).hide();
       });
 
 
@@ -85,11 +65,6 @@
       $this.on('click', 'a', function(e) {
         if ($(this).parent().hasClass('disabled')) {
           e.preventDefault();
-          return;
-        }
-
-        // Act as regular link if target attribute is specified.
-        if (!!$(this).attr("target")) {
           return;
         }
 
@@ -104,9 +79,8 @@
 
         // Update the variables with the new link and content
         $active = $(this);
-        $content = $(Materialize.escapeHash(this.hash));
+        $content = $(this.hash);
         $links = $this.find('li.tab a');
-        var activeRect = $active.position();
 
         // Make the tab active.
         $active.addClass('active');
@@ -120,20 +94,17 @@
 
         if ($content !== undefined) {
           $content.show();
-          if (typeof(options.onShow) === "function") {
-            options.onShow.call(this, $content);
-          }
         }
 
         // Update indicator
-
         if (($index - $prev_index) >= 0) {
-          $indicator.velocity({"right": calcRightPos($active) }, { duration: 300, queue: false, easing: 'easeOutQuad'});
-          $indicator.velocity({"left": calcLeftPos($active) }, {duration: 300, queue: false, easing: 'easeOutQuad', delay: 90});
+          $indicator.velocity({"right": $tabs_width - (($index + 1) * $tab_width)}, { duration: 300, queue: false, easing: 'easeOutQuad'});
+          $indicator.velocity({"left": $index * $tab_width}, {duration: 300, queue: false, easing: 'easeOutQuad', delay: 90});
 
-        } else {
-          $indicator.velocity({"left": calcLeftPos($active) }, { duration: 300, queue: false, easing: 'easeOutQuad'});
-          $indicator.velocity({"right": calcRightPos($active) }, {duration: 300, queue: false, easing: 'easeOutQuad', delay: 90});
+        }
+        else {
+          $indicator.velocity({"left": $index * $tab_width}, { duration: 300, queue: false, easing: 'easeOutQuad'});
+          $indicator.velocity({"right": $tabs_width - (($index + 1) * $tab_width)}, {duration: 300, queue: false, easing: 'easeOutQuad', delay: 90});
         }
 
         // Prevent the anchor's default click action
@@ -154,7 +125,7 @@
       // Default to "init"
       return methods.init.apply( this, arguments );
     } else {
-      $.error( 'Method ' +  methodOrOptions + ' does not exist on jQuery.tabs' );
+      $.error( 'Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip' );
     }
   };
 

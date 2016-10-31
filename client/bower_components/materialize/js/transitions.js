@@ -1,14 +1,7 @@
 (function ($) {
   // Image transition function
-  Materialize.fadeInImage =  function(selectorOrEl) {
-    var element;
-    if (typeof(selectorOrEl) === 'string') {
-      element = $(selectorOrEl);
-    } else if (typeof(selectorOrEl) === 'object') {
-      element = selectorOrEl;
-    } else {
-      return;
-    }
+  Materialize.fadeInImage =  function(selector){
+    var element = $(selector);
     element.css({opacity: 0});
     $(element).velocity({opacity: 1}, {
         duration: 650,
@@ -38,21 +31,13 @@
   };
 
   // Horizontal staggered list
-  Materialize.showStaggeredList = function(selectorOrEl) {
-    var element;
-    if (typeof(selectorOrEl) === 'string') {
-      element = $(selectorOrEl);
-    } else if (typeof(selectorOrEl) === 'object') {
-      element = selectorOrEl;
-    } else {
-      return;
-    }
+  Materialize.showStaggeredList = function(selector) {
     var time = 0;
-    element.find('li').velocity(
+    $(selector).find('li').velocity(
         { translateX: "-100px"},
         { duration: 0 });
 
-    element.find('li').each(function() {
+    $(selector).find('li').each(function() {
       $(this).velocity(
         { opacity: "1", translateX: "0"},
         { duration: 800, delay: time, easing: [60, 10] });
