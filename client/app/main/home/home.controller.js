@@ -77,6 +77,7 @@
             setData();
             $timeout(function() {
                 feedback_modal = angular.element('#feedback-modal');
+                goToSection(0);
             });
         }
 
