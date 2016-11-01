@@ -9,7 +9,12 @@
 		vm.eventModal = eventModal;
 		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
-		vm.events = {};
+		vm.events = [];
+
+		vm.showEndedEventsCheckBox = false;
+		vm.eventListFilter = function(event){
+			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
+		};
 
 		init();
 
@@ -40,7 +45,6 @@
 				vm.events = updateTime(data);
 			}, function () {});
 		}
-
 
 		function updateTime(data) {
 			$.each(data, function(index, event) {

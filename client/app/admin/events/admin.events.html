@@ -7,6 +7,10 @@
 			</a>
 		</div>
 		<div class="section">
+			<input type="checkbox" ng-model="vm.showEndedEventsCheckBox" ng-change id="vm.showEndedEventsCheckBox">
+			<label for="vm.showEndedEventsCheckBox">Show Ended Events</label>
+		</div>
+		<div class="section">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -20,7 +24,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="event in vm.events">
+					<tr ng-repeat="event in vm.events | filter:vm.eventListFilter">
 						<td>{{event._id}}</td>
 						<td>{{event.activity.activity_name}}</td>
 						<td>{{event.venue.venue_name}}</td>
