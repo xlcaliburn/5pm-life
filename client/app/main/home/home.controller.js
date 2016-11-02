@@ -129,8 +129,10 @@
                     vm.feedback_type = '';
                     vm.feedback_description = '';
                     vm.submitting = false;
-                    feedback_modal.openModal();
                     vm.submitting = false;
+                    $timeout(function() {
+                        feedback_modal.openModal();
+                    });
                 }
             });
         }

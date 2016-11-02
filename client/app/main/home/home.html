@@ -22,7 +22,7 @@
                         <div class="banner-title" ng-bind-html="vm.banner.title | trustHTML"></div>
                         <div class="banner-subtitle" ng-bind-html="vm.banner.subtitle | trustHTML"></div>
                     </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-md-4 col-sm-12 col-xs-12" ng-if="navbar.queue_status == -1">
                         <div class="banner-queue">
                             <button class="banner-queue-button" ng-click="vm.open_queue_modal()">
                                 Queue up
