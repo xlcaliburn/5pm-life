@@ -45,21 +45,13 @@
 
 			Events.getByIdAdmin(vm.event_id)
 				.then(function(res) {
+					console.log(res.data);
 					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
 					var start_date = new Date(vm.selected_event.dt_start);
 					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
 					vm.form_start_time = moment(start_date).format('hh:mmA');
 					vm.form_end_time = moment(new Date(vm.selected_event.dt_end)).format('hh:mmA');
-				})
-				.then(function() {
-					for (var add_id in vm.queues_to_add) {
-						Queue
-							.getById(vm.queues_to_add[add_id]._id)
-							.then(function(res){
-								vm.queues_to_add[add_id].user = res.data.user;
-							});
-					}
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
 
