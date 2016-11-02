@@ -100,10 +100,16 @@ export function show(req, res) {
 
 // Admin level GetById
 export function admin_show(req, res) {
-	var response = {};
 	return Events.findById(req.params.id)
-	.populate('queue')
-	.populate('users','first_name last_name gender birthday ethnicity')
+	.populate({
+		path:'queue',
+		populate: {
+			path: 'user',
+			model: 'User',
+			select: 'first_name last_name gender birthday ethnicity'
+		}
+	})
+	//.populate('users','first_name last_name gender birthday ethnicity')
 	.exec()
 	.then(handleEntityNotFound(res))
 	.then(respondWithResult(res))
