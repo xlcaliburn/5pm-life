@@ -89,6 +89,9 @@
 				get : function() {
 					return $http.get('/api/events');
 				},
+				getAll : function(){
+					return $http.get('/api/events/all');
+				},
 				getById : function(id) {
 					return $http.get('/api/events/' + id);
 				},

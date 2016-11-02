@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/', auth.isAuthenticated(), controller.index);
 router.post('/', auth.isAuthenticated(), controller.create);
+router.get('/all', auth.isAuthenticated(), controller.getAllEvents);
 
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.get('/admin/:id', auth.isAuthenticated(), controller.admin_show);

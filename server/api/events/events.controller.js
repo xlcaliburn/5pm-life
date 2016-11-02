@@ -77,7 +77,7 @@ function handleEntityNotFound(res) {
 // Gets a list of live events
 // TODO: Make this more generic on refactor
 export function index(req, res) {
-	return Events.find().sort({dt_search_start: -1})
+	return Events.find({'status' : {$ne : 'Ended'}}).sort({dt_search_start: -1})
 	.exec()
 	.then(respondWithResult(res))
 	.catch(handleError(res));
@@ -95,6 +95,12 @@ export function show(req, res) {
 		response.event_model = event;
 		return res.json({ response: response });
 	})
+	.catch(handleError(res));
+}
+
+export function getAllEvents(req, res){
+	return Events.find().sort({dt_search_start: -1})
+	.then(respondWithResult(res))
 	.catch(handleError(res));
 }
 

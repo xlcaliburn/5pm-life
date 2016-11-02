@@ -10,7 +10,9 @@
 		vm.createFormData = {};
 		vm.currentTime = new Date(Date.now()).getTime();
 		vm.events = [];
+		vm.includeEndedEvents = includeEndedEvents;
 
+		var includedEndedEvents = false;
 		vm.showEndedEventsCheckBox = false;
 		vm.eventListFilter = function(event){
 			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
@@ -53,6 +55,21 @@
 				}
 			});
 			return data;
+		}
+
+		/* When the "Show Ended Events" checkbox is selected all the events
+		are fetched from the database. We only need to do this once.*/
+		function includeEndedEvents(){
+			if (!includedEndedEvents){
+				Events.getAll()
+				.then((events) => {
+				console.log(vm.events);
+					vm.events = updateTime(events.data);
+					console.log(vm.events);
+					includedEndedEvents = true;
+				})
+				.catch(function(err) {console.log(err);});
+			}
 		}
 	}
 })();
