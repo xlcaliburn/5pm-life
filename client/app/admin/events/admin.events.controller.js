@@ -63,9 +63,7 @@
 			if (!includedEndedEvents){
 				Events.getAll()
 				.then((events) => {
-				console.log(vm.events);
 					vm.events = updateTime(events.data);
-					console.log(vm.events);
 					includedEndedEvents = true;
 				})
 				.catch(function(err) {console.log(err);});
