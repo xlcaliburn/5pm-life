@@ -148,13 +148,14 @@ export function destroy(req, res) {
 	.then(handleEntityNotFound(res))
 	.then((event) => {
 		if(event.users.length > 0){
-			return res.json({status: 'An event containing users cannot be deleted.'});
+			res.status(500).send('An event containing users cannot be deleted.');
+			return null;
 		}
 		else{
-			console.log(5);
 			return Events.remove({_id: req.params.id})
 			.then(() => {
-				return res.json({status: 'ok'});
+				res.status(200).end();
+				return null;
 			});
 		}
 	})
