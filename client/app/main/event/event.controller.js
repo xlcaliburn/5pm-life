@@ -51,9 +51,13 @@
             $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
 
             // remove bg
-            angular.element('body').css('background', '#ffffff');
-            angular.element('.wrap').css('background', '#ffffff');
-            angular.element('.wrap').css('padding-bottom', '0');
+            angular.element('body').addClass('event');
+            angular.element('.wrap').addClass('event');
+
+            // leave modal
+            $timeout(function() {
+                angular.element('.modal-trigger').leanModal();
+            });
 
             getLatLng();
             getSelfStatus(true);
@@ -92,8 +96,6 @@
                 beautiful_chat_messages.push(message);
             }
 
-            console.log('origin', vm.chat_messages);
-            console.log('beautiful', beautiful_chat_messages);
             vm.chat_messages = beautiful_chat_messages;
         }
 
@@ -147,9 +149,8 @@
         function destroy() {
             // re-eanble bg
             hideNavbar(false);
-            angular.element('body').css('background', '#f2f5f7');
-            angular.element('.wrap').css('background', '#f2f5f7');
-            angular.element('.wrap').css('padding-bottom', '95px');
+            angular.element('body').removeClass('event');
+            angular.element('.wrap').removeClass('event');
             angular.element('.footer').css('display', 'block');
             angular.element('.mobile-navbar').removeClass('no-shadow');
         }
@@ -452,16 +453,16 @@
         function hideNavbar(hide) {
             if (hide) {
                 // ngFocus
-                angular.element('.mobile-navbar').css('display', 'none');
-                angular.element('.wrap').css('padding-top', '0');
+                angular.element('.mobile-navbar').addClass('focus');('display', 'none');
+                angular.element('.wrap').addClass('focus');
                 angular.element('.mobile-chat-area').css('max-height', '100%');
             } else {
                 //ngBlur
                 focus_timeout = $timeout(function() {
                     if (angular.element('.mobile-event-tabs').is(':visible')) {
-                        angular.element('.mobile-navbar').css('display', 'initial');
+                        angular.element('.mobile-navbar').removeClass('focus');
                     }
-                    angular.element('.wrap').css('padding-top', '65px');
+                    angular.element('.wrap').removeClass('focus');
                     angular.element('.mobile-chat-area').css('max-height', 'calc(100% - 65px)');
                     if (chatbox) {
                         chatbox.scrollTop(chatbox.prop('scrollHeight'));
