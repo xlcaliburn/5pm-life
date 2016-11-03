@@ -233,7 +233,7 @@
 
                 // fix for mobile google maps
                 google.maps.event.addListenerOnce(mobile_map, 'idle', function() {
-                    angular.element('body').removeClass('gmap-fix');
+                    angular.element('html').removeClass('gmap-fix');
                 });
             }
         }
