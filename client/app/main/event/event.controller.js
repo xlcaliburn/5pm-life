@@ -419,7 +419,8 @@
         }
 
         // resize google maps on details page
-        function resizeMap() {
+        function resizeMap(event) {
+            event.currentTarget.click();
             $timeout(function() {
                 google.maps.event.trigger(mobile_map, 'resize');
             });
