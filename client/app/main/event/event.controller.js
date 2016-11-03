@@ -13,7 +13,7 @@
         vm.event_data = event_data;
 
         // variables
-        var map, mobile_map, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
+        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
         var eventSocket;
         var eventRoom = $stateParams.id;
         var chatbox, chatbox_mobile;
@@ -54,6 +54,7 @@
             // remove bg
             angular.element('body').addClass('event');
             angular.element('.wrap').addClass('event');
+            angular.element('body').addClass('gmap');
 
             // leave modal
             $timeout(function() {
@@ -187,6 +188,7 @@
 
             if (draggable) {
                 // desktop
+                angular.element('body').removeClass('gmap');
                 map = new google.maps.Map(document.getElementById('event-gmap'), {
                     center: {lat: lat, lng: lng},
                     zoom: 14,
@@ -209,10 +211,9 @@
                 });
             } else {
                 // mobile
-                angular.element('html').addClass('gmap-fix');
-                mobile_map = new google.maps.Map(document.getElementById('mobile-event-gmap'), {
+                mobile_gmap = new google.maps.Map(document.getElementById('mobile-event-gmap'), {
                     center: {lat: lat, lng: lng},
-                    zoom: 14,
+                    zoom: 12,
                     options: myOptions
                 });
 
@@ -222,18 +223,20 @@
 
                 mobile_marker = new google.maps.Marker({
                     position: {lat: lat, lng: lng},
-                    map: mobile_map,
+                    map: mobile_gmap,
                     title: vm.event_data.venue.venue_name
                 });
 
                 mobile_marker.addListener('click', function() {
                     if (mobile_infowindow) { mobile_infowindow.close(); }
-                    mobile_infowindow.open(mobile_map, mobile_marker);
+                    mobile_infowindow.open(mobile_gmap, mobile_marker);
                 });
 
                 // fix for mobile google maps
-                google.maps.event.addListenerOnce(mobile_map, 'idle', function() {
-                    angular.element('html').removeClass('gmap-fix');
+                google.maps.event.addListenerOnce(mobile_gmap, 'idle', function() {
+                    angular.element('body').removeClass('gmap');
+                    google.maps.event.trigger(mobile_gmap, 'resize');
+                    mobile_gmap.setCenter(new google.maps.LatLng(lat, lng));
                 });
             }
         }
@@ -436,8 +439,8 @@
         function resizeMap(event) {
             event.currentTarget.click();
             $timeout(function() {
-                if (mobile_map) {
-                    google.maps.event.trigger(mobile_map, 'resize');
+                if (mobile_gmap) {
+                    google.maps.event.trigger(mobile_gmap, 'resize');
                 }
             });
         }
