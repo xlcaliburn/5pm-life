@@ -27,7 +27,7 @@
             },
             fetchEventChat: function(event_id, offset_id) {
                 if (!offset_id) { offset_id = ''; }
-                var url = 'api/chat/history/' + event_id + '?offset_id=' + offset_id;
+                var url = 'api/chat/history/' + event_id;
                 return $http.get(url).then(function(res) {
                     return res.data;
                 });

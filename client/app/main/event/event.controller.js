@@ -17,7 +17,6 @@
         var eventSocket;
         var eventRoom = $stateParams.id;
         var chatbox, chatbox_mobile;
-        var offset_id;
         var selfInfo = getSelfInfo();
         var textarea;
         var just_confirmed = false;
@@ -41,7 +40,6 @@
         vm.resize_map = resizeMap;
         vm.send_message = sendMessage;
         vm.view_attendees = viewAttendees;
-
 
         init();
 
@@ -76,6 +74,7 @@
 
         // make chat look pretty
         function beautifyChatMessages() {
+            console.log(vm.chat_messages);
             var beautiful_chat_messages = [];
             var message = vm.chat_messages[0];
             var buffer = vm.chat_messages[0].message;
@@ -83,13 +82,13 @@
             for (var i = 1; i < vm.chat_messages.length; i++) {
                 if (vm.chat_messages[i].user._id === message.user._id) {
                     // append current message to  the end of the previous message
-                    if (buffer !== '') { buffer += '\n'; }
-                        buffer += vm.chat_messages[i].message;
+                    buffer += '\n' + vm.chat_messages[i].message;
                 } else {
+                    // on person change
                     message.message = buffer;
-                    buffer = '';
                     beautiful_chat_messages.push(message);
                     message = vm.chat_messages[i];
+                    buffer = vm.chat_messages[i].message;
                 }
             }
 
@@ -97,7 +96,7 @@
                 message.message = buffer;
                 beautiful_chat_messages.push(message);
             }
-
+            console.log('filtered chat', beautiful_chat_messages);
             vm.chat_messages = beautiful_chat_messages;
         }
 
@@ -361,9 +360,7 @@
                 eventSocket.on('fetch_chat', function() {
                     EventService.fetchEventChat(eventRoom).then(function(res) {
                         vm.chat_messages = res.messages;
-                        if (vm.chat_messages.length > 0) {
-                            offset_id = vm.chat_messages[0].offset;
-                        }
+
                         beautifyChatMessages();
                         scrollChatbox();
                     });

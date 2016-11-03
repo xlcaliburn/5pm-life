@@ -116,11 +116,12 @@ export function fetch(req, res) {
 
         // send array based on offset
         var raw_messages = chat.messages;
-        raw_messages.sort(function(a,b) {
+        /*raw_messages.sort(function(a,b) {
             return b.timestamp - a.timestamp;
-        });
+        });*/
 
         // get position of last chat message
+		/*
         var offset;
         var fetched_messages = [];
         var i = 0;
@@ -147,8 +148,8 @@ export function fetch(req, res) {
         fetched_messages.sort(function(a,b) {
             return a.timestamp - b.timestamp;
         });
-
-        return res.json({ messages: fetched_messages });
+		*/
+        return res.json({ messages: raw_messages });
 
     })
     .catch(handleError(res));
