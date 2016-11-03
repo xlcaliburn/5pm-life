@@ -16,7 +16,7 @@
 		vm.get_formatted_date = function(date) { return moment(date).format('MMM DD, YY | h:mm a');};
 		vm.allowed_activities = {};
 		vm.allowed_venues = {};
-		vm.enum_status = [];
+		vm.enums = [];
 		vm.form_date = null;
 		vm.form_start_time = null;
 		vm.form_end_time = null;
@@ -55,9 +55,10 @@
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
 
-			Enums.getByType('queue_status')
+			// Enums.getByType('queue_status')
+			Enums.get()
 				.then(function(res) {
-					vm.enum_status = res.data;
+					vm.enums = res.data;
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
 
@@ -120,15 +121,36 @@
 
 		function triggerEvent() {
 			// TODO: Add warning before calling this function
-			updateQueueStatus(vm.enum_status.PENDING_USER_CONFIRM);
-			vm.selected_event.status = vm.enum_status.PENDING_USER_CONFIRM;
+			updateQueueStatus(vm.enums.queue_status.PENDING_USER_CONFIRM.value);
+			vm.selected_event.status = vm.enums.event_status.PENDING_USER_CONFIRM.value;
 			saveAndClose('Event started', true);
 		}
 
 		function submit() {
-			updateQueueStatus(vm.enum_status.PENDING);
-			vm.selected_event.dt_start = new Date(vm.form_date + ' ' + moment(vm.form_start_time, 'hh:mmA').format('HH:mm:00'));
-			vm.selected_event.dt_end =  new Date(vm.form_date + ' ' + moment(vm.form_end_time, 'hh:mmA').format('HH:mm:00'));
+			if (vm.selected_event.status === vm.enums.event_status.NEW.value)
+			{
+				updateQueueStatus(vm.enums.queue_status.PENDING.value);
+				vm.selected_event.dt_start = new Date(vm.form_date + ' ' + moment(vm.form_start_time, 'hh:mmA').format('HH:mm:00'));
+				vm.selected_event.dt_end =  new Date(vm.form_date + ' ' + moment(vm.form_end_time, 'hh:mmA').format('HH:mm:00'));
+			}
+			else if (vm.selected_event.status === vm.enums.event_status.PENDING_USER_CONFIRM.value)
+			{
+				var newQueues = [];
+				for (var i=0; i < vm.queues_to_add.length; i++) {
+					if (vm.queues_to_add[i].status !== vm.enums.queue_status.PENDING_USER_CONFIRM.value){
+						newQueues.add(vm.queues_to_add[i]);
+					}
+				}
+
+				if (newQueues.length > 0)
+				{
+					var queue_data = {
+						event_id: vm.event_id,
+						queues: vm.queues_to_add
+					};
+					Queue.triggerEventStart(queue_data);
+				}
+			}
 
 			saveAndClose('Event saved');
 		}
@@ -147,7 +169,7 @@
 						user_remove_id = vm.queues_to_remove[remove_id]._id;
 					}
 
-					Queue.put(user_remove_id, {status : vm.enum_status.SEARCHING})
+					Queue.put(user_remove_id, {status : vm.enums.queue_status.SEARCHING.value})
 					.catch(function(err) { console.log(err); }); // jshint ignore:line
 				}
 			}
@@ -185,7 +207,7 @@
 				;
 			}
 
-			vm.selected_event.status = vm.enum_status.ENDED;
+			vm.selected_event.status = vm.enums.event_status.ENDED.value;
 			saveAndClose('Event ended', false);
 		}
 

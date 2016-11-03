@@ -15,10 +15,12 @@
         "OTHER": {"order": 9, "value": "Other"}
     },
     "event_status":{
-        "ATTENDED": { "order": 1, "value": "Attended"},
-        "CONFIRMED": {"order": 2, "value": "Confirmed"},
-        "DECLINED": {"order": 3, "value": "Declined"},
-        "LEFT": {"order": 4, "value": "Left"}
+        "NEW": { "order": 1, "value": "New"},
+        "PENDING_USER_CONFIRM": {"order": 2, "value": "Pending User Confirmation"},
+        "ATTENDED": { "order": 3, "value": "Attended"},
+        "CONFIRMED": {"order": 4, "value": "Confirmed"},
+        "DECLINED": {"order": 5, "value": "Declined"},
+        "LEFT": {"order": 6, "value": "Left"}
     },
     "location":{
         "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}

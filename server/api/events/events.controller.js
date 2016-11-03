@@ -107,14 +107,16 @@ export function getAllEvents(req, res){
 // Admin level GetById
 export function admin_show(req, res) {
 	return Events.findById(req.params.id)
-	.populate({
+	.populate([{
 		path:'queue',
 		populate: {
 			path: 'user',
-			model: 'User',
 			select: 'first_name last_name gender birthday ethnicity'
 		}
-	})
+	},{
+		path:'users',
+		select: 'first_name last_name gender birthday ethnicity'
+	}])
 	//.populate('users','first_name last_name gender birthday ethnicity')
 	.exec()
 	.then(handleEntityNotFound(res))
