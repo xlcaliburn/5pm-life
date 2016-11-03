@@ -63,7 +63,6 @@
 
         // variables
         vm.submitting = false;
-        var feedback_modal;
 
         // functions
         vm.close_modal = closeModal;
@@ -76,14 +75,13 @@
         function init() {
             setData();
             $timeout(function() {
-                feedback_modal = angular.element('#feedback-modal');
                 goToSection(0);
             });
         }
 
         // close feedback modal
         function closeModal() {
-            feedback_modal.closeModal();
+            angular.element('#feedback-modal').closeModal();
         }
 
         // go to slick section
@@ -98,6 +96,11 @@
             // news
             // about
             // feedback
+        }
+
+        // open feedback modal
+        function openFeedbackModal() {
+            angular.element('#feedback-modal').openModal();
         }
 
         // open queue modal
@@ -123,16 +126,13 @@
                 type: vm.feedback_type,
                 description: vm.feedback_description
             };
-
             feedbackService.submitFeedback(data).then(function(res) {
                 if (res.data.success) {
                     vm.feedback_type = '';
                     vm.feedback_description = '';
                     vm.submitting = false;
                     vm.submitting = false;
-                    $timeout(function() {
-                        feedback_modal.openModal();
-                    });
+                    openFeedbackModal();
                 }
             });
         }
