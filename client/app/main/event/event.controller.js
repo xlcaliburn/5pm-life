@@ -40,6 +40,7 @@
         vm.get_profile_img = getProfileImg;
         vm.resize_map = resizeMap;
         vm.send_message = sendMessage;
+        vm.view_attendees = viewAttendees;
 
 
         init();
@@ -184,49 +185,57 @@
                 disableDoubleClickZoom: true
             };
 
-            // desktop
-            map = new google.maps.Map(document.getElementById('event-gmap'), {
-                center: {lat: lat, lng: lng},
-                zoom: 14,
-                options: myOptions
-            });
+            if (draggable) {
+                // desktop
+                map = new google.maps.Map(document.getElementById('event-gmap'), {
+                    center: {lat: lat, lng: lng},
+                    zoom: 14,
+                    options: myOptions
+                });
 
-            // mobile
-            mobile_map = new google.maps.Map(document.getElementById('mobile-event-gmap'), {
-                center: {lat: lat, lng: lng},
-                zoom: 14,
-                options: myOptions
-            });
+                infowindow = new google.maps.InfoWindow({
+                    content: vm.event_data.venue.venue_name
+                });
 
-            infowindow = new google.maps.InfoWindow({
-                content: vm.event_data.venue.venue_name
-            });
+                marker = new google.maps.Marker({
+                    position: {lat: lat, lng: lng},
+                    map: map,
+                    title: vm.event_data.venue.venue_name
+                });
 
-            mobile_infowindow = new google.maps.InfoWindow({
-                content: vm.event_data.venue.venue_name
-            });
+                marker.addListener('click', function() {
+                    if (infowindow) { infowindow.close(); }
+                    infowindow.open(map, marker);
+                });
+            } else {
+                // mobile
+                angular.element('html').addClass('gmap-fix');
+                mobile_map = new google.maps.Map(document.getElementById('mobile-event-gmap'), {
+                    center: {lat: lat, lng: lng},
+                    zoom: 14,
+                    options: myOptions
+                });
 
-            marker = new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: map,
-                title: vm.event_data.venue.venue_name
-            });
+                mobile_infowindow = new google.maps.InfoWindow({
+                    content: vm.event_data.venue.venue_name
+                });
 
-            mobile_marker = new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: mobile_map,
-                title: vm.event_data.venue.venue_name
-            });
+                mobile_marker = new google.maps.Marker({
+                    position: {lat: lat, lng: lng},
+                    map: mobile_map,
+                    title: vm.event_data.venue.venue_name
+                });
 
-            marker.addListener('click', function() {
-                if (infowindow) { infowindow.close(); }
-                infowindow.open(map, marker);
-            });
+                mobile_marker.addListener('click', function() {
+                    if (mobile_infowindow) { mobile_infowindow.close(); }
+                    mobile_infowindow.open(mobile_map, mobile_marker);
+                });
 
-            mobile_marker.addListener('click', function() {
-                if (mobile_infowindow) { mobile_infowindow.close(); }
-                mobile_infowindow.open(mobile_map, mobile_marker);
-            });
+                // fix for mobile google maps
+                google.maps.event.addListenerOnce(mobile_map, 'idle', function() {
+                    angular.element('body').removeClass('gmap-fix');
+                });
+            }
         }
 
         // returns your status
@@ -419,11 +428,17 @@
             scrollChatbox();
         }
 
+        function viewAttendees(event) {
+            event.currentTarget.click();
+        }
+
         // resize google maps on details page
         function resizeMap(event) {
             event.currentTarget.click();
             $timeout(function() {
-                google.maps.event.trigger(mobile_map, 'resize');
+                if (mobile_map) {
+                    google.maps.event.trigger(mobile_map, 'resize');
+                }
             });
         }
 

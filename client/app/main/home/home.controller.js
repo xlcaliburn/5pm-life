@@ -89,7 +89,7 @@
         // go to slick section
         function goToSection(index) {
             $timeout(function() {
-                vm.slick_config.method.slickGoTo(index);
+                $('slick').slick('slickGoTo', index);
             });
         }
 
