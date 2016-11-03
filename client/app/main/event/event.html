@@ -173,7 +173,7 @@
                 <a href="#mobile-event-attendees" ng-mouseover="vm.view_attendees($event)">Going</a>
             </li>
             <li class="tab col s4" ng-class="{'disabled': vm.user_status == 'Pending User Confirmation'}">
-                <a href="#mobile-event-chat" ng-class="{'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="bottom" data-delay="0" data-tooltip="Confirm event to chat!">Chat</a>
+                <a href="#mobile-event-chat" ng-class="{'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="bottom" data-delay="0" data-tooltip="Confirm event to chat!" ng-click="vm.scroll_chatbox()">Chat</a>
             </li>
         </ul>
     </div>
@@ -304,7 +304,7 @@
             <!-- message box -->
             <div class="message-box valign-wrapper">
                 <img class="event-profile-pic" src="{{ vm.profile_picture }}">
-                <textarea ng-focus="vm.hide_navbar(true)" ng-blur="vm.hide_navbar(false, $event)" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
+                <textarea ng-focus="vm.hide_navbar(true)" ng-blur="vm.hide_navbar(false, $event); vm.scroll_chatbox()" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
                 <button type="button" ng-click="vm.send_message($event)" class="btn-floating waves-effect waves-light event-chat-send-button"><i class="material-icons">arrow_forward</i></button>
             </div>
         </div>

@@ -38,8 +38,10 @@
         vm.leave_event = leaveEvent;
         vm.get_profile_img = getProfileImg;
         vm.resize_map = resizeMap;
+        vm.scroll_chatbox = scrollChatbox;
         vm.send_message = sendMessage;
         vm.view_attendees = viewAttendees;
+
 
         init();
 
