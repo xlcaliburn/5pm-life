@@ -44,7 +44,8 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.events = updateTime(data);
+				vm.events.unshift(data);
+				vm.events = updateTime(vm.events);
 			}, function () {});
 		}
 

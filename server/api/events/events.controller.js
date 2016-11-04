@@ -127,7 +127,7 @@ export function admin_show(req, res) {
 // Creates a new Events in the DB
 export function create(req, res) {
 	return Events.create(req.body)
-	.then(respondWithAll(res, 201))
+	.then(respondWithResult(res, 201))
 	.catch(handleError(res));
 }
 
