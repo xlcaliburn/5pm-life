@@ -76,6 +76,7 @@
 						<th>Age</th>
 						<th>Gender</th>
 						<th>Ethnicity</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -84,6 +85,9 @@
 						<td>{{vm.get_age(user.birthday)}}</td>
 						<td>{{user.gender}}</td>
 						<td>{{user.ethnicity}}</td>
+						<td>
+							{{ vm.unconfirmed_users.indexOf(user._id) > -1 ? "": "Confirmed" }}
+						</td>
 					</tr>
 				</tbody>
 			</table>
