@@ -254,6 +254,7 @@
                                  if (vm.user_status === 'Confirmed') {
                                      initSockets();
                                      angular.element('.modal-trigger').leanModal();
+                                     $timeout(scrollChatbox);
                                  }
                                  return;
                             }
