@@ -115,7 +115,7 @@ export function admin_show(req, res) {
 		}
 	},{
 		path:'users',
-		select: 'first_name last_name gender birthday ethnicity'
+		select: 'first_name last_name gender birthday ethnicity current_event'
 	}])
 	//.populate('users','first_name last_name gender birthday ethnicity')
 	.exec()

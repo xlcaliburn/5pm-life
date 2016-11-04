@@ -334,6 +334,9 @@ export function triggerEvent(req, res) {
 		})
 		.then(event=>{
 			var event_users = event.users.concat(users_array);
+			event_users = event_users.filter(function(item, pos) {
+			    return event_users.indexOf(item) === pos;
+			});
 
 			return Events.findByIdAndUpdate({
 				_id : event_id
