@@ -124,7 +124,7 @@ export function validate_save(req, res) {
         .then((user) => {
             user.first_name = req.body.first_name;
             user.last_name = req.body.last_name;
-            user.email_address = req.body.email_address.toLowerCase();
+            user.email = req.body.email_address.toLowerCase();
             user.ethnicity = req.body.ethnicity;
             user.gender = req.body.gender;
             user.birthday = new Date(req.body.birthday.year + '/' + req.body.birthday.month + '/' + req.body.birthday.day);
