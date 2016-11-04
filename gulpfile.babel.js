@@ -257,7 +257,7 @@ gulp.task('styles', () => {
 gulp.task('transpile:client', () => {
     return gulp.src(paths.client.scripts)
         .pipe(transpileClient())
-        .pipe(gulp.dest('.tmp'));
+        .pipe(gulp.dest('.tmp/app'));
 });
 
 gulp.task('transpile:server', () => {
