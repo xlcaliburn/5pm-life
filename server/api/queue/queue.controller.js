@@ -269,7 +269,15 @@ export default function(socketio) {
 }
 
 function saveUserEventStatus(user, event_id) {
-	return User.update({_id: user._id }, { $set: { event_status: 'Pending User Confirmation', current_event: event_id }}).exec()
+	return User.update({
+		_id: user._id
+	}, {
+		$set: {
+			event_status: 'Pending User Confirmation',
+			current_event: event_id
+		}
+	})
+	.exec()
 	.then(()=> {
 		io.sockets.in(user._id).emit('update_status');
 	});
@@ -280,32 +288,32 @@ export function triggerEvent(req, res) {
 	var response = {};
 	var queue = req.body.queues;
 	var event_id = req.body.event_id;
-	var query_array = [];
 	var users_array = [];
+	var queue_array = [];
 
-	for (var i = 0; i < queue.length; i++) {
-		//var query_obj = new mongoose.Types.ObjectId(queue[i]);
-		//query_array.push(query_obj);
-		query_array.push(queue[i]);
+	for (var q in queue) {
+		queue_array.push(queue[q]._id);
+		users_array.push(queue[q].user._id);
 	}
-
-	return Queue.find({ _id : { $in: query_array }}).exec()
-	 	.then(function(queue_items) {
-			var user_array = [];
-			for (var j = 0; j < queue_items.length; j++) {
-				user_array.push(queue_items[j].user);
-			}
-
-			return User.find({_id: { $in: user_array }});
+	Queue.update({
+			_id : { $in: queue }
+	 	},{
+			$set : { status : 'Pending User Confirmation' }
+		},{
+			multi : true
+		}).exec()
+		.then(()=> {
+			return User.find({
+				_id : { $in : users_array }
+			});
 		})
-		.then(function(users) {
+		.then(users=>{
 			for (var k = 0; k < users.length; k++) {
-				// send emails to all users
 				var url_origin = req.headers.origin;
 				url_origin = url_origin.replace('http://', 'http://www.');
 				var email_data = {
 	                first_name: users[k].first_name,
-									template: 'event-confirmation',
+					template: 'event-confirmation',
 	                event_link: url_origin + '/home/event/' + event_id
 	            };
 
@@ -320,24 +328,20 @@ export function triggerEvent(req, res) {
 	            };
 
 	            emailCtrl.sendEmail(email_content);
-
-				// add users to event
-				var user_obj = new User(users[k]);
-				users_array.push(user_obj);
-
-				saveUserEventStatus(user_obj, event_id);
+				saveUserEventStatus(users[k], event_id);
 			}
 			return Events.findById(event_id);
 		})
-		.then(function(event) {
-			event.users = users_array;
-			event.save()
-				.then(function() {
-					response.status = 'ok';
-					return res.json({ response: response });
-				});
-			return null;
+		.then(event=>{
+			var event_users = event.users.concat(users_array);
+
+			return Events.findByIdAndUpdate({
+				_id : event_id
+			},{
+				$set : { users : event_users }
+			});
 		})
+		.then(respondWithResult(res))
 		.catch(function(err) {
 			return res.json({ error: err });
 		});

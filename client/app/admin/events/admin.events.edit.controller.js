@@ -138,15 +138,14 @@
 				var newQueues = [];
 				for (var i=0; i < vm.queues_to_add.length; i++) {
 					if (vm.queues_to_add[i].status !== vm.enums.queue_status.PENDING_USER_CONFIRM.value){
-						newQueues.add(vm.queues_to_add[i]);
+						newQueues.push(vm.queues_to_add[i]);
 					}
 				}
-
 				if (newQueues.length > 0)
 				{
 					var queue_data = {
 						event_id: vm.event_id,
-						queues: vm.queues_to_add
+						queues: newQueues
 					};
 					Queue.triggerEventStart(queue_data);
 				}
