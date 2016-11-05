@@ -364,7 +364,7 @@
                         vm.chat_messages = res.messages;
 
                         beautifyChatMessages();
-                        scrollChatbox();
+                        $timeout(scrollChatbox, 50);
                     });
                 });
 
