@@ -76,7 +76,7 @@
             setData();
             $timeout(function() {
                 goToSection(0);
-            });
+            }, 1000);
         }
 
         // close feedback modal

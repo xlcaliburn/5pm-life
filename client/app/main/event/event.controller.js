@@ -37,6 +37,7 @@
         vm.hide_navbar = hideNavbar;
         vm.leave_event = leaveEvent;
         vm.get_profile_img = getProfileImg;
+        vm.open_leave_modal = openLeaveModal;
         vm.resize_map = resizeMap;
         vm.scroll_chatbox = scrollChatbox;
         vm.send_message = sendMessage;
@@ -76,7 +77,6 @@
 
         // make chat look pretty
         function beautifyChatMessages() {
-            console.log(vm.chat_messages);
             var beautiful_chat_messages = [];
             var message = vm.chat_messages[0];
             var buffer = vm.chat_messages[0].message;
@@ -98,7 +98,6 @@
                 message.message = buffer;
                 beautiful_chat_messages.push(message);
             }
-            console.log('filtered chat', beautiful_chat_messages);
             vm.chat_messages = beautiful_chat_messages;
         }
 
@@ -405,6 +404,11 @@
                     eventSocket.emit('confirm_event', eventRoom);
                 }
             }
+        }
+
+        // open leave modal
+        function openLeaveModal() {
+            angular.element('#leave-modal').openModal();
         }
 
         // receive message from server

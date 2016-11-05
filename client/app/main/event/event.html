@@ -62,7 +62,7 @@
 
                             <ul id='event-options' class='dropdown-menu dropdown-menu-right' aria-labelledby="event-dropdown">
                                 <li>
-                                    <a class="modal-trigger" href="#leave-modal">
+                                    <a class="leave-modal-trigger" ng-click="vm.open_leave_modal()">
                                         Leave event
                                     </a>
                                 </li>
@@ -304,7 +304,7 @@
             <!-- message box -->
             <div class="message-box valign-wrapper">
                 <img class="event-profile-pic" src="{{ vm.profile_picture }}">
-                <textarea ng-focus="vm.hide_navbar(true)" ng-blur="vm.hide_navbar(false, $event); vm.scroll_chatbox()" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
+                <textarea ng-focus="vm.hide_navbar(true); vm.scroll_chatbox()" ng-blur="vm.hide_navbar(false, $event); vm.scroll_chatbox()" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
                 <button type="button" ng-click="vm.send_message($event)" class="btn-floating waves-effect waves-light event-chat-send-button"><i class="material-icons">arrow_forward</i></button>
             </div>
         </div>

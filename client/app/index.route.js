@@ -250,7 +250,7 @@
 	// redirect user based on cookie
 	redirectUser.$inject = ['$cookies', '$location', '$state', 'Auth'];
 	function redirectUser($cookies, $location, $state, Auth) {
-		Auth.isLoggedIn(function(isLoggedIn) {
+		return Auth.isLoggedIn(function(isLoggedIn) {
 			if (isLoggedIn) {
 				if ($cookies.get('req_page')) { $location.path($cookies.get('req_page')); }
 			} else {
@@ -261,16 +261,14 @@
 				$state.go('login');
 			}
 		});
-		return;
 	}
 
 	// validate user on login
 	validateUser.$inject = ['$state', 'Auth'];
 	function validateUser($state, Auth) {
-		Auth.isLoggedIn(function(isLoggedIn) {
+		return Auth.isLoggedIn(function(isLoggedIn) {
 			if (isLoggedIn) { $state.go('home'); }
 		});
-		return;
 	}
 
 })();
