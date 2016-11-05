@@ -43,7 +43,7 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.events.unshift(data);
+				vm.events = data;
 			}, function () {});
 		}
 
