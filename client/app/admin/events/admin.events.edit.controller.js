@@ -23,7 +23,7 @@
 		vm.queues_to_add = [];
 		vm.queues_to_remove = [];
 		vm.selected_event = {};
-		vm.unconfirmed_users = [];
+		vm.confirmed_users = [];
 
 		init();
 
@@ -49,7 +49,12 @@
 					console.log(res.data);
 					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
-					for (var q in vm.queues_to_add) { vm.unconfirmed_users.push(vm.queues_to_add[q].user._id); }
+					var unconfirmed_users = [];
+					for (var q in vm.queues_to_add) { unconfirmed_users.push(vm.queues_to_add[q].user._id); }
+					vm.confirmed_users = vm.selected_event.users.filter(function(user) {
+					    return unconfirmed_users.indexOf(user._id) === -1;
+					});
+
 					var start_date = new Date(vm.selected_event.dt_start);
 					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
 					vm.form_start_time = moment(start_date).format('hh:mmA');

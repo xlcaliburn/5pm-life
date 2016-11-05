@@ -80,14 +80,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in vm.selected_event.users">
+					<tr ng-repeat="user in vm.confirmed_users">
 						<td>{{user.first_name}} {{user.last_name}}</td>
 						<td>{{vm.get_age(user.birthday)}}</td>
 						<td>{{user.gender}}</td>
 						<td>{{user.ethnicity}}</td>
-						<td>
-							{{ vm.unconfirmed_users.indexOf(user._id) > -1 ? "": "Confirmed" }}
-						</td>
 					</tr>
 				</tbody>
 			</table>
