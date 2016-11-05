@@ -11,12 +11,11 @@
 		vm.currentTime = new Date(Date.now()).getTime();
 		vm.events = [];
 		vm.includeEndedEvents = includeEndedEvents;
+		vm.getReadableTime = getReadableTime;
 
 		var includedEndedEvents = false;
 		vm.showEndedEventsCheckBox = false;
-		vm.eventListFilter = function(event){
-			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
-		};
+		vm.eventListFilter = eventListFilter;
 
 		init();
 
@@ -69,6 +68,18 @@
 				})
 				.catch(function(err) {console.log(err);});
 			}
+		}
+
+		function eventListFilter(event){
+			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
+		}
+
+		function getReadableTime(ms){
+			var searchTime = Math.floor(ms/(1000*60*60*24)) + 'd ';
+			searchTime += Math.floor((ms % (1000*60*60*24))/(1000*60*60)) + 'h ';
+			searchTime += Math.floor((ms % (1000*60*60*24) % (1000*60*60))/(1000*60)) + 'm';
+
+			return searchTime;
 		}
 	}
 })();
