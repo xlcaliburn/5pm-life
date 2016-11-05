@@ -29,7 +29,7 @@
 						<td>{{event.activity.activity_name}}</td>
 						<td>{{event.venue.venue_name}}</td>
 						<td>({{event.queue.length ? event.queue.length : 0}}) {{event.users.length ? event.users.length : 0}}/{{event.activity.allowed_capacity}}</td>
-						<td>{{vm.getReadableTime(vm.currentTime - event.dt_search_start_time)}}</td>
+						<td>{{vm.getReadableDuration(vm.currentTime,event.dt_search_start)}}</td>
 						<td>{{event.status}}</td>
 						<td>
 							<a ui-sref="admin.events.edit({ event_id: event._id })"><i class="small material-icons">mode_edit</i></a>

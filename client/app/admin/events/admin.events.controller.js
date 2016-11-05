@@ -8,10 +8,10 @@
 		var vm = this;
 		vm.eventModal = eventModal;
 		vm.createFormData = {};
-		vm.currentTime = new Date(Date.now()).getTime();
+		vm.currentTime = new Date(Date.now());
 		vm.events = [];
 		vm.includeEndedEvents = includeEndedEvents;
-		vm.getReadableTime = getReadableTime;
+		vm.getReadableDuration = getReadableDuration;
 
 		var includedEndedEvents = false;
 		vm.showEndedEventsCheckBox = false;
@@ -22,12 +22,12 @@
 		function init() {
 			Events.get()
 				.then(function(res) {
-					vm.events = updateTime(res.data);
+					vm.events = res.data;
 				})
 				.catch(function(err) {console.log(err);});
 
 			var tick = function() {
-				vm.currentTime = new Date(Date.now()).getTime();
+				vm.currentTime = new Date(Date.now());
 			};
 			$interval(tick, 1000);
 		}
@@ -44,17 +44,7 @@
 
 			modalInstance.result.then(function(data) {
 				vm.events.unshift(data);
-				vm.events = updateTime(vm.events);
 			}, function () {});
-		}
-
-		function updateTime(data) {
-			$.each(data, function(index, event) {
-				if (event.dt_search_start) {
-					event.dt_search_start_time = new Date(event.dt_search_start).getTime();
-				}
-			});
-			return data;
 		}
 
 		/* When the "Show Ended Events" checkbox is selected all the events
@@ -63,7 +53,7 @@
 			if (!includedEndedEvents){
 				Events.getAll()
 				.then((events) => {
-					vm.events = updateTime(events.data);
+					vm.events = events.data;
 					includedEndedEvents = true;
 				})
 				.catch(function(err) {console.log(err);});
@@ -74,12 +64,11 @@
 			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
 		}
 
-		function getReadableTime(ms){
-			var searchTime = Math.floor(ms/(1000*60*60*24)) + 'd ';
-			searchTime += Math.floor((ms % (1000*60*60*24))/(1000*60*60)) + 'h ';
-			searchTime += Math.floor((ms % (1000*60*60*24) % (1000*60*60))/(1000*60)) + 'm';
-
-			return searchTime;
+		function getReadableDuration(fromTime,toTime){
+			var duration = moment.duration(moment(fromTime).diff(toTime));
+			var readableDuration = Math.floor(duration.asDays()) + 'd ';
+			readableDuration += duration.hours() + 'h ' + duration.minutes() + 'm';
+			return readableDuration;
 		}
 	}
 })();
