@@ -16,7 +16,6 @@
 			Venues.get()
 				.then(function(res) {
 					vm.venues = res.data;
-					console.log(vm.venues);
 				})
 				.catch((err)=>console.log('Error: ' + err))
 			;
@@ -28,14 +27,16 @@
 			;
 		}
 
-		function create_modal() {
+		function create_modal(venueId) {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/venues/modals/createVenueModal.html',
-				controller: 'CreateVenueModalController',
+				templateUrl: 'app/admin/venues/modals/editVenueModal.html',
+				controller: 'EditVenueModalController',
 				controllerAs: 'vm',
 				size: 'lg',
-				resolve: {}
+				resolve: {
+					venueId : function() { return venueId; }
+				}
 			});
 
 			modalInstance.result.then(()=>init());

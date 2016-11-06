@@ -60,11 +60,17 @@
 				get : function() {
 					return $http.get('/api/venues');
 				},
+				getById : function(id) {
+					return $http.get('/api/venues/' + id);
+				},
 				create : function(data) {
 					return $http.post('/api/venues', data);
 				},
 				delete : function(id) {
 					return $http.delete('/api/venues/' + id);
+				},
+				updateById : function(id, data) {
+					return $http.put('/api/venues/' + id, data);
 				}
 			};
 		})
