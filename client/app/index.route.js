@@ -51,13 +51,13 @@
 									{
 										title: 'BETA Test Launching on Nov 4/5!',
 										date: 'Oct 22, 2016',
-										content: '<img src="assets/images/home-1.jpg" width="100%"> <p>We’re preparing to launching our BETA test in the next upcoming weeks. We have been working so hard for the past 6 months and thanks to your feedback and support, we’ve managed to bring you version 0.5! As we continue to get more feedback, I would like to make sure you’re not actually reading this but focusing on the overall layout of this page.</p>'
+										content: '<img src="assets/images/home-1.jpg" width="100%"> <p>We’re preparing to launch our BETA test in the upcoming weeks. We have been working hard for the past 6 months and thanks to your feedback and support, we’ve managed to bring you v0.1 of the app! We will be trying to run events every 2 weeks starting Nov 4/5 for the next several months. Sign up above when you are available!</p>'
 									}
 								]
 							},
 							about: {
 								name: 'About',
-								content: '<div class="about-title">A Little Bit About 5PM</div><div class="about-content"><p>Are you looking to meet new people but can\'t meet anyone outside of work? Want to try new events but can\'t get friends to go with you? Looking for a romantic partner but not clicking with anyone? 5PM is the newest platform that can connect you with the people that you want to meet.</p><p class="align-center"><img src="assets/images/5pm-icon-live.png" width="150px"><br /><span class="light purple-font">share your interests</span> &nbsp; · &nbsp;<span class="light pink-font">exchange ideas</span> &nbsp;·&nbsp; <span class="light aqua-font">create life experiences</span></p><p>5PM aims to matchmake you with the people that you want to actually want to meet while doing activities and events that you actually want to do. Our mission is to help provide a way for you to meet more people, make more friends and have fun!</p>'
+								content: '<div class="about-title">A Little Bit About 5PM</div><div class="about-content"><p>Are you looking to meet new people but can\'t meet anyone outside of work? Want to try new events but can\'t get friends to go with you? 5PM is the newest platform that can connect you with the people that you want to meet.</p><p class="align-center"><img src="assets/images/5pm-icon-live.png" width="150px"><br /><span class="light purple-font">share your interests</span> &nbsp; · &nbsp;<span class="light pink-font">exchange ideas</span> &nbsp;·&nbsp; <span class="light aqua-font">create life experiences</span></p><p>5PM aims to matchmake you with the people that you want to actually want to meet while doing activities and events that you actually want to do. Our mission is to help provide a way for you to meet more people, make more friends and have fun!</p>'
 							},
 							feedback: {
 								name: 'Feedback',
@@ -250,7 +250,7 @@
 	// redirect user based on cookie
 	redirectUser.$inject = ['$cookies', '$location', '$state', 'Auth'];
 	function redirectUser($cookies, $location, $state, Auth) {
-		Auth.isLoggedIn(function(isLoggedIn) {
+		return Auth.isLoggedIn(function(isLoggedIn) {
 			if (isLoggedIn) {
 				if ($cookies.get('req_page')) { $location.path($cookies.get('req_page')); }
 			} else {
@@ -261,16 +261,14 @@
 				$state.go('login');
 			}
 		});
-		return;
 	}
 
 	// validate user on login
 	validateUser.$inject = ['$state', 'Auth'];
 	function validateUser($state, Auth) {
-		Auth.isLoggedIn(function(isLoggedIn) {
+		return Auth.isLoggedIn(function(isLoggedIn) {
 			if (isLoggedIn) { $state.go('home'); }
 		});
-		return;
 	}
 
 })();

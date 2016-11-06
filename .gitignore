@@ -12,3 +12,4 @@ client/uploads
 npm-debug.log
 server/config/environment/development.js
 server/config/environment/index.js
+gulpfile.babel.js

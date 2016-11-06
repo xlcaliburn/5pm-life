@@ -19,8 +19,9 @@
         "PENDING_USER_CONFIRM": {"order": 2, "value": "Pending User Confirmation"},
         "ATTENDED": { "order": 3, "value": "Attended"},
         "CONFIRMED": {"order": 4, "value": "Confirmed"},
-        "DECLINED": {"order": 5, "value": "Declined"},
-        "LEFT": {"order": 6, "value": "Left"}
+        "ENDED": {"order": 5, "value": "Ended"},
+        "DECLINED": {"order": 6, "value": "Declined"},
+        "LEFT": {"order": 7, "value": "Left"}
     },
     "location":{
         "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}
@@ -28,8 +29,7 @@
     "queue_status": {
         "SEARCHING": {"order": 1, "value": "Searching"},
         "PENDING": {"order": 2, "value": "Pending"},
-        "PENDING_USER_CONFIRM": {"order": 3, "value": "Pending User Confirmation"},
-        "ENDED": {"order": 4, "value": "Ended"}
+        "PENDING_USER_CONFIRM": {"order": 3, "value": "Pending User Confirmation"}
     },
     "gender": {
         "MALE": {"order": 1, "value": "Male"},
