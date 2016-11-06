@@ -49,6 +49,8 @@
 					console.log(res.data);
 					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
+
+					// Display only confirmed users in view
 					var unconfirmed_users = [];
 					for (var q in vm.queues_to_add) { unconfirmed_users.push(vm.queues_to_add[q].user._id); }
 					vm.confirmed_users = vm.selected_event.users.filter(function(user) {
@@ -62,7 +64,6 @@
 				})
 				.catch(function(data) { console.log('Error: ' + data); });
 
-			// Enums.getByType('queue_status')
 			Enums.get()
 				.then(function(res) {
 					vm.enums = res.data;
