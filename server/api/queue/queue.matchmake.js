@@ -87,10 +87,9 @@ function createNewEvent(queue) {
 				status : 'New'
 			};
 			console.log(newEvent);
-			return Events.create(newEvent)
-				.then((ev) => {	return addQueueToEvent(queue._id, ev); })
-			;
+			return Events.create(newEvent);
 		})
+		.then((ev) => {	return addQueueToEvent(queue._id, ev); })
 	;
 }
 
@@ -100,8 +99,8 @@ function findEvent(queue) {
 	Events
 		.find({
 			'status' : 'New',
-			dt_start : { $lte : param.event_search_dt_start },
-			dt_end : { $gte : param.event_search_dt_end }
+			dt_start : { $gte : param.event_search_dt_start },
+			dt_end : { $lte : param.event_search_dt_end }
 			// TODO: Length of Queue < Venue.Allowed_Capacity
 		})
 		// More Conditions
