@@ -414,3 +414,57 @@ export function getAttendees(req, res) {
 	})
 	.catch(handleError(res));
 }
+
+
+export function endEvent(req, res) {
+	var event_id = req.params.id;
+	var fetched_event = {};
+	Events.findById(event_id).populate([{path:'queue', select:'user status'}, {path:'users', select:'event_status current_event event_history'}])
+		.then(ev => { // Update and end for attended users
+			fetched_event = ev;
+			var attendees = [];
+			for (var i=ev.users.length -1; i>=0; i--){
+				if (ev.users[i].event_status !== 'Confirmed'){
+					ev.users.splice(i, 1);
+				}
+				else { attendees.push(ev.users[i]._id); }
+			}
+
+			Events.findByIdAndUpdate(event_id,{ $set : { users : ev.users} }).exec();
+			User.update({
+				_id : {$in: attendees}
+			}, {
+				$set : {
+					event_status : null,
+					current_event : null
+				},
+				$push : {
+					event_history : event_id
+				}
+			}).exec();
+
+			return ev;
+		})
+		.then(ev => { // Remove pending confirm users from queue. This could be written without the for loop
+			if (ev.queue.length > 0) {
+				for (var j = 0; j < ev.queue.length; j++) {
+					if (ev.queue[j].status === 'Pending User Confirmation')
+					{
+						User.findByIdAndUpdate(ev.queue[j].user, {
+							$set : {
+								event_status : null,
+								current_event : null
+							}
+						}).exec();
+
+						Queue.remove(ev.queue[j]).exec();
+					}
+				}
+
+				return Events.findByIdAndUpdate(event_id, { $set:{ queue : null } });
+			}
+
+		})
+		.then(()=>{res.sendStatus(200); })
+	;
+}

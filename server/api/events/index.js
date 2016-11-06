@@ -16,6 +16,7 @@ router.get('/attendees/:event_id', auth.isAuthenticated(), controller.getAttende
 router.post('/confirm', auth.isAuthenticated(), controller.confirmEvent);
 router.post('/decline', auth.isAuthenticated(), controller.declineEvent);
 router.post('/leave', auth.isAuthenticated(), controller.leaveEvent);
+router.post('/end/:id', controller.endEvent);
 
 router.put('/:id', auth.isAuthenticated(), controller.update);
 router.patch('/:id', auth.isAuthenticated(), controller.update);
