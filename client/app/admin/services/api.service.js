@@ -113,6 +113,9 @@
 				create : function(data) {
 					return $http.post('/api/events', data);
 				},
+				end : function(id) {
+					return $http.post('/api/events/end/' + id);
+				},
 				delete : function(id) {
 					return $http.delete('/api/events/' + id);
 				}
