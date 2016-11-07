@@ -8,29 +8,29 @@
 		var vm = this;
 		vm.eventModal = eventModal;
 		vm.createFormData = {};
-		vm.currentTime = new Date(Date.now()).getTime();
+		vm.currentTime = new Date(Date.now());
 		vm.events = [];
 		vm.includeEndedEvents = includeEndedEvents;
+		vm.getReadableDuration = getReadableDuration;
+		var interval;
 
 		var includedEndedEvents = false;
 		vm.showEndedEventsCheckBox = false;
-		vm.eventListFilter = function(event){
-			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
-		};
+		vm.eventListFilter = eventListFilter;
 
 		init();
 
 		function init() {
 			Events.get()
 				.then(function(res) {
-					vm.events = updateTime(res.data);
+					vm.events = res.data;
 				})
 				.catch(function(err) {console.log(err);});
 
 			var tick = function() {
-				vm.currentTime = new Date(Date.now()).getTime();
+				vm.currentTime = new Date(Date.now());
 			};
-			$interval(tick, 1000);
+			interval = $interval(tick, 1000);
 		}
 
 		function eventModal() {
@@ -44,17 +44,8 @@
 			});
 
 			modalInstance.result.then(function(data) {
-				vm.events = updateTime(data);
+				vm.events = data;
 			}, function () {});
-		}
-
-		function updateTime(data) {
-			$.each(data, function(index, event) {
-				if (event.dt_search_start) {
-					event.dt_search_start_time = new Date(event.dt_search_start).getTime();
-				}
-			});
-			return data;
 		}
 
 		/* When the "Show Ended Events" checkbox is selected all the events
@@ -63,11 +54,27 @@
 			if (!includedEndedEvents){
 				Events.getAll()
 				.then((events) => {
-					vm.events = updateTime(events.data);
+					vm.events = events.data;
 					includedEndedEvents = true;
 				})
 				.catch(function(err) {console.log(err);});
 			}
 		}
+
+		function eventListFilter(event){
+			return vm.showEndedEventsCheckBox || event.status !== 'Ended';
+		}
+
+		function getReadableDuration(fromTime,toTime){
+			var duration = moment.duration(moment(fromTime).diff(toTime));
+			var readableDuration = Math.floor(duration.asDays()) + 'd ';
+			readableDuration += duration.hours() + 'h ' + duration.minutes() + 'm';
+			return readableDuration;
+		}
+
+		// Stopping the interval to prevent a memory leak
+		$scope.$on('$destroy', function(){
+			$interval.cancel(interval);
+		});
 	}
 })();
