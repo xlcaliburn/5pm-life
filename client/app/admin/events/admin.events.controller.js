@@ -12,6 +12,7 @@
 		vm.events = [];
 		vm.includeEndedEvents = includeEndedEvents;
 		vm.getReadableDuration = getReadableDuration;
+		var interval;
 
 		var includedEndedEvents = false;
 		vm.showEndedEventsCheckBox = false;
@@ -29,7 +30,7 @@
 			var tick = function() {
 				vm.currentTime = new Date(Date.now());
 			};
-			$interval(tick, 1000);
+			interval = $interval(tick, 1000);
 		}
 
 		function eventModal() {
@@ -70,5 +71,10 @@
 			readableDuration += duration.hours() + 'h ' + duration.minutes() + 'm';
 			return readableDuration;
 		}
+
+		// Stopping the interval to prevent a memory leak
+		$scope.$on('$destroy', function(){
+			$interval.cancel(interval);
+		});
 	}
 })();
