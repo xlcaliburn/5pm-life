@@ -1,7 +1,10 @@
 <div class="modal-header">
-	<h3 class="modal-title">Create New Venue</h3>
+	<h3 class="modal-title">{{vm.title}}</h3>
 </div>
 <div class="modal-body">
+	<div class="row right-align">
+		<button class="btn red darken-4" ng-show="vm.deleteButtonShow" ng-click="vm.deleteVenue()">Delete</button>
+	</div>
 	<div class="row">
 		<form class="col s12" name="create_form" ng-submit="vm.submit()">
 			<div class="form-group">
