@@ -415,7 +415,6 @@ export function getAttendees(req, res) {
 	.catch(handleError(res));
 }
 
-
 export function endEvent(req, res) {
 	var event_id = req.params.id;
 	var fetched_event = {};
@@ -446,7 +445,7 @@ export function endEvent(req, res) {
 			return ev;
 		})
 		.then(ev => { // Remove pending confirm users from queue. This could be written without the for loop
-			if (ev.queue.length > 0) {
+			if (ev.queue && ev.queue.length > 0) {
 				for (var j = 0; j < ev.queue.length; j++) {
 					if (ev.queue[j].status === 'Pending User Confirmation')
 					{
@@ -460,10 +459,14 @@ export function endEvent(req, res) {
 						Queue.remove(ev.queue[j]).exec();
 					}
 				}
-
-				return Events.findByIdAndUpdate(event_id, { $set:{ queue : null } });
 			}
 
+			return Events.findByIdAndUpdate(event_id, {
+				$set:{
+					queue : null,
+					status : 'Ended'
+				}
+			});
 		})
 		.then(()=>{res.sendStatus(200); })
 	;
