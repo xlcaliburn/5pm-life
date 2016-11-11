@@ -199,26 +199,7 @@
 
 		function endEvent() {
 			Events.end(vm.selected_event._id);
-
-			// for (var user in vm.selected_event.users)
-			// {
-			// 	// TODO: Very bad way of writing this, this should be addressed on the refactor. Move the code to server side
-			// 	var user_data;
-			// 	Users.getById(vm.selected_event.users[user]._id)
-			// 		.then(function(res){
-			// 			console.log(res.data);
-			// 			user_data = res.data;
-			// 			user_data.event_status = null;
-			// 			user_data.event_history.push(vm.selected_event._id);
-			// 			user_data.current_event = null;
-			// 		}).then(function() {
-			// 			Users.updateById(vm.selected_event.users[user]._id, user_data);
-			// 		})
-			// 	;
-			// }
-			//
-			// vm.selected_event.status = vm.enums.event_status.ENDED.value;
-			saveAndClose('Event ended', false);
+			close('Event ended');
 		}
 
 		function saveAndClose(notificationString, trigger) {
@@ -234,9 +215,14 @@
 						Queue.triggerEventStart(queue_data);
 					}
 
-					$state.go('admin.events', {}, { reload: true });
-					Materialize.toast(notificationString, 2000); // jshint ignore:line
+					close(notificationString);
 				});
+		}
+
+		function close(notificationString)
+		{
+			$state.go('admin.events', {}, { reload: true });
+			Materialize.toast(notificationString, 2000); // jshint ignore:line
 		}
 	}
 })();
