@@ -6,6 +6,7 @@
 	function EditVenueModalController ($uibModalInstance, Venues, Activities, venueId) {
 		var vm = this;
 		vm.submit = submit;
+		vm.deleteVenue = deleteVenue;
 
 		init();
 
@@ -17,6 +18,7 @@
 				// If this is an existing venue
 				if(venueId){
 					vm.title = 'Edit Venue';
+					vm.deleteButtonShow = true;
 
 					Venues.getById(venueId)
 					.then((res) => {
@@ -37,6 +39,7 @@
 				}
 				else{
 					vm.title = 'Create New Venue';
+					vm.deleteButtonShow = false;
 				}
 			});
 		}
@@ -59,6 +62,14 @@
 			else{
 				Venues.create(vm.form_data)
 					.then(()=>$uibModalInstance.close());
+			}
+		}
+
+		function deleteVenue(){
+			if (venueId){
+				Venues.delete(venueId)
+					.then(()=>$uibModalInstance.close())
+				;
 			}
 		}
 	}

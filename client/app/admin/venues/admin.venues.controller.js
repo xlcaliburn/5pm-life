@@ -7,7 +7,6 @@
 	function AdminVenuesController ($scope, $http, $uibModal, Venues) {
 		var vm = this;
 		vm.venues = {};
-		vm.delete_venue = deleteVenue;
 		vm.create_modal = create_modal;
 
 		init();
@@ -18,12 +17,6 @@
 					vm.venues = res.data;
 				})
 				.catch((err)=>console.log('Error: ' + err))
-			;
-		}
-
-		function deleteVenue(id) {
-			Venues.delete(id)
-				.then(()=>init())
 			;
 		}
 
