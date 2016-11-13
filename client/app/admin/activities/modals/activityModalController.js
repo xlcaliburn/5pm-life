@@ -4,11 +4,13 @@
 		.module('fivepmApp.admin')
 		.controller('ActivityModalController', ActivityModalController);
 
-	function ActivityModalController ($timeout, $uibModalInstance, Activities, Enums) {
+	function ActivityModalController ($timeout, $uibModalInstance, Activities, Enums, activityId) {
 		var vm = this;
 		vm.create_form = {};
 		vm.validTags = [];
 		vm.submit = submit;
+		vm.deleteButtonShow = false;
+		vm.deleteActivity = deleteActivity;
 
 		var newTags;
 
@@ -30,22 +32,42 @@
 					console.log('Error: ' + data);
 				})
 			;
+
+			if (activityId){
+				vm.title = 'Edit Activity';
+				vm.deleteButtonShow = true;
+				Activities.getById(activityId)
+				.then((res) => {
+					vm.create_form = res.data;
+					for(var i in res.data.tags){
+						newTags.addTag(res.data.tags[i]);
+					}
+				});
+			}
+			else{
+				vm.title = 'Create New Activity';
+				vm.deleteButtonShow = false;
+			}
 		}
 
 		function submit() {
 			vm.create_form.tags = newTags.getTags();
-			Activities.create(vm.create_form)
-				.success(function(data) {
-					vm.create_form = {};
-					vm.activities = data;
 
-					var len = $('#activity_tags').tags().getTags().length;
-					for(var i=0; i<len; i++) {
-						$('#activity_tags').tags().removeLastTag();
-					}
+			if (activityId){
+					Activities.updateById(activityId,vm.create_form)
+					.then(() => {$uibModalInstance.close();});
+			}
+			else{
+				Activities.create(vm.create_form)
+				.then(() => {$uibModalInstance.close();});
+			}
+		}
 
-					$uibModalInstance.close();
-			});
+		function deleteActivity() {
+			if (activityId){
+				Activities.delete(activityId)
+				.then(()=> {$uibModalInstance.close();});
+			}
 		}
 	}
 })();

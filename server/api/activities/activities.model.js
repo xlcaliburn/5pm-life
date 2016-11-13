@@ -7,7 +7,8 @@ var ActivitySchema = new Schema ({
 	activity_name : String,
 	tags : [String],
 	allowed_capacity : Number,
-	required_equipment : [String]
+	required_equipment : [String],
+	duration : Number
 });
 
 export default mongoose.model('Activities', ActivitySchema);

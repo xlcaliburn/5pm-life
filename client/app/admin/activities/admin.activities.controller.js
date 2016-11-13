@@ -6,7 +6,6 @@
 	function AdminActivitiesController ($scope, $http, $uibModal, Enums, Activities) {
 		var vm = this;
 		vm.createModal = createModal;
-		vm.deleteActivity = deleteActivity;
 		vm.activities = {};
 		vm.formData = {};
 
@@ -37,19 +36,16 @@
 			;
 		}
 
-		function deleteActivity(id) {
-			Activities.delete(id)
-				.then(()=>init());
-		}
-
-		function createModal() {
+		function createModal(activityId) {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
 				templateUrl: 'app/admin/activities/modals/activityModal.html',
 				controller: 'ActivityModalController',
 				controllerAs: 'vm',
 				size: 'lg',
-				resolve: {}
+				resolve: {
+					activityId: function(){return activityId;}
+				}
 			});
 			modalInstance.result.then(()=>init());
 		}
