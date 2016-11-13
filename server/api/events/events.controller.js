@@ -422,14 +422,16 @@ export function endEvent(req, res) {
 		.then(ev => { // Update and end for attended users
 			fetched_event = ev;
 			var attendees = [];
+			// Remove pending user confirmation users from event.users
 			for (var i=ev.users.length -1; i>=0; i--){
-				if (ev.users[i].event_status !== 'Confirmed'){
+				if (ev.users[i].event_status === 'Pending User Confirmation'){
 					ev.users.splice(i, 1);
 				}
 				else { attendees.push(ev.users[i]._id); }
 			}
-
 			Events.findByIdAndUpdate(event_id,{ $set : { users : ev.users} }).exec();
+
+			// Update confirmed users
 			User.update({
 				_id : {$in: attendees}
 			}, {
@@ -440,6 +442,8 @@ export function endEvent(req, res) {
 				$push : {
 					event_history : event_id
 				}
+			}, {
+				multi: true
 			}).exec();
 
 			return ev;
