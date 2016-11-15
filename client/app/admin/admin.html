@@ -1,33 +1,48 @@
-<div id="sidebar-wrapper">
-	<ul class="sidebar-nav">
-		<li class="sidebar-brand" style="margin: 20px 0px 20px">
-			<a ui-sref=".">
-					Admin Dashboard
-			</a>
-		</li>
-		<li>
-			<a ui-sref="admin.settings">Admin Settings</a>
-		</li>		
-		<li>
-			<a ui-sref=".users">User Management</a>
-		</li>
-		<li>
-			<a ui-sref="admin.enums">Enums</a>
-		</li>		
-		<li>
-			<a ui-sref="admin.activities">Activities</a>
-		</li>
-		<li>
-			<a ui-sref="admin.venues">Venues</a>
-		</li>		
-		<li>
-			<a ui-sref=".events">Event Management</a>
-		</li>
+<ul id="slide-out" class="side-nav">
+	<li class="sidebar-brand" style="margin: 20px 0px 20px">
+		<a ui-sref=".">
+				<b>Admin Dashboard</b>
+		</a>
+	</li>
+	<li class="divider">< /li>
+	<li>
+		<a ui-sref="admin.settings">Admin Settings</a>
+	</li>
+	<li>
+		<a ui-sref=".users">User Management</a>
+	</li>
+	<li>
+		<a ui-sref="admin.enums">Enums</a>
+	</li>
+	<li>
+		<a ui-sref="admin.activities">Activities</a>
+	</li>
+	<li>
+		<a ui-sref="admin.venues">Venues</a>
+	</li>
+	<li>
+		<a ui-sref=".events">Event Management</a>
+	</li>
+</ul>
+
+<nav>
+  <div class="nav-wrapper">
+	<a href="#" class="brand-logo">Admin</a>
+	<ul id="nav-mobile">
+
 	</ul>
-</div>
+	  <li><a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+</li>
+	</ul>
+  </div>
+</nav>
+
 
 <div id="page-content-wrapper">
 	<div ui-view>
-		Admin Home
+		<div class="container">
+			<h2>Admin Dashboard</h2>
+			Total current users: {{vm.users.length}}
+		</div>
 	</div>
 </div>
