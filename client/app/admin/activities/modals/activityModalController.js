@@ -11,6 +11,9 @@
 		vm.submit = submit;
 		vm.deleteButtonShow = false;
 		vm.deleteActivity = deleteActivity;
+		vm.removeRequiredEquipment = removeRequiredEquipment;
+		vm.addRequiredEquipment = addRequiredEquipment;
+		vm.addReqEquipText = '';
 
 		var newTags;
 
@@ -67,6 +70,18 @@
 			if (activityId){
 				Activities.delete(activityId)
 				.then(()=> {$uibModalInstance.close();});
+			}
+		}
+
+		function removeRequiredEquipment(index) {
+			vm.create_form.required_equipment.splice(index,1);
+		}
+
+		function addRequiredEquipment(equipment) {
+			equipment = equipment.trim();
+			if(equipment.length > 0){
+				vm.create_form.required_equipment.push(equipment);
+				vm.addReqEquipText = '';
 			}
 		}
 	}
