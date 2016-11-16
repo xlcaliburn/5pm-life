@@ -1,6 +1,5 @@
 <nav>
 	<div class="nav-wrapper">
-	<a href="#" class="brand-logo center">Admin</a>
 	<ul id="nav-mobile">
 		<li>
 		<a href="#" data-activates="slide-out" id="button-collapse"><i class="material-icons">menu</i></a>
@@ -12,27 +11,31 @@
 <ul id="slide-out" class="side-nav">
 	<li class="sidebar-brand" style="margin: 20px 0px 20px">
 		<a ui-sref=".">
-				<b>Admin Dashboard</b>
+				<b><i class="fa fa-bar-chart fa-fw" aria-hidden="true"></i> Admin Dashboard</b>
 		</a>
 	</li>
 	<li class="divider">< /li>
 	<li>
-		<a ui-sref="admin.settings">Admin Settings</a>
+		<a ui-sref=".settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Admin Settings</a>
 	</li>
 	<li>
-		<a ui-sref=".users">User Management</a>
+		<a ui-sref=".users"><i class="fa fa-user fa-fw" aria-hidden="true"></i> User Management</a>
 	</li>
 	<li>
-		<a ui-sref="admin.enums">Enums</a>
+		<a ui-sref=".enums"><i class="fa fa-list-ol fa-fw" aria-hidden="true"></i> Enums</a>
 	</li>
 	<li>
-		<a ui-sref="admin.activities">Activities</a>
+		<a ui-sref=".activities"><i class="fa fa-futbol-o fa-fw" aria-hidden="true"></i> Activities</a>
 	</li>
 	<li>
-		<a ui-sref="admin.venues">Venues</a>
+		<a ui-sref=".venues"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Venues</a>
 	</li>
 	<li>
-		<a ui-sref=".events">Event Management</a>
+		<a ui-sref=".events"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> Event Management</a>
+	</li>
+	<li class="divider">< /li>
+	<li>
+		<a ui-sref="home"><i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Return to App</a>
 	</li>
 </ul>
 
@@ -41,7 +44,30 @@
 	<div ui-view>
 		<div class="container">
 			<h2>Admin Dashboard</h2>
-			Total current users: {{vm.users.length}}
+			<div class="section">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Total Current Users:</h4>
+						<h3>{{vm.users.length}}</h3>
+					</div>
+					<div class="col-md-3">
+						<h4>Users Searching:</h4>
+						<h3>{{vm.searching_queues.length}}</h3>
+					</div>
+					<div class="col-md-3">
+						<h4>Total Activities:</h4>
+						<h3>{{vm.activities.length}}</h3>
+					</div>
+					<div class="col-md-3">
+						<h4>Total Venues:</h4>
+						<h3>{{vm.venues.length}}</h3>
+					</div>
+				</div>
+			</div>
+			<div class="section">
+				<h3>Danger Zone</h3>
+				<button ng-click="vm.matchmake()">Run Matchmaking Algorithm</button>
+			</div>
 		</div>
 	</div>
 </div>

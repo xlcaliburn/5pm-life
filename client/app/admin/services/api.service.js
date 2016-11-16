@@ -39,6 +39,9 @@
 				},
 				triggerEventStart: function(queue_data) {
 					return $http.post('/api/queue/triggerEvent', queue_data);
+				},
+				matchmake: function() {
+					return $http.post('/api/queue/matchmake');
 				}
 			};
 		})
