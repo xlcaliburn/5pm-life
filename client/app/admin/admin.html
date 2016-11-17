@@ -1,5 +1,5 @@
 <nav>
-	<div class="nav-wrapper">
+	<div class="nav-wrapper blue-grey">
 	<ul id="nav-mobile">
 		<li>
 		<a href="#" data-activates="slide-out" id="button-collapse"><i class="material-icons">menu</i></a>
@@ -45,27 +45,47 @@
 <div id="page-content-wrapper">
 	<div ui-view>
 		<div class="container">
-			<h2>Admin Dashboard</h2>
 			<div class="section">
 				<div class="row">
 					<div class="col-md-3">
-						<h4>Total Current Users:</h4>
-						<h3>{{vm.users.length}}</h3>
+						<div class="card">
+							<div class="card-content">
+								<h6>Total Users:</h6>
+								<div class="divider"></div>
+								<h1 class="right-align blue-text text-darken-4">{{vm.users.length}}</h1>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-3">
-						<h4>Users Searching:</h4>
-						<h3>{{vm.searching_queues.length}}</h3>
+						<div class="card">
+							<div class="card-content">
+								<h6>Users Searching:</h6>
+								<div class="divider"></div>
+								<h1 class="right-align blue-text text-darken-4">{{vm.searching_queues.length}}</h1>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-3">
-						<h4>Total Activities:</h4>
-						<h3>{{vm.activities.length}}</h3>
+						<div class="card">
+							<div class="card-content">
+								<h6>Total Activities:</h6>
+								<div class="divider"></div>
+								<h1 class="right-align blue-text text-darken-4">{{vm.activities.length}}</h1>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-3">
-						<h4>Total Venues:</h4>
-						<h3>{{vm.venues.length}}</h3>
+						<div class="card">
+							<div class="card-content">
+								<h6>Total Venues:</h6>
+								<div class="divider"></div>
+								<h1 class="right-align blue-text text-darken-4">{{vm.venues.length}}</h1>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="section">
 				<h3>Danger Zone</h3>
 				<button ng-click="vm.matchmake()">Run Matchmaking Algorithm</button>
