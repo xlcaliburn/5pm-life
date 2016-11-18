@@ -205,8 +205,8 @@
 		.state('admin', {
 			url: '/admin',
 			templateUrl: 'app/admin/admin.html',
-			//controller: 'DashboardController',
-			//controllerAs: 'admin',
+			controller: 'AdminController',
+			controllerAs: 'vm',
 			authenticate: 'admin'
 		});
 
