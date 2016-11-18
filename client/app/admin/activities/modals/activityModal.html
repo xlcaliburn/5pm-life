@@ -32,19 +32,27 @@
 				</div>
 			</div>
 			<div class="row">
-				<label class="col s12">Required Equipment</label>
-				<ul class="list-group col s12 m6 l4" id="required_equipment_list">
-					<li class="list-group-item" ng-repeat="equipment in vm.create_form.required_equipment track by $index">
-						{{equipment}}
-						<a href="" class="list-button" ng-click="vm.removeRequiredEquipment($index)">
-							<i class="material-icons">remove</i>
-						</a>
-					</li>
-					<li class="list-group-item">
-						<input ng-model="vm.addReqEquipText" type="text" placeholder="Add required equipment..."/>
-						<a href="" class="list-button" ng-click="vm.addRequiredEquipment(vm.addReqEquipText)"><i class="material-icons">add</i></a>
-					</li>
-				</ul>
+				<div class="col s12 m6 l4">
+					<label>Required Equipment</label>
+					<table class="table">
+						<tbody>
+							<tr ng-repeat="equipment in vm.create_form.required_equipment track by $index">
+								<td >
+									{{equipment}}
+									<a href="" class="list-button-remove" ng-click="vm.removeRequiredEquipment($index)">
+										<i class="material-icons">remove</i>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input class="col s10" ng-model="vm.addReqEquipText" type="text" placeholder="Add required equipment..."/>
+									<a href="" ng-click="vm.addRequiredEquipment(vm.addReqEquipText)"><i class="material-icons list-button-add">add</i></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="row right-align">
 				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
