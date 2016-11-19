@@ -2,7 +2,7 @@
 
 	angular
 		.module('fivepmApp.admin')
-		.controller('ActivityModalController', ActivityModalController);
+		.controller('EditActivityModalController', ActivityModalController);
 
 	function ActivityModalController ($timeout, $uibModalInstance, Activities, Enums, activityId) {
 		var vm = this;

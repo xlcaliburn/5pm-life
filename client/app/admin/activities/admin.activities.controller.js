@@ -39,8 +39,8 @@
 		function createModal(activityId) {
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'app/admin/activities/modals/activityModal.html',
-				controller: 'ActivityModalController',
+				templateUrl: 'app/admin/activities/modals/editActivityModal.html',
+				controller: 'EditActivityModalController',
 				controllerAs: 'vm',
 				size: 'lg',
 				resolve: {
