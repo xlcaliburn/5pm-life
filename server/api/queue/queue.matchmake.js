@@ -45,7 +45,7 @@ function addQueueToEvent(queueId, ev) {
 		.catch((err) => {console.log(err);})
 	;
 
-	Events.findByIdAndUpdate(ev._id, { queue : ev.queue }).exec();
+	return Events.findByIdAndUpdate(ev._id, { queue : ev.queue }).exec();
 }
 
 /////////////////////
