@@ -50,11 +50,17 @@
 				get : function() {
 					return $http.get('/api/activities');
 				},
+				getById : function(id) {
+					return $http.get('/api/activities/' + id);
+				},
 				create : function(data) {
 					return $http.post('/api/activities', data);
 				},
 				delete : function(id) {
 					return $http.delete('/api/activities/' + id);
+				},
+				updateById : function(id, data) {
+					return $http.put('/api/activities/' + id, data);
 				}
 			};
 		})
