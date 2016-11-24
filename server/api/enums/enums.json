@@ -4,15 +4,29 @@
         "SOCIAL": {"order": 2, "value": "Social"}
     },
     "ethnicity":{
-        "CAUCASIAN": {"order": 1, "value": "Caucasian"},
-        "LATINO": {"order": 2, "value": "Latino/Hispanic"},
-        "AFRICAN": {"order": 3, "value": "African"},
-        "CARIBBEAN": {"order": 4, "value": "Caribbean"},
-        "SOUTH_ASIAN": {"order": 5, "value": "South Asian"},
-        "EAST_ASIAN":{"order": 6, "value": "East Asian"},
-        "MIDDLE_EASTERN": {"order": 7, "value": "Middle Eastern"},
-        "MIXED": {"order": 8, "value": "Mixed"},
-        "OTHER": {"order": 9, "value": "Other"}
+        "ASIAN": {"order": 1, "value": "Asian"},
+        "ARAB": {"order": 2, "value": "Arab"},
+        "BLACK": {"order": 3, "value": "Black/African-descent"},
+        "HISPANIC": {"order": 4, "value": "Hispanic/Latino"},
+        "NATIVE_AMERICAN": {"order": 5, "value": "Native American"},
+        "PACIFIC_ISLANDER":{"order": 6, "value": "Pacific Islander"},
+        "SOUTH_ASIAN": {"order": 7, "value": "South Asian"},
+        "WHITE": {"order": 8, "value": "White/Caucasian"},
+        "OTHER": {"order": 9, "value": "Other"},
+        "UNDISCLOSED": {"order": 10, "value": "Prefer not to disclose"}
+    },
+    "religion":{
+        "BUDDHIST": {"order": 1, "value": "Buddhist"},
+        "CHRISTIAN": {"order": 2, "value": "Christian"},
+        "CATHOLIC": {"order": 3, "value": "Catholic"},
+        "HINDU": {"order": 4, "value": "Hindu"},
+        "JEWISH": {"order": 5, "value": "Jewish"},
+        "MUSLIM": {"order": 6, "value": "Muslim"},
+        "SIKH": {"order": 7, "value": "Sikh"},
+        "SHINTO": {"order": 8, "value": "Shinto"},
+        "SPIRITUAL": {"order": 9, "value": "Spiritual but not religious"},
+        "NONE": {"order": 10, "value": "Neither spiritual nor religious"},
+        "OTHER": {"order": 11, "value": "Other"}
     },
     "event_status":{
         "NEW": { "order": 1, "value": "New"},
@@ -33,7 +47,8 @@
     },
     "gender": {
         "MALE": {"order": 1, "value": "Male"},
-        "FEMALE": {"order": 2, "value": "Female"}
+        "FEMALE": {"order": 2, "value": "Female"},
+        "UNDISCLOSED": {"order": 3, "value": "Prefer not to disclose"}
     },
     "feedback_type": {
         "BUG": {"order": 1, "value": "Bug"},

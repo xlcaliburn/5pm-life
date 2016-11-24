@@ -129,9 +129,12 @@
 
 		function triggerEvent() {
 			// TODO: Add warning before calling this function
-			updateQueueStatus(vm.enums.queue_status.PENDING_USER_CONFIRM.value);
-			vm.selected_event.status = vm.enums.event_status.PENDING_USER_CONFIRM.value;
-			saveAndClose('Event started', true);
+			if (vm.queues_to_add.length > 0)
+			{
+				updateQueueStatus(vm.enums.queue_status.PENDING_USER_CONFIRM.value);
+				vm.selected_event.status = vm.enums.event_status.PENDING_USER_CONFIRM.value;
+				saveAndClose('Event started', true);
+			}
 		}
 
 		function submit() {
