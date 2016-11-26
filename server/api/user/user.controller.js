@@ -32,11 +32,14 @@ export function getDecodedToken(token) {
  * restriction: 'admin'
  */
 export function index(req, res) {
-	return User.find({}, '-salt -password').exec()
+	return User.find({}, 'first_name last_name gender email role birthday verified event_status account_create_date')
+		.sort({'role': 1,  'account_create_date': 1})
+		.exec()
 		.then(users => {
 			return res.status(200).json(users);
 		})
-		.catch(handleError(res));
+		.catch(handleError(res))
+	;
 }
 
 /**
