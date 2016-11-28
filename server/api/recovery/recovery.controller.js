@@ -57,7 +57,7 @@ export function send_reset_link(req, res) {
                     };
                     var email_content = {
                         to: user.email,
-                        subject: '[5PMLIFE] Reset Password',
+                        subject: '[5PM] Reset Password',
                         text: ResetPasswordEmail.get_text_version(user_details),
                         html: ResetPasswordEmail.get_html_version(user_details)
                     };

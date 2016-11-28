@@ -12,7 +12,7 @@ export function get_text_version(user) {
     user.password_recovery_link + '\r\n\r\n' +
 
     'Cheers,\r\n' +
-    '5PMLIFE Team\r\n\r\n' +
+    '5PM Team\r\n\r\n' +
 
     'Do not forward this email. The verify link is private';
 
@@ -33,7 +33,7 @@ export function get_html_version(user) {
     '<table cellspacing="0" cellpadding="0"><tr><td align="center" width="150" height="35" bgcolor="#f13c68" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;"><a href="' + user.password_recovery_link + '" style="font-size:16px; text-decoration: none; font-weight: bold; font-family: Helvetica, Arial, sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block"><span style="color: #FFFFFF; font-size: 14px; font-family: Arial, sans-serif;">RESET PASSWORD</span></a></td></tr></table><br>' +
 
     '<p style="font-family: Arial, sans-serif;">Cheers,<br>' +
-    '5PMLIFE Team</p><br>' +
+    '5PM Team</p><br>' +
 
     '<p><span style="color: #7f7f7f; font-family: Arial, sans-serif;">Do not forward this email. The verify link is private<br>' +
     'If the link above does not work, try this one: <a href="' + user.password_recovery_link + '" style="font-family: Arial, sans-serif;">' + user.password_recovery_link + '</a></p></div>';

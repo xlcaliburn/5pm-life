@@ -322,7 +322,7 @@ export function triggerEvent(req, res) {
 
 	            var email_content = {
 	                to: users[k].email,
-	                subject: '[5PMLIFE] An event has been found!',
+	                subject: '[5PM] An event has been found!',
 	                text: text_version,
 	                html: html_version
 	            };
