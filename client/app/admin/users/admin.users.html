@@ -17,19 +17,13 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in vm.users">
-						<td>{{ user.first_name + " " + user.last_name}}</td>
+						<td><a ui-sref="admin.users.edit({ user_id: user._id })">{{ user.first_name + " " + user.last_name}}</a></td>
 						<td>{{ user.email }}</td>
 						<td>{{ vm.age(user.birthday) }}</td>
 						<td>{{ user.role }}</td>
-						<td>
-							{{user.verified}}
-						</td>
-						<td>
-							{{user.event_status ? user.event_status : "None"}}
-						</td>
-						<td
-							<a ui-sref="admin.users.edit({ user_id: user._id })"><i class="small material-icons">mode_edit</i></a>
-						</td>
+						<td>{{user.verified}}</td>
+						<td>{{user.event_status ? user.event_status : "None"}}</td>
+						<td><a ui-sref="admin.users.edit({ user_id: user._id })"><i class="small material-icons">mode_edit</i></a></td>
 					</tr>
 				</tbody>
 			</table>

@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import User from './user.model';
+import Queue from '../queue/queue.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
@@ -156,6 +157,32 @@ export function getUserVerification(req, res) {
 			return res.send(false);
 		}
 	}).catch(handleError(res));
+}
+
+export function getQueueByUserid(req, res) {
+	var user_id= req.params.id;
+	Queue.findOne({ user: user_id }).exec()
+	.then(user => { // don't ever give out the password or salt
+		if (!user) {
+			return res.status(401).end();
+		}
+		return res.status(204).end();
+	});
+}
+
+export function unQueueByUserId(req, res) {
+	var user_id= req.params.id;
+	Queue.findOneAndRemove({ user: user_id }).exec();
+	User.findOneAndUpdate({ user: user_id }, {
+		$set: {event_status : null}
+	}, {new: true}).exec()
+		.then(user => {
+			if (!user) {
+				return res.status(401).end();
+			}
+			return res.status(200).json(user);
+		})
+	;
 }
 
 /**

@@ -10,6 +10,7 @@
 		vm.delete_user = deleteUser;
 		vm.allowed_roles = ['admin', 'user'];
 		vm.submit = submit;
+		vm.unqueue = unqueue;
 
 		init();
 
@@ -31,6 +32,11 @@
 
 		function submit() {
 			saveAndClose('Event saved');
+		}
+
+		function unqueue() {
+			Users.unQueueById(vm.user_id)
+				.success(()=>{Materialize.toast("User Unqueued", 2000);});  // jshint ignore:line
 		}
 
 		function saveAndClose(notificationString) {

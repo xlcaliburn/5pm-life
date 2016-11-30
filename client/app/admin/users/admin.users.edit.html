@@ -4,7 +4,11 @@
 		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
 
+
+
+
 	<div class="row right-align">
+		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status == 'Pending'" ng-click="vm.unqueue()">Unqueue</button>
 		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
 	</div>
 
@@ -26,7 +30,8 @@
 				<label class="active" for="email">Email</label>
 			</div>
 			<div class="input-field col s3">
-				{{vm.user.verified ? "Verified" : "Not verified"}}
+				<input disabled value="{{vm.user.verified ? 'Verified' : 'Not verified'}}" id="verification" type="text" class="validate">
+	            <label class="active" for="verification">Verification Status</label>
 			</div>
 		</div>
 		<div class="row">
@@ -47,6 +52,13 @@
 					ng-model="vm.user.role"
 					ng-options="role for role in vm.allowed_roles">
 				</select>
+				<label>User Role</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s3">
+				<input disabled value="{{vm.user.event_status == null ? 'None' : vm.user.event_status}}" id="event_status" type="text" class="validate">
+				<label class="active" for="event_status">Event Status</label>
 			</div>
 		</div>
 

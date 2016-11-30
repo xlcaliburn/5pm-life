@@ -15,6 +15,9 @@
 				getById : function(id) {
 					return $http.get('/api/users/' + id);
 				},
+				unQueueById : function(id) {
+					return $http.get('/api/users/' + id + '/unqueue');
+				},
 				updateById : function(id, data) {
 					return $http.put('/api/users/' + id, data);
 				}

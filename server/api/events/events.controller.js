@@ -243,7 +243,7 @@ export function confirmEvent(req, res) {
 		var html_version = EmailTemplate.get_html_version(email_data);
 		var email_content = {
 			to: current_user.email,
-			subject: '[5PMLIFE]' + email_data.activity + ' at ' + email_data.venue,
+			subject: '[5PM]' + email_data.activity + ' at ' + email_data.venue,
 			text: text_version,
 			html: html_version
 		};
