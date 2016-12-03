@@ -5,38 +5,15 @@
 
     function SettingsController($scope, enumsData, SettingsService, userData, Users) {
         var vm = this;
-
-        // model
         vm.user = userData;
         vm.enums = enumsData;
-
-        // functions
-        vm.formatBirthday = formatBirthday;
-        vm.getAge = getAge;
-        vm.getEthnicity = getEthnicity;
-        vm.getGender = getGender;
+        vm.formatBirthday = () => moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
+        vm.getAge = () => moment().diff(vm.user.birthday, 'years');
+        vm.getEthnicity = () => typeof vm.enums.ethnicity[vm.user.ethnicity] === 'undefined' ? vm.user.ethnicity : vm.enums.ethnicity[vm.user.ethnicity].value;
+        vm.getGender = () => vm.enums.gender[vm.user.gender].value;
         vm.selectImage = selectImage;
         vm.uploadImage = uploadImage;
-
-        // get user's age based on birthday
-        function getAge() {
-            return moment().diff(vm.user.birthday, 'years');
-        }
-
-        // get ethnicty value
-        function getEthnicity() {
-            return vm.enums.ethnicity[vm.user.ethnicity].value;
-        }
-
-        // get gender value
-        function getGender() {
-            return vm.enums.gender[vm.user.gender].value;
-        }
-
-        // format birthday to return age
-        function formatBirthday() {
-            return moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
-        }
+        vm.submit = submit;
 
         // open file picker
         function selectImage() {
@@ -63,6 +40,10 @@
                     });
                 }
             });
+        }
+
+        function submit() {
+            Materialize.toast('Saved!', 2000); // jshint ignore:line
         }
     }
 })();

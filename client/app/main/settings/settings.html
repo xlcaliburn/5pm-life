@@ -19,70 +19,110 @@
         </div>
     </div>
 
-    <div class="row settings-content-row">
-        <div class="col l4 push-l8"></div>
-        <div class="col l8 m12 s12 settings-box-shadow">
-            <div class="row">
-                <!-- user profile picture -->
-                <div class="col l6 m6 s12 setting-card setting-border-right">
-                    <div class="settings-title">PROFILE PICTURE</div>
-                    <div class="valign-wrapper">
-                        <img ng-src="{{ vm.user.profile_picture.current }}" class="settings-profile-pic valign">
+    <form ng-submit="vm.submit()">
+        <div class="row settings-content-row">
+            <div class="col l4 push-l8"></div>
+            <div class="col l8 m12 s12 settings-box-shadow">
+                <div class="row">
+                    <!-- user profile picture -->
+                    <div class="col l6 m6 s12 setting-card setting-border-right">
+                        <div class="settings-title">PROFILE PICTURE</div>
+                        <div class="valign-wrapper">
+                            <img ng-src="{{ vm.user.profile_picture.current }}" class="settings-profile-pic valign">
+                        </div>
+                    </div>
+
+                    <!-- full name -->
+                    <div class="col l6 m6 s12 setting-card">
+                        <div class="settings-title">NAME</div>
+                        <div class="settings-subtitle">
+                            {{ vm.user.first_name + ' ' + vm.user.last_name }}
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- full name -->
-                <div class="col l6 m6 s12 setting-card">
-                    <div class="settings-title">NAME</div>
-                    <div class="settings-subtitle">
-                        {{ vm.user.first_name + ' ' + vm.user.last_name }}
+            <div class="col l4 push-l8"></div>
+            <div class="col l8 m12 s12 settings-box-shadow">
+                <div class="row">
+                    <!-- date of birth -->
+                    <div class="col l6 m6 s12 setting-card setting-border-right">
+                        <div class="settings-title">BIRTHDAY</div>
+                        <div class="settings-subtitle">
+
+                            {{ vm.formatBirthday() }}
+                            <span class="settings-age">({{ vm.getAge() }} years old)</span>
+                        </div>
+                    </div>
+
+                    <!-- email address -->
+                    <div class="col l6 m6 s12 setting-card">
+                        <div class="settings-title">EMAIL</div>
+                        <div class="settings-subtitle">
+                            {{ vm.user.email }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col l4 push-l8"></div>
+            <div class="col l8 m12 s12 settings-box-shadow">
+                <div class="row">
+                    <!-- date of birth -->
+                    <div class="col l6 m6 s12 setting-card setting-border-right">
+                        <div class="settings-title">GENDER</div>
+                        <div class="settings-subtitle">
+                            {{ vm.getGender() }}
+                        </div>
+                    </div>
+
+                    <!-- email address -->
+                    <div class="col l6 m6 s12 setting-card">
+                        <div class="settings-title">ETHNICITY</div>
+                        <div class="settings-subtitle">
+                            {{ vm.getEthnicity() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col l4 push-l8"></div>
-        <div class="col l8 m12 s12 settings-box-shadow">
-            <div class="row">
-                <!-- date of birth -->
-                <div class="col l6 m6 s12 setting-card setting-border-right">
-                    <div class="settings-title">BIRTHDAY</div>
-                    <div class="settings-subtitle">
-
-                        {{ vm.formatBirthday() }}
-                        <span class="settings-age">({{ vm.getAge() }} years old)</span>
+        <div class="row settings-content-row">
+            <div class="col l4 push-l8"></div>
+            <div class="col l8 m12 s12 settings-box-shadow">
+                <div class="row">
+                    <div class="col l4 m4 s12 setting-card">
+                        <div class="settings-title">Short Description</div>
+                        <div class="input-field col s9">
+                            <input placeholder="Adventurous" ng-model="vm.user.adjectives.adjective_1" type="text" class="validate">
+                        </div>
                     </div>
-                </div>
 
-                <!-- email address -->
-                <div class="col l6 m6 s12 setting-card">
-                    <div class="settings-title">EMAIL</div>
-                    <div class="settings-subtitle">
-                        {{ vm.user.email }}
+                    <div class="col l4 m4 s12 setting-card">
+                        <div class="settings-title">&nbsp;</div>
+                        <div class="input-field col s9">
+                            <input placeholder="Cat-lover" ng-model="vm.user.adjectives.adjective_2" type="text" class="validate">
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col l4 push-l8"></div>
-        <div class="col l8 m12 s12 settings-box-shadow">
-            <div class="row">
-                <!-- date of birth -->
-                <div class="col l6 m6 s12 setting-card setting-border-right">
-                    <div class="settings-title">GENDER</div>
-                    <div class="settings-subtitle">
-                        {{ vm.getGender() }}
-                    </div>
-                </div>
-
-                <!-- email address -->
-                <div class="col l6 m6 s12 setting-card">
-                    <div class="settings-title">ETHNICITY</div>
-                    <div class="settings-subtitle">
-                        {{ vm.getEthnicity() }}
+                    <div class="col l4 m4 s12 setting-card">
+                        <div class="settings-title">&nbsp;</div>
+                        <div class="input-field col s9">
+                            <input placeholder="Engineer" ng-model="vm.user.adjectives.adjective_3" type="text" class="validate">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="row settings-content-row">
+            <div class="col l8 m12 s12">
+                <div class="row right-align">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
