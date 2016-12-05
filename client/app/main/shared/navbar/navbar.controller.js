@@ -390,7 +390,7 @@
                 var response = res.data.response;
                 if (response.status === 'ok') {
                     vm.close_queue_modal();
-                    Materialize.toast('You have been added to the queue!', 6000);
+                    Materialize.toast('You have been added to the queue! We will notify you by email when an event has been found!', 10000);
                     get_queue_status();
                 } else {
                     Materialize.toast(response.status, 6000);
