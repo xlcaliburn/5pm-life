@@ -15,6 +15,14 @@
         vm.uploadImage = uploadImage;
         vm.submit = submit;
 
+        init();
+
+        function init() {
+            $(document).ready(function(){
+                $('ul.tabs').tabs();
+            });
+        }
+        
         // open file picker
         function selectImage() {
             angular.element('input[name="userImage"]').click();

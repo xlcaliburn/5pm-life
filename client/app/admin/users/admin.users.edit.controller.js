@@ -31,7 +31,7 @@
 		}
 
 		function submit() {
-			saveAndClose('Event saved');
+			saveAndClose('User updated');
 		}
 
 		function unqueue() {
