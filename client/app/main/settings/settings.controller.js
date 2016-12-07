@@ -7,13 +7,13 @@
         var vm = this;
         vm.user = userData;
         vm.enums = enumsData;
-        vm.formatBirthday = () => moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
         vm.getAge = () => moment().diff(vm.user.birthday, 'years');
         vm.getEthnicity = () => typeof vm.enums.ethnicity[vm.user.ethnicity] === 'undefined' ? vm.user.ethnicity : vm.enums.ethnicity[vm.user.ethnicity].value;
         vm.getGender = () => vm.enums.gender[vm.user.gender].value;
         vm.selectImage = selectImage;
         vm.uploadImage = uploadImage;
         vm.submit = submit;
+        vm.getDate = getDate;
 
         // open file picker
         function selectImage() {
@@ -44,6 +44,10 @@
 
         function submit() {
             Materialize.toast('Saved!', 2000); // jshint ignore:line
+        }
+
+        function getDate(timeStamp){
+            return moment(timeStamp).format('MMM DD, YYYY')
         }
     }
 })();
