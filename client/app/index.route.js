@@ -49,7 +49,7 @@
 								name: 'News',
 								posts: [
 									{
-										title: 'It\'ts time to skate!',
+										title: 'It\'s time to skate!',
 										date: 'Dec 4, 2016',
 										content: '<img src="assets/images/home-2.jpg" width="100%"> <p>For the month of December and January, we will be hosting a number of skating events. Sign up now for any of the available dates using the Explore button to participate in one of our skating events!</p>'
 									},
