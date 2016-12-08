@@ -161,12 +161,13 @@ export function getUserVerification(req, res) {
 
 export function getQueueByUserid(req, res) {
 	var user_id= req.params.id;
+	console.log(user_id);
 	Queue.findOne({ user: user_id }).exec()
-	.then(user => { // don't ever give out the password or salt
-		if (!user) {
+	.then(queue => { // don't ever give out the password or salt
+		if (!queue) {
 			return res.status(401).end();
 		}
-		return res.status(204).end();
+		return res.status(200).json(queue);
 	});
 }
 

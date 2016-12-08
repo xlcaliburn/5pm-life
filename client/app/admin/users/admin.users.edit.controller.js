@@ -7,6 +7,8 @@
 		var vm = this;
 		vm.user = null;
 		vm.user_id = $stateParams.user_id;
+		vm.facebook_url = null;
+		vm.queue = {};
 		vm.delete_user = deleteUser;
 		vm.allowed_roles = ['admin', 'user'];
 		vm.submit = submit;
@@ -19,9 +21,17 @@
 				.then(function(res) {
 					vm.user = res.data;
 					vm.user.birthday = moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
+					vm.facebook_url = 'http://www.facebook.com/' + vm.user.facebook.id;
 				})
 				.then(function() {
 					$timeout(function() {materialize_select();});
+				})
+				.catch(function(err) {console.log(err);});
+
+			Users.getQueueByUserId(vm.user_id)
+				.then(function(res) {
+					vm.queue = res.data;
+					console.log(vm.queue);
 				})
 				.catch(function(err) {console.log(err);});
 		}

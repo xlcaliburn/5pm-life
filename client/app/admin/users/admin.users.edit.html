@@ -3,10 +3,6 @@
 	<section>
 		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
-
-
-
-
 	<div class="row right-align">
 		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status == 'Pending'" ng-click="vm.unqueue()">Unqueue</button>
 		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
@@ -67,6 +63,38 @@
 				<i class="material-icons right">send</i>
 			</button>
 		</div>
-
 	</form>
+	<h3>Other</h3>
+	<div class="row">
+		<div class="col s6">
+			<a href="{{vm.facebook_url}}">{{vm.facebook_url}}</a>
+		</div>
+	</div>
+	<h3>Queue Status</h3>
+	<div class="row">
+		<div class="col s12">
+			<h4>Search Parameters</h4>
+			<table class="table">
+				<thead>
+					<th>Parameter</th>
+					<th>Value</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>City</td>
+						<td>{{vm.queue.search_parameters.city}}</td>
+					</tr>
+					<tr>
+						<td>Target Start Time</td>
+						<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+					</tr>
+					<tr>
+						<td>Target End Time</td>
+						<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
 </div>
