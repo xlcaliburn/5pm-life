@@ -12,7 +12,7 @@ router.get('/:id', controller.show);
 router.get('/settings/:token', auth.isAuthenticated(), controller.getUserSettings);
 router.get('/verification/user', auth.isAuthenticated(), controller.getUserVerification);
 router.get('/:id/queue', controller.getQueueByUserid);
-router.get('/:id/unqueue', controller.unQueueByUserId);
+router.get('/:id/unqueue', controller.unqueueByUserId);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.put('/:id', auth.hasRole('admin'), controller.updateById);
 
