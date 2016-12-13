@@ -176,7 +176,7 @@ export function unqueueByUserId(req, res) {
 	var user_id = req.params.id;
 	Queue.findOneAndRemove({ user: user_id }).exec();
 	User.findOneAndUpdate({ _id: user_id }, {
-		$set: {event_status : null, current_event : null}
+		$set: {event_status : null}
 	}, {new: true}).exec()
 		.then(user => {
 			if (!user) {
