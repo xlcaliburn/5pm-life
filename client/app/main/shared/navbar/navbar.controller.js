@@ -371,11 +371,15 @@
             var end_date_string = vm.queue_date + ' ' + get_time(vm.queue_end_time);
             var event_end = new Date(end_date_string);
 
+            var user_queue = [];
+            user_queue.push(vm.user._id);
+
             // city
             var city = vm.location;
 
             var queue_data = {
                 token: token,
+                users: user_queue,
                 tags: tags,
                 event_start: event_start,
                 event_end: event_end,

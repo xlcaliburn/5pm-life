@@ -22,7 +22,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="queue in vm.queues">
-					<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
+					<td>{{queue.users}}</td>
 					<td>{{queue.search_parameters.tags}}</td>
 					<td>{{vm.get_age(queue.user.birthday)}}</td>
 					<td>{{queue.user.gender}}</td>

@@ -6,7 +6,7 @@ import {Schema} from 'mongoose';
 var ObjectId = Schema.ObjectId;
 
 var QueueSchema = new Schema({
-		user : { type : Schema.Types.ObjectId, ref : 'User'},
+		users : [{ type : Schema.Types.ObjectId, ref : 'User'}],
 		status : String,
 		search_parameters : {
 			min_age : Number,

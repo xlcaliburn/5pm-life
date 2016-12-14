@@ -63,7 +63,7 @@ function handleError(res, statusCode) {
 // Gets a list of Queue
 export function index(req, res) {
 	return Queue.find()
-		.populate('user', 'email first_name last_name role birthday gender')
+		.populate('users', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
@@ -72,7 +72,7 @@ export function index(req, res) {
 // Gets a single Queue from the DB
 export function show(req, res) {
 	return Queue.findById(req.params.id)
-		.populate('user', 'email first_name last_name role birthday gender')
+		.populate('users', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
@@ -81,7 +81,7 @@ export function show(req, res) {
 
 export function getByStatus(req, res) {
 	return Queue.find({status : req.params.status})
-		.populate('user', 'email first_name last_name role birthday gender')
+		.populate('users', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
@@ -206,7 +206,7 @@ export function create(req, res) {
 
 		// create the queue after passing the validations
 		var queue_object = {
-			user: decoded_token._id,
+			users: req.body.users,
 			status: 'Searching',
 			search_parameters: {
 				tags: req.body.tags,
@@ -238,10 +238,8 @@ export function create(req, res) {
 =======================================*/
 
 export function cancelEventSearch(req, res) {
-	var response = { status: 'ok' };
 	var token = getDecodedToken(req.params.token);
-	console.log(token);
-	return Queue.findOneAndRemove({ user : token._id })
+	return Queue.findOneAndRemove({ users : token._id })
 		.then(()=>User.findByIdAndUpdate(token._id, { $set : { event_status : null } } ))
 		.then(()=>res.sendStatus(200))
 		.catch(()=>handleError(res))
