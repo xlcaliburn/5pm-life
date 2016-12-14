@@ -1,14 +1,9 @@
-'use strict';
-
-(function() {
-
+(function() { 'use strict';
     angular
-    .module('fivepmApp')
-    .controller('NavbarController', NavbarController);
+        .module('fivepmApp')
+        .controller('NavbarController', NavbarController);
 
     function NavbarController($cookies, $rootScope, $sce, $scope, $state, $timeout, $window, NavbarService, socket, Users) {
-
-        /* jshint expr: true */
         var vm = this;
         vm.user = {};
 
@@ -69,11 +64,11 @@
         vm.confirm = false;
         vm.mobile_nav_open = false;
         vm.location;
-        vm.toggle_mobile_nav = toggleMobileNav;
+        vm.toggle_mobile_nav = ()=>{ vm.mobile_nav_open = !vm.mobile_nav_open; };
         vm.get_queue_status = get_queue_status;
         vm.prev_stage = prevStage;
         vm.next_stage = nextStage;
-        vm.get_current_statename = getCurrentStateName;
+        vm.get_current_statename = ()=>$state.current.name;
         var eventSocket;
 
         /*======================================
@@ -547,20 +542,10 @@
             return hour + ':' + minute + ':00 EDT';
         }
 
-        function toggleMobileNav() {
-            vm.mobile_nav_open = !vm.mobile_nav_open;
-        }
-
-        function getCurrentStateName() {
-            return $state.current.name;
-        }
-
         function updateUserInfo() {
             Users.getMe().success(function(data) {
                 vm.user = data;
             });
         }
-
     }
-
 })();

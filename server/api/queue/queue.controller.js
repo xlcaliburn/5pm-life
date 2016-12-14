@@ -240,26 +240,12 @@ export function create(req, res) {
 export function cancelEventSearch(req, res) {
 	var response = { status: 'ok' };
 	var token = getDecodedToken(req.params.token);
-
-	return Queue.findOne({ user: token._id }).exec()
-	.then(function(queue) {
-		if (!queue) {
-			return res.status(403).send('unauthorized');
-		}
-		var queue_id = queue._id;
-		return Queue.remove({ _id: queue_id }).exec()
-		.then(function() {
-			// change user event_status = null
-			return User.findById(token._id).exec()
-			.then(function(user) {
-				user.event_status = null;
-				return user.save()
-				.then(function() {
-					return res.json({ response: response });
-				});
-			});
-		});
-	}).catch(handleError(res));
+	console.log(token);
+	return Queue.findOneAndRemove({ user : token._id })
+		.then(()=>User.findByIdAndUpdate(token._id, { $set : { event_status : null } } ))
+		.then(()=>res.sendStatus(200))
+		.catch(()=>handleError(res))
+	;
 }
 
 /*======================================*/
