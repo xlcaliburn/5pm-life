@@ -277,7 +277,9 @@ export function triggerEvent(req, res) {
 
 	for (var q in queue) {
 		queue_array.push(queue[q]._id);
-		users_array.push(queue[q].user._id);
+		for (var u = 0; u < queue[q].users.length; u++) {
+			users_array.push(queue[q].users[u]._id);
+		}
 	}
 	Queue.update({
 			_id : { $in: queue }

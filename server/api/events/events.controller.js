@@ -110,7 +110,7 @@ export function admin_show(req, res) {
 	.populate([{
 		path:'queue',
 		populate: {
-			path: 'user',
+			path: 'users',
 			select: 'first_name last_name gender birthday ethnicity'
 		}
 	},{

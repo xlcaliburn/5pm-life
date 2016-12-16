@@ -51,11 +51,11 @@
 					vm.queues_to_add = vm.selected_event.queue;
 
 					// Display only confirmed users in view
-					var unconfirmed_users = [];
-					for (var q in vm.queues_to_add) { unconfirmed_users.push(vm.queues_to_add[q].user._id); }
-					vm.confirmed_users = vm.selected_event.users.filter(function(user) {
-					    return unconfirmed_users.indexOf(user._id) === -1;
-					});
+					// var unconfirmed_users = [];
+					// for (var q in vm.queues_to_add) { unconfirmed_users.push(vm.queues_to_add[q].user._id); }
+					// vm.confirmed_users = vm.selected_event.users.filter(function(user) {
+					//     return unconfirmed_users.indexOf(user._id) === -1;
+					// });
 
 					var start_date = new Date(vm.selected_event.dt_start);
 					vm.form_date = moment(start_date).format('MMMM DD[,] YYYY');
