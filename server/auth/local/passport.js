@@ -8,8 +8,13 @@ function localAuthenticate(User, email, password, done) {
     .then(user => {
       if (!user) {
         return done(null, false, {
-          message: 'This email is not registered.'
+          message: 'Incorrect email/password combination.'
         });
+      }
+      if (!user.verified) {
+          return done(null, false, {
+              message: 'You need to verify your account in order to log in.'
+          });
       }
       user.authenticate(password, function(authError, authenticated) {
         if (authError) {

@@ -2,13 +2,9 @@
 	'use strict';
 
 	angular.module('fivepmApp.admin', [
-		'fivepmApp.auth', 
+		'fivepmApp.auth',
+		'fivepmApp.constants', 
 		'ui.router', 
-		'tagCtrl',
-		'venueCtrl',
-		'userCtrl',
-		'adminEventCtrl',
-		'adminSettingsCtrl',
-		'apiService'
+		'ApiService'
 	]);
 })();

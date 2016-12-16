@@ -1,6 +1,6 @@
 /**
- * Thing model events
- */
+* Thing model events
+*/
 
 'use strict';
 
@@ -11,23 +11,25 @@ var ThingEvents = new EventEmitter();
 // Set max event listeners (0 == unlimited)
 ThingEvents.setMaxListeners(0);
 
+function emitEvent(event) {
+    return function(doc) {
+        ThingEvents.emit(event + ':' + doc._id, doc);
+        ThingEvents.emit(event, doc);
+    };
+}
+
 // Model events
 var events = {
-  'save': 'save',
-  'remove': 'remove'
+    'save': 'save',
+    'remove': 'remove'
 };
 
 // Register the event emitter to the model events
 for (var e in events) {
-  var event = events[e];
-  Thing.schema.post(e, emitEvent(event));
+    var event = events[e];
+    Thing.schema.post(e, emitEvent(event));
 }
 
-function emitEvent(event) {
-  return function(doc) {
-    ThingEvents.emit(event + ':' + doc._id, doc);
-    ThingEvents.emit(event, doc);
-  }
-}
+
 
 export default ThingEvents;

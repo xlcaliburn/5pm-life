@@ -1,0 +1,58 @@
+{
+    "activity_tag": {
+        "ACTIVE": {"order": 1, "value": "Active"},
+        "SOCIAL": {"order": 2, "value": "Social"}
+    },
+    "ethnicity":{
+        "ASIAN": {"order": 1, "value": "Asian"},
+        "ARAB": {"order": 2, "value": "Arab"},
+        "BLACK": {"order": 3, "value": "Black/African-descent"},
+        "HISPANIC": {"order": 4, "value": "Hispanic/Latino"},
+        "NATIVE_AMERICAN": {"order": 5, "value": "Native American"},
+        "PACIFIC_ISLANDER":{"order": 6, "value": "Pacific Islander"},
+        "SOUTH_ASIAN": {"order": 7, "value": "South Asian"},
+        "WHITE": {"order": 8, "value": "White/Caucasian"},
+        "OTHER": {"order": 9, "value": "Other"},
+        "UNDISCLOSED": {"order": 10, "value": "Prefer not to disclose"}
+    },
+    "religion":{
+        "BUDDHIST": {"order": 1, "value": "Buddhist"},
+        "CHRISTIAN": {"order": 2, "value": "Christian"},
+        "CATHOLIC": {"order": 3, "value": "Catholic"},
+        "HINDU": {"order": 4, "value": "Hindu"},
+        "JEWISH": {"order": 5, "value": "Jewish"},
+        "MUSLIM": {"order": 6, "value": "Muslim"},
+        "SIKH": {"order": 7, "value": "Sikh"},
+        "SHINTO": {"order": 8, "value": "Shinto"},
+        "SPIRITUAL": {"order": 9, "value": "Spiritual but not religious"},
+        "NONE": {"order": 10, "value": "Neither spiritual nor religious"},
+        "OTHER": {"order": 11, "value": "Other"}
+    },
+    "event_status":{
+        "NEW": { "order": 1, "value": "New"},
+        "PENDING_USER_CONFIRM": {"order": 2, "value": "Pending User Confirmation"},
+        "ATTENDED": { "order": 3, "value": "Attended"},
+        "CONFIRMED": {"order": 4, "value": "Confirmed"},
+        "ENDED": {"order": 5, "value": "Ended"},
+        "DECLINED": {"order": 6, "value": "Declined"},
+        "LEFT": {"order": 7, "value": "Left"}
+    },
+    "location":{
+        "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}
+    },
+    "queue_status": {
+        "SEARCHING": {"order": 1, "value": "Searching"},
+        "PENDING": {"order": 2, "value": "Pending"},
+        "PENDING_USER_CONFIRM": {"order": 3, "value": "Pending User Confirmation"}
+    },
+    "gender": {
+        "MALE": {"order": 1, "value": "Male"},
+        "FEMALE": {"order": 2, "value": "Female"},
+        "UNDISCLOSED": {"order": 3, "value": "Prefer not to disclose"}
+    },
+    "feedback_type": {
+        "BUG": {"order": 1, "value": "Bug"},
+        "FEATURE": {"order": 2, "value": "Feature"},
+        "COMMENT": {"order": 3, "value": "Comment"}
+    }
+}

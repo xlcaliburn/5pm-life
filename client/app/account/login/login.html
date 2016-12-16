@@ -1,54 +1,19 @@
 <div id="login-container">
-    <div class="container full">
-
-        <!-- login container -->
-        <div class="login-container">
-            <div class="login-box">
-                <div class="login-title">Sign In</div>
-                <div class="login-description">Some random filler description here</div>
-
-                <!-- login status -->
-                <div class="login-status" ng-class="{ true: 'show-error' }[login.status != '']">{{ login.status }}</div>
-
-                <!-- login form -->
-                <form class="login-form" ng-submit="login.login()">
-                    <!-- email address -->
-                    <div class="valign-wrapper">
-                        <i class="material-icons login-icon">person_outline</i>
-                        <input type="text" ng-model="login.email_address" placeholder="Email address">
-                    </div>
-                    <!-- password -->
-                    <div class="valign-wrapper">
-                        <i class="material-icons login-icon">lock_outline</i>
-                        <input type="password" ng-model="login.password" placeholder="Password">
-                    </div>
-
-                    <!-- keep me signed in -->
-                    <div class="valign-wrapper login-checkbox">
-                        <input type="checkbox" class="filled-in" id="keep-signed-in" ng-model="login.remember_login">
-                        <label for="keep-signed-in">Keep me signed in</label>
-
-                        <!-- login button -->
-                        <button type="submit" class="btn-floating btn-large waves-effect waves-light login-button"><i class="material-icons">arrow_forward</i></button>
-                    </div>
-                </form>
-
-                <!-- password recovery -->
-                <div class="login-forgot"><a href="/recover-password">Forgot password</a></div>
-
-                <!-- register link -->
-                <div class="login-register-container align-center">
-                    <a href="/register" class="waves-effect waves-light btn login-register">SIGN UP</a>
-                </div>
+    <div class="login-background">
+        <div class="login-box">
+            <img src="assets/images/5pm-icon.png" height="150px">
+            <div class="login-text">
+                Meet new friends and enjoy doing the things you love
+            </div>
+            <div class="fb-button">
+                <a ng-class="classes" ng-click="vm.login()" class="btn-facebook">
+                  <i class="fa fa-facebook"></i>
+                  Connect with Facebook
+                </a>
+            </div>
+            <div class="back-home">
+                <a href="/">Back to home</a>
             </div>
         </div>
-
-        <!-- background -->
-        <div class="login-background">
-            <div class="login-background-description">
-                Meet friends and enjoy <br />doing the things you love!
-            </div>
-        </div>
-
     </div>
 </div>

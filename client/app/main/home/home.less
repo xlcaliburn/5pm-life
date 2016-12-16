@@ -1,534 +1,302 @@
-@home-border-radius: 3px;
-
-.queue {
-    padding: 0;
-}
-
-.home-left {
+#home-section {
     background-color: @white;
-    border-top-left-radius: @home-border-radius;
-    border-bottom-left-radius: @home-border-radius;
-    min-height: 500px;
 }
 
-.home-right {
-    background-color: @teal;
-    border-top-right-radius: @home-border-radius;
-    border-bottom-right-radius: @home-border-radius;
-    height: 500px;
-    padding: 20px 50px;
-    color: @white;
-}
-
-.home-title {
-    text-align: center;
-    padding: 20px 30px;
-    font-size: 16px;
-    margin: 3% 0;
-}
-
-.home-title .glyphicon {
-    font-size: 20px;
-}
-
-.home-instructions {
-    font-size: 18px;
-}
-
-/* Date Picker CSS */
-._720kb-datepicker-calendar-body, ._720kb-datepicker-calendar-days-header, ._720kb-datepicker-calendar-header, ._720kb-datepicker-calendar-years-pagination-pages, .datepicker, [datepicker], datepicker {
-    font-family: 'Roboto', sans-serif;
-}
-
-._720kb-datepicker-calendar {
-    position: inherit;
-    width: 90%;
-    margin: 0 auto;
+#feedback-modal {
+    max-width: 350px;
     box-shadow: none;
-    color: @uppergrey;
-}
-
-._720kb-datepicker-calendar-month,
-a._720kb-datepicker-calendar-month-button {
-    color: @teal;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-._720kb-datepicker-calendar-header {
-    background-color: transparent !important;
-}
-
-._720kb-datepicker-calendar-days-header {
-    background: none;
-    border: none;
-    text-align: center;
-    clear: both;
-}
-
-._720kb-datepicker-calendar-days-header div {
-    color: @pinkred;
-    width: 12%;
-    float: none;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: 300;
-    text-transform: uppercase;
-}
-
-._720kb-datepicker-calendar-body {
-    width: 95%;
-    float: none;
-    padding: 0 6%;
-    text-align: center;
-    clear: both;
-}
-
-._720kb-datepicker-calendar-day {
-    float: none;
-    display: inline-block;
-    padding: 0 0 10% 0;
-    width: 10%;
-    font-size: 16px;
-    margin: 2%;
-    height: 0;
-    line-height: 60px;
-    border-radius: 50%;
-}
-
-._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
     background-color: transparent;
-    text-decoration: none;
+    border-radius: 0;
+    height: auto;
 }
 
-._720kb-datepicker-calendar-day._720kb-datepicker-today {
-    color: @teal;
-    font-weight: 700;
-}
-
-._720kb-datepicker-calendar-day._720kb-datepicker-active {
-    background-color: @babyblue;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-._720kb-datepicker-calendar-header a:hover {
-    color: @babyblue;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.time-section {
-    padding-bottom: 30px;
-    text-align: center;
-    color: @teal;
-    font-weight: 700;
-    font-size: 20px;
-}
-
-.time-input {
+#feedback-modal .modal-content {
+    border-radius: 0;
+    box-shadow: none;
     border: none;
-    border-bottom: 1px solid @lightgrey;
-    margin: 0 15px;
-    outline: none;
-    color: @babyblue;
     text-align: center;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-
-/* DELETE THIS CRAP
-==============================================*/
-.topnav {
-    font-size: 14px;
-}
-
-.lead {
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 300;
 }
 
-.intro-header {
-    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
-    padding-bottom: 50px;
-    text-align: center;
-    color: #f8f8f8;
-    background: url(../img/intro-bg.jpg) no-repeat center center;
-    background-size: cover;
+#feedback-modal .modal-footer {
+    line-height: 50px;
+    padding: 0;
+    height: 50px;
 }
 
-.intro-message {
-    position: relative;
-    padding-top: 20%;
-    padding-bottom: 20%;
+#feedback-modal a {
+    display: block;
+    height: 100%;
+    line-height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: @darkgrey !important;
 }
 
-.intro-message > h1 {
-    margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-    font-size: 5em;
+#feedback-modal a:hover {
+    background-color: @faintgrey;
+    color: @darkgrey;
 }
 
-.intro-divider {
-    width: 400px;
-    border-top: 1px solid #f8f8f8;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+.home-banner {
+    width: 100%;
+    height: 500px;
+    color: @white;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.intro-message > h3 {
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-}
-
-@media(max-width:767px) {
-    .intro-message {
-        padding-bottom: 15%;
-    }
-
-    .intro-message > h1 {
-        font-size: 3em;
-    }
-
-    ul.intro-social-buttons > li {
-        display: block;
-        margin-bottom: 20px;
-        padding: 0;
-    }
-
-    ul.intro-social-buttons > li:last-child {
-        margin-bottom: 0;
-    }
-
-    .intro-divider {
-        width: 100%;
-    }
-}
-
-.network-name {
+.banner-title {
+    margin-top: 185px;
+    font-size: 48px;
+    font-weight: 700;
     text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 2px;
+    text-shadow: 0px 1px 5px rgb( 0, 0, 0 );
 }
 
-.content-section-a {
-    padding: 50px 0;
-    background-color: #f8f8f8;
+.banner-subtitle {
+    margin-top: 15px;
+    font-size: 22px;
+    text-shadow: 0px 1px 5px rgb( 0, 0, 0 );
 }
 
-.content-section-b {
-    padding: 50px 0;
-    border-top: 1px solid #e7e7e7;
-    border-bottom: 1px solid #e7e7e7;
+.banner-queue-button {
+    margin-top: 225px;
+    color: @white;
+    background-color: @pink !important;
+    border: none;
+    border-radius: 2px;
+    height: 40px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-weight:700;
+    opacity: 0.85;
+    .dropshadow;
 }
 
-.section-heading {
-    margin-bottom: 30px;
+.banner-queue-button:hover {
+    opacity: 1;
 }
 
-.section-heading-spacer {
-    float: left;
-    width: 200px;
-    border-top: 3px solid #e7e7e7;
+.home-tabs {
+    border-bottom: 1px solid @lightgrey;
+    text-align: center;
 }
 
-.banner {
-    padding: 100px 0;
-    color: #f8f8f8;
-    background: url(../img/banner-bg.jpg) no-repeat center center;
-    background-size: cover;
+.home-tabs .anchor {
+    cursor: pointer;
+    color: @middlegrey;
+    font-weight: 500;
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+    .user-select-none;
 }
 
-.banner h2 {
-    margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-    font-size: 3em;
+.home-tabs .anchor:hover {
+    color: @pink;
 }
 
-.banner ul {
+.home-tabs .anchor.active {
+    color: @pink;
+}
+
+.home-tabs .row {
     margin-bottom: 0;
 }
 
-.banner-social-buttons {
-    float: right;
-    margin-top: 0;
+.slick-container {
+    max-width: 850px;
+    padding-top: 10px;
 }
 
-.queue-title {
-    border-bottom: 3px solid @white;
-    text-align: center;
+.slick-container div {
+    -webkit-user-select: initial;
+    user-select: initial;
+}
+
+.post-title {
+    color: @pink;
     font-size: 22px;
     font-weight: 700;
-    padding: 10% 0 3%;
+    margin-top: 10px;
 }
 
-.queue-date-time {
-    padding: 20px 0 0;
-    cursor: pointer;
+.post-date {
+    color: @uppergrey;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 20px;
 }
 
-.activity-types,
-.queue-location {
-    cursor: pointer;
-    opacity: 1;
-    transition: all 0.25s ease-out;
+.post-content {
+    font-size: 16px;
+    font-weight: 300;
+    color: @darkgrey;
 }
 
-.queue-date-time-title,
-.queue-activity-title,
-.queue-event-title {
-    font-weight: 700;
-    font-size: 18px;
-    padding: 5px 0;
+.post-content p {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    line-height: 1.75;
 }
 
-.queue-date, .queue-time {
+.about-title {
+    font-weight: 500;
+    color: @teal;
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+.about-content img {
+    display: inline-block;
+}
+
+.about-content p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+}
+
+.feedback-title {
+    font-size: 20px;
+    color: @pink;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.feedback-description {
+    font-size: 16px;
+    color: @darkgrey;
+    line-height: 1.75;
+    font-weight: 300;
+}
+
+@feedback-width: 325px;
+
+.feedback select,
+.feedback textarea {
+    border: 1px solid @uppergrey;
+    border-radius: 0;
+    max-width: @feedback-width;
+    margin-top: 20px;
+    background-color: @white;
+}
+
+.feedback select {
     font-weight: 300;
     font-size: 15px;
-    display: inline-block;
-    color: @yellow;
 }
 
-.queue-label {
-    display: inline-block;
-    font-weight: 700;
+.feedback select:focus {
+    outline: none;
+}
+
+.feedback textarea {
+    height: 200px;
+    resize: none;
+    padding: 10px 15px;
+    margin-top: 15px;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
     font-size: 15px;
-    width: 50px;
+    font-weight: 300;
 }
 
-.queue-disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.prev-stage-button {
-    float: left;
-}
-
-.next-stage-button,
-.queue-up-button {
-    float: right;
-}
-
-.next-stage-button,
-.prev-stage-button
- {
-    border: 3px solid @pinkred;
-    background-color: @white;
-    color: @pinkred;
-    font-size: 16px;
-    padding: 6px 20px;
-    outline: none;
-    transition: all 0.2s ease-out;
-}
-
-.next-stage-button:hover,
-.prev-stage-button:hover {
-    background-color: @pinkred;
+.submit-feedback-button {
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+    max-width: @feedback-width;
+    height: 45px;
+    line-height: 45px;
+    font-weight: 700;
     color: @white;
+    background-color: @pink !important;
+    border: none;
+    opacity: 0.8;
 }
 
-.next-stage-button:active,
-.prev-stage-button:active {
-    background-color: @white;
-    color: @pinkred;
-}
-
-.next-previous-buttons {
-    text-align: center;
-    padding: 0 30px 30px;
-}
-
-.queue-up-button {
-    border: 3px solid @babyblue;
-    background-color: @white;
-    color: @babyblue;
-    font-size: 16px;
-    padding: 6px 20px;
-    outline: none;
-    transition: all 0.2s ease-out;
-}
-
-.queue-up-button:hover {
-    background-color: @babyblue;
-    color: @white;
-}
-
-.queue-up-button:active {
-    background-color: @white;
-    color: @babyblue;
-}
-
-.activity-checkboxes {
-    margin: 10px 0;
-}
-
-.active-checkbox,
-.social-checkbox {
-    position: relative;
-    margin: 5px 0;
-}
-
-.active-checkbox label,
-.social-checkbox label {
-    display: inline-block;
-    position: relative;
-    font-size: 16px;
-    font-weight: 400;
-    padding: 0 0 0 40px;
-    vertical-align: middle;
-    cursor: pointer;
-    transition: color 0.3s ease-out;
-    .user-select-none;
-}
-
-.active-checkbox input[type='checkbox'],
-.social-checkbox input[type='checkbox'],
-.active-checkbox label::before,
-.social-checkbox label::before {
-    width: 25px;
-	height: 25px;
-	top: 40%;
-	left: 0;
-	margin-top: -12.5px;
-	position: absolute;
-	cursor: pointer;
-}
-
-.active-checkbox input[type='checkbox'],
-.social-checkbox input[type='checkbox'] {
-    opacity: 0;
-    display: inline-block;
-    vertical-align: middle;
-    z-index: 100;
-}
-
-.active-checkbox label::before,
-.social-checkbox label::before {
-    content: '';
-    border: 3px solid @white;
-    transition: opacity 0.3s ease-out;
-}
-
-.active-checkbox input[type="checkbox"]:checked + label::before,
-.social-checkbox input[type="checkbox"]:checked + label::before {
-	content: '✔';
-    color: @white;
-    padding-left: 3px;
-}
-
-.activity-container {
-    text-align: center;
-    margin: 30px 0;
-    min-height: 300px;
-}
-
-.active-card, .social-card {
-    cursor: pointer;
-    text-align: center;
-    padding: 20px 40px;
-    transition: all 0.25s ease-out;
-    .user-select-none;
-}
-
-.active-card {
-    color: @pinkred;
-    border: 3px solid @pinkred;
-}
-
-.social-card {
-    color: @babyblue;
-    border: 3px solid @babyblue;
-}
-
-.active-card:hover {
-    background-color: @pinkred;
-    color: @white;
-    opacity: 0.6;
-}
-
-.social-card:hover {
-    background-color: @babyblue;
-    color: @white;
-    opacity: 0.6;
-}
-
-.active-card.card-selected,
-.active-card.card-selected:hover {
-    background-color: @pinkred;
-    color: @white;
+.submit-feedback-button:hover {
     opacity: 1;
 }
 
-.social-card.card-selected,
-.social-card.card-selected:hover {
-    background-color: @babyblue;
-    color: @white;
-    opacity: 1;
+.submit-feedback-button:active {
+    opacity: 0.8;
 }
 
-@media(max-width:1199px) {
-    ul.banner-social-buttons {
-        float: left;
-        margin-top: 15px;
+@media screen and (max-width: 991px) {
+    .home-banner {
+        text-align: center;
+        height: 350px;
     }
 
-    ._720kb-datepicker-calendar-day {
-        line-height: 50px;
-    }
-}
-
-@media(max-width: 991px) {
-    ._720kb-datepicker-calendar-day {
-        line-height: 60px;
-    }
-}
-
-@media(max-width:767px) {
-    .banner h2 {
-        margin: 0;
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-        font-size: 3em;
+    .banner-title {
+        margin-top: 125px;
+        font-size: 38px;
     }
 
-    ul.banner-social-buttons > li {
-        display: block;
-        margin-bottom: 20px;
-        padding: 0;
+    .banner-subtitle {
+        margin-top: 0px;
+        font-size: 18px;
     }
 
-    ul.banner-social-buttons > li:last-child {
-        margin-bottom: 0;
+    .banner-queue-button {
+        margin-top: 25px;
     }
 
-    ._720kb-datepicker-calendar-day {
-        line-height: 60px;
+    .home-tabs .anchor:hover {
+        color: @middlegrey;
     }
 
-    .prev-stage-button,
-    .next-stage-button,
-    .queue-up-button {
-        float: none;
+    .home-tabs .anchor.active {
+        color: @pink;
     }
 }
 
-@media(max-width: 600px) {
-    ._720kb-datepicker-calendar-day {
+@media screen and (max-width: 767px) {
+
+    .banner-title {
+        margin-top: 125px;
+        font-size: 30px;
+    }
+
+    .banner-subtitle {
+        margin-top: 0px;
         font-size: 16px;
-        line-height: 30px;
     }
-}
 
-footer {
-    padding: 50px 0;
-    background-color: #f8f8f8;
-}
+    .banner-queue-button {
+        height: 35px;
+        font-size: 14px;
+    }
 
-p.copyright {
-    margin: 15px 0 0;
+    .home-tabs .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .home-tabs .row>.anchor:nth-child(2) {
+        padding-left: 0;
+    }
+
+    .slick-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .slick-container div {
+        .user-select-none;
+    }
+
+    .section {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 }

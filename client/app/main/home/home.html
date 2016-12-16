@@ -1,6 +1,89 @@
 <navbar></navbar>
-<div ui-view>
-    <div class="align-center">
-        <img src="assets/images/placeholder.jpg">
+<div ui-view class="wrap">
+
+    <!-- Thank you modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <p>Thanks for your feedback!</p>
+        </div>
+        <div class="modal-footer align-center">
+            <a href="#" ng-click="vm.close_modal()">OK</a>
+        </div>
     </div>
+
+    <!-- Home Section -->
+    <div id="home-section">
+
+        <!-- banner -->
+        <div class="home-banner" background="{{vm.banner.url}}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="banner-title" ng-bind-html="vm.banner.title | trustHTML"></div>
+                        <div class="banner-subtitle" ng-bind-html="vm.banner.subtitle | trustHTML"></div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" ng-if="navbar.queue_status == -1">
+                        <div class="banner-queue">
+                            <button class="banner-queue-button" ng-click="vm.open_queue_modal()">
+                                Queue up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- home info -->
+        <div class="home-info">
+
+            <!-- home tab header -->
+            <div class="home-tabs">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4 anchor" ng-repeat="section in vm.sections" ng-click="vm.go_to_section  ($index)" ng-class="{'active': vm.current_section == $index, 'col-md-offset-1': $index == 0}">{{ section.name }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- slick -->
+            <div class="container slick-container">
+                <slick settings="vm.slick_config">
+                    <!-- news -->
+                    <div class="news section">
+                        <div class="post" ng-repeat="post in vm.news_data.posts">
+                            <div class="post-title">{{ post.title }}</div>
+                            <div class="post-date">{{ post.date }}</div>
+                            <div class="post-content" ng-bind-html="post.content | trustHTML"></div>
+                             <div class="divider"></div>
+                        </div>
+                    </div>
+
+                    <!-- about -->
+                    <div class="about section">
+                        <div ng-bind-html="vm.about_data.content | trustHTML"></div>
+                    </div>
+
+                    <!-- feedback -->
+                    <div class="feedback section">
+                        <div class="feedback-title">Feedback</div>
+                        <div class="feedback-description" ng-bind-html="vm.feedback_data.content | trustHTML "></div>
+
+                        <!-- type -->
+                        <select ng-model="vm.feedback_type" class="browser-default">
+                            <option value="" disabled>Select feedback type</option>
+                            <option value="{{name}}" ng-repeat="(name, type) in vm.feedback_data.types">{{ type.value }}</option>
+                        </select>
+
+                        <!-- description -->
+                        <textarea ng-model="vm.feedback_description" placeholder="Your feedback is greatly appreciated!"></textarea>
+
+                        <!-- submit -->
+                        <button class="submit-feedback-button" ng-click="vm.submit_feedback()" ng-class="{'disabled': vm.submitting }">Submit</button>
+                    </div>
+                </slick>
+            </div>
+        </div>
+    </div>
+
 </div>
+<sticky-footer></sticky-footer>

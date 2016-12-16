@@ -4,56 +4,148 @@
  */
 
 'use strict';
-import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
+import Queue from '../api/queue/queue.model';
 
-Thing.find({}).remove()
-  .then(() => {
-    Thing.create({
-      name: 'Development Tools',
-      info: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
-             'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
-             'Stylus, Sass, and Less.'
-    }, {
-      name: 'Server and Client integration',
-      info: 'Built with a powerful and fun stack: MongoDB, Express, ' +
-             'AngularJS, and Node.'
-    }, {
-      name: 'Smart Build System',
-      info: 'Build system ignores `spec` files, allowing you to keep ' +
-             'tests alongside code. Automatic injection of scripts and ' +
-             'styles into your index.html'
-    }, {
-      name: 'Modular Structure',
-      info: 'Best practice client and server structures allow for more ' +
-             'code reusability and maximum scalability'
-    }, {
-      name: 'Optimized Build',
-      info: 'Build process packs up your templates as a single JavaScript ' +
-             'payload, minifies your scripts/css/images, and rewrites asset ' +
-             'names for caching.'
-    }, {
-      name: 'Deployment Ready',
-      info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
-             'and openshift subgenerators'
-    });
-  });
+// User.find({}).remove()
+// 	.then(() => {
+// 		User.create(
+// 		{
+// 			'first_name' : 'Michael',
+// 			'last_name' : 'Wong',
+// 			'ethnicity' : 'South East Asian',
+// 			'gender' : 'Male',
+// 			'email' : 'michaelchunkitwong@gmail.com',
+// 			'password' : 'a',
+// 			'verified' : true,
+// 			'event_history' : [ ],
+// 			'role' : 'admin',
+// 			'__v' : 0
+// 		},
+// 		{
+// 			"first_name" : "a",
+// 			"last_name" : "bc",
+// 			"ethnicity" : "South East Asian",
+// 			"gender" : "Male",
+// 			"email" : "admin@example.com",
+// 			"password" : "admin",
+// 			"verified" : true,
+// 			"event_history" : [ ],
+// 			"role" : "admin",
+// 			"__v" : 0
+// 		},
+// 		{
+// 			"first_name" : "a",
+// 			"last_name" : "bc",
+// 			"ethnicity" : "South East Asian",
+// 			"gender" : "Male",
+// 			"email" : "a@gmail.com",
+// 			"password" : "a",
+// 			"verified" : true,
+// 			"event_history" : [ ],
+// 			"role" : "user",
+// 			"__v" : 0
+// 		},
+// 		{
+// 			"first_name" : "asdf",
+// 			"last_name" : "de",
+// 			"ethnicity" : "South East Asian",
+// 			"gender" : "Male",
+// 			"email" : "b@gmail.com",
+// 			"password" : "b",
+// 			"verified" : true,
+// 			"event_history" : [ ],
+// 			"role" : "user",
+// 			"__v" : 0
+// 		})
+// 		.then(() => {
+// 			console.log('Finished populating users');
+// 		});
+// 	});
 
-User.find({}).remove()
-  .then(() => {
-    User.create({
-      provider: 'local',
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'test'
-    }, {
-      provider: 'local',
-      role: 'admin',
-      name: 'Admin',
-      email: 'admin@example.com',
-      password: 'admin'
-    })
-    .then(() => {
-      console.log('finished populating users');
-    });
-  });
+/*Queue.find({}).remove()
+	.then(() => {
+		Queue.create({
+			user : "57b675bfb921140c3ab275c3",
+			status : 'Pending',
+			search_parameters : {
+				override_default : false,
+				tags : []
+			}
+		}, {
+			user : "57b675bfb921140c3ab275c4",
+			status : 'Pending',
+			search_parameters : {
+				override_default : false,
+				tags : []
+			}
+		});
+	});
+*/
+// Enums.find({}).remove()
+// 	.then(() => {
+// 		Enums.create({
+// 			type : 'activity_tag',
+// 			key : 'ACTIVE',
+// 			value : 'Active'
+// 		}, {
+// 			type : 'activity_tag',
+// 			key : 'SOCIAL',
+// 			value : 'Social'
+// 		}, {
+// 			type : 'queue_status',
+// 			key : 'SEARCHING',
+// 			value : 'Searching'
+// 		}, {
+// 			type : 'queue_status',
+// 			key : 'PENDING',
+// 			value : 'Pending'
+// 		}, {
+// 			type : 'queue_status',
+// 			key : 'PENDING_USER_CONFIRM',
+// 			value : 'Pending User Confirmation',
+// 		}, {
+// 			type : 'event_status',
+// 			key : 'CONFIRMED',
+// 			value : 'Confirmed'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'CAUCASIAN',
+// 			value : 'Caucasian'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'LATINO',
+// 			value : 'Latino/Hispanic'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'AFRICAN',
+// 			value : 'African'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'CARIBBEAN',
+// 			value : 'Caribbean'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'SOUTH_ASIAN',
+// 			value :  'South Asian'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'EAST_ASIAN',
+// 			value : 'East Asian'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'MIXED',
+// 			value : 'Mixed'
+// 		}, {
+// 			type : 'ethnicity',
+// 			key : 'OTHER',
+// 			value : 'Other'
+// 		}, {
+// 			type : 'location',
+// 			key : 'CA_ON_RICHMOND_HILL',
+// 			value : 'Richmond Hill'
+// 		})
+// 		.then(() => {
+// 			console.log('Finished populating enums');
+// 		});
+// 	});

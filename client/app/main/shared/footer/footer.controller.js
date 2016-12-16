@@ -1,14 +1,13 @@
 'use strict';
 
 (function() {
+
     angular
     .module('fivepmApp')
     .controller('FooterController', FooterController);
 
-    /** @ngInject */
+    /** @ngInject */ 
     function FooterController() {
-        var self = this;
-
 
     }
 

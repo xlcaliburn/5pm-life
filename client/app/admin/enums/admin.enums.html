@@ -1,0 +1,23 @@
+<div class="container">
+	<h2>Enum Management</h2>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Enum</th>
+					<th>Key</th>
+					<th>Value</th>
+					<th>Order</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="enum in vm.enums">
+					<td>{{enum.type}}</td>
+					<td>{{enum.key}}</td>
+					<td>{{enum.value}}</td>
+					<td>{{enum.order}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

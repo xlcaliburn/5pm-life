@@ -1,6 +1,8 @@
 'use strict';
 
+import _ from 'lodash';
 import User from './user.model';
+import Queue from '../queue/queue.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
@@ -9,7 +11,7 @@ function validationError(res, statusCode) {
 	statusCode = statusCode || 422;
 	return function(err) {
 		res.status(statusCode).json(err);
-	}
+	};
 }
 
 function handleError(res, statusCode) {
@@ -19,23 +21,46 @@ function handleError(res, statusCode) {
 	};
 }
 
+export function getDecodedToken(token) {
+	if (!token) {
+		return false;
+	}
+	return jwt.verify(token, config.secrets.session);
+}
+
 /**
  * Get list of users
  * restriction: 'admin'
  */
 export function index(req, res) {
-	return User.find({}, '-salt -password').exec()
+	return User.find({}, 'first_name last_name gender email role birthday verified event_status account_create_date')
+		.sort({'role': 1,  'account_create_date': 1})
+		.exec()
 		.then(users => {
-			res.status(200).json(users);
+			return res.status(200).json(users);
+		})
+		.catch(handleError(res))
+	;
+}
+
+/**
+ * Get users by id
+ */
+export function getUsersById(req, res) {
+	return User.find({_id : req.body.users}).exec()
+		.then(users => {
+			return res.status(200).json(users);
 		})
 		.catch(handleError(res));
 }
+
 
 /**
  * Creates a new user
  */
 export function create(req, res, next) {
 	var newUser = new User(req.body);
+
 	newUser.provider = 'local';
 	newUser.role = 'user';
 	newUser.save()
@@ -56,10 +81,7 @@ export function show(req, res, next) {
 
 	return User.findById(userId).exec()
 		.then(user => {
-			if (!user) {
-				return res.status(404).end();
-			}
-			res.json(user.profile);
+			return res.status(200).json(user);
 		})
 		.catch(err => next(err));
 }
@@ -99,6 +121,74 @@ export function changePassword(req, res, next) {
 		});
 }
 
+function saveUpdates(updates) {
+
+	return function(entity) {
+		var updated = _.merge(entity, updates);
+		return updated.save({new : true})
+			.then(updated => {
+				return updated;
+			});
+	};
+}
+
+export function updateById(req, res, next) {
+	if (req.body._id) {
+		delete req.body._id;
+	}
+	return User.findById(req.params.id)
+		.exec()
+		.then(saveUpdates(req.body))
+		.then(function(){return res.status(204).end();})
+		.catch(handleError(res));
+}
+
+// get user verification for signup
+export function getUserVerification(req, res) {
+	var token = req.cookies.token;
+	if (!token) { throw 'unauthorized'; }
+	var user_id = getDecodedToken(token)._id;
+
+	return User.findById(user_id).exec()
+	.then((user) => {
+		if (user.verified) {
+			return res.send(true);
+		} else {
+			return res.send(false);
+		}
+	}).catch(handleError(res));
+}
+
+export function getQueueByUserid(req, res) {
+	var user_id= req.params.id;
+	Queue.findOne({ user: user_id }).exec()
+	.then(queue => { // don't ever give out the password or salt
+		if (!queue) {
+			// TODO: Fix 401 error loops
+			return res.status(200);
+			//return res.status(401).end();
+		}
+		return res.status(200).json(queue);
+	});
+}
+
+export function unqueueByUserId(req, res) {
+	var user_id = req.params.id;
+	Queue.findOneAndRemove({ user: user_id }).exec();
+	User.findOneAndUpdate({ _id: user_id }, {
+		$set: {event_status : null}
+	}, {new: true}).exec()
+		.then(user => {
+			if (!user) {
+				// TODO: Fix 401 error loops
+				return res.status(200);
+				//return res.status(401).end();
+			}
+			return res.status(200).json(user);
+		})
+	;
+}
+
 /**
  * Get my info
  */
@@ -110,9 +200,36 @@ export function me(req, res, next) {
 			if (!user) {
 				return res.status(401).end();
 			}
-			res.json(user);
+			return res.json(user);
 		})
 		.catch(err => next(err));
+}
+
+// get settings info
+export function getUserSettings(req, res, next) {
+	var token = req.params.token;
+	var response = {};
+	if (!token) {
+		response.status = 'unauthorized';
+		return res.json({ response: response });
+	}
+	var decoded_token = jwt.verify(token, config.secrets.session);
+
+	return User.findOne({ _id: decoded_token._id }, '-_id first_name last_name ethnicity gender birthday email profile_picture.current').exec()
+		.then(function(user) {
+			if (!user) {
+				response.status = 'unauthorized';
+				return res.json({ response: response });
+			}
+			response.status = 'ok';
+			response.user = user;
+			return res.json({ response: response });
+		})
+		.catch(function(err) {
+			response.status = 'error';
+			response.error = err;
+			return res.json({ response: response });
+		});
 }
 
 /**

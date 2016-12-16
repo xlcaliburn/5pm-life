@@ -1,142 +1,142 @@
 'use strict';
 
 (function() {
+
     angular
     .module('fivepmApp')
-    .controller('HomeController', HomeController);
+    .controller('HomeController', HomeController)
+    .filter('trustHTML', htmlFilter);
+
+    // trust html filter
+    function htmlFilter($sce) {
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }
 
     /** @ngInject */
-    function HomeController($filter, $timeout, $rootScope, $state) {
-        var self = this;
+    /* jshint expr: true */
+    function HomeController($timeout, feedbackService, sectionData) {
+        var vm = this;
 
         // model
-        // should definitely get this from the db
-        self.stages = [
-            {
-                stage: "datetime",
-                instructions: "Select a <span class='babyblue bold'>date</span> and <span class='babyblue bold'>time range</span> that you are available"
+        vm.about_data = sectionData.sections.about;
+        vm.feedback_data = sectionData.sections.feedback;
+        vm.news_data = sectionData.sections.news;
+        vm.sections = sectionData.sections;
+
+        // views
+        vm.banner = sectionData.banner;
+        vm.current_section = 0;
+        vm.feedback_type = null;
+        vm.feedback_description = '';
+        vm.slick_config = {
+            enabled: true,
+            accessibility: false,
+            autoplay: false,
+            draggable: false,
+            adaptiveHeight: true,
+            slidesToShow: 1,
+            infinite: false,
+            waitForAnimate: false,
+            speed: 0,
+            arrows: false,
+            method: {},
+            event: {
+                init: function() {
+                    goToSection(0);
+                },
+                beforeChange: function(event, slick, currentSlide, nextSlide) {
+                    vm.current_section = nextSlide;
+                }
             },
-            {
-                stage: "activity",
-                instructions: "Select an <span class='babyblue bold'>activity card</span> you would like your event to be"
-            }
-        ];
-        self.activity_cards = [
-            {
-                activity_type: "active",
-                color: "#ff5d5d"
-            },
-            {
-                type: "social",
-                color: "#429fd9"
-            }
-        ]
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        speed: 350,
+                        method: {}
+                    },
+                }
+            ]
+        };
 
         // variables
-        self.current_stage = 0;
-        self.show_calendar = true;
-        self.today = get_todays_date();
-        self.date;
-        self.time_1;
-        self.time_2
-        self.formatted_date;
-        self.formatted_time_1;
-        self.formatted_time_2;
-        self.selected_activity_types = [];
-        self.active = false;
-        self.social = false;
-        self.next_button = false;
-        self.prev_button = false;
+        vm.submitting = false;
 
-        /* class functions
-        =====================================================*/
+        // functions
+        vm.close_modal = closeModal;
+        vm.go_to_section = goToSection;
+        vm.open_queue_modal = openQueueModal;
+        vm.submit_feedback = submitFeedback;
 
-        self.init = function() {
-            // set page title
-            $rootScope.title = $state.current.title;
+        init();
 
-            // remove active calendar highlight from today's date
+        function init() {
+            setData();
             $timeout(function() {
-                var today_cell = angular.element("._720kb-datepicker-calendar-day._720kb-datepicker-active");
-                today_cell.addClass("today-date");
-                today_cell.removeClass("_720kb-datepicker-active");
-                today_cell.click(function() {
-                    today_cell.addClass("_720kb-datepicker-active")
-                });
+                goToSection(0);
+            }, 1000);
+        }
+
+        // close feedback modal
+        function closeModal() {
+            angular.element('#feedback-modal').closeModal();
+        }
+
+        // go to slick section
+        function goToSection(index) {
+            $timeout(function() {
+                $('slick').slick('slickGoTo', index);
             });
         }
 
-        self.set_date = function() {
-            var unformatted_date = moment(self.date);
-            self.formatted_date = unformatted_date.format("ddd, MMMM Do, YYYY");
-
-            if (self.formatted_time_1 && self.formatted_time_2)
-                self.next_button = true;
+        // setup homepage info
+        function setData() {
+            // news
+            // about
+            // feedback
         }
 
-        self.set_time = function() {
-            if (!self.time_1 || !self.time_2) return;
-            if (self.time_1 > self.time_2) return;
-
-            // format times
-            self.formatted_time_1 = new moment(self.time_1).format("h:mmA");
-            self.formatted_time_2 = new moment(self.time_2).format("h:mmA");
-
-            if (self.formatted_date)
-                self.next_button = true;
+        // open feedback modal
+        function openFeedbackModal() {
+            angular.element('#feedback-modal').openModal();
         }
 
-        self.toggle_activity = function(type) {
-            if (self.selected_activity_types.indexOf(type) > -1) {
-                // it exists in array
-                var index = self.selected_activity_types.indexOf(type);
-                self.selected_activity_types.splice(index, 1);
+        // open queue modal
+        function openQueueModal() {
+            $timeout(function() {
+                angular.element('#explore-button').click();
+            });
+        }
 
-            } else {
-                // add to array
-                self.selected_activity_types.push(type);
+        // submit feedback
+        function submitFeedback() {
+            if (vm.submitting) { return; }
+            if (!vm.feedback_type) {
+                Materialize.toast('Please select a feedback type.', 6000);
+                return;
+            } else if (!vm.feedback_description.trim()) {
+                Materialize.toast('Please fill in your feedback', 6000);
+                return;
             }
 
-            // show queue button
-            if (self.selected_activity_types.length > 0)
-                self.show_ready();
+            vm.submitting = true;
+            var data = {
+                type: vm.feedback_type,
+                description: vm.feedback_description
+            };
+            feedbackService.submitFeedback(data).then(function(res) {
+                if (res.data.success) {
+                    vm.feedback_type = '';
+                    vm.feedback_description = '';
+                    vm.submitting = false;
+                    vm.submitting = false;
+                    openFeedbackModal();
+                }
+            });
         }
 
-        self.show_ready = function() {
-
-        }
-
-        self.prev_stage = function() {
-            if (self.current_stage - 1 < 0) return;
-
-            self.next_button = !self.next_button;
-            self.prev_button = !self.prev_button;
-
-            self.current_stage--;
-        }
-
-        self.next_stage = function() {
-            if (self.current_stage + 1 >= self.stages.length) return;
-
-            self.next_button = !self.next_button;
-            self.prev_button = !self.prev_button;
-
-            self.current_stage++;
-        }
-
-        /* Helper functions
-        ===========================================*/
-
-        function get_todays_date() {
-            var offset = (new Date()).getTimezoneOffset() * 60000;
-            var local_time = (new Date(Date.now() - offset)).toISOString().slice(0,10).replace(/-/g,"-");
-
-            return local_time;
-        }
-
-
-
-        self.init();
     }
 
 })();

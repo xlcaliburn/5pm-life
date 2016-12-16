@@ -10,17 +10,27 @@ import path from 'path';
 export default function(app) {
 
 	var mongoose = require('mongoose');
-	var models = require('./api/model.js')(mongoose);
+	var chatmodel = require('./api/chat/chat.model')(mongoose);
 
-	// Insert routes below
 	app.use('/api/things', require('./api/thing')); // to delete
 	app.use('/api/users', require('./api/user'));
-	app.use('/api/email', require('./api/email'));
+	app.use('/api/email', require('./api/email')); // generic send email
+	app.use('/api/signup', require('./api/signup')); // signup
+	app.use('/api/signup/verify', require('./api/signup/verify')); // verify email
+	app.use('/api/recovery', require('./api/recovery')); // verify reset password
+	app.use('/api/resetpassword', require('./api/recovery/resetpassword')); // change password
 
-	app.use('/api/tags', require('./api/tags/tags.routes.js'));
-	app.use('/api/venues', require('./api/venues/venues.routes.js'));
-	app.use('/api/admin', require('./api/admin/admin.routes.js'));
-	app.use('/api/events', require('./api/events/event.routes.js'));
+	// upload images
+	app.use('/api/upload/avatar', require('./api/upload'));
+
+	app.use('/api/enums', require('./api/enums'));
+	app.use('/api/activities', require('./api/activities'));
+	app.use('/api/venues', require('./api/venues'));
+	app.use('/api/adminsettings', require('./api/adminsettings'));
+	app.use('/api/events', require('./api/events'));
+	app.use('/api/queue', require('./api/queue'));
+	app.use('/api/chat', require('./api/chat'));
+	app.use('/api/feedback', require('./api/feedback'));
 
 	app.use('/auth', require('./auth').default);
 

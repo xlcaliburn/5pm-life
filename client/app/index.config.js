@@ -1,9 +1,11 @@
 (function() {
   'use strict';
 
+  /*jslint latedef:false*/
+
   angular
     .module('fivepmApp')
-    .config(config)
+    .config(config);
 
     /** @ngInject */
     function config($logProvider) {

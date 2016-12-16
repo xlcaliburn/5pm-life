@@ -1,11 +1,17 @@
 'use strict';
 
 import Email from './email.model';
+import config from '../../config/environment';
 var nodemailer = require("nodemailer");
 var smtp_transport = require('nodemailer-smtp-transport');
 
-function sendEmail(email_address) {
-    console.log('Attempting to send email to', email_address);
+export function sendEmail(email_content) {
+    console.log('Attempting to send email to', email_content.to, '...');
+
+    if (config.env === 'development') {
+        console.log('Email would have been sent to', email_content.to);
+        return;
+    }
 
     // trying nodemailer
     var transporter = nodemailer.createTransport(smtp_transport({
@@ -16,26 +22,30 @@ function sendEmail(email_address) {
         }
     }));
 
+    // default options
     var mailOptions = {
         from: '5PM.life <fivepm.life@gmail.com>', // sender address
-        to: email_address, // the same mail = want to send it to myself
+        to: email_content.to, // the same mail = want to send it to myself
         subject: 'Thank you for signing up!', // Subject line
         text: 'Thank you for signing up for our BETA. You will hear back from us very soon!', // plaintext body
         html: '<b>Thank you</b><p>Thank you for signing up for our BETA. You will hear back from us very soon!</p><p>Sincerely,<br>5PM Team</p>' // html body
     };
 
+    if (email_content.to) { mailOptions.to = email_content.to; }
+    if (email_content.subject) { mailOptions.subject = email_content.subject; }
+    if (email_content.text) { mailOptions.text = email_content.text; }
+    if (email_content.html) { mailOptions.html = email_content.html; }
+
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             return console.log(error);
         }
-        console.log('Message sent to : ' + email_address + ' with ' + info.response);
+        console.log('Message sent to : ' + email_content.to + ' with ' + info.response);
     });
 }
 
-export function saveEmail(req, res) {
-    return Email.create(req.body)
-        .then(function() {
-            sendEmail(req.body.email_address);
-            res.json({ status: "success" });
-        });
+export function send_email(req, res) {
+
+    sendEmail(req.body.email_address);
+    return res.json({ status: "success" });
 }

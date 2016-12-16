@@ -1,89 +1,200 @@
-#event-container {
-    margin-top: 30px;
+.event-gmap-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
 }
 
-.image-list-container::-webkit-scrollbar-track {
+#event-gmap {
+    width: 100%;
+    height: 100%;
+}
+
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gm-style .gm-style-iw {
+    font-weight: 700;
+}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    display: none;
+    background:none !important;
+}
+
+.event-overlay-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    -webkit-box-shadow: inset 0px -3px 10px -1px rgba(0,0,0,0.15);
+    -moz-box-shadow: inset 0px -3px 10px -1px rgba(0,0,0,0.15);
+    box-shadow: inset 0px -3px 10px -1px rgba(0,0,0,0.15);
+}
+
+.overlay-text-container {
+    position: relative;
+    height: 100%;
+}
+
+.map-title, .map-venue {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.65);
+    padding: 5px 30px 5px 15px;
+}
+
+.map-title {
+    color: @white;
+    font-size: 50px;
+    font-weight: 200;
+}
+
+.map-venue {
+    color: @pink;
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.event-title-venue {
+    position: absolute;
+    top: 30%;
+    left: 0;
+}
+
+.confirmation-row {
+    .dropshadow;
+    background-color: @white;
+    font-weight: 500;
+    padding: 20px 25px;
+    position: absolute;
+    z-index: 99;
+    margin-left: auto;
+    margin-right: auto;
+    top: 20px;
+    left: 0;
+    right: 0;
+    width: 500px;
+    max-width: 100%;
+}
+
+.confirmation-description {
+    color: @darkgrey;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 36px;
+    padding-bottom: 15px !important;
+}
+
+.event-confirm-button,
+.event-decline-button {
+    display: inline-block;
+    cursor: pointer;
+    color: @white;
+    height: 35px;
+    padding: 0 2em;
+    line-height: 35px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+    .user-select-none;
+    .dropshadow;
+}
+
+.event-confirm-button {
+    background-color: @turq;
+}
+
+.event-decline-button {
+    background-color: @pink;
+}
+
+.event-confirm-button:hover {
+    color: @white;
+    background-color: rgba(0, 189, 184, 0.75);
+}
+
+.event-decline-button:hover {
+    color: @white;
+    background-color: rgba(228, 60, 92, 0.75);
+}
+
+.events-row {
+    overflow: hidden;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.event-detail-card,
+.event-chat-card {
+    background: @white;
+    -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-header {
+    position: relative;
+    padding: 15px 25px;
+    //border-bottom: 1px solid @BGcolor;
+    background-color: @pink;
+    color: @white;
+}
+
+#event-chat>.event-chat-card>.event-card-header {
+    background-color: @white;
+    border-bottom: 1px solid @faintgrey;
+}
+
+#event-chat>.event-chat-card>.event-card-header>.event-title {
+    color: @middlegrey;
+}
+
+.event-options-dropdown {
+    position: relative;
+    float: right;
+    right: -20px;
+    top: 0;
+}
+
+.chat-area {
+    min-height: 350px;
+    padding: 20px 25px 0;
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+.chat-area::-webkit-scrollbar-track,
+.chat-box::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
 	border-radius: 20px !important;
 	background-color: #f5f5f5 !important;
 }
 
-.image-list-container::-webkit-scrollbar {
-    height: 6px !important;
+.chat-area::-webkit-scrollbar,
+.chat-box::-webkit-scrollbar {
+    width: 5px !important;
 	background-color: #F5F5F5 !important;
 }
 
-.image-list-container::-webkit-scrollbar-thumb {
+.chat-area::-webkit-scrollbar-thumb,
+.chat-box::-webkit-scrollbar-thumb {
 	border-radius: 20px !important;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1) !important;
 	background-color: #7f7f7f !important;
 }
 
-.current-image {
-    width: 100%;
-    height: 400px;
-    margin-bottom: 15px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
-    .user-select-none;
-    -webkit-transition: background-image 0.3s ease-out;
-    -moz-transition: background-image 0.3s ease-out;
-    -ms-transition: background-image 0.3s ease-out;
-    -o-transition: background-image 0.3s ease-out;
-    transition: background-image 0.3s ease-out;
-}
-
-.image-list-container {
-    width: 100%;
-    overflow-x: scroll;
-}
-
-.image-list {
-    list-style: none;
-}
-
-.image-list>li {
-    display: inline-block;
-}
-
-.image-item {
-    width: 145px;
-    height: 100px;
-    margin-right: 15px;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    transition: all 0.2s ease-out;
-}
-
-.image-item.image-selected {
-    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.75);
-}
-
-.event-detail-card {
-    background-color: @white;
-    -webkit-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
-    -moz-box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
-    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.35);
-}
-
-.event-card-header {
-    position: relative;
-    padding: 25px 25px 15px 35px;
-    border-bottom: 1px solid @BGcolor;
+.chat-user-message {
+    word-break: break-all;
+    padding-left: 25px !important;
 }
 
 a.event-options {
-    position: absolute;
-    right: 25px;
-    top: 25px;
+    color: @white;
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -98,17 +209,76 @@ a.event-options:hover {
 }
 
 a.event-options>i {
-    color: @lightgrey !important;
-    transition: color 0.2s ease-out;
+    color: @white !important;
 }
 
 a.event-options:hover>i {
-    color: @uppergrey !important;
+    color: rgba(255,255,255,0.7) !important;
+}
+
+a.leave-modal-trigger {
+    padding: 10px 20px !important;
+}
+
+#event-options.dropdown-menu {
+    padding: 0;
+    border-radius: 0;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+#leave-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    background-color: @white;
+    padding: 0;
+    max-height: 70%;
+    height: auto;
+    width: 500px;
+    max-width: 90%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+    top: 10% !important;
+    transform: initial !important;
+}
+
+#leave-modal .modal-content {
+    position: relative;
+    background-color: @white;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: @darkgrey;
+    font-size: 15px;
+    padding: 15px 30px;
+}
+
+#leave-modal .modal-footer {
+    padding: 8px 15px;
+}
+
+#leave-modal .modal-action {
+    font-weight: 700;
+    color: @middlegrey;
+    letter-spacing: 0.5px;
+}
+
+#leave-modal .modal-action:hover {
+    color: @darkgrey;
+}
+
+#leave-modal .modal-action[ng-click] {
+    font-weight: 700;
+    color: @pink;
 }
 
 .event-title {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 300;
+    padding-top: 5px;
 }
 
 .event-venue {
@@ -118,14 +288,38 @@ a.event-options:hover>i {
 }
 
 .event-card-body {
-    padding: 15px 25px 15px 35px;
+    padding: 15px 25px;
+    overflow: hidden;
 }
 
 .event-card-body td {
     padding: 10px 0;
-    color: @uppergrey;
-    font-size: 16px;
+    color: @darkgrey;
+    font-size: 15px;
+    font-weight: 300;
     vertical-align: top;
+    cursor: default;
+}
+
+.event-card-body td.event-icons {
+    cursor: pointer;
+}
+
+.event-icons>i {
+    .user-select-none;
+}
+
+.event-card-body td.pending {
+    color: @pink;
+}
+
+.event-card-body td.confirmed {
+    color: @pink;
+    font-weight: 500;
+}
+
+td.event-icons {
+    width: 50px;
 }
 
 .event-icons>i {
@@ -151,164 +345,340 @@ a.event-status:active {
     text-decoration: none !important;
 }
 
-.dropdown-content>li {
-    min-height: 40px;
+.no-chat-messages {
+    font-weight: 300;
+    color: @lightgrey;
+    .user-select-none;
 }
 
-.dropdown-content>li a {
-    font-size: 14px;
-    color: #26a69a;
-    line-height: 32px;
-    padding: 5px 16px;
+.message-name {
+    font-weight: 500;
+    font-size: 16px;
 }
 
-.dropdown-content.active {
-    opacity: 1;
-    display: block;
-}
-
-#event-map {
-    width: 100%;
-    height: 175px;
-}
-
-a[href^="http://maps.google.com/maps"]{display:none !important}
-a[href^="https://maps.google.com/maps"]{display:none !important}
-
-.gmnoprint a, .gmnoprint span, .gm-style-cc {
-    display:none;
-}
-.gmnoprint div {
-    background:none !important;
-}
-
-.event-card-footer {
-    text-align: center;
-    padding: 20px 0;
-}
-
-.event-card-footer>a {
-    font-size: 12px;
-    background-color: @pink;
-    color: @white;
-}
-
-.event-card-footer>a:hover {
-    background-color: @green;
-    color: @white;
-}
-
-.attendees-chat-section {
-    background: @navyblue;
-    background: -moz-linear-gradient(left,  @navyblue 68%, @white 32%);
-    background: -webkit-linear-gradient(left,  @navyblue 68%, @white 32%);
-    background: linear-gradient(to right,  @navyblue 68%, @white 32%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@navyblue', endColorstr='@white',GradientType=1 );
-}
-
-.attendees-chat-section>.container>.row {
-    margin-bottom: 0;
-}
-
-#event-attendees {
-    background-color: @navyblue;
-}
-
-#event-chat {
-    background-color: @white;
-}
-
-.attendees-title {
-    padding: 30px 0;
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: @white;
+.message-text {
+    font-size: 15px;
+    color: @uppergrey;
+    display: inline;
+    background: none;
+    border: none;
+    font-family: inherit;
 }
 
 .attendee-card {
     margin-bottom: 10px;
 }
 
+.attendees-list {
+    padding: 20px;
+    min-height: 348px;
+    border-left: 1px solid @faintgrey;
+    /*background-color: @white;
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);*/
+}
+
 .attendee-name {
-    color: @white;
-    font-size: 20px;
-    letter-spacing: 1.5px;
+    color: @uppergrey;
+    font-weight: 500;
+    font-size: 15px;
+    word-break: break-word;
+    letter-spacing: 0.5px;
 }
 
-.attendee-props {
-    color: @green;
+.message-box {
+    padding: 5px 15px;
+    border-top: 1px solid @BGcolor;
 }
 
-.chat-title {
-    padding: 20px 30px;
-    color: @pink;
-    font-weight: 700;
-    font-size: 18px;
-}
-
-#chat-box {
-    height: 430px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.chat-textarea {
-    border-top: 1px solid @lightgrey;
-    height: 100px;
-    margin: 15px;
-    margin-bottom: 0;
-    padding-left: 5px;
-    background-color: @white;
-}
-
-.send-button {
-    background-color: @pink;
+.event-profile-pic {
+    height: 35px;
     border-radius: 50%;
-    padding: 10px 13px;
-    color: @white;
 }
 
-.send-button:hover {
-    color: @white;
+textarea.message-input {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    width: 80%;
+    color: @uppergrey;
+    border: none;
+    height: auto;
+    max-height: 100px !important;
+    max-height: 200px;
+    padding: 0;
+    margin: 15px;
+    outline: none;
+    resize: none;
 }
 
-.send-button>i {
+textarea.message-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+button.event-chat-send-button {
+    background-color: @pink !important;
+    height: 35px;
+    width: 35px;
+    min-width: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+button.event-chat-send-button>i {
     font-size: 14px;
 }
 
-.message-name {
-    font-weight: 500;
+.event-attendees-card>.event-card-header {
+    background-color: @babyblue;
 }
 
-#chatarea::-webkit-scrollbar-track,
-#chat-box::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
-	border-radius: 20px !important;
-	background-color: #f5f5f5 !important;
+#event-mobile-container {
+    display: none;
 }
 
-#chatarea::-webkit-scrollbar,
-#chat-box::-webkit-scrollbar {
-    width: 5px !important;
-	background-color: #F5F5F5 !important;
-}
-
-#chatarea::-webkit-scrollbar-thumb,
-#chat-box::-webkit-scrollbar-thumb {
-	border-radius: 20px !important;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1) !important;
-	background-color: #7f7f7f !important;
-}
-
-#chatarea {
-    max-height: 3rem;
-    overflow-y: auto;
-}
-
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 992px) {
     // use mobile here
     // at < 992px, mobile will show up
+
+    .event-gmap-container {
+        height: 300px;
+    }
+
+    #event-container {
+        display: none;
+    }
+
+    #event-mobile-container {
+        display: block;
+    }
+
+    #event-mobile-container>.row {
+        margin: 0;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    #event-mobile-container>.row:first-child {
+        margin-right: auto;
+        margin-left: auto;
+        width: 90%;
+    }
+
+    #event-mobile-container>.row .col {
+        padding: 0;
+    }
+
+    .mobile-event-tabs {
+        height: 40px;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .mobile-event-tabs .tab {
+        line-height: 40px;
+        height: 40px;
+    }
+
+    .mobile-event-tabs .tab.disabled {
+        pointer-events: all;
+    }
+
+    .mobile-event-tabs .tab {
+        min-width: 0px;
+    }
+
+    .mobile-event-tabs .tab a {
+        color: @uppergrey;
+        font-weight: 500;
+    }
+
+    .mobile-event-tabs .tab a.active {
+        color: @pink;
+    }
+
+    .mobile-event-tabs .tab a:hover {
+        color: @pink;
+    }
+
+    .mobile-event-tabs .tab.disabled a {
+        color: @lightgrey;
+    }
+
+    .mobile-event-tabs .indicator {
+        background-color: @pink;
+    }
+
+    #mobile-event-gmap {
+        height: 250px;
+        width: 100%;
+    }
+
+    .mobile-event-details {
+        position: relative;
+        padding: 25px;
+        background-color: @white;
+    }
+
+    #mobile-event-details>.confirmation-row {
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .confirmation-row {
+        position: static;
+        width: 100%;
+    }
+
+    .event-options-dropdown {
+        right: 0;
+    }
+
+    .mobile-event-details a.event-options>i {
+        color: @middlegrey !important;
+    }
+
+    .mobile-event-activity {
+        font-size: 30px;
+        font-weight: 300;
+        color: @darkgrey;
+    }
+
+    .mobile-event-venue {
+        font-size: 25px;
+        font-weight: 300;
+        color: @pink;
+    }
+
+    .mobile-event-info {
+        padding: 20px 0;
+    }
+
+    .mobile-event-info td {
+        padding: 10px 0;
+        color: #434343;
+        font-size: 15px;
+        font-weight: 300;
+        vertical-align: top;
+        cursor: default;
+    }
+
+    .mobile-event-info td.pending {
+        color: @pink;
+    }
+
+    .mobile-event-info td.confirmed {
+        color: @pink;
+        font-weight: 500;
+    }
+
+    .view-gmaps {
+        margin-top: 15px;
+        font-size: 12px;
+        background-color: @pink;
+        color: @white !important;
+        border-radius: 1px;
+        height: 40px;
+        line-height: 40px;
+        padding: 0px 20px;
+    }
+
+    .view-gmaps:hover {
+        color: @white;
+        background-color: @pink;
+    }
+
+    .attendees-list-container {
+        .attendees-list;
+        border: none;
+    }
+
+    ul.attendees-list {
+        padding-top: 0;
+    }
+
+    ul.attendees-list {
+        text-align: center;
+        border: none;
+    }
+
+    ul.attendees-list li {
+        margin-bottom: 20px;
+    }
+
+    ul.attendees-list img {
+        max-width: 35px;
+        margin-right: 20px
+    }
+
+    .attendee-name {
+        font-size: 14px;
+    }
+
+    .no-attendees-text {
+        width: 100%;
+        font-size: 16px;
+        color: @uppergrey;
+    }
+
+    .confirmation-description {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    .confirm-event-button {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: @pink;
+        height: 35px;
+        font-size: 13px;
+        padding: 0 20px;
+        font-weight: 400;
+        line-height: 35px;
+        cursor: pointer;
+        outline: none;
+        color: @white !important;
+    }
+
+    .confirm-event-button:hover {
+        background-color: @teal;
+    }
+
+    #mobile-event-chat {
+        position: relative;
+        height: ~"calc(100vh - 105px)";
+    }
+
+    #mobile-event-chat .event-title {
+        color: @middlegrey;
+    }
+
+    #mobile-event-chat .event-card-header {
+        border-bottom: 1px solid @faintgrey;
+    }
+
+    .mobile-chat-area {
+        min-height: initial;
+        padding: 20px 25px 0;
+        overflow-y: auto;
+        max-height: ~"calc(100% - 65px)";
+    }
+
+    .chat-message-area {
+        list-style: none;
+        background: none;
+        margin: 0;
+        padding: 0 0 50px 0;
+        margin-top: 60px;
+        margin-bottom: 10px;
+    }
+
+    #mobile-event-chat .message-box {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+
+    textarea#message-input {
+        width: 75%;
+    }
 }

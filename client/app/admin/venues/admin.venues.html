@@ -1,0 +1,36 @@
+<div class="container">
+	<h2>Venue Management</h2>
+	<div class="section" style="float:right">
+		<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.create_modal()">
+			<i class="material-icons">add</i>
+		</a>
+	</div>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Venue Name</th>
+						<th>Allowed Activities</th>
+						<th>Street</th>
+						<th>City</th>
+						<th width="10%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="venue in vm.venues">
+						<td>{{ venue.venue_name }}</td>
+						<td>
+							<div ng-repeat="activity in venue.allowed_activities" class="chip">
+								{{activity.activity_name}}
+							</div
+						</td>
+						<td>{{ venue.address.street }}</td>
+						<td>{{ venue.address.city }}</td>
+						<td>
+							<a href="" ng-click="vm.create_modal(venue._id)"><i class="small material-icons">mode_edit</i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+</div>

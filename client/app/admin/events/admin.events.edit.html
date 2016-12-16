@@ -1,0 +1,166 @@
+<div class="container" id="admin-events-edit">
+	<h2>Edit Event</h2>
+	<section>
+		<a ui-sref="admin.events">Events</a> > Event #{{vm.selected_event._id}}
+	</section>
+
+	<div class="row right-align">
+		<button class="btn yellow darken-4" name="End Event" value="End Event" ng-hide="vm.selected_event.status == 'New'" ng-disabled="vm.selected_event.status == 'Ended'" ng-click="vm.end_event()">End
+		</button>
+
+		<button class="btn waves-effect waves-light" ng-show="vm.selected_event.status == 'New'" ng-click="vm.trigger_event()">Trigger
+		</button>
+
+		<button class="btn red darken-4" name="Delete" value="Delete" ng-show="vm.selected_event.status == 'New'" ng-click="vm.delete_event()">Delete
+		</button>
+	</div>
+
+	<h3>General</h3>
+	<form class="col s12" name="createForm" ng-submit="vm.submit()">
+		<div class="row">
+			<div class="input-field col s12">
+				<h5>Event Status: </h5>
+				<p>{{vm.selected_event.status}}</p>
+
+				<!-- Date Input -->
+				<div class="datetime-input-container valign-wrapper">
+					<i class="material-icons queue-icons">event</i>
+					<div class="input-field date-input">
+						<input ng-model="vm.form_date" id="datepicker" class="datepicker" placeholder="Select a date">
+					</div>
+				</div>
+
+				<!-- Time Input -->
+				<div class="datetime-input-container valign-wrapper">
+					<i class="material-icons queue-icons">access_time</i>
+					<span class="time-text">From</span>
+					<div class="input-field times-input">
+						<input id="start_timepicker" class="start-timepicker" ng-model="vm.form_start_time" placeholder="Select a time">
+					</div>
+					<span class="time-text">to</span>
+					<div class="input-field times-input">
+						<input id="end_timepicker" class="end-timepicker" ng-model="vm.form_end_time" placeholder="Select a time">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<select ng-model="vm.selected_event.activity" ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name">
+				</select>
+
+				<label>Activity</label>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<select ng-model="vm.selected_event.venue" ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
+				</select>
+				<label>Venue</label>
+			</div>
+		</div>
+
+		<div class="divider"></div>
+
+		<h3>Users</h3>
+		<div class="table-container">
+			<div class="section">
+				<h5>Activity Capacity: {{vm.selected_event.activity.allowed_capacity}}</h5>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Gender</th>
+						<th>Ethnicity</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in vm.confirmed_users">
+						<td>{{user.first_name}} {{user.last_name}}</td>
+						<td>{{vm.get_age(user.birthday)}}</td>
+						<td>{{user.gender}}</td>
+						<td>{{user.ethnicity}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="divider"></div>
+
+		<h3>Queues</h3>
+		<div class="table-container">
+			<div class="section">
+				<div style="float:right">
+					<a class="btn-floating btn-small waves-effect waves-light green right-align" ng-click="vm.add_users()">
+						<i class="material-icons">add</i>
+					</a>
+				</div>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Gender</th>
+						<th>
+							City
+						</th>
+						<th>
+							Tags
+						</th>
+						<th>
+							DT Start
+						</th>
+						<th>
+							DT End
+						</th>
+						<th>
+							Status
+						</th>
+						<th width="10%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="queue in vm.queues_to_add">
+						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
+						<td>{{vm.get_age(queue.user.birthday)}}</td>
+						<td>{{queue.user.gender}}</td>
+						<td>
+							{{queue.search_parameters.city}}
+						</td>
+						<td>
+							{{queue.search_parameters.tags}}
+						</td>
+						<td>
+							{{vm.get_formatted_date(queue.search_parameters.event_search_dt_start)}}
+						</td>
+						<td>
+							{{vm.get_formatted_date(queue.search_parameters.event_search_dt_end)}}
+						</td>
+						<td>
+							{{queue.status}}
+						</td>
+						<td>
+							<a href="" ng-click="vm.remove_queue_from_event(queue)"><i class="small material-icons">delete</i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="divider"></div>
+
+		<div class="section">
+			<div class="row right-align">
+				<button class="btn waves-effect waves-light" type="submit" ng-disabled="vm.selected_event.status == 'Ended'" name="action">Save
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

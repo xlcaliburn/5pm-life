@@ -5,10 +5,13 @@ import mongoose from 'mongoose';
 mongoose.Promise = require('bluebird');
 import {Schema} from 'mongoose';
 
+var ObjectId = Schema.ObjectId;
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var UserSchema = new Schema({
-	name: String,
+	first_name: String,
+	last_name: String,
+	birthday: Date,
 	email: {
 		type: String,
 		lowercase: true,
@@ -20,6 +23,8 @@ var UserSchema = new Schema({
 			}
 		}
 	},
+	ethnicity: String,
+	gender: String,
 	role: {
 		type: String,
 		default: 'user'
@@ -34,10 +39,28 @@ var UserSchema = new Schema({
 			}
 		}
 	},
+	password_reset: Boolean,
 	provider: String,
 	salt: String,
 	facebook: {},
-	github: {}
+	event_status : String,
+	current_event : { type : Schema.Types.ObjectId, ref : 'Events'},
+	event_history : [{
+		event: { type : Schema.Types.ObjectId, ref : 'Events'},
+		status: String
+	}],
+	account_create_date : Date,
+	profile_picture: {
+		current : String,
+		past : [String]
+	},
+	description : String,
+	adjectives : {
+		adjective_1 : String,
+		adjective_2 : String,
+		adjective_3 : String
+	},
+	verified: Boolean
 });
 
 /**
@@ -107,7 +130,8 @@ UserSchema
 				return respond(true);
 			})
 			.catch(function(err) {
-				throw err;
+				// throw err;
+				console.log('The specified email address is already in use.');
 			});
 	}, 'The specified email address is already in use.');
 

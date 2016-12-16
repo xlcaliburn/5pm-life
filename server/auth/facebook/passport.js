@@ -7,22 +7,34 @@ export function setup(User, config) {
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
     profileFields: [
-      'displayName',
-      'emails'
+      'first_name',
+      'last_name',
+      'birthday',
+      'email',
+      'gender'
     ]
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({'facebook.id': profile.id}).exec()
       .then(user => {
         if (user) {
-          return done(null, user);
+            done(null, user);
+            return null;
         }
 
         user = new User({
-          name: profile.displayName,
-          email: profile.emails[0].value,
+          first_name: profile._json.first_name,
+          last_name: profile._json.last_name,
+          birthday: profile._json.birthday,
+          email: profile._json.email,
+          gender: profile._json.gender,
           role: 'user',
           provider: 'facebook',
+          verified: false,
+          profile_picture: {
+              current: 'https://graph.facebook.com/' + profile.id + '/picture?width=250&height=250'
+          },
+          account_create_date: new Date(),
           facebook: profile._json
         });
         user.save()

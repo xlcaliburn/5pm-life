@@ -1,3 +1,57 @@
+/* Date picker
+========================================*/
+.picker__date-display {
+    display: none;
+}
+
+.picker__holder {
+    overflow: visible;
+}
+
+.picker__day.picker__day--today,
+.picker__close, .picker__today {
+    color: @babyblue;
+}
+
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
+    background-color: @babyblue;
+}
+
+.picker--opened .picker__frame,
+.picker__frame {
+    top: 5% !important;
+}
+
+.btn-floating.btn-flat.active,
+.clockpicker-tick.active,
+.clockpicker-tick:hover {
+    background-color: rgb(188, 229, 255) !important;
+}
+
+.clockpicker-canvas-bg,
+.clockpicker-canvas-bearing {
+    fill: rgb(188, 229, 255) !important;
+}
+
+.clockpicker-am-pm-block {
+    transform: translateY(20px);
+}
+
+.picker__footer {
+    padding: 0;
+}
+
+.picker__footer .clockpicker-button {
+    margin-top: 0 !important;
+    transform: translateY(-25px);
+}
+
+#datepicker_root>.picker__holder {
+    display: none;
+}
+
 /*=======================================
     Queue Modal
 ========================================*/
@@ -8,7 +62,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 5% 0;
+    padding: 2% 0;
     overflow-y: auto;
     opacity: 0;
     z-index: 999;
@@ -92,10 +146,7 @@
 }
 
 .confirmation {
-    pointer-events:none;
     padding-right: 35px;
-    opacity: 0;
-    position: absolute;
     transition: opacity 0.25s ease-out 0s;
 }
 
@@ -127,8 +178,8 @@
 }
 
 .queue-modal-header {
-    background-color: @turq;
-    padding: 25px 30px 25px 50px;
+    background-color: @babyblue;
+    padding: 20px 30px 20px 30px;
     color: @white;
     text-transform: uppercase;
     font-weight: 300;
@@ -147,9 +198,8 @@
 }
 
 .queue-modal-body {
-    padding: 35px 30px;
+    padding: 35px 30px 10px;
     background-color: @white;
-    overflow: hidden;
     -webkit-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
     box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
@@ -166,7 +216,7 @@
 .queue-modal-title {
     font-weight: 700;
     font-size: 18px;
-    color: @turq;
+    color: @babyblue;
     text-transform: uppercase;
     transition: color 0.35s ease-out;
 }
@@ -224,6 +274,7 @@ select.queue-input-error {
 .date-input #datepicker,
 .times-input #start_timepicker,
 .times-input #end_timepicker {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     cursor: default;
     height: 2em;
@@ -242,8 +293,12 @@ select.queue-input-error {
     text-align: center;
 }
 
+.picker__header {
+    margin-bottom: 0.75em;
+}
+
 .time-text {
-    color: @turq;
+    color: @babyblue;
     font-weight: 700;
     font-size: 14px;
 }
@@ -278,17 +333,50 @@ label.both-cb-label {
     font-size: 16px;
 }
 
+.queue-modal-footer {
+    padding-bottom: 25px;
+}
+
 .queue-confirm-container {
-    text-align: center;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.queue-confirm-container::after {
+    content: '';
+    clear: both;
+}
+
+.queue-next-button {
+    background-color: @babyblue;
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 20px;
+    color: @white;
+    border-radius: 0px;
+    float: right;
+    font-size: 11px;
+}
+
+.queue-prev-button {
+    background-color: @babyblue;
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 20px;
+    border-radius: 0px;
+    color: @white;
+    float: left;
+    font-size: 11px;
 }
 
 .queue-confirm-button {
     background-color: @pink;
-    transform: translateY(-50%);
 }
 
+.queue-prev-button:hover,
+.queue-next-button:hover,
 .queue-confirm-button:hover {
-    background-color: @pinkred;
+    color: @white;
 }
 
 .confirm-instructions {
@@ -305,6 +393,10 @@ label.both-cb-label {
     font-size: 16px;
 }
 
+.queue-modal-footer {
+    background-color: @white;
+}
+
 @media screen and (max-width: 991px) {
     #queue-modal {
         padding: 0;
@@ -319,9 +411,99 @@ label.both-cb-label {
     margin: 20px 0;
 }
 
-select.location-select {
-    width: 60%;
+.location-select-wrapper {
     display: inline-block;
+    width: 60%;
+}
+
+.toggle-confirm-button {
+    padding-right: 15px;
+    cursor: pointer;
+    color: @white !important;
+}
+
+/*=================================
+    Cancel Queue Modal
+===================================*/
+
+.lean-overlay {
+    position: fixed;
+    z-index: 999;
+    top: -100px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 125%;
+    width: 100%;
+    background: #000;
+    display: none;
+    will-change: opacity;
+}
+
+.cancel-queue-modal,
+.event-found-modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    background-color: #ffffff;
+    padding: 0;
+    border-radius: 0;
+    height: auto;
+    max-height: 70%;
+    width: 55%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+}
+
+.cancel-queue-modal-content,
+.event-found-modal-content {
+    padding: 24px;
+    position: relative;
+    background-color: #fff;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    background-clip: none;
+    outline: 0;
+}
+
+#cancel-search,
+#event-found-modal {
+    width: 400px;
+    max-width: 100%;
+}
+
+.event-found-title {
+    color: @pink;
+    font-weight: 700;
+}
+
+.view-event-btn {
+    font-size: 12px;
+    background-color: @green;
+    color: @white;
+    text-decoration: none;
+    opacity: 1;
+}
+
+.view-event-btn:hover {
+    background-color: @green;
+    color: @white;
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+.ok-event-btn {
+    font-size: 12px;
+    color: @darkgrey;
+}
+
+.ok-event-btn:hover {
+    color: @darkgrey;
 }
 
 /*==================================
@@ -329,14 +511,21 @@ select.location-select {
 ===================================*/
 
 .navbar {
-    background-color: #ffffff;
-    padding: 20px 0;
+    background-color: @white;
+    padding: 0;
+    height: 65px;
     border: none;
     margin: 0;
     border-radius: 0;
-    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
-    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
-    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.navbar>.container,
+.navbar>.container>.row {
+    height: 100%;
 }
 
 .navbar .row {
@@ -348,26 +537,26 @@ select.location-select {
 }
 
 .nav-logo {
+    height: 3.75em;
     opacity: 1;
     outline: none;
-    transition: opacity 0.25s ease-out;
 }
 
-.nav-logo:hover { opacity: 0.7; }
-
 .nav-center {
+    position: relative;
     text-align: center;
 }
 
 #explore-button {
-    height: auto;
-    padding: 6px 30px 4px;
+    height: 40px;
+    padding: 0 25px;
     background-color: @pink;
     border: none;
     border-radius: 30px;
     color: @white;
+    font-size: 1em;
+    line-height: 42px;
     font-weight: 300;
-    margin-top: 2px;
     text-decoration: none;
     transition: all 0.25s ease-out;
 }
@@ -378,8 +567,135 @@ select.location-select {
 
 #explore-button i {
     vertical-align: middle;
-    transform: translate(15px, -1px);
+    transform: translate(10px, -1px);
+    font-size: 1em;
 }
+
+/* Cancel button
+====================================*/
+
+.cancel-queue .cancel-button-spinner {
+    border: 2px solid rgba(228, 60, 92, 0.3);
+    border-bottom-color: @pink;
+    -webkit-animation: rotate 2s linear 0s infinite;
+    animation: rotate 3s linear 0s infinite;
+}
+
+.cancel-button-spinner {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    margin: auto;
+    position: absolute;
+    right: ~"calc(30% - 5px)";
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.cancel-button {
+    display:block;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background: @pink;
+    color: @white;
+    text-align: center;
+    border: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 30%;
+    cursor: pointer;
+    outline: none;
+    margin: auto;
+}
+
+@-moz-document url-prefix() {
+    .cancel-button {
+        top: 2px;
+    }
+}
+
+.cancel-button:hover {
+    background: rgba(228, 60, 92, 0.7);
+    color: @white;
+}
+
+.cancel-button:active {
+    background: @pink;
+}
+
+.cancel-button>i {
+    line-height: 35px;
+    font-size: 14px;
+    color: @white;
+}
+
+.searching-text {
+    font-weight: 700;
+    color: @pink;
+    text-align: left;
+    font-size: 16px;
+    letter-spacing: 0.75px;
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    margin: auto;
+    left: 5%;
+    top: 5px;
+    bottom: 0;
+    line-height: 1;
+    height: 35px;
+    text-transform: uppercase;
+}
+
+.subtext {
+    color: #434343;
+    font-weight: 300;
+    letter-spacing: 0.25px;
+    font-size: 13px;
+    text-transform: none;
+}
+
+.mobile-navbar {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .searching-text { left: 0; }
+    .cancel-button { right: 20%; }
+    .cancel-button-spinner { right: ~"calc(20% - 5px)"; }
+}
+
+@media screen and (max-width: 992px) {
+    .searching-text { left: 0; }
+    .cancel-button { right: 0%; }
+    .cancel-button-spinner { right: ~"calc(0% - 5px)"; }
+}
+
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+/*====================================*/
 
 .nav-right {
     text-align: right;
@@ -393,50 +709,66 @@ select.location-select {
     .user-select-none;
 }
 
-.nav-menu {
-    cursor: pointer;
+.dropdown-hr {
+    margin-top: 10px;
 }
 
 .profile-image {
-    max-height: 50px;
+    max-height: 40px;
     border-radius: 50%;
 }
 
+.nav-name {
+    font-size: 16px;
+    color: @uppergrey;
+    font-weight: 500;
+    margin-left: 12px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
 .drop-indicator {
-    background-color: #26a69a;
     border-radius: 50%;
-    color: #ffffff;
+    color: @uppergrey;
     padding: 2px;
     float: right;
-    transform: translate(-10px, 30px);
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.drop-indicator:hover {
+    color: @darkgrey;
+}
+
+ul.dropdown-ul {
+    margin-bottom: 0;
+}
+
+.dropdown-menu {
+    padding: 0;
 }
 
 .nav-dropdown {
     position: absolute;
-    background-color: @white;
+    background-color: #ffffff;
     text-align: left;
-    top: -999px;
     z-index: 99;
+    top: 45px;
     right: 0;
-    padding: 30px;
-    width: 280px;
-    opacity: 0;
-    transform: translate3d(-30px,0,0);
-    transition: transform 0.25s ease-out, opacity 0.25s ease-out, top 0s linear 0.25s;
-    -webkit-box-shadow: 0px 30px 50px 4px rgba(0,0,0,0.15);
-    -moz-box-shadow: 0px 30px 50px 4px rgba(0,0,0,0.15);
-    box-shadow: 0px 30px 50px 4px rgba(0,0,0,0.15);
+    border: none;
+    left: auto;
+    border-radius: 0;
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0 ,0.1);
+    -moz-box-shadow: 0 0 20px rgba(0, 0, 0 ,0.1);;
+    box-shadow: 0 0 20px rgba(0, 0, 0 ,0.1);;
 }
 
-.nav-dropdown-container:hover .nav-dropdown {
-    top: 50px;
-    opacity: 1;
-    transform: translate3d(0,0,0);
-    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+.nav-dropdown.show {
+    display: block;
 }
 
 .dropdown-name {
-    font-size: 24px;
+    font-size: 20px;
     color: @darkgrey;
     font-weight: 300;
 }
@@ -444,22 +776,26 @@ select.location-select {
 .dropdown-li>a:link,
 .dropdown-li>a:visited,
 .dropdown-li>a:active {
-    color: @uppergrey;
+    color: @darkgrey;
     display: block;
     margin: 10px 0;
     text-decoration: none;
-    font-size: 16px;
-    transition: color 0.25s ease-out;
+    font-size: 15px;
+    letter-spacing: 0.25px;
+    padding: 10px 15px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857;
+    white-space: nowrap;
 }
 
 .dropdown-li>a:hover {
-    color: @green;
+    color: @darkgrey;
+    background-color: @faintgrey;
 }
 
 .nav-link-text {
-    margin-left: 10px;
     vertical-align: middle;
-    transform: translateY(2px);
 }
 
 #mobile-nav {
@@ -467,43 +803,283 @@ select.location-select {
     text-align: right;
 }
 
-.mobile-menu {
-    display: none;
-}
+@media screen and (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
 
-@media screen and (max-width: 600px) {
-    .navbar>.container {
-        padding-left: 0;
+    .mobile-navbar {
+        display: block;
+        position: fixed;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 99;
+    }
+
+    .mobile-navbar.focus {
+        display: none;
+    }
+
+    .mobile-navbar.no-shadow {
+        box-shadow: none;
+    }
+
+    .mobile-nav-container .container,
+    .mobile-nav-container .row,
+    .mobile-nav-container .col {
+        height: 100%;
+    }
+
+    .mobile-nav-container .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .mobile-nav-container .row {
+        margin-bottom: 0;
+    }
+
+    @mobile-nav-height: 50px;
+    @mobile-logo-height: calc(@mobile-nav-height - 20px);
+
+    .mobile-nav-container {
+        background-color: @white;
+        height: @mobile-nav-height;
+    }
+
+    .mobile-logo-link {
+        display: inline-block;
+        margin-right: auto;
+    }
+
+    .mobile-logo {
+        height:@mobile-logo-height;
+    }
+
+    .mobile-menu-col {
+        margin-left: auto;
+        color: @white;
+    }
+
+    .scope-title {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 18px;
+        color: @darkgrey;
+        font-weight: 500;
+        .user-select-none;
+    }
+
+    .mobile-nav-menu-button {
+        margin-left: auto;
+        background: transparent !important;
+        border: none;
+        color: @white;
         padding-right: 0;
     }
 
-    #explore-button {
-        display: none;
+    .mobile-nav-menu-button:active {
+        background-color: transparent;
     }
 
-    #mobile-nav {
+    .hamburger::after {
+        content: '';
         display: block;
+        width: 22px;
+        margin: 5px;
+        height: 2px;
+        background-color: @pink;
+        border-radius: 5px;
     }
 
-    .nav-right {
-        display: none;
-    }
-
-    .nav-menu {
-        text-align: right;
-    }
-
-    #mobile-nav.nav-open .mobile-menu {
-        display: block;
-    }
-
-    .mobile-menu {
-        position: absolute;
-        text-align: center;
-        top: 70px;
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
         left: 0;
         width: 100%;
-        padding: 20px;
-        background-color: @white;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9;
     }
+
+    .mobile-menu-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        max-width: 90%;
+        background-color: @white;
+        min-height: 100%;
+        height: 100%;
+        overflow-y: auto;
+        z-index: 10;
+        .dropshadow;
+        transform: translate3d(-100%, 0, 0);
+        transition: transform 0.35s ease-out;
+    }
+
+    .mobile-menu-drawer.open {
+        transform: translate3d(0, 0, 0);
+    }
+
+    .mobile-menu-header {
+        position: relative;
+        background-color: @teal;
+        padding: 25px;
+        overflow: hidden;
+    }
+
+    .close-drawer-button {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        background: transparent !important;
+        outline: none;
+        border: none;
+    }
+
+    .close-drawer-button>i {
+        color: @white;
+        font-size: 22px;
+    }
+
+    .drawer-profile {
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .drawer-profile>img {
+        max-width: 75px;
+        max-height: 75px;
+        max-width: 50%;
+        border-radius: 50%;
+    }
+
+    .drawer-name {
+        margin-top: 10px;
+        color: @white;
+        font-size: 16px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+    }
+
+    .drawer-queue {
+        text-align: center;
+    }
+
+    .mobile-explore-button,
+    .mobile-cancel-button,
+    .mobile-event-button {
+        display: inline-block;
+        margin-top: 5px;
+        font-weight: 300;
+        width: 115px;
+        height: 35px;
+        letter-spacing: 0.5px;
+        line-height: 35px;
+        border-radius: 2px;
+        font-size: 13px;
+        color: @white !important;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.2)
+    }
+
+    .mobile-explore-button:hover,
+    .mobile-cancel-button:hover,
+    .mobile-event-button:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .mobile-explore-button>i {
+        font-size: 18px;
+        margin-top: -1px;
+    }
+
+    .drawer-status-text {
+        color: @white;
+        font-weight: 300;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+    }
+
+    .one {
+        opacity: 0;
+        -webkit-animation: dot 1.5s infinite;
+        -webkit-animation-delay: 0.0s;
+        animation: dot 1.5s infinite;
+        animation-delay: 0.0s;
+        font-size: 20px;
+    }
+
+    .two {
+        opacity: 0;
+        -webkit-animation: dot 1.5s infinite;
+        -webkit-animation-delay: 0.2s;
+        animation: dot 1.5s infinite;
+        animation-delay: 0.2s;
+        font-size: 20px;
+    }
+
+    .three {
+        opacity: 0;
+        -webkit-animation: dot 1.5s infinite;
+        -webkit-animation-delay: 0.4s;
+        animation: dot 1.5s infinite;
+        animation-delay: 0.4s;
+        font-size: 20px;
+    }
+
+    @-webkit-keyframes dot {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes dot {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .drawer-menu-list {
+        padding: 0 35px;
+        list-style: none;
+    }
+
+    .drawer-menu-list li {
+        font-size: 15px;
+        font-weight: 500;
+        margin: 15% 0;
+    }
+
+    .drawer-menu-list li>a {
+        color: @middlegrey;
+    }
+
+    .drawer-menu-list li>a>i {
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+    .drawer-menu-list li.current-state>a,
+    .drawer-menu-list li.current-state>a>i {
+        color: @teal;
+    }
+
+    .drawer-menu-list li.current-state>a:hover {
+        color: @teal;
+    }
+
 }

@@ -1,48 +1,68 @@
+'use strict';
+
 (function() {
-	'use strict';
-
 	angular
-	.module('fivepmApp.admin')
-	.config(adminConfig);
-		
-	function adminConfig($stateProvider, $urlRouterProvider) {
-		$urlRouterProvider.otherwise('/admin');
+		.module('fivepmApp.admin')
+		.config(adminConfig);
 
+	function adminConfig($stateProvider) {
 		$stateProvider
-			.state('admin', {
-				url: '/admin',
-				templateUrl: 'app/admin/admin.html'
-				//controller: 'DashboardController',
-				//controllerAs: 'admin',
-				//authenticate: 'admin'
-			})
 			.state('admin.users', {
 				url: '/users',
-				templateUrl: 'app/admin/views/manage_users.html',
-				controller: 'userController'
+				templateUrl: 'app/admin/users/admin.users.html',
+				controller: 'AdminUsersController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
 			})
-			.state('admin.tags', {
-				url: '/tags',
-				templateUrl: 'app/admin/views/manage_tags.html',
-				controller: 'TagController'
+			.state('admin.users.edit', {
+				url: '/:user_id',
+				templateUrl: 'app/admin/users/admin.users.edit.html',
+				controller: 'EditUserController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
+			})
+			.state('admin.enums', {
+				url: '/enums',
+				templateUrl: 'app/admin/enums/admin.enums.html',
+				controller: 'AdminEnumsController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
+			})
+			.state('admin.activities', {
+				url: '/activities',
+				templateUrl: 'app/admin/activities/admin.activities.html',
+				controller: 'AdminActivitiesController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
 			})
 			.state('admin.venues', {
 				url: '/venues',
-				templateUrl: 'app/admin/views/manage_venues.html',
-				controller: 'VenueController'
+				templateUrl: 'app/admin/venues/admin.venues.html',
+				controller: 'AdminVenuesController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
 			})
 			.state('admin.events', {
 				url: '/events',
-				templateUrl: 'app/admin/views/manage_events.html',
-				controller: 'AdminEventController',
-				controllerAs: 'vm'
+				templateUrl: 'app/admin/events/admin.events.html',
+				controller: 'AdminEventsController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
+			})
+			.state('admin.events.edit', {
+				url: '/:event_id',
+				templateUrl: 'app/admin/events/admin.events.edit.html',
+				controller: 'EditEventController',
+				controllerAs: 'vm',
+				authenticate: 'admin'
 			})
 			.state('admin.settings', {
 				url: '/settings',
-				templateUrl: 'app/admin/views/admin_settings.html',
+				templateUrl: 'app/admin/settings/admin.settings.html',
 				controller: 'AdminSettingsController',
-				controllerAs: 'vm'
-			})			
+				controllerAs: 'vm',
+				authenticate: 'admin'
+			})
 		;
 	}
 })();

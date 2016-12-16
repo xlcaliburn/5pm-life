@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('EmailService', []).factory('EmailService', ['$http', function($http) {
 
     return {
@@ -7,5 +9,5 @@ angular.module('EmailService', []).factory('EmailService', ['$http', function($h
             return $http.post('/api/email', email);
         }
 
-    }
+    };
 }]);

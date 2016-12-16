@@ -8,8 +8,8 @@
         </div>
 
         <!-- Modal Body -->
-        <div class="queue-modal-body">
-            <div class="confirmation">
+        <div class="queue-modal-body tab-content">
+            <div class="confirmation tab-pane" role="tabpanel" id="queue-step-4"  ng-class="{'active': navbar.current_stage == 4}">
                 <div class="confirm-instructions">
                     Please confirm the following information. If it all looks correct, press the queue button!
                 </div>
@@ -19,126 +19,120 @@
                     <div class="queue-modal-title">{{ step.title }}</div>
 
                     <!-- Datetime -->
-                    <div ng-if="step.stage == 'datetime'" class="confirm-step-container valign-wrapper">
+                    <div id="date-and-time" ng-if="step.stage == 'datetime'" class="confirm-step-container valign-wrapper">
                         <i class="material-icons queue-icons">event</i>
                         <div class="confirm-text">
                             I am available to meet up on
-                            <span class='bold pink-text'>
+                            <span class='bold pink-font'>
                                 {{ navbar.get_full_date(navbar.queue_date) }}
                             </span> between
-                            <span class='bold pink-text'>
+                            <span class='bold pink-font'>
                                 {{ navbar.get_formatted_time(navbar.queue_start_time) }}
                             </span>
                             and
-                            <span class='bold pink-text'>
+                            <span class='bold pink-font'>
                                 {{ navbar.get_formatted_time(navbar.queue_end_time) }}
                             </span>.
                         </div>
                     </div>
 
                     <!-- Activity Type -->
-                    <div ng-if="step.stage == 'activity_type'" class="confirm-step-container valign-wrapper">
+                    <div id="activity-type" ng-if="step.stage == 'activity_type'" class="confirm-step-container valign-wrapper">
                         <i ng-if="navbar.active && !navbar.social" class="material-icons queue-icons">pool</i>
                         <i ng-if="navbar.social && !navbar.active" class="material-icons queue-icons">local_bar</i>
                         <i ng-if="navbar.social && navbar.active" class="material-icons queue-icons">beach_access</i>
                         <div class="confirm-text">
                             I prefer meeting people over
-                            <span ng-if="navbar.active && !navbar.social" class='bold pink-text'>
+                            <span ng-if="navbar.active && !navbar.social" class='bold pink-font'>
                                 active
                             </span>
-                            <span ng-if="navbar.social && !navbar.active" class="bold babyblue">
+                            <span ng-if="navbar.social && !navbar.active" class="bold babyblue-font">
                                 social
                             </span>
                             <span ng-if="navbar.active && navbar.social">
                                 both
-                                <span class='bold pink-text'>active</span> and
-                                <span class='bold babyblue'>social</span>
+                                <span class='bold pink-font'>active</span> and
+                                <span class='bold babyblue-font'>social</span>
                             </span>
                             events.
                         </div>
                     </div>
 
                     <!-- Location Preference -->
-                    <div ng-if="step.stage == 'location_pref'" class="confirm-step-container valign-wrapper">
+                    <div id="location-preference" ng-if="step.stage == 'location_pref'" class="confirm-step-container valign-wrapper">
                         <i class="material-icons queue-icons">location_on</i>
                         <div class="confirm-text">
                             I prefer meeting up for events in
-                            <span class='bold pink-text'>{{ navbar.get_location(navbar.location) }}</span>.
+                            <span class='bold pink-font'>{{ navbar.get_location(navbar.location) }}</span>.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="stages">
-                <div class="stage" ng-repeat="step in navbar.steps">
-                    <hr ng-if="$index != 0">
-                    <div class="queue-modal-title">
-                        {{ step.title }}
-                        <a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>
-                    </div>
-                    <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
+            <div class="stage tab-pane" rol"tab-pane" id="queue-step-{{$index + 1}}" ng-repeat="step in navbar.steps" ng-class="{'active': $index+1 == navbar.current_stage}">
+                <div class="queue-modal-title">
+                    {{ step.title }}
+                    <!--<a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>-->
+                </div>
+                <div class="queue-modal-subtitle" ng-bind-html="navbar.to_html(step.subtitle)"></div>
 
-                    <!-- Errors -->
-                    <div class="queue-errors" type="{{ step.stage }}"></div>
+                <!-- Errors -->
+                <div class="queue-errors" type="{{ step.stage }}"></div>
 
-                    <!-- Datetime picker -->
-                    <div class="datetime-stage" ng-if="step.stage == 'datetime'">
+                <!-- Datetime picker -->
+                <div class="datetime-stage" ng-if="step.stage == 'datetime'">
 
-                        <!-- Date Input -->
-                        <div class="datetime-input-container valign-wrapper">
-                            <i class="material-icons queue-icons">event</i>
-                            <div class="input-field date-input">
-                                <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
-                            </div>
-                        </div>
-
-                        <!-- Time Input -->
-                        <div class="datetime-input-container valign-wrapper">
-                            <i class="material-icons queue-icons">access_time</i>
-                            <span class="time-text">From</span>
-                            <div class="input-field times-input">
-                                <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
-                            </div>
-                            <span class="time-text">to</span>
-                            <div class="input-field times-input">
-                                <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
-                            </div>
+                    <!-- Date Input -->
+                    <div class="datetime-input-container valign-wrapper">
+                        <i class="material-icons queue-icons">event</i>
+                        <div class="input-field date-input">
+                            <input ng-model="navbar.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
                         </div>
                     </div>
 
-                    <!-- Activity Types -->
-                    <div class="activity-stage" ng-if="step.stage == 'activity_type'">
-                        <div class="row">
-                            <!-- Active checkbox -->
-                            <div class="col l4 m4 s4">
-                                <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="navbar.active" ng-change="navbar.toggle_activity('active')">
-                                <label for="active-checkbox" class="active-cb-label">Active</label>
-                            </div>
-
-                            <!-- Social checkbox -->
-                            <div class="col l4 m4 s4">
-                                <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="navbar.social" ng-change="navbar.toggle_activity('social')">
-                                <label for="social-checkbox" class="social-cb-label">Social</label>
-                            </div>
-
-                            <!-- Both checkbox -->
-                            <div class="col l4 m4 s4">
-                                <input type="checkbox" class="filled-in" id="both-checkbox" ng-model="navbar.both" ng-change="navbar.toggle_activity('both')">
-                                <label for="both-checkbox" class="both-cb-label">Both</label>
-                            </div>
+                    <!-- Time Input -->
+                    <div class="datetime-input-container valign-wrapper">
+                        <i class="material-icons queue-icons">access_time</i>
+                        <span class="time-text">From</span>
+                        <div class="input-field times-input">
+                            <input id="start_timepicker" class="start-timepicker" ng-model="navbar.queue_start_time" placeholder="Select a time">
+                        </div>
+                        <span class="time-text">to</span>
+                        <div class="input-field times-input">
+                            <input id="end_timepicker" class="end-timepicker" ng-model="navbar.queue_end_time" placeholder="Select a time">
                         </div>
                     </div>
+                </div>
 
-                    <!-- Location Preferences -->
-                    <div class="location-stage" ng-if="step.stage == 'location_pref'">
-                        <i class="material-icons queue-icons">location_on</i>
-                        <select class="location-select browser-default" ng-model="navbar.location">
+                <!-- Activity Types -->
+                <div class="activity-stage" ng-if="step.stage == 'activity_type'">
+                    <div class="row">
+                        <!-- Active checkbox -->
+                        <div class="col l4 m4 s4">
+                            <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="navbar.active" ng-change="navbar.toggle_activity('active')">
+                            <label for="active-checkbox" class="active-cb-label">Active</label>
+                        </div>
+
+                        <!-- Social checkbox -->
+                        <div class="col l4 m4 s4">
+                            <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="navbar.social" ng-change="navbar.toggle_activity('social')">
+                            <label for="social-checkbox" class="social-cb-label">Social</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Location Preferences -->
+                <div class="location-stage" ng-if="step.stage == 'location_pref'">
+                    <i class="material-icons queue-icons">location_on</i>
+                    <div class="location-select-wrapper">
+                        <select class="location-select" ng-model="navbar.location">
                             <option value="" disabled selected>Select a location</option>
-                            <option ng-repeat="location in step.locations" value="{{location.id}}">{{location.city}}</option>
+                            <option ng-repeat="location in step.locations" value="{{location.city}}">{{location.city}}</option>
                         </select>
                     </div>
-
                 </div>
+
             </div>
         </div>
 
@@ -146,99 +140,250 @@
         <div class="queue-modal-footer">
             <!-- Submit button -->
             <div class="queue-confirm-container">
-                <a class="btn-floating btn-large waves-effect waves-light queue-confirm-button" ng-click="navbar.confirm_queue()">
-                    <i class="material-icons">chevron_right</i>
+                <!-- previous button -->
+                <a ng-show="navbar.current_stage > 1" class="btn queue-prev-button" ng-click="navbar.prev_stage()">
+                    <i class="material-icons">chevron_left</i> PREVIOUS
+                </a>
+
+                <!-- next button -->
+                <a class="btn queue-next-button" ng-click="navbar.next_stage()" ng-class="{'queue-confirm-button': navbar.current_stage == 4}">
+                    {{ navbar.next_or_queue }} <i class="material-icons">chevron_right</i>
                 </a>
             </div>
+            <div class="clear"></div>
         </div>
+    </div>
+</div>
+
+<!-- cancel event search modal -->
+<div id="cancel-search" class="cancel-queue-modal modal">
+    <div class="cancel-queue-modal-content">
+        <h4>Cancel Event Search</h4>
+        <p>Are you sure you would like to cancel the event search?</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="navbar.cancel_queue()" href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
+    </div>
+</div>
+
+<!-- Event found modal -->
+<div id="event-found-modal" class="event-found-modal modal">
+    <div class="event-found-modal-content">
+        <h4 class="event-found-title">Event Found</h4>
+        <p>An event has been found for you! Click the link below to view the event details.</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-href="home/event/{{navbar.event_link}}" class="modal-action modal-close waves-effect btn-flat view-event-btn">View Event</a>
+        <a href="#!" class="modal-action modal-close waves-effect btn-flat ok-event-btn">OK</a>
     </div>
 </div>
 
 <div class="navbar">
     <div class="container">
-        <div class="row">
+        <div class="row valign-wrapper">
 
             <!-- Logo -->
-            <div class="nav-left col l4 m4 s6">
-                <a href="/" target="_self">
-                    <img class="nav-logo" src="assets/images/logo-web.png">
+            <div class="nav-left col l4 m4 s6 valign">
+                <a href="/home">
+                    <img class="nav-logo" src="assets/images/5pm-icon.png">
                 </a>
             </div>
 
             <!-- Explore button -->
-            <div class="nav-center col m4 s6">
-                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()">
+            <div class="nav-center col m4 s6 valign">
+                <!-- explore -->
+                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()" ng-if="navbar.queue_status == -1">
                     Explore <i class="tiny material-icons">arrow_forward</i>
                 </a>
 
-                <div id="mobile-nav" ng-click="navbar.nav_open = !navbar.nav_open" ng-class="{true:'nav-open'}[navbar.nav_open]">
-                    <div class="nav-menu">
-                        <img class="profile-image" src="assets/images/profile.png">
+                <!-- cancel queue -->
+                <div class="cancel-queue" ng-if="navbar.queue_status == 'Pending'">
+                    <div class="searching-text">
+                        Searching for event<br />
+                        <span class="subtext">You will be notified via email</span>
+                    </div>
+                    <div class="cancel-button-spinner"></div>
+                    <a id="cancel-button" class="cancel-button modal-trigger queue-tooltip" data-position="bottom" data-tooltip="Cancel event search" href="#cancel-search">
+                        <i class="material-icons">close</i>
+                    </a>
+                </div>
+
+                <a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed') && !navbar.on_event_page" title="Go to event" href="home/event/{{ navbar.event_link }}">
+                    VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
+                </a>
+
+
+                <div id="mobile-nav">
+                     <div class="nav-menu" data-toggle="dropdown" id="home-mobile-menu">
+                        <img class="profile-image" src="{{navbar.user.profile_picture.current}}">
                         <i class="tiny material-icons drop-indicator">expand_more</i>
                     </div>
 
-                    <div class="mobile-menu">
-                        <div class="dropdown-name">Michael Wong</div>
+                    <!--<div class="mobile-menu nav-dropdown dropdown-menu" aria-labelledby="home-mobile-menu">
+                        <div class="dropdown-name">{{navbar.user.first_name + " " + navbar.user.last_name}}</div>
                         <hr class="dropdown-hr">
                         <ul class="dropdown-ul">
                             <li class="dropdown-li">
-                                <a href="#">
+                                <a id="explore-button" class="btn waves-light waves-effect" ng-click="navbar.open_queue_modal()" ng-if="navbar.queue_status == -1">
+                                    Explore <i class="tiny material-icons">arrow_forward</i>
+                                </a>
+
+                                <!-- cancel queue
+                                <a id="cancel-button" class="btn waves-light waves-effect modal-trigger" ng-if="navbar.queue_status == 'Pending'" title="Cancel search" href="#cancel-search">
+                                    CANCEL SEARCH <i class="tiny material-icons">close</i>
+                                </a>
+
+                                <a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed') && !navbar.on_event_page" title="Go to event" href="home/event/{{ navbar.event_link }}">
+                                    VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
+                                </a>
+                            </li>
+                            <li class="dropdown-li">
+                                <a href="/home/settings">
                                     <i class="material-icons tiny">person</i>
                                     <span class="nav-link-text">Profile</span>
                                 </a>
                             </li>
                             <li class="dropdown-li">
-                                <a href="#">
-                                    <i class="material-icons tiny">settings</i>
-                                    <span class="nav-link-text">User Preferences</span>
-                                </a>
-                            </li>
-                            <li class="dropdown-li">
-                                <a href="#">
+                                <a href="/logout">
                                     <i class="material-icons tiny">exit_to_app</i>
                                     <span class="nav-link-text">Logout</span>
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
             </div>
 
             <!-- Dropdown menu -->
             <div class="nav-right col m4">
                 <div class="nav-dropdown-container">
-                    <div class="nav-menu">
-                        <img class="profile-image" src="assets/images/profile.png">
-                        <i class="tiny material-icons drop-indicator">expand_more</i>
-                    </div>
-                    <!-- Dropdown menu -->
-                    <div class="nav-dropdown">
-                        <div class="dropdown-name">Michael Wong</div>
-                        <hr class="dropdown-hr">
-                        <ul class="dropdown-ul">
-                            <li class="dropdown-li">
-                                <a href="#">
-                                    <i class="material-icons tiny">person</i>
-                                    <span class="nav-link-text">Profile</span>
-                                </a>
-                            </li>
-                            <li class="dropdown-li">
-                                <a href="#">
-                                    <i class="material-icons tiny">settings</i>
-                                    <span class="nav-link-text">User Preferences</span>
-                                </a>
-                            </li>
-                            <li class="dropdown-li">
-                                <a href="#">
-                                    <i class="material-icons tiny">exit_to_app</i>
-                                    <span class="nav-link-text">Logout</span>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="nav-menu valign-wrapper dropdown">
+                        <img class="profile-image" src="{{ navbar.user.profile_picture.current}}">
+                        <span class="nav-name">{{navbar.user.first_name}}</span>
+                        <i class="material-icons drop-indicator" data-toggle="dropdown" id="home-menu-button">more_vert</i>
+
+                        <!-- Dropdown menu -->
+                        <div class="nav-dropdown dropdown-menu" aria-labelledby="home-menu-button">
+                            <!--<div class="dropdown-name">{{navbar.user.first_name + " " + navbar.user.last_name}}</div>-->
+                            <ul class="dropdown-ul">
+                                <li class="dropdown-li">
+                                    <a href="/home/settings">
+                                        <span class="nav-link-text">Settings</span>
+                                    </a>
+                                </li>
+                                <li class="dropdown-li">
+                                    <a href="/logout">
+                                        <span class="nav-link-text">Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="mobile-navbar" ng-class="{'no-shadow': navbar.on_event_page}">
+    <div class="mobile-nav-container">
+        <div class="container">
+            <div class="row">
+                <!-- logo -->
+                <div class="col s3 valign-wrapper align-center">
+                    <a href="/home" class="mobile-logo-link">
+                        <img class="mobile-logo" src="assets/images/5pm-icon.png" />
+                    </a>
+                </div>
+                <div class="col s6 valign-wrapper">
+                    <div class="scope-title">
+                        {{navbar.current_scope}}
+                    </div>
+                </div>
+                <!-- menu button -->
+                <div class="col s3 valign-wrapper mobile-menu-col">
+                    <button class="mobile-nav-menu-button" ng-click="navbar.toggle_mobile_nav()">
+                        <span class="hamburger"></span>
+                        <span class="hamburger"></span>
+                        <span class="hamburger"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div class="mobile-menu">
+        <!--<div class="mobile-menu-overlay" ng-click="navbar.toggle_mobile_nav()" ng-show="navbar.mobile_nav_open"></div>-->
+        <div class="mobile-menu-drawer" ng-class="{'open': navbar.mobile_nav_open}">
+            <!-- header: profile/event status -->
+            <div class="mobile-menu-header">
+                <!-- close button -->
+                <button class="close-drawer-button" ng-click="navbar.toggle_mobile_nav()">
+                    <i class="material-icons">close</i>
+                </button>
+
+                <!-- profile -->
+                <div class="drawer-profile">
+                    <img ng-src="{{navbar.user.profile_picture.current}}">
+                    <p class="drawer-name">
+                        {{ navbar.user.first_name }} {{ navbar.user.last_name }}
+                    </p>
+                </div>
+
+                <!-- queue status -->
+                <div class="drawer-queue">
+                    <!-- Explore -->
+                    <div ng-if="navbar.queue_status == -1">
+                        <a class="mobile-explore-button" ng-click="navbar.open_queue_modal(); navbar.toggle_mobile_nav()">
+                            Explore &nbsp; <i class="material-icons">arrow_forward</i>
+                        </a>
+                    </div>
+
+                    <!-- Searching -->
+                    <div ng-if="navbar.queue_status == 'Pending'">
+                        <p class="drawer-status-text drawer-queue-text">
+                            Searching for event<span class="one">.</span><span class="two">.</span><span class="three">.</span>
+                        </p>
+                        <a class="mobile-cancel-button modal-trigger" ng-click="navbar.toggle_mobile_nav()" href="#cancel-search">
+                            Cancel
+                        </a>
+                    </div>
+
+                    <!-- Event -->
+                    <div ng-if="navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed'">
+                        <p class="drawer-status-text">
+                            {{navbar.event.activity}} @ {{navbar.event.venue}}
+                        </p>
+                        <a class="mobile-event-button" ng-click="navbar.toggle_mobile_nav()" href="home/event/{{ navbar.event_link }}">
+                            View event
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- links -->
+            <div class="drawer-links">
+                <ul class="drawer-menu-list">
+                    <li ng-class="{'current-state': navbar.get_current_statename() == 'home'}"> <!-- home -->
+                        <a href="/home" class="valign-wrapper" ng-click="navbar.toggle_mobile_nav()">
+                            <i class="material-icons">home</i> Home
+                        </a>
+                    </li>
+                    <li ng-class="{'current-state': navbar.get_current_statename() == 'home.settings'}"> <!-- settings -->
+                        <a href="/home/settings" class="valign-wrapper" ng-click="navbar.toggle_mobile_nav()">
+                            <i class="material-icons">settings</i> Settings
+                        </a>
+                    </li>
+                    <li> <!-- logout -->
+                        <a href="/logout" class="valign-wrapper" ng-click="navbar.toggle_mobile_nav()">
+                            <i class="material-icons">exit_to_app</i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

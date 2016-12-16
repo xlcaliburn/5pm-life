@@ -1,0 +1,37 @@
+<!-- Verify Page -->
+<div id="signup-container">
+    <div class="container">
+
+        <!-- header: logo and login -->
+        <div class="row">
+
+            <!-- logo (blue) -->
+            <div class="logo-container col l2 m4 s4">
+                <a href="/">
+                    <img src="assets/images/5pm-logo-blue.png" width="100%" height="auto">
+                </a>
+            </div>
+
+            <!-- signup and login -->
+            <div class="signup-navigation align-right col l10 m8 s8">
+                <!-- login -->
+                <span class="signup-nav-text">Have an account?</span>
+                <a href="/login" class="babyblue-font">LOG IN</a>
+
+            </div>
+
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="signup-instructions">
+            <!-- verification status -->
+            <div class="verification-message align-center"><big>{{ verify.message }}</big></div>
+            <div class="align-center" ng-if="verify.status == 'ok'">
+                <big><a href="/login">Log in</a></big>
+            </div>
+        </div>
+
+
+    </div>
+</div>

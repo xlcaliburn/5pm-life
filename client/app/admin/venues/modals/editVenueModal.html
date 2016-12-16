@@ -1,0 +1,61 @@
+<div class="modal-header">
+	<h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body">
+	<div class="row right-align">
+		<button class="btn red darken-4" ng-show="vm.deleteButtonShow" ng-click="vm.deleteVenue()">Delete</button>
+	</div>
+	<div class="row">
+		<form class="col s12" name="create_form" ng-submit="vm.submit()">
+			<div class="form-group">
+				<label>Venue Name</label>
+				<input type="text" class="form-control" ng-model="vm.form_data.venue_name" required>
+			</div>
+			<div class="form-group">
+				<label>Street</label>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.street" required>
+			</div>
+			<div class="form-group">
+				<label>City</label>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.city" required>
+			</div>
+			<div class="form-group">
+				<label>Province/State</label>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.province" required>
+			</div>
+			<div class="form-group">
+				<label>Postal Code</label>
+				<input type="text" class="form-control" ng-model="vm.form_data.address.postal_code">
+			</div>
+			<div class="form-group">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td>Activity</td>
+							<td></td>
+							<td width="10%"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="activity in vm.valid_activities">
+							<td>{{activity.activity_name}}</td>
+							<td>
+								<div ng-repeat="tag in activity.tags" class="chip">
+									{{tag}}
+								</div>
+							</td>
+							<td><input type="checkbox" ng-model="vm.form_data.valid_activities[activity._id]" id="{{activity._id}}" />
+							<label for="{{activity._id}}"></label></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="row right-align">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

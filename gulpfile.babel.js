@@ -1,4 +1,3 @@
-// Generated on 2016-06-09 using generator-angular-fullstack 3.7.2
 'use strict';
 
 import _ from 'lodash';
@@ -257,7 +256,7 @@ gulp.task('styles', () => {
 gulp.task('transpile:client', () => {
     return gulp.src(paths.client.scripts)
         .pipe(transpileClient())
-        .pipe(gulp.dest('.tmp'));
+        .pipe(gulp.dest('.tmp/app'));
 });
 
 gulp.task('transpile:server', () => {
@@ -532,10 +531,11 @@ gulp.task('constant', function() {
     stream: true,
     constants: { appConfig: sharedConfig }
   })
+  /*
     .pipe(plugins.rename({
       basename: 'index.constant'
     }))
-    .pipe(gulp.dest(`${clientPath}/app/`))
+    .pipe(gulp.dest(`${clientPath}/app/`))*/
 });
 
 gulp.task('build:images', () => {

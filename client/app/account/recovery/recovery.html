@@ -1,0 +1,59 @@
+<!-- Recovery Page -->
+<div id="signup-container">
+    <div class="container">
+
+        <!-- header: logo and login -->
+        <div class="row">
+
+            <!-- logo (blue) -->
+            <div class="logo-container col l2 m3 s6">
+                <a href="/">
+                    <img src="assets/images/5pm-logo-blue.png" width="100%" height="auto">
+                </a>
+            </div>
+
+            <!-- signup and login -->
+            <div class="signup-navigation align-right col l10 m9 s6">
+                <!-- login -->
+                <span class="signup-nav-text">Remember your password?</span>
+                <a href="/login" class="babyblue-font">LOG IN</a>
+            </div>
+
+        </div>
+
+        <!-- instructions -->
+        <div class="row" ng-class="{true: 'invis' }[recovery.verified]">
+            <div class="recovery-instructions">
+                <div class="signup-instructions-title">Enter your email below:</div>
+                <div class="signup-instructions-subtitle">An email will be sent to your email address with password recovery options.</div>
+            </div>
+
+            <!-- errors -->
+            <div class="signup-errors invis" ng-class="{'appear': recovery.error_message}">{{ recovery.error_message }}</div>
+        </div>
+
+        <!-- email address -->
+        <div class="row recover-email-row" ng-hide="recovery.verified">
+            <div class="recovery-label col l2 m3 s12 offset-l3 offset-m1 align-center">email address</div>
+            <div class="recovery-input col l4 m7 s12">
+                <input type="text" ng-model="recovery.email_address" class="highlight-blue" ng-keypress="($event.which === 13 || $event.which === 32) && recovery.validate_email()">
+            </div>
+        </div>
+
+        <!-- submit button -->
+        <div class="row reset-password-row" ng-hide="recovery.verified">
+            <div class="align-center">
+                <a class="babyblue-bg rect-button reset-password-button" ng-click="recovery.validate_email()">RESET PASSWORD</a>
+            </div>
+        </div>
+
+        <!-- verified -->
+        <div class="row verified-email-row invis" ng-class="{true:'appear'}[recovery.verified == true]">
+            <div class="align-center">
+                Your password reset instructions have been sent to your email address. <br /><br />
+                <a href="/login" target="_self">Log in</a>
+            </div>
+        </div>
+
+    </div>
+</div>

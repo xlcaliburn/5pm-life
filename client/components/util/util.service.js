@@ -48,7 +48,10 @@
         origins = origins.map(Util.urlParse);
         origins.push($window.location);
         origins = origins.filter(function(o) {
-          return url.hostname === o.hostname && url.port === o.port && url.protocol === o.protocol;
+          //return url.hostname === o.hostname && url.port === o.port && url.protocol === o.protocol;
+          return url.hostname === o.hostname &&
+          (url.port === o.port || (o.port === '' && (url.port === '80' || url.port === '443'))) &&
+            url.protocol === o.protocol;
         });
         return origins.length >= 1;
       }

@@ -1,0 +1,342 @@
+#signup-container {
+    padding-bottom: 10px;
+}
+
+.signup-profile-img {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.signup-navigation {
+    margin-top: 35px;
+    font-size: 18px;
+}
+
+.signup-nav-text {
+    font-weight: 300;
+    color: @uppergrey;
+    margin-right: 30px;
+}
+
+.signup-navigation>a {
+    font-weight: 700;
+}
+
+.spacer {
+    margin-top: 6%;
+}
+
+.signup-stepper {
+    position: relative;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.stepper-line {
+    width: 100%;
+    border-bottom: 1px solid @middlegrey;
+}
+
+@step-size: 40px;
+
+.step-1, .step-2, .step-3 {
+    display: inline-block;
+    transform: translate3d(0,-20px, 0);
+    background-color: @white;
+}
+
+.step-1 {
+    float: left;
+}
+
+.step-3 {
+    float: right;
+}
+
+.steps {
+    display: inline-block;
+    font-size: 16px;
+    background-color: @babyblue;
+    border-radius: 50%;
+    font-weight: 700;
+    height: @step-size;
+    width: @step-size;
+    margin-bottom: 10px;
+    line-height: @step-size;
+    color: @white;
+}
+
+.steps-description {
+    color: @uppergrey;
+}
+
+.signup-instructions {
+    margin: 15px 0;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.signup-instructions-title {
+    font-size: 20px;
+    color: @darkgrey;
+}
+
+.signup-instructions-subtitle {
+    font-size: 14px;
+    color: @uppergrey;
+}
+
+.signup-errors {
+    min-height: 20px;
+    margin-top: 20px;
+    color: @pink;
+    font-size: 14px;
+    text-align: center;
+}
+
+#personal-information {
+    transition: all 0.5s ease-out;
+}
+
+.out-of-view {
+    transform: translate3d(-100px,0,0);
+    opacity: 0;
+}
+
+.signup-field-row {
+    padding: 15px 0;
+}
+
+.col.signup-label {
+    margin-left: 21% !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #7f7f7f;
+}
+
+input.signup-input {
+    height: auto;
+    font-size: 16px;
+    margin-bottom: 0;
+    padding: 0 0 6px 0;
+}
+
+input.signup-input:focus,
+input.signup-birthday:focus,
+input.signup-birthyear:focus {
+    border-bottom: 1px solid @babyblue !important;
+    box-shadow: 0 1px 0 0 @babyblue !important;
+}
+
+div.signup-inputs {
+    margin-left: 0 !important;
+}
+
+select.signup-birthmonth {
+    display: inline-block;
+    width: 150px;
+    outline: none;
+    padding: 0 10px;
+    border: 1px solid @middlegrey;
+    border-radius: 0;
+}
+
+select.signup-birthmonth>option:first-child {
+    color: @middlegrey;
+}
+
+select.signup-birthmonth>option {
+    color: @darkgrey;
+    font-weight: 400;
+}
+
+input.signup-birthday {
+    display: inline-block;
+    width: 75px;
+    outline: none;
+    margin: 0 25px;
+}
+
+input.signup-birthyear {
+    display: inline-block;
+    width: 100px;
+    outline: none;
+    margin: 0;
+}
+
+select.signup-select {
+    width: 70%;
+    outline: none;
+    padding: 0 10px;
+    border: 1px solid #b8b8b8;
+    border-radius: 0;
+}
+
+.prev-next-buttons {
+    margin-top: 50px;
+}
+
+.step-pending + .steps-description, .step-pending {
+    opacity: 0.3;
+    cursor: default;
+    .user-select-none;
+}
+
+.signup-prev-button, .signup-next-button, .signup-submit-button {
+    font-size: 14px;
+}
+
+.step-pending {
+    background-color: @uppergrey;
+}
+
+.signup-success-row {
+    min-height: 300px;
+    font-size: 16px;
+    line-height: 2;
+}
+
+.birthday-tooltip {
+    font-size: 15px;
+    color: @pink;
+    opacity: 0.5;
+    cursor: pointer;
+    .user-select-none;
+}
+
+/* Mobile */
+@media screen and (max-width: 992px) {
+    .signup-stepper {
+        width: 100%;
+    }
+
+    .col.signup-label {
+        margin-left: 8.3333333333% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .col.signup-label {
+        margin-left: 5% !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .logo-container.s6 img {
+        max-width: 125px;
+    }
+
+    .signup-navigation {
+        margin-top: 30px;
+    }
+
+    .signup-nav-text,
+    .stepper-line {
+        display: none;
+    }
+
+    .signup-field-row.valign-wrapper {
+        display: block;
+    }
+
+    .col.signup-label {
+        margin-left: auto !important;
+    }
+
+    .signup-label.align-right {
+        text-align: left;
+    }
+
+    input.signup-input, .date-selects, select.signup-select {
+        margin-top: 15px;
+    }
+
+    .date-selects.valign-wrapper {
+        display: block;
+    }
+
+    select.signup-birthmonth,
+    input.signup-birthday,
+    input.signup-birthyear {
+        display: inline-block !important;
+    }
+
+    select.signup-birthmonth {
+        width: 35%;
+    }
+
+    input.signup-birthday {
+        width: 20%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    input.signup-birthyear {
+        width: 30%;
+    }
+
+    select.signup-select {
+        width: 100%;
+    }
+
+    a.signup-next-button,
+    a.signup-prev-button,
+    a.signup-submit-button {
+        display: block;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .fade-me-hard {
+        overflow: hidden;
+    }
+
+    .signup-stepper {
+        width: 300%;
+        transition: transform 0.25s ease-out;
+    }
+
+    .signup-stepper.current-2 {
+        transform: translateZ(0) translateX(-33.3%) scale(1.0, 1.0);
+    }
+
+    .signup-stepper.current-3 {
+        -webkit-transform: translateZ(0) translateX(-66.6%) scale(1.0, 1.0);
+        transform: translateZ(0) translateX(-66.6%) scale(1.0, 1.0);
+    }
+
+    .step-1, .step-2, .step-3 {
+        transform: translate3d(0,0,0);
+        width: 33.33%;
+        margin: 10px 0;
+    }
+
+    select.signup-birthmonth {
+        width: 100%;
+    }
+
+    input.signup-birthday {
+        width: 35%;
+        margin: 15px 5px;
+        margin-right: 5%;
+    }
+
+    input.signup-birthyear {
+        width: 55%;
+    }
+
+    a.signup-prev-button {
+        margin-bottom: 25px;
+    }
+
+    .prev-next-buttons {
+        margin-top: 35px;
+    }
+
+}

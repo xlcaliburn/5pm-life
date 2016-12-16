@@ -1,11 +1,9 @@
-#node_modules
-#public
-#coverage
-#.idea
-#client/bower_components
-#dist
-#/server/config/local.env.js
-.gitignore
+!client/uploads/default-*
 .tmp
 npm-debug.log
+node_modules
+client/bower_components
+dist/
+client/uploads
+server/config/environment/index.js
 server/config/environment/development.js

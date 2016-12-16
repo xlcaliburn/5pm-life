@@ -1,83 +1,153 @@
-<div class="container">
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="title">
-				<h1>Michael Wong</h1>
-				<p>Computer Scientist, Realist, Racist</p>
-			</div>
-			<ul class="nav nav-tabs">
-				<li class="active"><a data-toggle="tab" href="#profile">General</a></li>
-				<li><a data-toggle="tab" href="#matching">Matching Preferences</a></li>
-				<li><a data-toggle="tab">Activity Preferences</a></li>
-			</ul>
-			<form role="form">
-			<div class="tab-content">
-				<div id="profile" class="tab-pane fade in active">
-					<h2>General</h2>
-					
-						<div class="form-group">
-							<label for"gender">Gender</label>
-							<div class="form-inline">
-							  <select class="form-control" id="gender">
-								<option>Male</option>
-								<option>Female</option>
-							</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for"shortbio">Short Bio:</label>
-							<textarea class="form-control" rows="3"id="shortbio"></textarea>
-						</div>
-						<div class="form-group">
-							<label for"address">Address</label>
-							<input class="form-control" id="address">
-						</div>
-						<div class="form-group">
-							<label for"city">City</label>
-							<input class="form-control" id="city">
-						</div>
+<div class="container settings-container">
+    <div class="row settings-header-row">
+        <div class="col l8 m12 s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#profile">Profile</a>
+                </li>
+                <li class="tab col s3"><a href="#activities">Activities</a>
+                </li>
+                <li class="tab col s3 disabled">
+                    <a href="#test3"></a>
+                </li>
+                <li class="tab col s3">
+                    <a href="#test4"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="profile" class="col s12">
+        <form ng-submit="vm.submit()">
+            <div class="row settings-content-row">
+                <div class="col l8 m12 s12 settings-box-shadow">
+                    <div class="row">
+                        <!-- user profile picture -->
+                        <div class="col l6 m6 s12 setting-card setting-border-right">
+                            <div class="settings-title">PROFILE PICTURE</div>
+                            <div class="valign-wrapper">
+                                <img ng-src="{{ vm.user.profile_picture.current }}" class="settings-profile-pic valign">
+                            </div>
+                        </div>
 
-						<!-- Three words to describe yourself 
-						Ethnicity
-						Language-->
-					<div class="form-group">
-						<label for"address">Email</label>
-						<input type="email" class="form-control" id="email">
-					</div>
-					<div class="form-group">
-					    <label for="birthday">Birthday</label>
-					    <div>
-					        <div class="form-inline">
-							    <select class="form-control" id="dob_month">
-									<option>January</option>
-									<option>February</option>
-									<option>March</option>
-									<option>April</option>
-									<option>May</option>
-									<option>June</option>
-									<option>July</option>
-									<option>August</option>
-									<option>September</option>
-									<option>October</option>
-									<option>November</option>
-									<option>December</option>
-								</select>
-					            <div class="form-group">
-					                <input type="text" class="form-control" placeholder="day"/>
-					            </div>
-					            <div class="form-group">
-					                <input type="text" class="form-control" placeholder="year"/>
-					            </div>
-					        </div>
-					    </div>
-					</div>
-				</div>
-				<div id="matching" class="tab-pane fade">
-					<h2>Matching Preferences</h2>
-				</div>
-			</div> <!-- End tab content -->
-			</form>
-			<button class="btn btn-lg btn-primary pull-right" type="submit">Save</button>
-		</div> <!-- End col-sm-12 -->
-	</div> <!-- End row -->
-</div> <!-- End container -->
+                        <!-- full name -->
+                        <div class="col l6 m6 s12 setting-card">
+                            <div class="settings-title">NAME</div>
+                            <div class="settings-subtitle">
+                                {{ vm.user.first_name + ' ' + vm.user.last_name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l8 m12 s12 settings-box-shadow">
+                    <div class="row">
+                        <!-- date of birth -->
+                        <div class="col l6 m6 s12 setting-card setting-border-right">
+                            <div class="settings-title">BIRTHDAY</div>
+                            <div class="settings-subtitle">
+
+                                {{ vm.formatBirthday() }}
+                                <span class="settings-age">({{ vm.getAge() }} years old)</span>
+                            </div>
+                        </div>
+
+                        <!-- email address -->
+                        <div class="col l6 m6 s12 setting-card">
+                            <div class="settings-title">EMAIL</div>
+                            <div class="settings-subtitle">
+                                {{ vm.user.email }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l8 m12 s12 settings-box-shadow">
+                    <div class="row">
+                        <!-- date of birth -->
+                        <div class="col l6 m6 s12 setting-card setting-border-right">
+                            <div class="settings-title">GENDER</div>
+                            <div class="settings-subtitle">
+                                {{ vm.getGender() }}
+                            </div>
+                        </div>
+
+                        <!-- email address -->
+                        <div class="col l6 m6 s12 setting-card">
+                            <div class="settings-title">ETHNICITY</div>
+                            <div class="settings-subtitle">
+                                {{ vm.getEthnicity() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row settings-content-row">
+                <div class="col l8 m12 s12 settings-box-shadow">
+                    <div class="row">
+                        <div class="col l4 m4 s12 setting-card">
+                            <div class="settings-title">Short Description</div>
+                            <div class="input-field col s9">
+                                <input placeholder="Adventurous" ng-model="vm.user.adjectives.adjective_1" type="text" class="validate">
+                            </div>
+                        </div>
+
+                        <div class="col l4 m4 s12 setting-card">
+                            <div class="settings-title">&nbsp;</div>
+                            <div class="input-field col s9">
+                                <input placeholder="Cat-lover" ng-model="vm.user.adjectives.adjective_2" type="text" class="validate">
+                            </div>
+                        </div>
+
+                        <div class="col l4 m4 s12 setting-card">
+                            <div class="settings-title">&nbsp;</div>
+                            <div class="input-field col s9">
+                                <input placeholder="Engineer" ng-model="vm.user.adjectives.adjective_3" type="text" class="validate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row settings-content-row">
+                <div class="col l8 m12 s12">
+                    <div class="row right-align">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="activities" class="col s12">
+        <div id="profile" class="col s12">
+            <form ng-submit="vm.submit()">
+                <div class="row settings-content-row">
+                    <div class="col l8 m12 s12 settings-box-shadow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Type</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Skating</td>
+                                    <td>Active</td>
+                                    <td>
+                                        <div class="switch">
+                                            <label>
+                                                <input checked type="checkbox">
+                                                <span class="lever"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
