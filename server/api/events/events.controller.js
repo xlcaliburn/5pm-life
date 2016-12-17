@@ -168,92 +168,85 @@ export function destroy(req, res) {
 
 // user confirms event inside event confirmation
 export function confirmEvent(req, res) {
-	var response = {};
+	var user = req.user;
+
 	var email_data = req.body;
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
 	var user_id = new mongoose.Types.ObjectId(token_result._id);
 	var current_event;
 	var queue_id;
-	var current_user;
 
 	// remove user from queue
-	return Promise.resolve(Queue.findOne({ user: user_id }).exec())
-	.then((queue) => {
-		if (!queue) { throw ('You have already confirmed this event!'); }
-		queue_id = queue._id;
-		return Promise.resolve(Queue.remove({ _id: queue_id }).exec()); // remove queue
-	})
-	.then(() => {
-		return Promise.resolve(User.findById(token_result._id).exec());
-	})
-	.then((user) => {
-		current_user = user;
-		user.event_status = 'Confirmed';
-		return user.save();
-	})
-	.then(() => {
-		return Promise.resolve(Events.findById(email_data.id).exec());
-	})
-	.then((event) => {
-		// remove corresponding queue from event
-		if (!event) { throw ('No event found'); }
-		current_event = event._id;
-		event.queue.remove(queue_id);
-		return event.save();
-	})
-	.then(() => {
-		// find chat that corresponds to event, if none, create one
-		return Promise.resolve(Chat.findOne({eventId: current_event }));
-	})
-	.then((chat) => {
-		var message;
-		if (!chat) {
-			// create new chat
-			message = new Message({
-				user: current_user._id,
-				message: 'has joined the event!',
-				timestamp: new Date()
-			});
+	Queue.findOne({users : user._id}).exec()
+		.then(queue => {
+			if (!queue) { throw ('You have already confirmed this event!'); }
+		    queue_id = queue._id;
+			if (queue.users.length > 1) {}
+			return Queue.remove({ _id: queue_id }).exec(); // remove queue
+		})
+	;
 
-			var chatroom = new Chat({
-				eventId: current_event,
-				messages: [message]
-			});
-			chatroom.save();
-		} else {
-			message = new Message({
-			   	user: current_user._id,
-			   	message: 'has joined the event!',
-			   	timestamp: new Date()
-			});
-			chat.messages.push(message);
-			chat.save();
-		}
-	})
-	.then(() => {
-		// send email to user with event details
-		var url_origin = (req.headers.origin ? req.headers.origin.replace('http://', 'http://www.') : 'http://www.' + req.headers.host);
+	User.findByIdAndUpdate(user._id, { event_status : 'Confirmed' }).exec();
+	Events.findById(email_data.id).exec()
+		.then((event) => {
+			// remove corresponding queue from event
+			if (!event) { throw ('No event found'); }
+			current_event = event._id;
+			event.queue.remove(queue_id);
+			return event.save();
+		})
+		.then(() => {
+			// find chat that corresponds to event, if none, create one
+			return Chat.findOne({eventId: current_event });
+		})
+		.then(chat => {
+			var message;
+			if (!chat) {
+				// create new chat
+				message = new Message({
+					user: user._id,
+					message: 'has joined the event!',
+					timestamp: new Date()
+				});
 
-		email_data.template = 'event-confirmation-accept';
-		email_data.first_name = current_user.first_name;
-		email_data.event_link = url_origin + '/home/event/' + email_data.id;
+				var chatroom = new Chat({
+					eventId: current_event,
+					messages: [message]
+				});
+				chatroom.save();
+			} else {
+				message = new Message({
+				   	user: user._id,
+				   	message: 'has joined the event!',
+				   	timestamp: new Date()
+				});
+				chat.messages.push(message);
+				chat.save();
+			}
+		})
+		.then(() => {
+			// send email to user with event details
+			var url_origin = (req.headers.origin ? req.headers.origin.replace('http://', 'http://www.') : 'http://www.' + req.headers.host);
 
-		var text_version = EmailTemplate.get_text_version(email_data);
-		var html_version = EmailTemplate.get_html_version(email_data);
-		var email_content = {
-			to: current_user.email,
-			subject: '[5PM]' + email_data.activity + ' at ' + email_data.venue,
-			text: text_version,
-			html: html_version
-		};
+			email_data.template = 'event-confirmation-accept';
+			email_data.first_name = user.first_name;
+			email_data.event_link = url_origin + '/home/event/' + email_data.id;
 
-		emailCtrl.sendEmail(email_content);
-		response.status = 'ok';
-		return res.json({ response: response });
-	})
-	.catch(handleError(res));
+			var text_version = EmailTemplate.get_text_version(email_data);
+			var html_version = EmailTemplate.get_html_version(email_data);
+			var email_content = {
+				to: user.email,
+				subject: '[5PM]' + email_data.activity + ' at ' + email_data.venue,
+				text: text_version,
+				html: html_version
+			};
 
+			emailCtrl.sendEmail(email_content);
+		})
+		.then(()=>res.sendStatus(204))
+		.catch(handleError(res))
+	;
 }
 
 // user declines an event inside event confirmation
@@ -301,10 +294,7 @@ export function declineEvent(req, res) {
 		user.event_history.push(past_event);
 		user.save();
 	})
-	.then(function() {
-		response.status = 'ok';
-		return res.json({ response: response });
-	})
+	.then(()=>res.sendStatus(204))
 	.catch(handleError(res));
 }
 
@@ -313,7 +303,7 @@ export function leaveEvent(req, res) {
 	var response = { status: 'ok' };
 	var event_id = req.body.id;
 	var token = req.cookies.token;
-	var user_id = userController.getDecodedToken(token)._id;
+	var user_id = req.user._id;
 
 	// User - change event_status = null
 	// User - change current_event = null
@@ -332,7 +322,7 @@ export function leaveEvent(req, res) {
 		// Event - remove user from event
 		return Promise.resolve(Events.findById(event_id).exec());
 	})
-	.then((event) => {
+	.then(event => {
 		event.users.remove(user_id);
 		return event.save();
 	})
@@ -341,7 +331,7 @@ export function leaveEvent(req, res) {
 		var eventId = new mongoose.Types.ObjectId(event_id);
 		return Promise.resolve(Chat.findOne({eventId: eventId}).exec());
 	})
-	.then((chat) => {
+	.then(chat => {
 		var current_user = new mongoose.Types.ObjectId(user_id);
 		var leave_message = new Message({
 			user: current_user,
@@ -351,9 +341,8 @@ export function leaveEvent(req, res) {
 		chat.messages.push(leave_message);
 		chat.save();
 	})
-	.then(()=>{
-		return res.json({ response: response });
-	}).catch(handleError(res));
+	.then(()=>res.sendStatus(204))
+	.catch(handleError(res));
 }
 
 // get attendees based on event_id

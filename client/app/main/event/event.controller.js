@@ -117,8 +117,8 @@
                 attendees: getConfirmedAttendees()
             };
 
-            EventService.confirmEvent(event_details).then(function(data) {
-                if (data.response.status === 'ok') {
+            EventService.confirmEvent(event_details)
+                .then(() => {
                     just_confirmed = true;
                     getSelfStatus(true);
                     Materialize.toast('You\'ve accepted the invitation!', 6000);
@@ -126,8 +126,8 @@
                         angular.element('.modal-trigger').leanModal();
                         angular.element('.tooltipped').off('mouseenter mouseleave');
                     }, 50);
-                }
-            });
+                })
+            ;
         }
 
         // decline event confirmation
@@ -136,11 +136,10 @@
                 id: vm.event_data._id
             };
 
-            EventService.declineEvent(event_details).then(function(data) {
-                if (data.response.status === 'ok') {
-                    $state.go('home');
-                    Materialize.toast('You have declined the event and will be placed back into queue.', 10000);
-                }
+            EventService.declineEvent(event_details)
+            .then(()=> {
+                $state.go('home');
+                Materialize.toast('You have declined the event and will be placed back into queue.', 10000);
             })
             .catch(function() {
                 $state.go('home');
