@@ -260,7 +260,7 @@ export function declineEvent(req, res) {
 	// Queue table - change user status to 'Pending'
 	var user_id = new mongoose.Types.ObjectId(token_result._id);
 
-	return Promise.resolve(Queue.findOne({ user: user_id }).exec())
+	return Queue.findOne({ users: user_id }).exec()
 	.then((queue) => {
 		if (!queue) {
 			throw('Unauthorized');
