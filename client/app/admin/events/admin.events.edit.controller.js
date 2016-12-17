@@ -52,7 +52,11 @@
 
 					// Display only confirmed users in view
 					var unconfirmed_users = [];
-					for (var q in vm.queues_to_add) { unconfirmed_users.push(vm.queues_to_add[q].user._id); }
+					for (var q in vm.queues_to_add) {
+						for (var u = 0; u < vm.queues_to_add[q].length; u++) {
+							unconfirmed_users.push(vm.queues_to_add[q].users[u]._id); 
+						}
+					}
 					vm.confirmed_users = vm.selected_event.users.filter(function(user) {
 					    return unconfirmed_users.indexOf(user._id) === -1;
 					});

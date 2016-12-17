@@ -4,7 +4,7 @@
 <div class="modal-body">
 <form class="col s12" ng-submit="vm.submit()">
 	<div class="section">
-		<table class="table table-striped">
+		<table class="responsive-table table-striped">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -22,16 +22,12 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="queue in vm.queues">
-					<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
+					<td><p ng-repeat="user in queue.users">{{user.first_name + " " + user.last_name}}</p></td>
 					<td>{{queue.search_parameters.tags}}</td>
-					<td>{{vm.get_age(queue.user.birthday)}}</td>
-					<td>{{queue.user.gender}}</td>
-					<td>
-						{{vm.get_formatted_date(queue.search_parameters.event_search_dt_start)}}
-					</td>
-					<td>
-						{{vm.get_formatted_date(queue.search_parameters.event_search_dt_end)}}
-					</td>
+					<td><p ng-repeat="user in queue.users">{{vm.get_age(user.birthday)}}</p></td>
+					<td><p ng-repeat="user in queue.users">{{user.gender}}</p></td>
+					<td>{{vm.get_formatted_date(queue.search_parameters.event_search_dt_start)}}</td>
+					<td>{{vm.get_formatted_date(queue.search_parameters.event_search_dt_end)}}</td>
 					<td><input type="checkbox" ng-model="vm.selected_queue[queue._id]" id="{{queue._id}}" />
 					<label for="{{queue._id}}"></label></td>
 				</tr>
