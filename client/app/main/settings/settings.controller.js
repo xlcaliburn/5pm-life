@@ -15,6 +15,14 @@
         vm.submit = submit;
         vm.getDate = getDate;
 
+        init();
+
+        function init() {
+            $(document).ready(function(){
+                $('ul.tabs').tabs();
+            });
+        }
+        
         // open file picker
         function selectImage() {
             angular.element('input[name="userImage"]').click();
@@ -28,22 +36,28 @@
 
             formData.append('userImage', input_file);
             SettingsService.uploadProfilePicture(formData)
-            .then(function(res) {
-                var response = res.data.response;
-                if (response.status === 'ok') {
-                    Users.getMe()
-                    .then(function(res) {
-                        vm.user = res.data;
+                .then(function(res) {
+                    var response = res.data.response;
+                    if (response.status === 'ok') {
+                        Users.getMe()
+                        .then(function(res) {
+                            vm.user = res.data;
 
-                        // update user info for navbar
-                        $scope.$emit('updateUser');
-                    });
-                }
-            });
+                            // update user info for navbar
+                            $scope.$emit('updateUser');
+                        });
+                    }
+                })
+            ;
         }
 
         function submit() {
-            Materialize.toast('Saved!', 2000); // jshint ignore:line
+            Users.updateById(vm.user._id, vm.user)
+                .success(function() {
+                    Materialize.toast('Saved!', 2000); // jshint ignore:line
+                });
+
+
         }
 
         function getDate(timeStamp){

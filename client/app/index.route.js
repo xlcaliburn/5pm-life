@@ -49,6 +49,11 @@
 								name: 'News',
 								posts: [
 									{
+										title: 'It\'s time to skate!',
+										date: 'Dec 4, 2016',
+										content: '<img src="assets/images/home-2.jpg" width="100%"> <p>For the month of December and January, we will be hosting a number of skating events. Sign up now for any of the available dates using the Explore button to participate in one of our skating events!</p>'
+									},
+									{
 										title: 'BETA Test Launching on Nov 4/5!',
 										date: 'Oct 22, 2016',
 										content: '<img src="assets/images/home-1.jpg" width="100%"> <p>We’re preparing to launch our BETA test in the upcoming weeks. We have been working hard for the past 6 months and thanks to your feedback and support, we’ve managed to bring you v0.1 of the app! We will be trying to run events every 2 weeks starting Nov 4/5 for the next several months. Sign up above when you are available!</p>'

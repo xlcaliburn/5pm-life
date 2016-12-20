@@ -3,70 +3,109 @@
 	<section>
 		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
-
-
-
-
 	<div class="row right-align">
 		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status == 'Pending'" ng-click="vm.unqueue()">Unqueue</button>
 		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
 	</div>
-
-	<h3>General</h3>
-	<form class="col s12" name="createForm" ng-submit="vm.submit()">
-		<div class="row">
-			<div class="input-field col s6">
-				<input ng-model="vm.user.first_name" name="first_name" type="text" class="validate">
-				<label class="active" for="first_name">First Name</label>
+	<div class="section">
+		<h3>General</h3>
+		<form class="col s12" name="createForm" ng-submit="vm.submit()">
+			<div class="row">
+				<div class="input-field col s6">
+					<input ng-model="vm.user.first_name" name="first_name" type="text" class="validate">
+					<label class="active" for="first_name">First Name</label>
+				</div>
+				<div class="input-field col s6">
+					<input ng-model="vm.user.last_name" name="last_name" type="text" class="validate">
+					<label class="active" for="last_name">Last Name</label>
+				</div>
 			</div>
-			<div class="input-field col s6">
-				<input ng-model="vm.user.last_name" name="last_name" type="text" class="validate">
-				<label class="active" for="last_name">Last Name</label>
+			<div class="row">
+				<div class="input-field col s9">
+					<input ng-model="vm.user.email" name="email" type="email" class="validate">
+					<label class="active" for="email">Email</label>
+				</div>
+				<div class="input-field col s3">
+					<input disabled value="{{vm.user.verified ? 'Verified' : 'Not verified'}}" id="verification" type="text" class="validate">
+		            <label class="active" for="verification">Verification Status</label>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s9">
-				<input ng-model="vm.user.email" name="email" type="email" class="validate">
-				<label class="active" for="email">Email</label>
+			<div class="row">
+				<div class="input-field col s4">
+					<input ng-model="vm.user.gender" name="gender" type="text" class="validate">
+					<label class="active" for="gender">Gender</label>
+				</div>
+				<div class="input-field col s4">
+					<input ng-model="vm.user.birthday" name="birthday">
+					<label class="active" for="birthday">Birthday</label>
+				</div>
+				<div class="input-field col s4">
+					<select
+						ng-model="vm.user.role"
+						ng-options="role for role in vm.allowed_roles">
+					</select>
+					<label>User Role</label>
+				</div>
 			</div>
-			<div class="input-field col s3">
-				<input disabled value="{{vm.user.verified ? 'Verified' : 'Not verified'}}" id="verification" type="text" class="validate">
-	            <label class="active" for="verification">Verification Status</label>
+			<div class="row right-align">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Save
+					<i class="material-icons right">send</i>
+				</button>
 			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s12">
-				<input ng-model="vm.user.gender" name="gender" type="text" class="validate">
-				<label class="active" for="gender">Gender</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s12">
-				<input ng-model="vm.user.birthday" name="birthday">
-				<label class="active" for="birthday">Birthday</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s12">
-				<select
-					ng-model="vm.user.role"
-					ng-options="role for role in vm.allowed_roles">
-				</select>
-				<label>User Role</label>
-			</div>
-		</div>
+		</form>
+	</div>
+	<div class="section">
+		<h3>Queue/Event Status</h3>
 		<div class="row">
 			<div class="input-field col s3">
 				<input disabled value="{{vm.user.event_status == null ? 'None' : vm.user.event_status}}" id="event_status" type="text" class="validate">
 				<label class="active" for="event_status">Event Status</label>
 			</div>
 		</div>
-
-		<div class="row right-align">
-			<button class="btn waves-effect waves-light" type="submit" name="action">Save
-				<i class="material-icons right">send</i>
-			</button>
+		<div class="row" ng-hide="vm.user.event_status == null">
+			<div class="col s12" >
+				<h4>Search Parameters</h4>
+				<table class="table">
+					<thead>
+						<th>Parameter</th>
+						<th>Value</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>City</td>
+							<td>{{vm.queue.search_parameters.city}}</td>
+						</tr>
+						<tr>
+							<td>Target Start Time</td>
+							<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+						</tr>
+						<tr>
+							<td>Target End Time</td>
+							<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
+	</div>
+	<div class="section">
+		<h3>Other</h3>
+		<div class="row">
+			<div class="col s12">
+				<table class="table">
+					<thead>
+						<th>Parameter</th>
+						<th>Value</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Facebook</td>
+							<td><a href="{{vm.facebook_url}}">{{vm.facebook_url}}</a></td>
+						</tr>
+					</tbody>
+				</table>
 
-	</form>
+			</div>
+		</div>
+	</div>
 </div>

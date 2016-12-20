@@ -63,7 +63,7 @@ function handleError(res, statusCode) {
 // Gets a list of Queue
 export function index(req, res) {
 	return Queue.find()
-		.populate('user', 'email first_name last_name role birthday gender')
+		.populate('users', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(respondWithResult(res))
 		.catch(handleError(res));
@@ -72,7 +72,7 @@ export function index(req, res) {
 // Gets a single Queue from the DB
 export function show(req, res) {
 	return Queue.findById(req.params.id)
-		.populate('user', 'email first_name last_name role birthday gender')
+		.populate('users', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
@@ -81,7 +81,7 @@ export function show(req, res) {
 
 export function getByStatus(req, res) {
 	return Queue.find({status : req.params.status})
-		.populate('user', 'email first_name last_name role birthday gender')
+		.populate('users', 'email first_name last_name role birthday gender')
 		.exec()
 		.then(handleEntityNotFound(res))
 		.then(respondWithResult(res))
@@ -206,7 +206,7 @@ export function create(req, res) {
 
 		// create the queue after passing the validations
 		var queue_object = {
-			user: decoded_token._id,
+			users: req.body.users,
 			status: 'Searching',
 			search_parameters: {
 				tags: req.body.tags,
@@ -238,28 +238,12 @@ export function create(req, res) {
 =======================================*/
 
 export function cancelEventSearch(req, res) {
-	var response = { status: 'ok' };
 	var token = getDecodedToken(req.params.token);
-
-	return Queue.findOne({ user: token._id }).exec()
-	.then(function(queue) {
-		if (!queue) {
-			return res.status(403).send('unauthorized');
-		}
-		var queue_id = queue._id;
-		return Queue.remove({ _id: queue_id }).exec()
-		.then(function() {
-			// change user event_status = null
-			return User.findById(token._id).exec()
-			.then(function(user) {
-				user.event_status = null;
-				return user.save()
-				.then(function() {
-					return res.json({ response: response });
-				});
-			});
-		});
-	}).catch(handleError(res));
+	return Queue.findOneAndRemove({ users : token._id })
+		.then(()=>User.findByIdAndUpdate(token._id, { $set : { event_status : null } } ))
+		.then(()=>res.sendStatus(200))
+		.catch(()=>handleError(res))
+	;
 }
 
 /*======================================*/
@@ -293,7 +277,9 @@ export function triggerEvent(req, res) {
 
 	for (var q in queue) {
 		queue_array.push(queue[q]._id);
-		users_array.push(queue[q].user._id);
+		for (var u = 0; u < queue[q].users.length; u++) {
+			users_array.push(queue[q].users[u]._id);
+		}
 	}
 	Queue.update({
 			_id : { $in: queue }

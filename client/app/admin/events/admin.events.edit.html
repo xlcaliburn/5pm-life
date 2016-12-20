@@ -127,9 +127,9 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="queue in vm.queues_to_add">
-						<td>{{queue.user.first_name + " " + queue.user.last_name}}</td>
-						<td>{{vm.get_age(queue.user.birthday)}}</td>
-						<td>{{queue.user.gender}}</td>
+						<td><p ng-repeat="user in queue.users">{{user.first_name + " " + user.last_name}}</p></td>
+						<td><p ng-repeat="user in queue.users">{{vm.get_age(user.birthday)}}</p></td>
+						<td><p ng-repeat="user in queue.users">{{user.gender}}</p></td>
 						<td>
 							{{queue.search_parameters.city}}
 						</td>

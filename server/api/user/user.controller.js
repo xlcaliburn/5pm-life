@@ -162,23 +162,27 @@ export function getUserVerification(req, res) {
 export function getQueueByUserid(req, res) {
 	var user_id= req.params.id;
 	Queue.findOne({ user: user_id }).exec()
-	.then(user => { // don't ever give out the password or salt
-		if (!user) {
-			return res.status(401).end();
+	.then(queue => { // don't ever give out the password or salt
+		if (!queue) {
+			// TODO: Fix 401 error loops
+			return res.status(200);
+			//return res.status(401).end();
 		}
-		return res.status(204).end();
+		return res.status(200).json(queue);
 	});
 }
 
-export function unQueueByUserId(req, res) {
-	var user_id= req.params.id;
+export function unqueueByUserId(req, res) {
+	var user_id = req.params.id;
 	Queue.findOneAndRemove({ user: user_id }).exec();
-	User.findOneAndUpdate({ user: user_id }, {
+	User.findOneAndUpdate({ _id: user_id }, {
 		$set: {event_status : null}
 	}, {new: true}).exec()
 		.then(user => {
 			if (!user) {
-				return res.status(401).end();
+				// TODO: Fix 401 error loops
+				return res.status(200);
+				//return res.status(401).end();
 			}
 			return res.status(200).json(user);
 		})

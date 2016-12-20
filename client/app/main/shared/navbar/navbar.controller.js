@@ -1,14 +1,9 @@
-'use strict';
-
-(function() {
-
+(function() { 'use strict';
     angular
-    .module('fivepmApp')
-    .controller('NavbarController', NavbarController);
+        .module('fivepmApp')
+        .controller('NavbarController', NavbarController);
 
     function NavbarController($cookies, $rootScope, $sce, $scope, $state, $timeout, $window, NavbarService, socket, Users) {
-
-        /* jshint expr: true */
         var vm = this;
         vm.user = {};
 
@@ -69,11 +64,11 @@
         vm.confirm = false;
         vm.mobile_nav_open = false;
         vm.location;
-        vm.toggle_mobile_nav = toggleMobileNav;
+        vm.toggle_mobile_nav = ()=>{ vm.mobile_nav_open = !vm.mobile_nav_open; };
         vm.get_queue_status = get_queue_status;
         vm.prev_stage = prevStage;
         vm.next_stage = nextStage;
-        vm.get_current_statename = getCurrentStateName;
+        vm.get_current_statename = ()=>$state.current.name;
         var eventSocket;
 
         /*======================================
@@ -376,11 +371,15 @@
             var end_date_string = vm.queue_date + ' ' + get_time(vm.queue_end_time);
             var event_end = new Date(end_date_string);
 
+            var user_queue = [];
+            user_queue.push(vm.user._id);
+
             // city
             var city = vm.location;
 
             var queue_data = {
                 token: token,
+                users: user_queue,
                 tags: tags,
                 event_start: event_start,
                 event_end: event_end,
@@ -390,7 +389,7 @@
                 var response = res.data.response;
                 if (response.status === 'ok') {
                     vm.close_queue_modal();
-                    Materialize.toast('You have been added to the queue!', 6000);
+                    Materialize.toast('You have been added to the queue! We will notify you by email when an event has been found!', 10000);
                     get_queue_status();
                 } else {
                     Materialize.toast(response.status, 6000);
@@ -547,20 +546,10 @@
             return hour + ':' + minute + ':00 EDT';
         }
 
-        function toggleMobileNav() {
-            vm.mobile_nav_open = !vm.mobile_nav_open;
-        }
-
-        function getCurrentStateName() {
-            return $state.current.name;
-        }
-
         function updateUserInfo() {
             Users.getMe().success(function(data) {
                 vm.user = data;
             });
         }
-
     }
-
 })();
