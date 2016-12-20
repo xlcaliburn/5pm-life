@@ -31,7 +31,7 @@
               }
             }
         }
-        
+
         // open file picker
         function selectImage() {
             angular.element('input[name="userImage"]').click();
@@ -70,7 +70,7 @@
         }
 
         function getDate(timeStamp){
-            return moment(timeStamp).format('MMM DD, YYYY')
+            return moment(timeStamp).format('MMM DD, YYYY');
         }
     }
 })();
