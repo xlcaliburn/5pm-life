@@ -14,6 +14,7 @@
         vm.uploadImage = uploadImage;
         vm.submit = submit;
         vm.getDate = getDate;
+        vm.adjectives = [];
 
         init();
 
@@ -21,6 +22,14 @@
             $(document).ready(function(){
                 $('ul.tabs').tabs();
             });
+            if (vm.user.adjectives){
+              var adjectives = vm.user.adjectives;
+              for (var tag in adjectives) {
+                if (adjectives[tag].trim() !== '') {
+                  vm.adjectives.push(adjectives[tag]);
+                }
+              }
+            }
         }
         
         // open file picker
