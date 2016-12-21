@@ -15,6 +15,9 @@
             if(adjective){
                 adjective = adjective.trim();
                 if(vm.user.adjectives.length < 3 && adjective.length > 0){
+                    if (adjective.length > 15){
+                        adjective = adjective.substring(0,15);
+                    }
                     vm.user.adjectives.push(adjective);
                     vm.adjectiveText = '';
                 }
