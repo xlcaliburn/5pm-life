@@ -55,11 +55,7 @@ var UserSchema = new Schema({
 		past : [String]
 	},
 	description : String,
-	adjectives : {
-		adjective_1 : String,
-		adjective_2 : String,
-		adjective_3 : String
-	},
+	adjectives : [String],
 	verified: Boolean
 });
 

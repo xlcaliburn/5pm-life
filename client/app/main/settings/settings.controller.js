@@ -3,17 +3,18 @@
         .module('fivepmApp')
         .controller('SettingsController', SettingsController);
 
-    function SettingsController($scope, enumsData, SettingsService, userData, Users) {
+    function SettingsController($scope, enumsData, SettingsService, userData, Users, $uibModal) {
         var vm = this;
         vm.user = userData;
         vm.enums = enumsData;
-        vm.formatBirthday = () => moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
         vm.getAge = () => moment().diff(vm.user.birthday, 'years');
         vm.getEthnicity = () => typeof vm.enums.ethnicity[vm.user.ethnicity] === 'undefined' ? vm.user.ethnicity : vm.enums.ethnicity[vm.user.ethnicity].value;
         vm.getGender = () => vm.enums.gender[vm.user.gender].value;
         vm.selectImage = selectImage;
         vm.uploadImage = uploadImage;
         vm.submit = submit;
+        vm.getDate = getDate;
+        vm.userEditModal = userEditModal;
 
         init();
 
@@ -22,7 +23,7 @@
                 $('ul.tabs').tabs();
             });
         }
-        
+
         // open file picker
         function selectImage() {
             angular.element('input[name="userImage"]').click();
@@ -56,8 +57,25 @@
                 .success(function() {
                     Materialize.toast('Saved!', 2000); // jshint ignore:line
                 });
+        }
 
+        function getDate(timeStamp){
+            return moment(timeStamp).format('MMM DD, YYYY');
+        }
 
+        function userEditModal() {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'app/main/settings/modals/userEditModal.html',
+                controller: 'UserEditModalController',
+                controllerAs:'vm',
+                size: 'sm',
+                resolve: {
+                    user : function() { return vm.user; }
+                }
+            });
+
+            modalInstance.result.then(() => {});
         }
     }
 })();

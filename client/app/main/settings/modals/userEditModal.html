@@ -1,0 +1,42 @@
+<div class="modal-header">
+	<h3 class="modal-title">Edit Profile</h3>
+</div>
+<div class="row">
+    <form class="col s12" ng-submit="vm.submit()">
+        <div class="input-field col s12">
+            <input ng-model="vm.user.first_name" type="text">
+            <label class="active">First Name</label>
+        </div>
+        <div class="input-field col s12">
+            <input ng-model="vm.user.last_name" type="text">
+            <label class="active">Last Name</label>
+        </div>
+
+        <div class="col s12">
+            <label>Adjectives</label>
+            <table class="table">
+                <tbody>
+                    <tr ng-repeat="adjective in vm.user.adjectives track by $index">
+                        <td >
+                            {{adjective}}
+                            <a href="" class="list-button-remove" ng-click="vm.removeAdjective($index)">
+                                <i class="material-icons">remove</i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="input-row col s10" ng-model="vm.adjectiveText" type="text" placeholder="Add adjective..."/>
+                            <a class="list-button-add" href="" ng-click="vm.addAdjective(vm.adjectiveText)"><i class="material-icons">add</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="submit-button col s12">
+            <button class="btn waves-effect waves-light " type="submit" name="action">Save
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
