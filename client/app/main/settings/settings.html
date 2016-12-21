@@ -3,28 +3,27 @@
         <div class="col s12 m8 offset-m2">
 
             <div class="row settings-header-row">
-                <!-- setup bs tabs later -->
-                <ul class="tabs">
-                    <li class="tab col s1">
-                        <a href="#profile" data-toggle="tab" role="tab" class="active">Profile</a>
-                    </li>
-                    <li class="tab col s3 disabled">
-                        <a href="#profile" data-toggle="tab" role="tab"></a>
-                    </li>
-                    <li class="tab col s4 disabled">
-                        <a href="#profile" data-toggle="tab" role="tab"></a>
-                    </li>
-                    <li class="tab col s4 disabled">
-                        <a href="#profile" data-toggle="tab" role="tab"></a>
-                    </li>
-                </ul>
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a class="active" href="#profile">Profile</a>
+                        </li>
+                        <li class="tab col s3"><a href="#activities">Activities</a>
+                        </li>
+                        <li class="tab col s3 disabled">
+                            <a href="#test3"></a>
+                        </li>
+                        <li class="tab col s3">
+                            <a href="#test4"></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <div id="profile" class="row">
                 <div class="col s12 settings-box-shadow profile-box">
                     <div class="col s12 m12 l5">
                       <img ng-src="{{ vm.user.profile_picture.current }}" class="row settings-profile-pic"/>
-                      <div class="row profile-chips-box"><div class="profile-chip chip" ng-repeat="adjective in vm.adjectives">{{adjective}}</div></div>
+                      <div class="row profile-chips-box"><div class="profile-chip chip" ng-repeat="adjective in vm.user.adjectives">{{adjective}}</div></div>
                     </div>
                     <div class="col s12 m12 l7 main-profile">
                         <div class="row settings-user-name">{{vm.user.first_name}} {{vm.user.last_name}}</div>
@@ -57,6 +56,43 @@
                           </div>
                         </div>
                     </div>
+                    <div class="col s12 edit-button">
+                        <a href="" ng-click="vm.userEditModal()"><i class="small material-icons">mode_edit</i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="activities" class="row">
+                <div class="col s12">
+                    <form ng-submit="vm.submit()">
+                        <div class="row settings-content-row">
+                            <div class="col s12 settings-box-shadow">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Activity</th>
+                                            <th>Type</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Skating</td>
+                                            <td>Active</td>
+                                            <td>
+                                                <div class="switch">
+                                                    <label>
+                                                        <input checked type="checkbox">
+                                                        <span class="lever"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 

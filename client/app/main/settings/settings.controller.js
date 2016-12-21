@@ -3,7 +3,7 @@
         .module('fivepmApp')
         .controller('SettingsController', SettingsController);
 
-    function SettingsController($scope, enumsData, SettingsService, userData, Users) {
+    function SettingsController($scope, enumsData, SettingsService, userData, Users, $uibModal) {
         var vm = this;
         vm.user = userData;
         vm.enums = enumsData;
@@ -14,7 +14,7 @@
         vm.uploadImage = uploadImage;
         vm.submit = submit;
         vm.getDate = getDate;
-        vm.adjectives = [];
+        vm.userEditModal = userEditModal;
 
         init();
 
@@ -22,14 +22,6 @@
             $(document).ready(function(){
                 $('ul.tabs').tabs();
             });
-            if (vm.user.adjectives){
-              var adjectives = vm.user.adjectives;
-              for (var tag in adjectives) {
-                if (adjectives[tag].trim() !== '') {
-                  vm.adjectives.push(adjectives[tag]);
-                }
-              }
-            }
         }
 
         // open file picker
@@ -65,12 +57,25 @@
                 .success(function() {
                     Materialize.toast('Saved!', 2000); // jshint ignore:line
                 });
-
-
         }
 
         function getDate(timeStamp){
             return moment(timeStamp).format('MMM DD, YYYY');
+        }
+
+        function userEditModal() {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'app/main/settings/modals/userEditModal.html',
+                controller: 'UserEditModalController',
+                controllerAs:'vm',
+                size: 'sm',
+                resolve: {
+                    user : function() { return vm.user; }
+                }
+            });
+
+            modalInstance.result.then(() => {});
         }
     }
 })();
