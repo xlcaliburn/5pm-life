@@ -1,0 +1,180 @@
+<div id="queue-modal">
+    <div class="queue-modal-overlay" ng-click="qm.close_queue_modal()"></div>
+    <div class="queue-modal">
+        <!-- Modal Header -->
+        <div class="queue-modal-header valign-wrapper">
+            {{ qm.status_title }}
+            <i class="material-icons close-queue-modal-button" ng-click="qm.close_queue_modal()">close</i>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="queue-modal-body tab-content">
+            <div class="confirmation tab-pane" role="tabpanel" id="queue-step-4"  ng-class="{'active': qm.current_stage == 4}">
+                <div class="confirm-instructions">
+                    Please confirm the following information. If it all looks correct, press the queue button!
+                </div>
+
+                <div class="confirm-stage" ng-repeat="step in qm.steps">
+                    <hr ng-if="$index != 0">
+                    <div class="queue-modal-title">{{ step.title }}</div>
+
+                    <!-- Datetime -->
+                    <div id="date-and-time" ng-if="step.stage == 'datetime'" class="confirm-step-container valign-wrapper">
+                        <i class="material-icons queue-icons">event</i>
+                        <div class="confirm-text">
+                            I am available to meet up on
+                            <span class='bold pink-font'>
+                                {{ qm.get_full_date(qm.queue_date) }}
+                            </span> between
+                            <span class='bold pink-font'>
+                                {{ qm.get_formatted_time(qm.queue_start_time) }}
+                            </span>
+                            and
+                            <span class='bold pink-font'>
+                                {{ qm.get_formatted_time(qm.queue_end_time) }}
+                            </span>.
+                        </div>
+                    </div>
+
+                    <!-- Activity Type -->
+                    <div id="activity-type" ng-if="step.stage == 'activity_type'" class="confirm-step-container valign-wrapper">
+                        <i ng-if="qm.active && !qm.social" class="material-icons queue-icons">pool</i>
+                        <i ng-if="qm.social && !qm.active" class="material-icons queue-icons">local_bar</i>
+                        <i ng-if="qm.social && qm.active" class="material-icons queue-icons">beach_access</i>
+                        <div class="confirm-text">
+                            I prefer meeting people over
+                            <span ng-if="qm.active && !qm.social" class='bold pink-font'>
+                                active
+                            </span>
+                            <span ng-if="qm.social && !qm.active" class="bold babyblue-font">
+                                social
+                            </span>
+                            <span ng-if="qm.active && qm.social">
+                                both
+                                <span class='bold pink-font'>active</span> and
+                                <span class='bold babyblue-font'>social</span>
+                            </span>
+                            events.
+                        </div>
+                    </div>
+
+                    <!-- Location Preference -->
+                    <div id="location-preference" ng-if="step.stage == 'location_pref'" class="confirm-step-container valign-wrapper">
+                        <i class="material-icons queue-icons">location_on</i>
+                        <div class="confirm-text">
+                            I prefer meeting up for events in
+                            <span class='bold pink-font'>{{ qm.get_location(qm.location) }}</span>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage tab-pane" rol"tab-pane" id="queue-step-{{$index + 1}}" ng-repeat="step in qm.steps" ng-class="{'active': $index+1 == qm.current_stage}">
+                <div class="queue-modal-title">
+                    {{ step.title }}
+                    <!--<a class="queue-tooltip" data-position="right" data-delay="30" data-tooltip="{{step.tooltip}}"><i class="material-icons tooltip-icon">help</i></a>-->
+                </div>
+                <div class="queue-modal-subtitle" ng-bind-html="qm.to_html(step.subtitle)"></div>
+
+                <!-- Errors -->
+                <div class="queue-errors" type="{{ step.stage }}"></div>
+
+                <!-- Datetime picker -->
+                <div class="datetime-stage" ng-if="step.stage == 'datetime'">
+
+                    <!-- Date Input -->
+                    <div class="datetime-input-container valign-wrapper">
+                        <i class="material-icons queue-icons">event</i>
+                        <div class="input-field date-input">
+                            <input ng-model="qm.queue_date" id="datepicker" class="datepicker" placeholder="Select a date">
+                        </div>
+                    </div>
+
+                    <!-- Time Input -->
+                    <div class="datetime-input-container valign-wrapper">
+                        <i class="material-icons queue-icons">access_time</i>
+                        <span class="time-text">From</span>
+                        <div class="input-field times-input">
+                            <input id="start_timepicker" class="start-timepicker" ng-model="qm.queue_start_time" placeholder="Select a time">
+                        </div>
+                        <span class="time-text">to</span>
+                        <div class="input-field times-input">
+                            <input id="end_timepicker" class="end-timepicker" ng-model="qm.queue_end_time" placeholder="Select a time">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Types -->
+                <div class="activity-stage" ng-if="step.stage == 'activity_type'">
+                    <div class="row">
+                        <!-- Active checkbox -->
+                        <div class="col l4 m4 s4">
+                            <input type="checkbox" class="filled-in" id="active-checkbox" ng-model="qm.active" ng-change="qm.toggle_activity('active')">
+                            <label for="active-checkbox" class="active-cb-label">Active</label>
+                        </div>
+
+                        <!-- Social checkbox -->
+                        <div class="col l4 m4 s4">
+                            <input type="checkbox" class="filled-in" id="social-checkbox" ng-model="qm.social" ng-change="qm.toggle_activity('social')">
+                            <label for="social-checkbox" class="social-cb-label">Social</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Location Preferences -->
+                <div class="location-stage" ng-if="step.stage == 'location_pref'">
+                    <i class="material-icons queue-icons">location_on</i>
+                    <div class="location-select-wrapper">
+                        <select class="location-select" ng-model="qm.location">
+                            <option value="" disabled selected>Select a location</option>
+                            <option ng-repeat="location in step.locations" value="{{location.city}}">{{location.city}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="queue-modal-footer">
+            <!-- Submit button -->
+            <div class="queue-confirm-container">
+                <!-- previous button -->
+                <a ng-show="qm.current_stage > 1" class="btn queue-prev-button" ng-click="qm.prev_stage()">
+                    <i class="material-icons">chevron_left</i> PREVIOUS
+                </a>
+
+                <!-- next button -->
+                <a class="btn queue-next-button" ng-click="qm.next_stage()" ng-class="{'queue-confirm-button': qm.current_stage == 4}">
+                    {{ qm.next_or_queue }} <i class="material-icons">chevron_right</i>
+                </a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<!-- explore button -->
+<a  id="explore-button"
+    class="btn waves-light waves-effect ng-scope"
+    ng-click="qm.open_queue_modal()"
+    ng-if="qm.queue_status == -1">
+    Explore <i class="tiny material-icons">arrow_forward</i>
+</a>
+
+<!-- cancel queue -->
+<div class="cancel-queue" ng-if="qm.queue_status == 'Pending'">
+    <div class="searching-text">
+        Searching for event<br />
+        <span class="subtext">You will be notified via email</span>
+    </div>
+    <div class="cancel-button-spinner"></div>
+    <a id="cancel-button" class="cancel-button modal-trigger queue-tooltip" data-position="bottom" data-tooltip="Cancel event search" href="#cancel-search">
+        <i class="material-icons">close</i>
+    </a>
+</div>
+
+<a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(qm.queue_status == 'Pending User Confirmation' || qm.queue_status == 'Confirmed') && !qm.on_event_page" title="Go to event" href="home/event/{{ qm.event_link }}">
+    VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
+</a>

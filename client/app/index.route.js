@@ -22,6 +22,14 @@
 			}
 		})
 
+		.state('test', {
+			url: '/test',
+			title: 'Testing Queue Modal',
+			templateUrl: 'components/queue-modal/test.html',
+			controller: 'TestController',
+			controllerAs: 'vm'
+		})
+
 		.state('home', {
 			url: '/home',
 			title: '5PM.LIFE - Meet, Share, Experience',

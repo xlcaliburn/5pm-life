@@ -1,0 +1,4 @@
+var QueueValidator = class {
+
+    constructor() {}
+};
