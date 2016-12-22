@@ -55,7 +55,7 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
 	statusCode = statusCode || 500;
 	return function(err) {
-		console.log(err);
+		console.log('Error is', err);
 		res.status(statusCode).send(err);
 	};
 }
@@ -106,47 +106,31 @@ function getDecodedToken(token) {
 }
 
 export function getUserStatus(req, res) {
-	var response = { status: 'ok' };
-
-	var token = getDecodedToken(req.params.token);
-	if (!token) {
-		return res.json({ response: 'unauthorized' });
-	}
-
 	// check queue to see if user is in queue
 	// and return status
-	return User.findOne({ _id: token._id }).exec()
+	return User.findOne({ _id: req.user._id }).exec()
 		.then(function(user) {
 			if (!user.event_status) {
-				response.queue = -1;
-				return res.json({ response: response });
-			}
-
-			if (user.current_event) {
-				response.event_link = user.current_event;
+				return res.json({ queue: -1 });
 			}
 
 			return Events.findOne({ _id: user.current_event }).exec()
 			.then((event)=> {
-				if (event) {
-					response.event = {
+				if (!event) {
+					res.status(401).end();
+				}
+
+				return res.json({
+					queue: user.event_status,
+					event: {
+						id: event._id,
 						activity: event.activity.activity_name,
 						venue: event.venue.venue_name
-					};
-				}
-				response.status = 'ok';
-				response.queue_status = user.event_status;
-				return res.json({ response: response });
+					}
+				});
 			});
-
-
 		})
-		.catch(function(err) {
-			response.status = 'error';
-			response.errors = err;
-			return res.json({ response: response });
-		});
-
+		.catch(()=>handleError(res));
 }
 
 

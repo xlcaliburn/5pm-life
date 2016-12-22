@@ -1,5 +1,7 @@
 'use strict';
 
+import * as auth from '../../auth/auth.service';
+
 var express = require('express');
 var controller = require('./queue.controller');
 var matchmake = require('./queue.matchmake');
@@ -7,9 +9,9 @@ var matchmake = require('./queue.matchmake');
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/user', auth.isAuthenticated(), controller.getUserStatus);
 router.get('/:id', controller.show);
 router.get('/status/:status', controller.getByStatus);
-router.get('/user/:token', controller.getUserStatus);
 router.get('/cancel/:token', controller.cancelEventSearch);
 
 router.post('/', controller.create);
