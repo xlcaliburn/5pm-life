@@ -100,9 +100,9 @@
             var token = $cookies.get('token');
             if (!token) { window.location.href = '/logout'; }
 
-            NavbarService.getUserQueueStatus(token).then(function(res) {
-
-                var queue_status = res.data.response.queue_status;
+            NavbarService.getUserQueueStatus().then(function(res) {
+                console.log(res);
+                var queue_status = res.data.queue;
                 var event_link = res.data.response.event_link;
                 var event = res.data.response.event;
                 var prev_queue_status = vm.queue_status;
@@ -143,8 +143,9 @@
                     initSockets();
                 }
             })
-            .catch(function() {
-                window.location.href = '/logout';
+            .catch(function(err) {
+                console.log(err);
+                //window.location.href = '/logout';
             });
         }
 

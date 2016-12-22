@@ -11,8 +11,8 @@
             addToQueue: function(data) {
                 return $http.post('/api/queue', data);
             },
-            getUserQueueStatus: function(token) {
-                var url = 'api/queue/user/' + token;
+            getUserQueueStatus: function() {
+                var url = 'api/queue/user';
                 return $http.get(url);
             },
             cancelUserQueue: function(token) {
