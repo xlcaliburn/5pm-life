@@ -103,8 +103,8 @@
             NavbarService.getUserQueueStatus().then(function(res) {
                 console.log(res);
                 var queue_status = res.data.queue;
-                var event_link = res.data.response.event_link;
-                var event = res.data.response.event;
+                var event_link = res.data.event;
+                var event = res.data.event;
                 var prev_queue_status = vm.queue_status;
                 vm.queue_status = queue_status;
 
