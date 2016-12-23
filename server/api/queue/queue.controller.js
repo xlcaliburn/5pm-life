@@ -123,7 +123,7 @@ export function getUserStatus(req, res) {
 				return res.json({
 					queue: user.event_status,
 					event: {
-						id: event._id,
+						link: event._id,
 						activity: event.activity.activity_name,
 						venue: event.venue.venue_name
 					}
