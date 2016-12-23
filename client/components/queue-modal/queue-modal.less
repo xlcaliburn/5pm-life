@@ -55,201 +55,102 @@
 /*=======================================
     Queue Modal
 ========================================*/
-#queue-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 2% 0;
-    overflow-y: auto;
-    opacity: 0;
-    z-index: 999;
-    text-align: center;
-    background-color: rgba(68, 68, 68, 0.9);
-    -webkit-animation: close-modal 0.3s ease-out;
-    -moz-animation: close-modal 0.3s ease-out;
-    -o-animation: close-modal 0.3s ease-out;
-    animation: close-modal 0.3s ease-out;
+
+#queueModal{
+
+    .modal-dialog {
+        width: 500px;
+
+        @media screen and (max-width: 767px) {
+            width: auto;
+            max-width: 100%;
+        }
+    }
+
+    .modal-content {
+        border-radius: 0;
+        padding: 0;
+    }
+
+    .modal-header {
+        background-color: @babyblue;
+        padding: 1.5rem;
+
+        h4 {
+            color: @white;
+            font-weight: 300;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+        }
+
+        // close button
+        .close {
+            text-shadow: none;
+            opacity: 0.8;
+            &:hover { opacity: 1; }
+            i { color: @white; }
+        }
+
+    }
+
+    .modal-body {
+        padding: 2rem 2rem 1rem 2rem;
+    }
+
+    .modal-footer {
+        background-color: @white;
+        border: none;
+        padding: 0 2rem 2rem 2rem;
+
+        .prev-button, .next-button {
+            background-color: @babyblue;
+            border: none;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            border-radius: 0px;
+            color: @white;
+            font-size: 0.8rem;
+        }
+
+        .prev-button { padding: 0 1.25rem 0 0.75rem }
+        .next-button { padding: 0 0.75rem 0 1.25rem }
+
+        .prev-button:after, .prev-button:after {
+            content: '';
+            clear: both;
+        }
+
+        .next-button.confirm { background-color: @pink; }
+
+        .prev-button:hover,
+        .next-button:hover {
+            background-color: @teal;
+            color: @white;
+        }
+    }
+
 }
 
-#queue-modal.queue-modal-open {
-    display: block;
-    opacity: 1;
-    -webkit-animation: show-modal 0.3s ease-out;
-    -moz-animation: show-modal 0.3s ease-out;
-    -o-animation: show-modal 0.3s ease-out;
-    animation: show-modal 0.3s ease-out;
-}
+/*=======================================
+    Queue Tabs
+========================================*/
+#queueTabs {
+    #stage2 {
+        .row { margin: 1.25rem 0; }
+        .col-xs-4 { padding: 0;}
+    }
 
-// Queue open modal animation
-@-webkit-keyframes show-modal {
-    0% { opacity: 0; display: none; }
-    1% { opacity: 0; display: block; }
-    100% { opacity: 1; display: block; }
-}
-
-@-moz-keyframes show-modal {
-    0% { opacity: 0; display: none; }
-    1% { opacity: 0; display: block; }
-    100% { opacity: 1; display: block; }
-}
-
-@-o-keyframes show-modal {
-    0% { opacity: 0; display: none; }
-    1% { opacity: 0; display: block; }
-    100% { opacity: 1; display: block; }
-}
-
-@keyframes show-modal {
-    0% { opacity: 0; display: none; }
-    1% { opacity: 0; display: block; }
-    100% { opacity: 1; display: block; }
-}
-
-// Queue close modal animation
-@-webkit-keyframes close-modal {
-    0% { opacity: 1; display: block; }
-    99% { opacity: 0; display: block; }
-    100% { opacity: 0; display: none; }
-}
-
-@-moz-keyframes close-modal {
-    0% { opacity: 1; display: block; }
-    99% { opacity: 0; display: block; }
-    100% { opacity: 0; display: none; }
-}
-
-@-o-keyframes close-modal {
-    0% { opacity: 1; display: block; }
-    99% { opacity: 0; display: block; }
-    100% { opacity: 0; display: none; }
-}
-
-@keyframes close-modal {
-    0% { opacity: 1; display: block; }
-    99% { opacity: 0; display: block; }
-    100% { opacity: 0; display: none; }
-}
-
-.stages {
-    opacity: 1;
-    transition: all 0.35s ease-out 0.25s;
-}
-
-.stages.confirm {
-    opacity: 0;
-    pointer-events:none;
-    transform: translate3d(-150px, 0, 0);
-    transition: all 0.35s ease-out;
-}
-
-.confirmation {
-    padding-right: 35px;
-    transition: opacity 0.25s ease-out 0s;
-}
-
-.confirmation.confirm {
-    pointer-events: all;
-    opacity: 1;
-    transition: opacity 0.35s ease-out 0.25s;
-}
-
-.queue-modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.queue-modal {
-    position: relative;
-    display: inline-block;
-    text-align: left;
-    width: 500px;
-    transform: translate3d(0,-50px,0);
-    transition: all 0.3s ease-out;
-}
-
-#queue-modal.queue-modal-open .queue-modal {
-    transform: translate3d(0,0,0);
-}
-
-.queue-modal-header {
-    background-color: @babyblue;
-    padding: 20px 30px 20px 30px;
-    color: @white;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 20px;
-    transition: background 0.35s ease-out;
-}
-
-.queue-modal-header.confirm {
-    background-color: @pink;
-}
-
-.close-queue-modal-button {
-    cursor: pointer;
-    margin-right: 0;
-    margin-left: auto;
-}
-
-.queue-modal-body {
-    padding: 35px 30px 10px;
-    background-color: @white;
-    -webkit-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
-    -moz-box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
-    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.35);
-}
-
-.queue-modal-body hr {
-    margin: 40px 0;
-}
-
-.confirm-stage hr {
-    margin: 20px 0;
-}
-
-.queue-modal-title {
-    font-weight: 700;
-    font-size: 18px;
-    color: @babyblue;
-    text-transform: uppercase;
-    transition: color 0.35s ease-out;
-}
-
-.queue-modal-title.confirm {
-    color: @pink;
-}
-
-.queue-modal-subtitle {
-    font-size: 16px;
-    color: @uppergrey;
-}
-
-.queue-icons {
-    color: @middlegrey;
-    margin-right: 20px;
-}
-
-.tooltip-icon {
-    cursor: pointer;
-    color: @middlegrey;
-    font-size: 16px;
-    margin-left: 20px;
-    margin-bottom: 2px;
-}
-
-.queue-errors {
-    margin: 20px 0 0;
-    color: @pinkred;
-}
-
-.input-field>input {
-    transition: all 0.25s ease-out;
+    #stage3 {
+        .wrapper { margin: 1.2rem 0; }
+        select {
+            border: 1px solid @lightgrey;
+            outline: none;
+           -webkit-border-radius: 0;  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+           -moz-border-radius: 0;  /* Firefox 1-3.6 */
+           border-radius: 0;
+        }
+    }
 }
 
 input.queue-input-error {
