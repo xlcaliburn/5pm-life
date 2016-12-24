@@ -303,6 +303,25 @@ i {
     }
 }
 
+/* PNotify */
+.ui-pnotify.ui-pnotify-fade-normal.ui-pnotify.ui-pnotify-move {
+    transition: opacity 0.2s linear,left .5s ease,top .5s ease,right .5s ease,bottom .5s ease;
+}
+
+.ui-pnotify {
+
+    .alert {
+        border-radius: 0;
+        color: @white;
+    }
+
+    .alert-success { background-color: @teal; border-color: @teal; }
+    .alert-info { background-color: @babyblue; border-color: @babyblue; }
+    .alert-danger { background-color: @pinkred; border-color: @pinkred; }
+    .alert-warning { background-color: @yellow; color: @uppergrey; }
+}
+
+
 /* inject:less */
 @import 'account/login/login';
 @import 'account/recovery/recovery';
