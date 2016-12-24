@@ -10,9 +10,9 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/user', auth.isAuthenticated(), controller.getUserStatus);
+router.get('/cancel', auth.isAuthenticated(), controller.cancelEventSearch);
 router.get('/:id', controller.show);
 router.get('/status/:status', controller.getByStatus);
-router.get('/cancel/:token', controller.cancelEventSearch);
 
 router.post('/', auth.isAuthenticated(), controller.create);
 router.post('/triggerEvent', controller.triggerEvent);
