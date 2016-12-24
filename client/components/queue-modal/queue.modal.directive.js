@@ -41,6 +41,7 @@
         vm.queue_status = null;
 
         // functions
+        vm.cancelQueue = cancelQueue;
         vm.nextStage = nextStage;
         vm.openQueueModal = openQueueModal;
         vm.prevStage = prevStage;
@@ -49,15 +50,50 @@
 
         function init() {
             getQueueStatus();
-            initDateTimePicker();
+            initPlugins();
+            completeQueue();
         }
 
-        // server-side validation + submit queue
+        function completeQueue() {
+            vm.queue.date = 'December 30, 2016';
+            vm.queue.time.start = '06:00PM';
+            vm.queue.time.end = '09:00PM';
+            vm.queue.activity.active = true;
+            vm.queue.location = 'Toronto';
+        }
+
+        // Cancel event search
+        function cancelQueue() {
+            QueueService.cancelQueue()
+            .then(function(res) {
+                getQueueStatus();
+                if (res.status === 200) {
+                    console.log('Event search cancelled with response:', res);
+                }
+            });
+        }
+
+        // Server-side validation + submit queue
         function confirmQueue() {
             QueueService.confirm(vm.queue)
             .then(function(res) {
-                vm.error = res.error;
-                if (!vm.error) { getQueueStatus(); }
+                vm.error = res.data.error;
+                if (!vm.error) {
+                    getQueueStatus();
+                    angular.element('#queueModal').modal('hide');
+                    resetQueueForm();
+                    console.log('You have been added to the queue');
+                } else {
+                    // navigate to error tab and display error
+                    if (!vm.error.stage) {
+                        console.log('You are already in queue!');
+                        angular.element('#queueModal').modal('hide');
+                        resetQueueForm();
+                    } else {
+                        vm.current_stage = vm.error.stage;
+                        goToStage(vm.error.stage);
+                    }
+                }
             })
             .catch(function() { $state.go('logout'); });
         }
@@ -111,13 +147,19 @@
             });
         }
 
+        // Initialize bootstrap plugins
+        function initPlugins() {
+            initDateTimePicker();
+            $timeout(function() {
+                angular.element('[data-toggle="tooltip"]').tooltip();
+            });
+        }
+
         // Gets queue status and display explore button accordingly
         function getQueueStatus() {
             NavbarService.getUserQueueStatus().then(function(res) {
                 vm.queue_status = res.data.queue;
                 vm.event = res.data.event || null;
-                // event object:
-                // { id, activity, activity, venue}
             })
             .catch(function() {
                 $state.go('logout');
@@ -153,6 +195,18 @@
             if (vm.current_stage === 1) { return; }
             vm.current_stage--;
             goToStage(vm.current_stage);
+        }
+
+        // Reset the queue form
+        function resetQueueForm() {
+            vm.queue = {
+                date: null,
+                time: { start: null, end: null },
+                activity: { active: false, social: false },
+                location: null
+            };
+            goToStage(1);
+            vm.current_stage =1 ;
         }
     }
 })();
