@@ -68,7 +68,11 @@
             .then(function(res) {
                 getQueueStatus();
                 if (res.status === 200) {
-                    console.log('Event search cancelled with response:', res);
+                    new PNotify({
+                        title: 'Queue Cancelled',
+                        text: 'You have cancelled the event search.',
+                        type: 'info'
+                    });
                 }
             });
         }
@@ -82,11 +86,19 @@
                     getQueueStatus();
                     angular.element('#queueModal').modal('hide');
                     resetQueueForm();
-                    console.log('You have been added to the queue');
+                    new PNotify({
+                        title: 'Queue Successful',
+                        text: 'You have been added to the queue.',
+                        type: 'success'
+                    });
                 } else {
                     // navigate to error tab and display error
                     if (!vm.error.stage) {
-                        console.log('You are already in queue!');
+                        new PNotify({
+                            title: 'Queue Error',
+                            text: 'You are already in queue!',
+                            type: 'error'
+                        });
                         angular.element('#queueModal').modal('hide');
                         resetQueueForm();
                     } else {
