@@ -7,6 +7,7 @@ import Events from '../events/events.model';
 import jwt from 'jsonwebtoken';
 import config from '../../config/environment';
 import mongoose from 'mongoose';
+import enums from '../enums/enums.json';
 
 var EmailTemplate = require('../email/templates/email.global');
 var emailCtrl = require('../email/email.controller');
@@ -109,28 +110,34 @@ export function getUserStatus(req, res) {
 	// check queue to see if user is in queue
 	// and return status
 	return User.findOne({ _id: req.user._id }).exec()
-		.then(function(user) {
-			if (!user.event_status) {
-				return res.json({ queue: -1 });
+	.then(function(user) {
+		if (!user.event_status && !user.current_event) {
+			res.json({ queue: -1 });
+			throw new Error('Not in queue');
+		}
+		else if (user.event_status && !user.current_event){
+			res.json({ queue: user.event_status });
+			throw new Error('User is searching');
+		}
+
+		return Events.findOne({ _id: user.current_event }).exec()
+		.then((event)=> {
+			if (!event) {
+				res.status(401).end();
+				throw new Error('Unauthorized');
 			}
 
-			return Events.findOne({ _id: user.current_event }).exec()
-			.then((event)=> {
-				if (!event) {
-					res.status(401).end();
+			return res.json({
+				queue: user.event_status,
+				event: {
+					link: event._id,
+					activity: event.activity.activity_name,
+					venue: event.venue.venue_name
 				}
-
-				return res.json({
-					queue: user.event_status,
-					event: {
-						link: event._id,
-						activity: event.activity.activity_name,
-						venue: event.venue.venue_name
-					}
-				});
 			});
-		})
-		.catch(()=>handleError(res));
+		});
+	})
+	.catch(()=>handleError(res));
 }
 
 
@@ -140,7 +147,7 @@ export function getUserStatus(req, res) {
 =====================================*/
 // Validate queue data
 function validateQueueData(queue_data) {
-	var response = {};
+	var error = false;
 
 	// TODO: check if start date is on a friday or saturday
 
@@ -148,67 +155,95 @@ function validateQueueData(queue_data) {
 
 	// TODO: check if the times are at least x amount of hours apart with start time < end time
 
-	// TODO: check if activity type is in the list activity_tags enums
-
-	// TODO: check if location is in the list location enums
-
-	response.status = 'ok';
-
-	return Queue.findOne({user: queue_data.user_id})
-	.then(function(queue){
-		if(queue){
-			response.status = 'A queue already exists for the user.';
+	// check if activity type is in the list activity_tags enums
+	var activity_exists = false;
+	for (var type in enums.activity_tag) {
+		if (queue_data.tags.indexOf(enums.activity_tag[type].value.toLowerCase()) > -1) {
+			activity_exists = true;
 		}
-		return response;
-	})
-	.catch(()=>handleError(response));
+	}
+	if (!activity_exists) {
+		error = {
+			stage: 2,
+			message: 'Please select an activity type.'
+		};
+	}
+
+	// check if location is in the list location enums
+	var location_exists = false;
+	for (var city in enums.location) {
+		if (queue_data.city === enums.location[city].value) {
+			location_exists = true;
+		}
+	}
+	if (!location_exists) {
+		error = {
+			stage: 3,
+			message: 'Please select your location preference.'
+		};
+	}
+
+	return Queue.findOne({user: queue_data.user_id}).exec()
+	.then(function(queue){
+		if (queue) {
+			error = {
+				stage: null,
+				message: 'You are already in queue!'
+			};
+		}
+		return error;
+	});
 }
 
 // Creates a new Queue in the DB
 /* Queue object passed in looks like below
 var queue = {
-	1: { date: Date, start_time: Date, end_time: Date },
-	2: { activity: ['active', 'social'] },
-	3: { location: opts.location }
+	event_start: Date,
+	event_end: Date,
+	tags: [],
+	city: string
 };
 */
 export function create(req, res) {
 	var error = false;
 	var queue = req.body;
+	queue.user = req.user;
 
 	validateQueueData(queue)
 	.then(function(result){
 		// return an error when validations do not work
 		error = result;
 		if (error) {
-			return res.json({ error: error });
-		} else {
-			// create the queue after passing the validations
-			var queue_object = {
-				users: queue.users,
-				status: 'Searching',
-				search_parameters: {
-					tags: queue.tags,
-					event_search_dt_start: queue.event_start,
-					event_search_dt_end: queue.event_end,
-					city: queue.city
-				},
-				queue_start_time: new Date()
-			};
-
-			return Queue.create(queue_object)
-			.then(function(){
-				return User.findById(req.user._id);
-			})
-			.then(function(user){
-				user.event_status = 'Pending';
-				return user.save();
-			})
-			.then(function(){
-				return res.json({ error: false });
-			})
-			.catch(()=>handleError(res));
+			res.json({ error: error });
+			throw new Error('Error while creating queue');
 		}
+
+		// create the queue after passing the validations
+		var queue_object = {
+			users: [req.user._id],
+			status: 'Searching',
+			search_parameters: {
+				tags: queue.tags,
+				event_search_dt_start: queue.event_start,
+				event_search_dt_end: queue.event_end,
+				city: queue.city
+			},
+			queue_start_time: new Date()
+		};
+
+		return Queue.create(queue_object)
+		.then(function(){
+			return User.findById(req.user._id);
+		})
+		.then(function(user){
+			user.event_status = 'Pending';
+			return user.save();
+		})
+		.then(function(){
+			return res.json({ error: false });
+		})
+		.catch(()=>handleError(res));
+
 	});
 }
 /*=====================================*/
@@ -217,9 +252,8 @@ export function create(req, res) {
 =======================================*/
 
 export function cancelEventSearch(req, res) {
-	var token = getDecodedToken(req.params.token);
-	return Queue.findOneAndRemove({ users : token._id })
-		.then(()=>User.findByIdAndUpdate(token._id, { $set : { event_status : null } } ))
+	return Queue.findOneAndRemove({ users : req.user._id })
+		.then(()=>User.findByIdAndUpdate(req.user._id, { $set : { event_status : null } } ))
 		.then(()=>res.sendStatus(200))
 		.catch(()=>handleError(res))
 	;
