@@ -191,7 +191,7 @@
                         <div class="queue-modal-subtitle">Select a date and time of when you are available.</div>
 
                         <!-- Errors -->
-                        <div class="queue-errors" ng-show="qm.error">{{ qm.error }}</div>
+                        <div class="queue-errors" ng-show="qm.error">{{ qm.error.message }}</div>
 
                         <!-- Date Input -->
                         <div class="datetime-input-container">
@@ -206,11 +206,11 @@
                             <i class="material-icons queue-icons">access_time</i>
                             <span class="time-text">From</span>
                             <div class="input-field times-input">
-                                <input id="start_timepicker" class="start-timepicker" ng-model="qm.queue.start" placeholder="Select a time">
+                                <input id="start_timepicker" class="start-timepicker" ng-model="qm.queue.time.start" placeholder="Select a time">
                             </div>
                             <span class="time-text">to</span>
                             <div class="input-field times-input">
-                                <input id="end_timepicker" class="end-timepicker" ng-model="qm.queue.end" placeholder="Select a time">
+                                <input id="end_timepicker" class="end-timepicker" ng-model="qm.queue.time.end" placeholder="Select a time">
                             </div>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                         </div>
 
                         <!-- Errors -->
-                        <div class="queue-errors" ng-show="qm.error">{{ qm.error }}</div>
+                        <div class="queue-errors" ng-show="qm.error">{{ qm.error.message }}</div>
 
                         <div class="row">
                             <!-- Active checkbox -->
@@ -248,7 +248,7 @@
                         </div>
 
                         <!-- Errors -->
-                        <div class="queue-errors" ng-show="qm.error">{{ qm.error }}</div>
+                        <div class="queue-errors" ng-show="qm.error">{{ qm.error.message }}</div>
 
                         <div class="wrapper">
                             <i class="material-icons queue-icons">location_on</i>
