@@ -17,7 +17,7 @@
     }
 
     /** @ngInject */
-    function QueueModalController($state, $timeout, NavbarService) {
+    function QueueModalController($state, $timeout, NavbarService, QueueService) {
         var vm = this;
 
         // views
@@ -35,7 +35,7 @@
         };
 
         // variables
-        vm.error = null;
+        vm.error = false;
         vm.event = null;
         vm.current_stage = 1;
         vm.queue_status = null;
@@ -50,6 +50,16 @@
         function init() {
             getQueueStatus();
             initDateTimePicker();
+        }
+
+        // server-side validation + submit queue
+        function confirmQueue() {
+            QueueService.confirm(vm.queue)
+            .then(function(res) {
+                vm.error = res.error;
+                if (!vm.error) { getQueueStatus(); }
+            })
+            .catch(function() { $state.go('logout'); });
         }
 
         // Initialize the date and time picker
@@ -114,13 +124,23 @@
             });
         }
 
+        // go to specific stage
+        function goToStage(stage) {
+            $timeout(function() {
+                angular.element('[href="#stage' + stage + '"]').click();
+            });
+        }
+
         // Go to next queue stage
         function nextStage() {
-            if (vm.current_stage === 4) { return; }
-            vm.current_stage++;
-            $timeout(function() {
-                angular.element('[href="#stage' + vm.current_stage + '"]').click();
-            });
+            if (vm.current_stage === 4) { confirmQueue(); return; }
+            // quick validator check
+            vm.error = QueueService.validateStage(vm.current_stage, vm.queue);
+            if (vm.error) { goToStage(vm.error.stage); }
+            else {
+                vm.current_stage++;
+                goToStage(vm.current_stage);
+            }
         }
 
         // Manual open of queue modal
@@ -132,9 +152,7 @@
         function prevStage() {
             if (vm.current_stage === 1) { return; }
             vm.current_stage--;
-            $timeout(function() {
-                angular.element('[href="#stage' + vm.current_stage + '"]').click();
-            });
+            goToStage(vm.current_stage);
         }
     }
 })();
