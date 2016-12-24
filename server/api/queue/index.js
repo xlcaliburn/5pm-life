@@ -14,7 +14,7 @@ router.get('/:id', controller.show);
 router.get('/status/:status', controller.getByStatus);
 router.get('/cancel/:token', controller.cancelEventSearch);
 
-router.post('/', controller.create);
+router.post('/', auth.isAuthenticated(), controller.create);
 router.post('/triggerEvent', controller.triggerEvent);
 
 router.post('/matchmake', matchmake.matchmake);
