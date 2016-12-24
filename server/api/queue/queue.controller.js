@@ -142,8 +142,6 @@ export function getUserStatus(req, res) {
 function validateQueueData(queue_data) {
 	var response = {};
 
-	// TODO: check if user has token
-
 	// TODO: check if start date is on a friday or saturday
 
 	// TODO: check if end date is on the same friday or saturday
@@ -167,53 +165,50 @@ function validateQueueData(queue_data) {
 }
 
 // Creates a new Queue in the DB
+/* Queue object passed in looks like below
+var queue = {
+	1: { date: Date, start_time: Date, end_time: Date },
+	2: { activity: ['active', 'social'] },
+	3: { location: opts.location }
+};
+*/
 export function create(req, res) {
-	// extract user_id from token
-	var token = req.body.token;
-	if (!token) {
-		return res.status(403).send('unauthorized');
-	}
+	var error = false;
+	var queue = req.body;
 
-	var decoded_token = jwt.verify(token, config.secrets.session);
-
-	var response = { status: 'ok'};
-	var queue_data = req.body;
-	queue_data.user_id = decoded_token._id;
-
-	validateQueueData(queue_data)
+	validateQueueData(queue)
 	.then(function(result){
 		// return an error when validations do not work
-		if (result.status !== 'ok') {
-			response.status = result.status;
-			return res.json({ response: response });
+		error = result;
+		if (error) {
+			return res.json({ error: error });
+		} else {
+			// create the queue after passing the validations
+			var queue_object = {
+				users: queue.users,
+				status: 'Searching',
+				search_parameters: {
+					tags: queue.tags,
+					event_search_dt_start: queue.event_start,
+					event_search_dt_end: queue.event_end,
+					city: queue.city
+				},
+				queue_start_time: new Date()
+			};
+
+			return Queue.create(queue_object)
+			.then(function(){
+				return User.findById(req.user._id);
+			})
+			.then(function(user){
+				user.event_status = 'Pending';
+				return user.save();
+			})
+			.then(function(){
+				return res.json({ error: false });
+			})
+			.catch(()=>handleError(res));
 		}
-
-		// create the queue after passing the validations
-		var queue_object = {
-			users: req.body.users,
-			status: 'Searching',
-			search_parameters: {
-				tags: req.body.tags,
-				event_search_dt_start: req.body.event_start,
-				event_search_dt_end: req.body.event_end,
-				city: req.body.city
-			},
-			queue_start_time: new Date()
-		};
-
-		return Queue.create(queue_object)
-		.then(function(){
-			return User.findById(decoded_token._id);
-		})
-		.then(function(user){
-			user.event_status = 'Pending';
-			return user.save();
-		})
-		.then(function(){
-			res.json({ response: response });
-			return res;
-		})
-		.catch(()=>handleError(res));
 	});
 }
 /*=====================================*/
