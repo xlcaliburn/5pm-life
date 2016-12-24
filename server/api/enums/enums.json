@@ -38,7 +38,8 @@
         "LEFT": {"order": 7, "value": "Left"}
     },
     "location":{
-        "CA_ON_RICHMOND_HILL": {"order": 1, "value": "Richmond Hill"}
+        "CA_ON_RICHMOND_HILL": { "order": 1, "value": "Richmond Hill" },
+        "CA_ON_TORONTO": { "order": 2, "value": "Toronto" }
     },
     "queue_status": {
         "SEARCHING": {"order": 1, "value": "Searching"},
