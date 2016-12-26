@@ -1,5 +1,5 @@
 <!-- Queue Modal -->
-<div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModal">
+<div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModal" ng-if="qm.mode == 'desktop'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" ng-class="{'confirm': qm.current_stage == 4}">
@@ -182,7 +182,7 @@
 </div>
 
 <!-- Cancel event search modal -->
-<div class="modal fade bs-example-modal-sm" id="cancelQueueModal" tabindex="-1" role="dialog">
+<div class="modal fade bs-example-modal-sm" id="cancelQueueModal" tabindex="-1" role="dialog" ng-if="qm.mode == 'desktop'">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -204,7 +204,7 @@
 </div>
 
 <!-- Event found modal  -->
-<div class="modal fade bs-example-modal-sm" id="eventFoundModal" tabindex="-1" role="dialog">
+<div class="modal fade bs-example-modal-sm" id="eventFoundModal" tabindex="-1" role="dialog" ng-if="qm.mode == 'desktop'">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -225,28 +225,39 @@
 </div>
 
 <!-- explore button -->
-<a  id="explore-button"
-    class="btn waves-light waves-effect ng-scope"
-    data-toggle="modal" data-target="#queueModal"
-    ng-if="qm.queue_status == -1">
-    Explore <i class="tiny material-icons">arrow_forward</i>
-</a>
+<div class="button-container">
+    <a  id="explore-button"
+        data-toggle="modal"
+        data-target="#queueModal"
+        ng-if="qm.queue_status == -1"
+        ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+        Explore <i class="tiny material-icons">arrow_forward</i>
+    </a>
 
-<!-- cancel queue -->
-<div id="cancel-queue" ng-if="qm.queue_status == 'Pending'">
-    <div class="searching-text">
-        Searching for event<br />
-        <span class="subtext">You will be notified via email</span>
+    <!-- cancel queue -->
+    <div id="cancel-queue" ng-if="qm.queue_status == 'Pending'">
+        <div class="searching-text">
+            Searching for event<br />
+            <span class="subtext">You will be notified via email</span>
+        </div>
+        <div class="cancel-button-spinner"></div>
+        <span data-toggle="modal" data-target="#cancelQueueModal">
+            <button class="cancel-button"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Cancel event search"
+                    ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                <i class="material-icons">close</i>
+            </button>
+        </span>
     </div>
-    <div class="cancel-button-spinner"></div>
-    <span data-toggle="modal" data-target="#cancelQueueModal">
-        <button class="cancel-button" data-toggle="tooltip" data-placement="bottom" title="Cancel event search">
-            <i class="material-icons">close</i>
-        </button>
-    </span>
-</div>
 
-<!-- go to event button -->
-<a id="event-button" ng-hide="qm.current_state == 'home.event'" ng-if="(qm.queue_status == 'Pending User Confirmation' || qm.queue_status == 'Confirmed')" title="Go to event" href="home/event/{{ qm.event.link }}">
-    VIEW EVENT <i class="tiny material-icons">navigation</i>
-</a>
+    <!-- go to event button -->
+    <a  id="event-button"
+        ng-hide="qm.current_state == 'home.event'"
+        ng-if="(qm.queue_status == 'Pending User Confirmation' || qm.queue_status == 'Confirmed')"
+        title="Go to event"
+        href="home/event/{{ qm.event.link }}" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+        VIEW EVENT <i class="tiny material-icons">navigation</i>
+    </a>
+</div>

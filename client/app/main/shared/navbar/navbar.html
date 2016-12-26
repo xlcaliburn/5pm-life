@@ -3,27 +3,21 @@
         <div class="row valign-wrapper">
 
             <!-- Logo -->
-            <div class="nav-left col l4 m4 s6 valign">
+            <div class="nav-left col-md-4 col-sm-4 col-xs-6">
                 <a href="/home">
                     <img class="nav-logo" src="assets/images/5pm-icon.png">
                 </a>
             </div>
 
-            <!-- Explore button -->
-            <div class="nav-center col m4 s6 valign">
+            <!-- Queue Modal -->
+            <div class="nav-center col-md-4 col-sm-4 col-xs-4">
+                <queue-modal mode="desktop"></queue-modal>
 
-                <queue-modal></queue-modal>
-
-                <div id="mobile-nav">
-                     <div class="nav-menu" data-toggle="dropdown" id="home-mobile-menu">
-                        <img class="profile-image" src="{{navbar.user.profile_picture.current}}">
-                        <i class="tiny material-icons drop-indicator">expand_more</i>
-                    </div>
-                </div>
+                <span>{{ navbar.current_state.scopeTitle }}</span>
             </div>
 
             <!-- Dropdown menu -->
-            <div class="nav-right col m4">
+            <div class="nav-right col-md-4 col-sm-4 col-xs-4">
                 <div class="nav-dropdown-container">
                     <div class="nav-menu valign-wrapper dropdown">
                         <img class="profile-image" src="{{ navbar.user.profile_picture.current}}">
@@ -47,109 +41,60 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Mobile hamburger -->
+                <button class="mobile-nav-menu-button" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
             </div>
 
         </div>
     </div>
 </div>
 
-<div class="mobile-navbar">
-    <div class="mobile-nav-container">
-        <div class="container">
-            <div class="row">
-                <!-- logo -->
-                <div class="col s3 valign-wrapper align-center">
-                    <a href="/home" class="mobile-logo-link">
-                        <img class="mobile-logo" src="assets/images/5pm-icon.png" />
-                    </a>
-                </div>
-                <div class="col s6 valign-wrapper">
-                    <div class="scope-title">
-                        {{navbar.current_scope}}
-                    </div>
-                </div>
-                <!-- menu button -->
-                <div class="col s3 valign-wrapper mobile-menu-col">
-                    <button class="mobile-nav-menu-button" ng-click="navbar.toggle_mobile_nav()">
-                        <span class="hamburger"></span>
-                        <span class="hamburger"></span>
-                        <span class="hamburger"></span>
-                    </button>
-                </div>
+<!-- Mobile drawer -->
+<div class="mobile-drawer">
+    <div class="mobile-menu-drawer" ng-class="{'open': navbar.mobile_nav_open}">
+        <!-- header: profile/event status -->
+        <div class="mobile-menu-header">
+            <!-- close button -->
+            <button class="close-drawer-button" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                <i class="material-icons">close</i>
+            </button>
+
+            <!-- profile -->
+            <div class="drawer-profile">
+                <img ng-src="{{navbar.user.profile_picture.current}}">
+                <p class="drawer-name">
+                    {{ navbar.user.first_name }} {{ navbar.user.last_name }}
+                </p>
             </div>
+
+            <queue-modal mode="mobile"></queue-modal>
         </div>
-    </div>
 
-    <!-- mobile menu -->
-    <div class="mobile-menu">
-        <!--<div class="mobile-menu-overlay" ng-click="navbar.toggle_mobile_nav()" ng-show="navbar.mobile_nav_open"></div>-->
-        <div class="mobile-menu-drawer" ng-class="{'open': navbar.mobile_nav_open}">
-            <!-- header: profile/event status -->
-            <div class="mobile-menu-header">
-                <!-- close button -->
-                <button class="close-drawer-button" ng-click="navbar.mobile_nav_open = !mobile_nav_open">
-                    <i class="material-icons">close</i>
-                </button>
-
-                <!-- profile -->
-                <div class="drawer-profile">
-                    <img ng-src="{{navbar.user.profile_picture.current}}">
-                    <p class="drawer-name">
-                        {{ navbar.user.first_name }} {{ navbar.user.last_name }}
-                    </p>
-                </div>
-
-                <!-- queue status -->
-                <div class="drawer-queue">
-                    <!-- Explore -->
-                    <div ng-if="navbar.queue_status == -1">
-                        <a class="mobile-explore-button" ng-click="navbar.open_queue_modal(); navbar.toggle_mobile_nav()">
-                            Explore &nbsp; <i class="material-icons">arrow_forward</i>
-                        </a>
-                    </div>
-
-                    <!-- Searching -->
-                    <div ng-if="navbar.queue_status == 'Pending'">
-                        <p class="drawer-status-text drawer-queue-text">
-                            Searching for event<span class="one">.</span><span class="two">.</span><span class="three">.</span>
-                        </p>
-                        <a class="mobile-cancel-button modal-trigger" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open" href="#cancel-search">
-                            Cancel
-                        </a>
-                    </div>
-
-                    <!-- Event -->
-                    <div ng-if="navbar.queue_status == 'Pending User Confirmation' || navbar.queue_status == 'Confirmed'">
-                        <p class="drawer-status-text">
-                            {{navbar.event.activity}} @ {{navbar.event.venue}}
-                        </p>
-                        <a class="mobile-event-button" ng-click="navbar.toggle_mobile_nav()" href="home/event/{{ navbar.event_link }}">
-                            View event
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- links -->
-            <div class="drawer-links">
-                <ul class="drawer-menu-list">
-                    <li ng-class="{'current-state': navbar.get_current_statename() == 'home'}"> <!-- home -->
-                        <a href="/home" class="valign-wrapper" ng-click="navbar.toggle_mobile_nav()">
-                            <i class="material-icons">home</i> Home
-                        </a>
-                    </li>
-                    <li ng-class="{'current-state': navbar.get_current_statename() == 'home.settings'}"> <!-- settings -->
-                        <a href="/home/settings" class="valign-wrapper" ng-click="navbar.toggle_mobile_nav()">
-                            <i class="material-icons">settings</i> Settings
-                        </a>
-                    </li>
-                    <li> <!-- logout -->
-                        <a href="/logout" class="valign-wrapper" ng-click="navbar.toggle_mobile_nav()">
-                            <i class="material-icons">exit_to_app</i> Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <!-- links -->
+        <div class="drawer-links">
+            <ul class="drawer-menu-list">
+                <li ng-class="{'current-state': navbar.current_state.name == 'home'}">
+                    <!-- home -->
+                    <a ui-sref="home" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                        <i class="material-icons">home</i> Home
+                    </a>
+                </li>
+                <li ng-class="{'current-state': navbar.current_state.name == 'home.settings'}"> <!-- settings -->
+                    <a ui-sref="home.settings" class="valign-wrapper" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                        <i class="material-icons">settings</i> Settings
+                    </a>
+                </li>
+                <li> <!-- logout -->
+                    <a ui-sref="logout" class="valign-wrapper" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                        <i class="material-icons">exit_to_app</i> Logout
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
