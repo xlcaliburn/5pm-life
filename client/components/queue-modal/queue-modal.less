@@ -125,7 +125,6 @@
                 color: @white;
                 font-weight: 300;
                 font-size: 1.3rem;
-                text-transform: uppercase;
                 letter-spacing: 0.05rem;
             }
 
@@ -169,8 +168,8 @@
     }
 }
 
-/*--- Cancel queue modal ---*/
-#cancelQueueModal {
+/*--- Cancel queue/Event found modal ---*/
+#cancelQueueModal, #eventFoundModal {
     .modal-content {
         padding: 0;
         width: 400px;
@@ -193,15 +192,27 @@
             padding: 0.75rem 1rem;
             height: auto;
 
-            button {
+            a, button {
                 height: 2.5rem;
                 line-height: 2.53rem;
                 border: none;
                 background-color: transparent;
                 padding: 0 2rem;
+                cursor: pointer;
 
                 &:hover {
                     background-color: @faintgrey;
+                }
+            }
+
+            a[view] {
+                display: inline-block;
+                background-color: @pink;
+                color: @white;
+                opacity: 1;
+
+                &:hover {
+                    opacity: 0.8;
                 }
             }
         }
@@ -242,11 +253,11 @@
         .row { margin: 1.25rem 0; }
         .col-xs-4 { padding: 0;}
 
-        label.active-cb-label { color: @pinkred; font-size: 16px; }
+        label.active-cb-label { color: @pink; font-size: 16px; }
 
         .filled-in:checked + label.active-cb-label:after {
-            background-color: @pinkred;
-            border: 2px solid @pinkred;
+            background-color: @pink;
+            border: 2px solid @pink;
         }
 
         label.social-cb-label { color: @blue; font-size: 16px; }
@@ -311,7 +322,7 @@
     border: none;
     border-radius: 30px;
     color: @white;
-    font-size: 1em;
+    font-size: 1rem;
     line-height: 42px;
     font-weight: 300;
     text-decoration: none;
@@ -324,7 +335,6 @@
         font-size: 1em;
     }
 }
-
 
 /*--- Cancel button ---*/
 #cancel-queue {
@@ -420,6 +430,31 @@
         .searching-text { left: 0; }
         .cancel-button { right: 0%; }
         .cancel-button-spinner { right: ~"calc(0% - 5px)"; }
+    }
+}
+
+/*--- Event button ---*/
+#event-button {
+    display: inline-block;
+    height: 3rem;
+    line-height: 3rem;
+    padding: 0 1.5rem;
+    background-color: @pink;
+    border: none;
+    border-radius: 2px;
+    color: @white;
+    font-size: 1rem;
+    font-weight: 300;
+    text-decoration: none;
+    outline: none;
+
+    &:hover { opacity: 0.8; }
+
+    i {
+        font-size: 1rem;
+        vertical-align: middle;
+        margin-left: 0.5rem;
+        transform: rotate(90deg) translateX(-1px);
     }
 }
 
