@@ -1,4 +1,4 @@
-<!-- New Modal -->
+<!-- Queue Modal -->
 <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -181,7 +181,7 @@
     </div>
 </div>
 
-<!-- cancel event search modal -->
+<!-- Cancel event search modal -->
 <div class="modal fade bs-example-modal-sm" id="cancelQueueModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -199,18 +199,28 @@
                 <button no data-dismiss="modal">NO</button>
                 <button yes data-dismiss="modal" ng-click="qm.cancelQueue()">YES</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div id="cancel-search" class="cancel-queue-modal modal">
-    <div class="cancel-queue-modal-content">
-        <h4>Cancel Event Search</h4>
-        <p>Are you sure you would like to cancel the event search?</p>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a ng-click="navbar.cancel_queue()" href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
+</div>
+
+<!-- Event found modal  -->
+<div class="modal fade bs-example-modal-sm" id="eventFoundModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- Close button -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+                <h4 class="modal-title">Event Found</h4>
+            </div>
+            <div class="modal-body">
+                <p>An event has been found for you! Click the link below to view the event details.</p>
+            </div>
+            <div class="modal-footer">
+                <a view data-dismiss="modal" ng-click="qm.viewEvent()">View Event</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -237,6 +247,6 @@
 </div>
 
 <!-- go to event button -->
-<a id="go-to-event-button" class="btn waves-light waves-effect" ng-if="(qm.queue_status == 'Pending User Confirmation' || qm.queue_status == 'Confirmed')" title="Go to event" href="home/event/{{ qm.event.link }}">
-    VIEW EVENT <i class="tiny material-icons">arrow_forward</i>
+<a id="event-button" ng-hide="qm.current_state == 'home.event'" ng-if="(qm.queue_status == 'Pending User Confirmation' || qm.queue_status == 'Confirmed')" title="Go to event" href="home/event/{{ qm.event.link }}">
+    VIEW EVENT <i class="tiny material-icons">navigation</i>
 </a>
