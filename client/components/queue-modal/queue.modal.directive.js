@@ -8,16 +8,19 @@
     function QueueModalDirective() {
         var directive = {
             restrict: 'E',
+            scope: true,
             templateUrl: 'components/queue-modal/queue-modal.html',
             controller: QueueModalController,
             controllerAs: 'qm',
-            bindToController: true
+            bindToController: {
+                mode: '@'
+            }
         };
         return directive;
     }
 
     /** @ngInject */
-    function QueueModalController($state, $timeout, NavbarService, QueueService) {
+    function QueueModalController($interval, $rootScope, $state, $timeout, QueueService, socket) {
         var vm = this;
 
         // views
@@ -38,10 +41,13 @@
         vm.error = false;
         vm.event = null;
         vm.current_stage = 1;
+        vm.current_state;
         vm.queue_status = null;
+        var eventSocket;
 
         // functions
         vm.cancelQueue = cancelQueue;
+        vm.viewEvent = viewEvent;
         vm.nextStage = nextStage;
         vm.openQueueModal = openQueueModal;
         vm.prevStage = prevStage;
@@ -51,15 +57,12 @@
         function init() {
             getQueueStatus();
             initPlugins();
-            completeQueue();
-        }
 
-        function completeQueue() {
-            vm.queue.date = 'December 30, 2016';
-            vm.queue.time.start = '06:00PM';
-            vm.queue.time.end = '09:00PM';
-            vm.queue.activity.active = true;
-            vm.queue.location = 'Toronto';
+            // show/hide event button depending on state
+            $rootScope.$on('$stateChangeSuccess',
+            function(event, toState){
+                vm.current_state = toState.name;
+            });
         }
 
         // Cancel event search
@@ -167,11 +170,27 @@
             });
         }
 
+        // init socket to change user queue status
+        function initSockets() {
+            if (!eventSocket) {
+                eventSocket = socket.socket;
+                eventSocket.emit('join');
+                eventSocket.on('update_status', function() {
+                    getQueueStatus();
+                    angular.element('#eventFoundModal').modal('show');
+                });
+                eventSocket.on('message_error', function() {
+                    $state.go('logout');
+                });
+            }
+        }
+
         // Gets queue status and display explore button accordingly
         function getQueueStatus() {
-            NavbarService.getUserQueueStatus().then(function(res) {
+            QueueService.getStatus().then(function(res) {
                 vm.queue_status = res.data.queue;
                 vm.event = res.data.event || null;
+                if (vm.queue_status) { initSockets(); }
             })
             .catch(function() {
                 $state.go('logout');
@@ -207,6 +226,7 @@
             if (vm.current_stage === 1) { return; }
             vm.current_stage--;
             goToStage(vm.current_stage);
+            vm.error = false;
         }
 
         // Reset the queue form
@@ -218,7 +238,16 @@
                 location: null
             };
             goToStage(1);
-            vm.current_stage =1 ;
+            vm.current_stage = 1 ;
+        }
+
+        // Go to event link
+        function viewEvent() {
+            if (!vm.event) { return; }
+            angular.element('#eventModalFound').modal('hide');
+            $timeout(function() {
+                $state.go('home.event', {id: vm.event.link});
+            }, 300);
         }
     }
 })();

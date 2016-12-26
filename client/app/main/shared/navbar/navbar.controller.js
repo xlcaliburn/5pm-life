@@ -11,7 +11,7 @@
 
         // variables
         vm.on_event_page = false;
-        vm.current_scope;
+        vm.current_state;
         vm.mobile_nav_open = false;
 
         // functions
@@ -21,21 +21,22 @@
             updateUserInfo();
             // detect when user info needs to be updated
             $scope.$on('updateUser', updateUserInfo);
-            vm.current_scope = $state.current.scopeTitle;
+            setScope($state.current);
             // display current scope title
             $rootScope.$on('$stateChangeSuccess',
             function(event, toState){
-                setTitle(toState.scopeTitle);
+                setScope(toState);
             });
         }
 
-        function setTitle(title) {
+        function setScope(title) {
             vm.current_scope = title;
         }
 
         function updateUserInfo() {
-            Users.getMe().success(function(data) {
-                vm.user = data;
+            Users.getMe()
+            .then(function(res) {
+                vm.user = res.data;
             });
         }
     }
