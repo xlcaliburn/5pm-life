@@ -14,6 +14,9 @@
                 var serverQueue = createServerQueueObject(queue);
                 return $http.post('/api/queue', serverQueue);
             },
+            getStatus: function() {
+                return $http.get('api/queue/user');
+            },
             validateStage: function(stage, obj) {
                 var queue = createQueueObject(obj);
                 var error = false;
