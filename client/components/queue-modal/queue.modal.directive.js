@@ -133,7 +133,8 @@
                       1,2,3,4,5
                     ],
                     onSet: function( arg ){
-                        if ( 'select' in arg ){ //prevent closing on selecting month/year
+                        if ( 'select' in arg ){
+                            //prevent closing on selecting month/year
                             this.close();
                         }
                     },
@@ -147,15 +148,15 @@
                 });
 
                 // init start time
-                var start_timepicker = angular.element('#start_timepicker');
-                start_timepicker.pickatime({
+                angular.element('#start_timepicker')
+                .pickatime({
                     autoclose: true,
                     twelvehour: true
                 });
 
                 // init end time
-                var end_timepicker = angular.element('#end_timepicker');
-                end_timepicker.pickatime({
+                angular.element('#end_timepicker')
+                .pickatime({
                     autoclose: true,
                     twelvehour: true
                 });
