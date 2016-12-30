@@ -34,6 +34,8 @@
 		function submit() {
 			vm.selected_event.dt_search_start = new Date().getTime();
 			vm.selected_event.status = 'New';
+			vm.selected_event.dt_start = new Date().getTime() + 3;
+			vm.selected_event.dt_end = new Date().setHours(new Date().getHours() + 3);
 			Events.create(vm.selected_event)
 				.success(function(data) {
 					vm.selected_event = {};

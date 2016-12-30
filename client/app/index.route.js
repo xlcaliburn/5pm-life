@@ -10,7 +10,7 @@
 		$stateProvider
 		.state('welcome', {
 			url: '/',
-			title: '5PM.LIFE - Meet, Share, Experience',
+			title: '5PM - Meet, Share, Experience',
 			templateUrl: 'app/main/welcome/welcome.html',
 			controller: 'WelcomeController',
 			controllerAs: 'welcome',
@@ -32,7 +32,7 @@
 
 		.state('home', {
 			url: '/home',
-			title: '5PM.LIFE - Meet, Share, Experience',
+			title: '5PM - Meet, Share, Experience',
 			scopeTitle: 'Home',
 			templateUrl: 'app/main/home/home.html',
 			controller: 'HomeController',
