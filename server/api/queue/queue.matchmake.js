@@ -123,7 +123,17 @@ function clearEmptyEvents() {
 			'users' : { $size: 0 },
 			'queue' : { $size: 0 }
 		}).exec()
-		.catch((err) => {console.log(err);})
+		.catch(err => {console.log(err);})
+	;
+}
+
+function clearExpiredQueues() {
+	// TODO: Add warning or send email to let the users know their queue has expired
+	Queue
+		.remove({
+			"search_parameters.event_search_dt_start" : { "$lte" : new Date() }
+		}).exec()
+		.catch(err => {console.log(err);})
 	;
 }
 
@@ -132,6 +142,7 @@ export function rebalance(req, res) {
 }
 
 export function matchmake(req, res) {
+	clearExpiredQueues();
 	clearEmptyEvents();
 	rebalance();
 
