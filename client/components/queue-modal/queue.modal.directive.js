@@ -58,11 +58,14 @@
             getQueueStatus();
             initPlugins();
 
-            // show/hide event button depending on state
+            // Show/hide event button depending on state
             $rootScope.$on('$stateChangeSuccess',
             function(event, toState){
                 vm.current_state = toState.name;
             });
+
+            // Reset form on event
+            $rootScope.$on('reset_queue', resetQueueForm);
         }
 
         // Cancel event search

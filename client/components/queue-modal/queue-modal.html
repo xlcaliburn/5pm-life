@@ -9,8 +9,8 @@
                 </button>
 
                 <!-- Title -->
-                <h4 class="modal-title" ng-show="qm.current_stage < 4">Queue for event</h4>
-                <h4 class="modal-title" ng-show="qm.current_stage == 4">Confirm event preferences</h4>
+                <h4 class="modal-title" ng-show="qm.current_stage < 4">Queue for Event</h4>
+                <h4 class="modal-title" ng-show="qm.current_stage == 4">Confirm Event Preferences</h4>
             </div>
 
             <!-- Queue stage tabs -->
@@ -182,7 +182,7 @@
 </div>
 
 <!-- Cancel event search modal -->
-<div class="modal fade bs-example-modal-sm" id="cancelQueueModal" tabindex="-1" role="dialog" ng-if="qm.mode == 'desktop'">
+<div class="modal fade bs-example-modal-sm" id="cancelQueueModal" tabindex="-1" role="dialog" ng-if="qm.mode == 'desktop'" small>
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -196,16 +196,15 @@
                 <p>Are you sure you would like to cancel the event search?</p>
             </div>
             <div class="modal-footer">
-                <button no data-dismiss="modal">NO</button>
-                <button yes data-dismiss="modal" ng-click="qm.cancelQueue()">YES</button>
+                <button yes data-dismiss="modal" ng-click="qm.cancelQueue()">Yes</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Event found modal  -->
-<div class="modal fade bs-example-modal-sm" id="eventFoundModal" tabindex="-1" role="dialog" ng-if="qm.mode == 'desktop'">
-    <div class="modal-dialog modal-sm" role="document">
+<div class="modal fade" id="eventFoundModal" tabindex="-1" role="dialog" ng-if="qm.mode == 'desktop'" small>
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- Close button -->
@@ -218,7 +217,7 @@
                 <p>An event has been found for you! Click the link below to view the event details.</p>
             </div>
             <div class="modal-footer">
-                <a view data-dismiss="modal" ng-click="qm.viewEvent()">View Event</a>
+                <button view data-dismiss="modal" ng-click="qm.viewEvent()">View Event</button>
             </div>
         </div>
     </div>
