@@ -46,7 +46,6 @@
 
 			Events.getByIdAdmin(vm.event_id)
 				.then(function(res) {
-					console.log(res.data);
 					vm.selected_event = res.data;
 					vm.queues_to_add = vm.selected_event.queue;
 
@@ -54,7 +53,7 @@
 					var unconfirmed_users = [];
 					for (var q in vm.queues_to_add) {
 						for (var u = 0; u < vm.queues_to_add[q].length; u++) {
-							unconfirmed_users.push(vm.queues_to_add[q].users[u]._id); 
+							unconfirmed_users.push(vm.queues_to_add[q].users[u]._id);
 						}
 					}
 					vm.confirmed_users = vm.selected_event.users.filter(function(user) {

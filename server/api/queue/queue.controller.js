@@ -147,7 +147,6 @@ export function getUserStatus(req, res) {
 =====================================*/
 // Validate queue data
 function validateQueueData(queue_data) {
-	console.log(queue_data);
 	var error = false;
 
 	// TODO: check if start date is on a friday or saturday
@@ -183,7 +182,6 @@ function validateQueueData(queue_data) {
 			message: 'Please select your location preference.'
 		};
 	}
-	console.log(queue_data.user_id);
 	return Queue.findOne({user: queue_data.user_id}).exec()
 	.then(function(queue){
 		if (queue) {
@@ -213,8 +211,6 @@ export function create(req, res) {
 	{
 		userid = queue.user_id;
 	}
-
-	console.log(userid);
 
 	validateQueueData(queue)
 	.then(function(result){

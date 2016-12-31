@@ -29,7 +29,6 @@
         }
 
         function submit(){
-            console.log('test');
             Users.updateById(vm.user._id, vm.user)
             .then(() => {$uibModalInstance.close();});
         }
