@@ -20,7 +20,6 @@
 		function init() {
 			Users.getById(vm.user_id)
 				.then(function(res) {
-					console.log(res.data);
 					vm.user = res.data;
 					vm.user.birthday = moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
 					vm.facebook_url = 'http://www.facebook.com/' + vm.user.facebook.id;

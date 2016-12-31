@@ -18,12 +18,10 @@
             method: 'get',
             url: vm.api_url,
         }).then(function successCallback(res) {
-            console.log(res);
             var response = res.data.response;
             vm.status = response.status;
             vm.message = response.message;
         }, function errorCallback(res) {
-            console.log(res);
             vm.message = 'There was an error trying to verify your email. Please try again.';
         });
 
