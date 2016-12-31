@@ -147,6 +147,7 @@ export function getUserStatus(req, res) {
 =====================================*/
 // Validate queue data
 function validateQueueData(queue_data) {
+	console.log(queue_data);
 	var error = false;
 
 	// TODO: check if start date is on a friday or saturday
@@ -182,7 +183,7 @@ function validateQueueData(queue_data) {
 			message: 'Please select your location preference.'
 		};
 	}
-
+	console.log(queue_data.user_id);
 	return Queue.findOne({user: queue_data.user_id}).exec()
 	.then(function(queue){
 		if (queue) {
@@ -207,20 +208,26 @@ var queue = {
 export function create(req, res) {
 	var error = false;
 	var queue = req.body;
-	queue.user = req.user;
+	var userid = req.user;
+	if (typeof(queue.user_id) !== 'undefined')
+	{
+		userid = queue.user_id;
+	}
+
+	console.log(userid);
 
 	validateQueueData(queue)
 	.then(function(result){
 		// return an error when validations do not work
 		error = result;
 		if (error) {
+			console.log(error);
 			res.json({ error: error });
 			throw new Error('Error while creating queue');
 		}
-
 		// create the queue after passing the validations
 		var queue_object = {
-			users: [req.user._id],
+			users: [userid],
 			status: 'Searching',
 			search_parameters: {
 				tags: queue.tags,
@@ -233,7 +240,7 @@ export function create(req, res) {
 
 		return Queue.create(queue_object)
 		.then(function(){
-			return User.findById(req.user._id);
+			return User.findById(userid);
 		})
 		.then(function(user){
 			user.event_status = 'Pending';

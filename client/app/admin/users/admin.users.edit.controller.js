@@ -20,6 +20,7 @@
 		function init() {
 			Users.getById(vm.user_id)
 				.then(function(res) {
+					console.log(res.data);
 					vm.user = res.data;
 					vm.user.birthday = moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
 					vm.facebook_url = 'http://www.facebook.com/' + vm.user.facebook.id;
@@ -51,8 +52,9 @@
 
 		function createQueue() {
 			if (vm.user.event_status !== null) { return; }
+			console.log(vm.user_id);
 			var queue_object = {
-				user: vm.user_id,
+				user_id: vm.user_id,
 				tags: ['social'],
 				event_start: new Date(),
 				event_end: new Date(),
