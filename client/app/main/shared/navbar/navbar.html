@@ -20,8 +20,10 @@
             <div class="nav-right col-md-4 col-sm-4 col-xs-4">
                 <div class="nav-dropdown-container">
                     <div class="nav-menu valign-wrapper dropdown">
-                        <img class="profile-image" src="{{ navbar.user.profile_picture.current}}">
-                        <span class="nav-name">{{navbar.user.first_name}}</span>
+                        <a href="/home/settings">
+                            <img class="profile-image" src="{{ navbar.user.profile_picture.current}}">
+                            <span class="nav-name">{{navbar.user.first_name}}</span>
+                        </a>
                         <i class="material-icons drop-indicator" data-toggle="dropdown" id="home-menu-button">more_vert</i>
 
                         <!-- Dropdown menu -->
