@@ -23,8 +23,6 @@
 					vm.user = res.data;
 					vm.user.birthday = moment(vm.user.birthday).utc().format('MMMM DD, YYYY');
 					vm.facebook_url = 'http://www.facebook.com/' + vm.user.facebook.id;
-					console.log(res.data);
-					console.log(vm.user.event_status);
 					return res.data;
 				})
 				.then (function(user) {
@@ -52,25 +50,19 @@
 		}
 
 		function createQueue() {
+			if (vm.user.event_status !== null) { return; }
 			var queue_object = {
 				user: vm.user_id,
-				status: 'Searching',
-				search_parameters: {
-					tags: [],
-					event_search_dt_start: new Date(),
-					event_search_dt_end: new Date(),
-					city: 'Toronto'
-				},
-				queue_start_time: new Date()
+				tags: ['social'],
+				event_start: new Date(),
+				event_end: new Date(),
+				city: 'Toronto'
 			};
 
-			// TODO: This should be serverside
 			Queue.create(queue_object)
-				.then(function(user){
-					user.event_status = 'Pending';
-					return user.save();
-				})
-			;
+				.then(()=>{
+					vm.user.event_status = 'Pending';
+				});
 		}
 
 		function unqueue() {

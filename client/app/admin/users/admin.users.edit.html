@@ -57,6 +57,11 @@
 	<div class="section">
 		<h3>Queue/Event Status</h3>
 		<div class="row">
+			<div class="col s3">
+				<button class="btn waves-effect waves-light" ng-disabled ="vm.user.event_status != null" ng-click="vm.create_queue()" name="action">Quick Create</button>
+			</div>
+		</div>
+		<div class="row">
 			<div class="input-field col s3">
 				<input disabled value="{{vm.user.event_status == null ? 'None' : vm.user.event_status}}" id="event_status" type="text" class="validate">
 				<label class="active" for="event_status">Event Status</label>
