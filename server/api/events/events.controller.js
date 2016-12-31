@@ -377,6 +377,7 @@ export function getAttendees(req, res) {
 				current_user = {
 					name: users[i].first_name + ' ' + users[i].last_name,
 					profile_picture: users[i].profile_picture.current,
+					adjectives: users[i].adjectives,
 					status: users[i].event_status
 				};
 				confirmed_users.push(current_user);
@@ -386,7 +387,8 @@ export function getAttendees(req, res) {
 			if (users[i].event_status === 'Confirmed') {
 				current_user = {
 					name: users[i].first_name + ' ' + users[i].last_name,
-					profile_picture: users[i].profile_picture.current
+					profile_picture: users[i].profile_picture.current,
+					adjectives: users[i].adjectives
 				};
 				confirmed_users.push(current_user);
 			}

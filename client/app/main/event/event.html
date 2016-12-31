@@ -145,12 +145,12 @@
             <div class="col s3" id="event-attendees">
                 <div class="event-attendees-card">
                     <div class="attendees-list" ng-show="vm.attendees.length > 0">
-                        <div class="row valign-wrapper" ng-repeat="person in vm.get_confirmed_attendees()">
-                            <div class="col s3"><img class="responsive-img circle" src="{{ vm.get_profile_img(person.profile_picture) }}"></div>
-                            <div class="col s9">
-                                <div class="attendee-name">{{person.name}}</div>
-                                <div class="attendee-props">
-                                    {{ vm.display_props(person.props) }}
+                        <div class="row valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.get_confirmed_attendees()">
+                            <img class="event-profile-pic" src="{{ vm.get_profile_img(person.profile_picture) }}">
+                            <div class="col-xs-9">
+                                <span class="attendee-name">{{person.name}}</span>
+                                <div class="label attendee-adjective col-xs-12" ng-show="hovering" ng-repeat="adjective in person.adjectives">
+                                    {{ adjective }}
                                 </div>
                             </div>
                         </div>
@@ -263,9 +263,14 @@
                             <a  ng-click="vm.confirm_event()" class="confirm-event-button">Join event</a>
                         </div>
                     </li>
-                    <li class="valign-wrapper" ng-repeat="person in vm.get_confirmed_attendees()">
-                        <img class="responsive-img circle" ng-src="{{ vm.get_profile_img(person.profile_picture) }}">
-                        <span class="attendee-name">{{person.name}}</div>
+                    <li class="valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.get_confirmed_attendees()">
+                        <img class="event-profile-pic" ng-src="{{ vm.get_profile_img(person.profile_picture) }}">
+                        <div class="col-xs-9">
+                            <span class="attendee-name">{{person.name}}</span>
+                            <div class="label attendee-adjective col-xs-12" ng-show="hovering" ng-repeat="adjective in person.adjectives">
+                                {{ adjective }}
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
