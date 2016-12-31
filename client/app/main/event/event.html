@@ -1,14 +1,21 @@
-<!-- Leave event modal -->
-<div id="leave-modal" class="modal" ng-show="vm.user_status == 'Confirmed'">
-    <div class="modal-content">
-        <h3 class="pink-font">Leave Event</h3>
-        <p>
-            Once you leave this event, you will no longer be able to view its details and people attending. Are you sure you would like to leave?
-        </p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" ng-click="vm.leave_event()" class="modal-action modal-close waves-effect waves-green btn-flat">Leave</a>
-        <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+<!-- Leave Modal -->
+<div class="modal fade" id="leaveModal" tabindex="-1" role="dialog" small>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="material-icons">close</span></button>
+                <h4 class="modal-title">Leave Event</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Once you leave this event, you will no longer be able to view its details and people attending. Are you sure you would like to leave?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button leave ng-click="vm.leave_event()" data-dismiss="modal">Leave</button>
+                <button data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -62,7 +69,8 @@
 
                             <ul id='event-options' class='dropdown-menu dropdown-menu-right' aria-labelledby="event-dropdown">
                                 <li>
-                                    <a class="leave-modal-trigger" ng-click="vm.open_leave_modal()">
+                                    <a class="leave-modal-trigger"
+                                    data-toggle="modal" data-target="#leaveModal">
                                         Leave event
                                     </a>
                                 </li>

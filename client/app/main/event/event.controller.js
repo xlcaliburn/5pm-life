@@ -121,9 +121,12 @@
                 .then(() => {
                     just_confirmed = true;
                     getSelfStatus(true);
-                    Materialize.toast('You\'ve accepted the invitation!', 6000);
+                    new PNotify({
+                        title: 'Event',
+                        text: 'You have accepted the invitation!',
+                        type: 'success'
+                    });
                     $timeout(function() {
-                        angular.element('.modal-trigger').leanModal();
                         angular.element('.tooltipped').off('mouseenter mouseleave');
                     }, 50);
                 })
@@ -139,7 +142,12 @@
             EventService.declineEvent(event_details)
             .then(()=> {
                 $state.go('home');
-                Materialize.toast('You have declined the event and will be placed back into queue.', 10000);
+                new PNotify({
+                    title: 'Decline Event',
+                    text: 'You have declined the event and will be placed back into queue.',
+                    type: 'info',
+                    delay: 8000
+                });
             })
             .catch(function() {
                 $state.go('home');
@@ -331,23 +339,27 @@
 
         // leave event because they cannot make it
         function leaveEvent() {
-            var event_details = {
-                id: vm.event_data._id
-            };
+            $timeout(function() {
+                var event_details = {};
+                event_details._id = vm.event_data._id;
 
-            EventService.leaveEvent(event_details).then(function(data) {
-                if (data.response.status === 'ok') {
-                    $state.go('home');
-                    Materialize.toast('You have left the event.', 6000);
+                EventService.leaveEvent(event_details).then(function(data) {
+                    if (data.response.status === 'ok') {
+                        $state.go('home');
+                        new PNotify({
+                            title: 'Leave Event',
+                            text: 'You have left the event',
+                            type: 'success'
+                        });
+                        eventSocket.emit('leave_event', eventRoom);
+                        eventSocket = null;
+                        eventRoom = null;
 
-                    eventSocket.emit('leave_event', eventRoom);
-                    eventSocket = null;
-                    eventRoom = null;
-
-                    // reset navbar search settings
-                    $rootScope.$emit('reset_queue_search');
-                }
-            }).catch(function() { $state.go('home'); });
+                        // reset navbar search settings
+                        $rootScope.$emit('reset_queue');
+                    }
+                }).catch(function() { $state.go('home'); });
+            }, 300);
         }
 
         // initialize sockets;
