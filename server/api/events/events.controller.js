@@ -86,7 +86,12 @@ export function index(req, res) {
 // Gets a single event from the DB
 export function show(req, res) {
 	var response = {};
-	return Promise.resolve(Events.findById(req.params.id, 'activity venue dt_start dt_end status').exec())
+	return Promise.resolve(Events.findById(req.params.id)
+		.populate({
+				path:'users',
+				select: 'first_name last_name profile_picture status adjectives event_status'
+			})
+		.exec())
 	.then(function(event) {
 		if (!event) {
 			throw('No event found');
@@ -181,7 +186,7 @@ export function confirmEvent(req, res) {
 		.then(queue => {
 			if (!queue) { throw ('You have already confirmed this event!'); }
 
-			User.update({_id : {$in : queue.users }}, { event_status : 'Confirmed' }).exec();
+			User.update({_id : {$in : queue.users }}, { event_status : 'Confirmed' }, {multi: true}).exec();
 			q = queue;
 			return queue;
 		})
