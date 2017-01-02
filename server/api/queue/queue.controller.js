@@ -147,12 +147,33 @@ export function getUserStatus(req, res) {
 // Validate queue data
 function validateQueueData(queue_data) {
 	var error = false;
+	var start_date = new Date(queue_data.event_start);
+	var end_date = new Date(queue_data.event_end);
 
-	// TODO: check if start date is on a friday or saturday
+	// check if start date is on a friday or saturday
+	if (start_date.getDay() < 5) {
+		error = {
+			stage: 1,
+			message: 'Please choose a Friday or Saturday.'
+		};
+	}
 
-	// TODO: check if end date is on the same friday or saturday
+	// check if end date is on the same friday or saturday
+	if (start_date.getDay() !== end_date.getDay()) {
+		error = {
+			stage: 1,
+			message: 'Start date and end date has to be the same.'
+		};
+	}
 
-	// TODO: check if the times are at least x amount of hours apart with start time < end time
+	// check if the times are at least x amount of hours apart with start time < end time
+	var hours_diff = Math.abs(end_date - start_date) / 36e5;
+	if (hours_diff < 3) {
+		error = {
+			stage: 1,
+			message: 'Your available time range needs to be at least 3 hours.'
+		};
+	}
 
 	// check if activity type is in the list activity_tags enums
 	var activity_exists = false;
