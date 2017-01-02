@@ -30,7 +30,8 @@
         // functions
         vm.confirm_event = confirmEvent;
         vm.decline_event = declineEvent;
-        vm.get_confirmed_attendees = getConfirmedAttendees;
+        //vm.get_confirmed_attendees = getConfirmedAttendees;
+        vm.confirmed = [];
         vm.get_event_date = getEventDate;
         vm.get_event_time = getEventTime;
         vm.get_googlemaps_link = getGoogleMapsLink;
@@ -61,6 +62,7 @@
                 angular.element('.modal-trigger').leanModal();
             });
 
+            setConfirmedAttendees();
             getLatLng();
             getSelfStatus(true);
             initPlugins();
@@ -113,7 +115,7 @@
                 province: vm.event_data.venue.address.province,
                 postal_code: vm.event_data.venue.address.postal_code,
                 gmaps_link: getGoogleMapsLink(),
-                attendees: getConfirmedAttendees()
+                attendees: vm.confirmed
             };
 
             EventService.confirmEvent(event_details)
@@ -291,14 +293,18 @@
         }
 
         // gets list of confirmed attendees
-        function getConfirmedAttendees() {
+        function setConfirmedAttendees() {
             var attendees_array = [];
-            for (var i = 0; i < vm.attendees.length; i++) {
-                if (!vm.attendees[i].status || vm.attendees[i].status === 'Confirmed') {
-                    attendees_array.push(vm.attendees[i]);
-                }
+            for (var i = 0; i < vm.event_data.users.length; i++) {
+                //if (!vm.attendees[i].status || vm.attendees[i].status === 'Confirmed') {
+                    attendees_array.push({
+                        name : vm.event_data.users[i].first_name + ' ' + vm.event_data.users[i].last_name,
+                        adjectives : vm.event_data.users[i].adjectives,
+                        profile_picture : vm.event_data.users[i].profile_picture.current
+                    });
+                //}
             }
-            return attendees_array;
+            vm.confirmed = attendees_array;
         }
 
         // return user profile image

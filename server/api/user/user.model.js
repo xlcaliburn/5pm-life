@@ -56,6 +56,10 @@ var UserSchema = new Schema({
 	},
 	description : String,
 	adjectives : [String],
+	languages : {
+		primary : String,
+		secondary : String
+	},
 	verified: Boolean
 });
 

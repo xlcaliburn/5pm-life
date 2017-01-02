@@ -81,7 +81,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in vm.confirmed_users">
-						<td>{{user.first_name}} {{user.last_name}}</td>
+						<td><a ui-sref="admin.users.edit({ user_id: user._id })">{{user.first_name}} {{user.last_name}}</a></td>
 						<td>{{vm.get_age(user.birthday)}}</td>
 						<td>{{user.gender}}</td>
 						<td>{{user.ethnicity}}</td>
@@ -127,7 +127,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="queue in vm.queues_to_add">
-						<td><p ng-repeat="user in queue.users">{{user.first_name + " " + user.last_name}}</p></td>
+						<td><p ng-repeat="user in queue.users"><a ui-sref="admin.users.edit({ user_id: user._id })">{{user.first_name + " " + user.last_name}}</a></p></td>
 						<td><p ng-repeat="user in queue.users">{{vm.get_age(user.birthday)}}</p></td>
 						<td><p ng-repeat="user in queue.users">{{user.gender}}</p></td>
 						<td>

@@ -86,7 +86,12 @@ export function index(req, res) {
 // Gets a single event from the DB
 export function show(req, res) {
 	var response = {};
-	return Promise.resolve(Events.findById(req.params.id, 'activity venue dt_start dt_end status').exec())
+	return Promise.resolve(Events.findById(req.params.id)
+		.populate({
+				path:'users',
+				select: 'first_name last_name profile_picture status adjectives event_status'
+			})
+		.exec())
 	.then(function(event) {
 		if (!event) {
 			throw('No event found');
@@ -174,56 +179,47 @@ export function confirmEvent(req, res) {
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
 	var user_id = new mongoose.Types.ObjectId(token_result._id);
-	var current_event;
-	var queue_id;
-
+	var ev_id;
+	var q;
 	// remove user from queue
 	Queue.findOne({users : user._id}).exec()
 		.then(queue => {
 			if (!queue) { throw ('You have already confirmed this event!'); }
-		    queue_id = queue._id;
-			if (queue.users.length > 1) {}
-			return Queue.remove({ _id: queue_id }).exec(); // remove queue
-		})
-	;
 
-	User.findByIdAndUpdate(user._id, { event_status : 'Confirmed' }).exec();
-	Events.findById(email_data.id).exec()
-		.then((event) => {
-			// remove corresponding queue from event
-			if (!event) { throw ('No event found'); }
-			current_event = event._id;
-			event.queue.remove(queue_id);
-			return event.save();
+			User.update({_id : {$in : queue.users }}, { event_status : 'Confirmed' }, {multi: true}).exec();
+			q = queue;
+			return queue;
+		})
+		.then(queue => {
+			return Queue.findOneAndRemove({ _id: queue._id }).exec(); // remove queue
+
 		})
 		.then(() => {
-			// find chat that corresponds to event, if none, create one
-			return Chat.findOne({eventId: current_event });
+			return Events.findByIdAndUpdate(email_data.id, { $pull : {'queue' : q._id} }).exec();
+		})
+		.then(event => {
+			ev_id = event._id;
+			return Chat.findOne({eventId: event._id });
 		})
 		.then(chat => {
 			var message;
 			if (!chat) {
 				// create new chat
+				chat = new Chat({
+					eventId: ev_id,
+					messages: []
+				});
+			}
+			for (var i = 0; i < q.users.length; i++)
+			{
 				message = new Message({
-					user: user._id,
+					user: q.users[i],
 					message: 'has joined the event!',
 					timestamp: new Date()
 				});
-
-				var chatroom = new Chat({
-					eventId: current_event,
-					messages: [message]
-				});
-				return chatroom.save();
-			} else {
-				message = new Message({
-				   	user: user._id,
-				   	message: 'has joined the event!',
-				   	timestamp: new Date()
-				});
 				chat.messages.push(message);
-				return chat.save();
 			}
+			return chat.save();
 		})
 		.then(() => {
 			// send email to user with event details
@@ -244,7 +240,7 @@ export function confirmEvent(req, res) {
 
 			emailCtrl.sendEmail(email_content);
 		})
-		.then(()=>res.sendStatus(204))
+		.then(() => res.sendStatus(204))
 		.catch(handleError(res))
 	;
 }

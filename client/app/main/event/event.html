@@ -153,7 +153,7 @@
             <div class="col s3" id="event-attendees">
                 <div class="event-attendees-card">
                     <div class="attendees-list" ng-show="vm.attendees.length > 0">
-                        <div class="row valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.get_confirmed_attendees()">
+                        <div class="row valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.confirmed">
                             <img class="event-profile-pic" src="{{ vm.get_profile_img(person.profile_picture) }}">
                             <div class="col-xs-9">
                                 <span class="attendee-name">{{person.name}}</span>

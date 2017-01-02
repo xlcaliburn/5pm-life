@@ -96,7 +96,7 @@
                     resetQueueForm();
                     new PNotify({
                         title: 'Queue Successful',
-                        text: 'You have been added to the queue.',
+                        text: 'You have been added to the queue. You will be notified when we find an event for you!',
                         type: 'success'
                     });
                 } else {

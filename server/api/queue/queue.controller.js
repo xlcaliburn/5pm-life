@@ -107,10 +107,9 @@ function getDecodedToken(token) {
 }
 
 export function getUserStatus(req, res) {
-	// check queue to see if user is in queue
-	// and return status
+	// check queue to see if user is in queue and return status
 	return User.findOne({ _id: req.user._id }).exec()
-	.then(function(user) {
+	.then(user => {
 		if (!user.event_status && !user.current_event) {
 			res.json({ queue: -1 });
 			throw new Error('Not in queue');
@@ -121,7 +120,7 @@ export function getUserStatus(req, res) {
 		}
 
 		return Events.findOne({ _id: user.current_event }).exec()
-		.then((event)=> {
+		.then(event => {
 			if (!event) {
 				res.status(401).end();
 				throw new Error('Unauthorized');

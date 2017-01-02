@@ -67,9 +67,34 @@
 				<label class="active" for="event_status">Event Status</label>
 			</div>
 		</div>
-		<div class="row" ng-hide="vm.user.event_status == null">
+		<div class="row" ng-hide="vm.user.event_status != Pending">
 			<div class="col s12" >
 				<h4>Search Parameters</h4>
+				<table class="table">
+					<thead>
+						<th>Parameter</th>
+						<th>Value</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>City</td>
+							<td>{{vm.queue.search_parameters.city}}</td>
+						</tr>
+						<tr>
+							<td>Target Start Time</td>
+							<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+						</tr>
+						<tr>
+							<td>Target End Time</td>
+							<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row" ng-hide="vm.user.event_status == Confirmed">
+			<div class="col s12" >
+				<h4><a ui-sref="admin.events.edit({ event_id: vm.user.current_event })">Event Details</a></h4>
 				<table class="table">
 					<thead>
 						<th>Parameter</th>
