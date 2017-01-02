@@ -214,7 +214,7 @@ export function confirmEvent(req, res) {
 					eventId: current_event,
 					messages: [message]
 				});
-				chatroom.save();
+				return chatroom.save();
 			} else {
 				message = new Message({
 				   	user: user._id,
@@ -222,7 +222,7 @@ export function confirmEvent(req, res) {
 				   	timestamp: new Date()
 				});
 				chat.messages.push(message);
-				chat.save();
+				return chat.save();
 			}
 		})
 		.then(() => {
@@ -307,7 +307,7 @@ export function leaveEvent(req, res) {
 
 	// User - change event_status = null
 	// User - change current_event = null
-	return Promise.resolve(User.findById(user_id).exec())
+	return User.findById(user_id).exec()
 	.then((user)=> {
 		user.event_status = null;
 		user.current_event = null;
@@ -316,22 +316,22 @@ export function leaveEvent(req, res) {
 			status: enums.event_status.LEFT.value
 		};
 		user.event_history.push(past_event);
-		user.save();
+		return user.save();
 	})
 	.then(() => {
 		// Event - remove user from event
-		return Promise.resolve(Events.findById(event_id).exec());
+		return Events.findById(event_id).exec();
 	})
-	.then(event => {
+	.then((event) => {
 		event.users.remove(user_id);
 		return event.save();
 	})
 	.then(() => {
 		// send chat message
 		var eventId = new mongoose.Types.ObjectId(event_id);
-		return Promise.resolve(Chat.findOne({eventId: eventId}).exec());
+		return Chat.findOne({eventId: eventId}).exec();
 	})
-	.then(chat => {
+	.then((chat) => {
 		var current_user = new mongoose.Types.ObjectId(user_id);
 		var leave_message = new Message({
 			user: current_user,
@@ -339,7 +339,7 @@ export function leaveEvent(req, res) {
 			timestamp: new Date()
 		});
 		chat.messages.push(leave_message);
-		chat.save();
+		return chat.save();
 	})
 	.then(()=>res.sendStatus(204))
 	.catch(handleError(res));
