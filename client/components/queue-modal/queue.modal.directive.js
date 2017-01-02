@@ -18,6 +18,7 @@
             link: function(scope) {
                 // Reset queue on event leave
                 $rootScope.$on('reset_queue', scope.qm.resetQueue);
+                $rootScope.$on('update_queue', scope.qm.getQueueStatus);
             }
         };
         return directive;
@@ -51,11 +52,12 @@
 
         // functions
         vm.cancelQueue = cancelQueue;
-        vm.viewEvent = viewEvent;
+        vm.getQueueStatus = getQueueStatus;
         vm.nextStage = nextStage;
         vm.openQueueModal = openQueueModal;
         vm.prevStage = prevStage;
         vm.resetQueue = resetQueue;
+        vm.viewEvent = viewEvent;
 
         init();
 
@@ -74,7 +76,7 @@
         function cancelQueue() {
             QueueService.cancelQueue()
             .then(function(res) {
-                getQueueStatus();
+                $rootScope.$emit('update_queue');
                 if (res.status === 200) {
                     new PNotify({
                         title: 'Queue Cancelled',
@@ -91,7 +93,7 @@
             .then(function(res) {
                 vm.error = res.data.error;
                 if (!vm.error) {
-                    getQueueStatus();
+                    $rootScope.$emit('update_queue');
                     angular.element('#queueModal').modal('hide');
                     resetQueueForm();
                     new PNotify({
@@ -179,7 +181,7 @@
                 eventSocket = socket.socket;
                 eventSocket.emit('join');
                 eventSocket.on('update_status', function() {
-                    getQueueStatus();
+                    $rootScope.$emit('update_queue');
                     angular.element('#eventFoundModal').modal('show');
                 });
                 eventSocket.on('message_error', function() {
@@ -234,7 +236,7 @@
 
         // Reset queue + queue form
         function resetQueue() {
-            getQueueStatus();
+            $rootScope.$emit('update_queue');
             resetQueueForm();
         }
 
