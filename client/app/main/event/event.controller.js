@@ -43,7 +43,6 @@
         vm.send_message = sendMessage;
         vm.view_attendees = viewAttendees;
 
-
         init();
 
         $scope.$on('$destroy', destroy);
@@ -341,10 +340,10 @@
         function leaveEvent() {
             $timeout(function() {
                 var event_details = {};
-                event_details._id = vm.event_data._id;
+                event_details.id = vm.event_data._id;
 
-                EventService.leaveEvent(event_details).then(function(data) {
-                    if (data.response.status === 'ok') {
+                EventService.leaveEvent(event_details).then(function(res) {
+                    if (res.status === 204) {
                         $state.go('home');
                         new PNotify({
                             title: 'Leave Event',

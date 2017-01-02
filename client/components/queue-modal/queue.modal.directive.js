@@ -5,7 +5,7 @@
     .directive('queueModal', QueueModalDirective);
 
     /** @ngInject */
-    function QueueModalDirective() {
+    function QueueModalDirective($rootScope) {
         var directive = {
             restrict: 'E',
             scope: true,
@@ -14,6 +14,10 @@
             controllerAs: 'qm',
             bindToController: {
                 mode: '@'
+            },
+            link: function(scope) {
+                // Reset queue on event leave
+                $rootScope.$on('reset_queue', scope.qm.resetQueue);
             }
         };
         return directive;
@@ -51,6 +55,7 @@
         vm.nextStage = nextStage;
         vm.openQueueModal = openQueueModal;
         vm.prevStage = prevStage;
+        vm.resetQueue = resetQueue;
 
         init();
 
@@ -63,9 +68,6 @@
             function(event, toState){
                 vm.current_state = toState.name;
             });
-
-            // Reset form on event
-            $rootScope.$on('reset_queue', resetQueueForm);
         }
 
         // Cancel event search
@@ -228,6 +230,12 @@
             vm.current_stage--;
             goToStage(vm.current_stage);
             vm.error = false;
+        }
+
+        // Reset queue + queue form
+        function resetQueue() {
+            getQueueStatus();
+            resetQueueForm();
         }
 
         // Reset the queue form
