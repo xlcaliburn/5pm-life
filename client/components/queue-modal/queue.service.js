@@ -1,9 +1,7 @@
-(function() {
-
-    'use strict';
+(function() { 'use strict';
     angular
-    .module('fivepmApp')
-    .factory('QueueService', QueueService);
+        .module('fivepmApp')
+        .factory('QueueService', QueueService);
 
     function QueueService($http) {
         return {
