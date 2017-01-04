@@ -53,12 +53,15 @@
 
 		function createQueue() {
 			if (vm.user.event_status !== null) { return; }
-			console.log(vm.user_id);
+
+			var d = new Date();
+			d.setHours(d.getHours() + 4);
+
 			var queue_object = {
 				user_id: vm.user_id,
 				tags: ['social'],
 				event_start: new Date(),
-				event_end: new Date(),
+				event_end: d,
 				city: 'Toronto'
 			};
 

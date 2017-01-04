@@ -4,7 +4,7 @@
 		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
 	<div class="row right-align">
-		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status == 'Pending'" ng-click="vm.unqueue()">Unqueue</button>
+		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status != null" ng-click="vm.unqueue()">Unqueue</button>
 		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
 	</div>
 	<div class="section">
@@ -19,7 +19,7 @@
 					<input ng-model="vm.user.last_name" name="last_name" type="text" class="validate">
 					<label class="active" for="last_name">Last Name</label>
 				</div>
-			</div>
+			</div>1
 			<div class="row">
 				<div class="input-field col s9">
 					<input ng-model="vm.user.email" name="email" type="email" class="validate">
