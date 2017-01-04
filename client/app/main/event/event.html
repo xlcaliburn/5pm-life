@@ -272,7 +272,7 @@
                             <a  ng-click="vm.confirm_event()" class="confirm-event-button">Join event</a>
                         </div>
                     </li>
-                    <li class="valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.get_confirmed_attendees()">
+                    <li class="valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.confirmed">
                         <img class="event-profile-pic" ng-src="{{ vm.get_profile_img(person.profile_picture) }}">
                         <div class="col-xs-9">
                             <span class="attendee-name">{{person.name}}</span>
