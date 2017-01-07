@@ -81,3 +81,16 @@ export function setTokenCookie(req, res) {
     res.cookie('token', token);
     res.redirect('/');
 }
+
+/**
+ * Set token cookie directly for oAuth strategies FOR MOBILE
+ */
+export function setMobileTokenCookie(req, res) {
+    if (!req.user) {
+        return res.status(404).send('It looks like you aren\'t logged in, please try again.');
+    } else {
+        var token = signToken(req.user._id, req.user.role);
+        res.cookie('token', token);
+        return res.status(200).json({token: token});
+    }
+}
