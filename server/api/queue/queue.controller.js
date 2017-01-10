@@ -226,11 +226,8 @@ var queue = {
 export function create(req, res) {
 	var error = false;
 	var queue = req.body;
+	queue.user_id = req.user._id;
 	var userid = req.user;
-	if (typeof(queue.user_id) !== 'undefined')
-	{
-		userid = queue.user_id;
-	}
 
 	validateQueueData(queue)
 	.then(function(result){
