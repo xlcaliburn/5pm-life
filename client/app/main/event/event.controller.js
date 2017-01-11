@@ -11,6 +11,7 @@
         // model
         vm.attendees = attendees;
         vm.event_data = event_data;
+        vm.tooltipPerson = {};
 
         // variables
         var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
@@ -43,6 +44,7 @@
         vm.scroll_chatbox = scrollChatbox;
         vm.send_message = sendMessage;
         vm.view_attendees = viewAttendees;
+        vm.setTooltipPerson = setTooltipPerson;
 
         init();
 
@@ -526,6 +528,10 @@
             });
         }
 
+        function setTooltipPerson(person) {
+          vm.tooltipPerson = person;
+            console.log(vm.tooltipPerson);
+        }
     }
 
 })();

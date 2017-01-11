@@ -153,13 +153,17 @@
             <div class="col s3" id="event-attendees">
                 <div class="event-attendees-card">
                     <div class="attendees-list" ng-show="vm.attendees.length > 0">
-                        <div class="row valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.confirmed">
+                        <div
+                          class="row valign-wrapper"
+                          ng-mouseenter="vm.setTooltipPerson(person)"
+                          ng-mouseleave="vm.setTooltipPerson({})"
+                          ng-repeat="person in vm.confirmed"
+                          uib-tooltip-template="'profileTooltip.html'"
+                          tooltip-placement='auto left'
+                        >
                             <img class="event-profile-pic" src="{{ vm.get_profile_img(person.profile_picture) }}">
                             <div class="col-xs-9">
-                                <span class="attendee-name">{{person.name}}</span>
-                                <div class="label attendee-adjective col-xs-12" ng-show="hovering" ng-repeat="adjective in person.adjectives">
-                                    {{ adjective }}
-                                </div>
+                                <span class="attendee-name">{{ person.name }}</span>
                             </div>
                         </div>
                     </div>
@@ -175,10 +179,10 @@
     <div class="row">
         <ul class="tabs mobile-event-tabs" style="display: block;">
             <li class="tab col s4">
-                <a class="active" href="#mobile-event-details" ng-mouseover="vm.resize_map($event);">Details</a>
+                <a class="active" href="#mobile-event-details" ng-click="vm.resize_map($event);">Details</a>
             </li>
             <li class="tab col s4">
-                <a href="#mobile-event-attendees" ng-mouseover="vm.view_attendees($event)">Going</a>
+                <a href="#mobile-event-attendees" ng-click="vm.view_attendees($event)">Going</a>
             </li>
             <li class="tab col s4" ng-class="{'disabled': vm.user_status == 'Pending User Confirmation'}">
                 <a href="#mobile-event-chat" ng-class="{'tooltipped': vm.user_status == 'Pending User Confirmation'}" data-position="bottom" data-delay="0" data-tooltip="Confirm event to chat!" ng-click="vm.scroll_chatbox()">Chat</a>
@@ -272,13 +276,17 @@
                             <a  ng-click="vm.confirm_event()" class="confirm-event-button">Join event</a>
                         </div>
                     </li>
-                    <li class="valign-wrapper" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-repeat="person in vm.confirmed">
+                    <li
+                      class="row valign-wrapper"
+                      ng-mouseenter="vm.setTooltipPerson(person)"
+                      ng-mouseleave="vm.setTooltipPerson({})"
+                      ng-repeat="person in vm.confirmed"
+                      uib-tooltip-template="'profileTooltip.html'"
+                      tooltip-placement='auto top'
+                    >
                         <img class="event-profile-pic" ng-src="{{ vm.get_profile_img(person.profile_picture) }}">
                         <div class="col-xs-9">
                             <span class="attendee-name">{{person.name}}</span>
-                            <div class="label attendee-adjective col-xs-12" ng-show="hovering" ng-repeat="adjective in person.adjectives">
-                                {{ adjective }}
-                            </div>
                         </div>
                     </li>
                 </ul>
@@ -324,3 +332,14 @@
         </div>
     </div>
 </div>
+
+<!-- Tooltip when hovering over attendees -->
+<script type="text/ng-template" id="profileTooltip.html">
+  <div class="tooltip-person">
+    <img class="event-profile-pic" src="{{ vm.get_profile_img(vm.tooltipPerson.profile_picture) }}">
+    <span class="attendee-name">{{ vm.tooltipPerson.name }}</span>
+    <span class="label attendee-adjective col-xs-12" ng-repeat="adjective in vm.tooltipPerson.adjectives">
+        {{ adjective }}
+    </span>
+  </div>
+</script>
