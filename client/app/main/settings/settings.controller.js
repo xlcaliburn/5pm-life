@@ -15,6 +15,7 @@
         vm.submit = submit;
         vm.getDate = getDate;
         vm.userEditModal = userEditModal;
+        vm.showAdjectiveEditPrompt = showAdjectiveEditPrompt;
 
         init();
 
@@ -76,6 +77,10 @@
             });
 
             modalInstance.result.then(() => {});
+        }
+
+        function showAdjectiveEditPrompt() {
+          return !vm.user.adjectives || vm.user.adjectives.length === 0;
         }
     }
 })();
