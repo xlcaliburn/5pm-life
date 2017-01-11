@@ -10,6 +10,8 @@
         vm.user = user;
         vm.addAdjective = addAdjective;
         vm.removeAdjective = removeAdjective;
+        vm.showAddAdjectiveRow = () =>
+          (!vm.user.adjectives || vm.user.adjectives.length < 3);
 
         function addAdjective(adjective){
             if(adjective){
@@ -18,7 +20,9 @@
                     if (adjective.length > 15){
                         adjective = adjective.substring(0,15);
                     }
-                    vm.user.adjectives.push(adjective);
+                    if (!vm.user.adjectives.includes(adjective)) {
+                      vm.user.adjectives.push(adjective);
+                    }
                     vm.adjectiveText = '';
                 }
             }
@@ -29,8 +33,10 @@
         }
 
         function submit(){
-            Users.updateById(vm.user._id, vm.user)
-            .then(() => {$uibModalInstance.close();});
+          addAdjective(vm.adjectiveText);
+
+          Users.updateById(vm.user._id, vm.user)
+          .then(() => {$uibModalInstance.close();});
         }
     }
 })();

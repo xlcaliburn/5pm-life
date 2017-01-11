@@ -24,7 +24,7 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-show="vm.showAddAdjectiveRow()">
                         <td>
                             <input class="input-row col s10" ng-model="vm.adjectiveText" type="text" placeholder="Add adjective..."/>
                             <a class="list-button-add" href="" ng-click="vm.addAdjective(vm.adjectiveText)"><i class="material-icons">add</i></a>
