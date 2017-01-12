@@ -19,7 +19,7 @@
 					<input ng-model="vm.user.last_name" name="last_name" type="text" class="validate">
 					<label class="active" for="last_name">Last Name</label>
 				</div>
-			</div>1
+			</div>
 			<div class="row">
 				<div class="input-field col s9">
 					<input ng-model="vm.user.email" name="email" type="email" class="validate">
@@ -40,11 +40,8 @@
 					<label class="active" for="birthday">Birthday</label>
 				</div>
 				<div class="input-field col s4">
-					<select
-						ng-model="vm.user.role"
-						ng-options="role for role in vm.allowed_roles">
-					</select>
-					<label>User Role</label>
+					<input ng-model="vm.user.role" name="role">
+					<label class="active" for="role">User Role</label>
 				</div>
 			</div>
 			<div class="row right-align">
@@ -67,7 +64,7 @@
 				<label class="active" for="event_status">Event Status</label>
 			</div>
 		</div>
-		<div class="row" ng-hide="vm.user.event_status != Pending">
+		<div class="row" ng-hide="vm.user.event_status != 'Pending'">
 			<div class="col s12" >
 				<h4>Search Parameters</h4>
 				<table class="table">
@@ -92,7 +89,7 @@
 				</table>
 			</div>
 		</div>
-		<div class="row" ng-hide="vm.user.event_status == Confirmed">
+		<div class="row" ng-show="vm.user.event_status == 'Confirmed'">
 			<div class="col s12" >
 				<h4><a ui-sref="admin.events.edit({ event_id: vm.user.current_event })">Event Details</a></h4>
 				<table class="table">
