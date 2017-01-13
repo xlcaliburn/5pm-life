@@ -27,6 +27,7 @@ export default function(app) {
 	app.use('/api/activities', require('./api/activities'));
 	app.use('/api/venues', require('./api/venues'));
 	app.use('/api/adminsettings', require('./api/adminsettings'));
+	app.use('/api/preferences', require('./api/preferences'));
 	app.use('/api/events', require('./api/events'));
 	app.use('/api/queue', require('./api/queue'));
 	app.use('/api/chat', require('./api/chat'));

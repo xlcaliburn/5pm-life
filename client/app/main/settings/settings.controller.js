@@ -6,8 +6,8 @@
     function SettingsController($scope, enumsData, SettingsService, userData, Users, $uibModal) {
         var vm = this;
         vm.user = userData;
-        vm.ethnicity = null;
-        vm.gender = null;
+        vm.ethnicity = vm.user.ethnicity;
+        vm.gender = vm.user.gender;
         vm.enums = enumsData;
         vm.getAge = () => moment().diff(vm.user.birthday, 'years');
         vm.getEthnicity = () => typeof vm.enums.ethnicity[vm.user.ethnicity] === 'undefined' ? vm.user.ethnicity : vm.enums.ethnicity[vm.user.ethnicity].value;
@@ -22,9 +22,12 @@
         init();
 
         function init() {
-            vm.gender = enumsData.gender[vm.user.gender].value;
-            vm.ethnicity = enumsData.ethnicity[vm.user.ethnicity].value;
-
+            if (enumsData.gender[vm.user.gender] !== null && enumsData.ethnicity[vm.user.ethnicity])
+            {
+                vm.gender = enumsData.gender[vm.user.gender].value;
+                vm.ethnicity = enumsData.ethnicity[vm.user.ethnicity].value;
+            }
+            
             $(document).ready(function(){
                 $('ul.tabs').tabs();
             });
