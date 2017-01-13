@@ -3,10 +3,6 @@
 	<section>
 		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
-	<div class="row right-align">
-		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status != null" ng-click="vm.unqueue()">Unqueue</button>
-		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
-	</div>
 	<div class="section">
 		<h3>General</h3>
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
@@ -54,9 +50,8 @@
 	<div class="section">
 		<h3>Queue/Event Status</h3>
 		<div class="row">
-			<div class="col s3">
-				<button class="btn waves-effect waves-light" ng-disabled ="vm.user.event_status != null" ng-click="vm.create_queue()" name="action">Quick Create</button>
-			</div>
+			<button class="btn waves-effect waves-light" ng-disabled ="vm.user.event_status != null" ng-click="vm.create_queue()" name="action">Quick Create</button>
+			<button class="btn red darken-4" ng-show="vm.user.event_status != null" ng-click="vm.unqueue()">Unqueue</button>
 		</div>
 		<div class="row">
 			<div class="input-field col s3">
