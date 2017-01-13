@@ -209,8 +209,8 @@ export function getUserVerification(req, res) {
 
 export function getQueueByUserid(req, res) {
 	var user_id= req.params.id;
-	Queue.findOne({ user: user_id }).exec()
-	.then(queue => { // don't ever give out the password or salt
+	Queue.findOne({ users: user_id }).exec()
+	.then(queue => {
 		if (!queue) {
 			// TODO: Fix 401 error loops
 			return res.status(200);

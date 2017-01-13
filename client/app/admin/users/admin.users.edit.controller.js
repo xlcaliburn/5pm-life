@@ -14,6 +14,7 @@
 		vm.submit = submit;
 		vm.create_queue = createQueue;
 		vm.unqueue = unqueue;
+		vm.date_format = function(date) {return moment(date).utc().format('h:mm a, MMMM DD, YYYY'); };
 
 		init();
 

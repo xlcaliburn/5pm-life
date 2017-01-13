@@ -80,11 +80,15 @@
 						</tr>
 						<tr>
 							<td>Target Start Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+							<td>{{vm.date_format(vm.queue.search_parameters.event_search_dt_start)}}</td>
 						</tr>
 						<tr>
 							<td>Target End Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+							<td>{{vm.date_format(vm.queue.search_parameters.event_search_dt_end)}}</td>
+						</tr>
+						<tr>
+							<td>Tags</td>
+							<td>{{vm.queue.search_parameters.tags}}</td>
 						</tr>
 					</tbody>
 				</table>
