@@ -86,12 +86,15 @@ export function index(req, res) {
 // Gets a single event from the DB
 export function show(req, res) {
 	var response = {};
-	return Promise.resolve(Events.findById(req.params.id)
-		.populate({
+	return Events.findById(req.params.id)
+		.populate([{
 				path:'users',
 				select: 'first_name last_name profile_picture status adjectives event_status'
-			})
-		.exec())
+			}, {
+				path:'queue',
+				select: 'users status'
+			}])
+		.exec()
 	.then(function(event) {
 		if (!event) {
 			throw('No event found');

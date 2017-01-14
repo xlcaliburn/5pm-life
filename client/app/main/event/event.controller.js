@@ -5,39 +5,36 @@
     .module('fivepmApp')
     .controller('EventController', EventController);
 
-    function EventController($cookies, $rootScope, $scope, $state, $stateParams, $timeout, $window, attendees, event_data, EventService, socket) {
+    function EventController($cookies, $rootScope, $scope, $state, $stateParams, $timeout, $window, event_data, EventService, socket) {
         var vm = this;
 
         vm.event_data = event_data;
-        vm.attendees = attendees;
-
-        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
-        var eventSocket;
-        var eventRoom = $stateParams.id;
-        var chatbox, chatbox_mobile;
-        var selfInfo = getSelfInfo();
-        var textarea;
-        var just_confirmed = false;
-        var focus_timeout;
-
+        vm.attendees = null;
         vm.chat_messages = [];
         vm.message_input = '';
-        vm.profile_picture = getProfileImg(selfInfo.profile_picture);
         vm.confirm_event = confirmEvent;
         vm.decline_event = declineEvent;
         //vm.get_confirmed_attendees = getConfirmedAttendees;
         vm.confirmed = [];
-        vm.get_event_date = function(date) { return moment(date).format('dddd, MMMM D, YYYY');};
+        vm.get_event_date = function(date) { return moment(date).format('dddd, MMMM D, YYYY'); };
         vm.get_event_time = function() { return moment(vm.event_data.dt_start).format('h:mmA') + ' to ' + moment(vm.event_data.dt_end).format('h:mmA'); };
         vm.get_googlemaps_link = function() { return 'http://maps.google.com/?q=' + vm.event_data.venue.venue_name + ',' + vm.event_data.venue.address.city; };
         vm.hide_navbar = hideNavbar;
         vm.leave_event = leaveEvent;
-        vm.get_profile_img = getProfileImg;
+        vm.get_profile_img = function(image_name) { return image_name; };
         vm.open_leave_modal = function() { angular.element('#leave-modal').openModal(); };
         vm.resize_map = resizeMap;
         vm.scroll_chatbox = scrollChatbox;
         vm.send_message = sendMessage;
         vm.view_attendees = function() { event.currentTarget.click(); };
+
+        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
+        var eventSocket;
+        var eventRoom = $stateParams.id;
+        var chatbox, chatbox_mobile;
+        var textarea;
+        var just_confirmed = false;
+        var focus_timeout;
 
         $scope.$on('$destroy', destroy);
 
@@ -46,7 +43,7 @@
         function init() {
             $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
 
-            console.log(event_data);
+            console.log(vm.event_data);
             // remove bg
             angular.element('body').addClass('event');
             angular.element('.wrap').addClass('event');
@@ -249,18 +246,6 @@
             }
         }
 
-        // get self info
-        function getSelfInfo() {
-            for (var i = 0; i < vm.attendees.length;i++) {
-                if (vm.attendees[i].status) {
-                    return {
-                        name: vm.attendees[i].name,
-                        profile_picture: vm.attendees[i].profile_picture
-                    };
-                }
-            }
-        }
-
         // gets list of confirmed attendees
         function setConfirmedAttendees() {
             var attendees_array = [];
@@ -274,11 +259,6 @@
                 //}
             }
             vm.confirmed = attendees_array;
-        }
-
-        // return user profile image
-        function getProfileImg(image_name) {
-            return image_name;
         }
 
         // init materialize plugins
