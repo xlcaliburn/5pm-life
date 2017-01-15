@@ -104,16 +104,16 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>City</td>
-							<td>{{vm.queue.search_parameters.city}}</td>
+							<td>Activity</td>
+							<td>{{vm.user.current_event.activity.activity_name}}</td>
 						</tr>
 						<tr>
-							<td>Target Start Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+							<td>Event Start Time</td>
+							<td>{{vm.date_format(vm.user.current_event.dt_start)}}</td>
 						</tr>
 						<tr>
-							<td>Target End Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+							<td>Event End Time</td>
+							<td>{{vm.date_format(vm.user.current_event.dt_end)}}</td>
 						</tr>
 					</tbody>
 				</table>

@@ -28,7 +28,7 @@
         vm.send_message = sendMessage;
         vm.view_attendees = function() { event.currentTarget.click(); };
 
-        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
+        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow;
         var eventSocket;
         var eventRoom = $stateParams.id;
         var chatbox, chatbox_mobile;
@@ -146,15 +146,13 @@
 
             geocoder.geocode({ 'address': address }, function(res, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
-                    lat = res[0].geometry.location.lat();
-                    lng = res[0].geometry.location.lng();
-                    initMap();
+                    initMap(res[0].geometry.location.lat(), res[0].geometry.location.lng());
                 }
             });
         }
 
         // init google maps using coordinates from address
-        function initMap() {
+        function initMap(lat, lng) {
             var draggable = ($window.innerWidth > 768);
             var myOptions = {
                 zoom: 14,

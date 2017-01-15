@@ -120,7 +120,9 @@ export function create(req, res, next) {
 export function show(req, res, next) {
 	var userId = req.params.id;
 
-	return User.findById(userId).exec()
+	return User.findById(userId)
+		.populate('current_event')
+		.exec()
 		.then(user => {
 			return res.status(200).json(user);
 		})
