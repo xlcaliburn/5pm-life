@@ -226,45 +226,55 @@ var queue = {
 export function create(req, res) {
 	var error = false;
 	var queue = req.body;
-	queue.user_id = req.user._id;
-	var userid = req.user;
+
+	if (!req.body.user_id){
+		queue.user_id = req.user._id;
+	}
+
+	Queue.findOne({ users: queue.user_id }).exec()
+	.then(queue => {
+		if (queue) {
+			return res.status(400).end();
+		}
+	});
 
 	validateQueueData(queue)
-	.then(function(result){
-		// return an error when validations do not work
-		error = result;
-		if (error) {
-			console.log(error);
-			res.json({ error: error });
-			throw new Error('Error while creating queue');
-		}
-		// create the queue after passing the validations
-		var queue_object = {
-			users: [userid],
-			status: 'Searching',
-			search_parameters: {
-				tags: queue.tags,
-				event_search_dt_start: queue.event_start,
-				event_search_dt_end: queue.event_end,
-				city: queue.city
-			},
-			queue_start_time: new Date()
-		};
+		.then(function(result){
+			// return an error when validations do not work
+			error = result;
+			if (error) {
+				console.log(error);
+				res.json({ error: error });
+				throw new Error('Error while creating queue');
+			}
+			// create the queue after passing the validations
+			var queue_object = {
+				users: [queue.user_id],
+				status: 'Searching',
+				search_parameters: {
+					tags: queue.tags,
+					event_search_dt_start: queue.event_start,
+					event_search_dt_end: queue.event_end,
+					city: queue.city
+				},
+				queue_start_time: new Date()
+			};
 
-		return Queue.create(queue_object)
-		.then(function(){
-			return User.findById(userid);
-		})
-		.then(function(user){
-			user.event_status = 'Pending';
-			return user.save();
-		})
-		.then(function(){
-			return res.json({ error: false });
-		})
-		.catch(()=>handleError(res));
+			return Queue.create(queue_object)
+			.then(function(){
+				return User.findById(queue.user_id);
+			})
+			.then(function(user){
+				user.event_status = 'Pending';
+				return user.save();
+			})
+			.then(function(){
+				return res.json({ error: false });
+			})
+			.catch(()=>handleError(res));
 
-	});
+		})
+	;
 }
 /*=====================================*/
 
