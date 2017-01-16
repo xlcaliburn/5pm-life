@@ -236,7 +236,7 @@
     <!-- cancel queue -->
     <div id="cancel-queue" ng-if="qm.queue_status == 'Pending'">
         <div class="searching-text">
-            Searching for event<br />
+            Searching for event<span class="hidden-sm">...</span><br />
             <span class="subtext">You will be notified via email</span>
         </div>
         <div class="cancel-button-spinner"></div>
@@ -249,6 +249,11 @@
                 <i class="material-icons">close</i>
             </button>
         </span>
+        <div class="mobile-button-container">
+            <button data-toggle="modal" data-target="#cancelQueueModal" ng-click="navbar.mobile_nav_open = !navbar.mobile_nav_open">
+                Cancel
+            </button>
+        </div>
     </div>
 
     <!-- go to event button -->

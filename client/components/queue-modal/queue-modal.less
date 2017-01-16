@@ -385,6 +385,8 @@
             }
         }
 
+        .mobile-button-container { display: none; }
+
         @-moz-document url-prefix() {
             .cancel-button {
                 top: 2px;
@@ -409,6 +411,36 @@
             .searching-text { left: 0; }
             .cancel-button { right: 0%; }
             .cancel-button-spinner { right: ~"calc(0% - 5px)"; }
+        }
+
+        @media screen and (max-width: 767px) {
+            position: relative;
+            .subtext, .cancel-button, .cancel-button-spinner { display: none; }
+            .searching-text {
+                position: static;
+                font-size: 1rem;
+                font-weight: 400;
+                color: @white;
+                text-transform: capitalize;
+                letter-spacing: normal;
+                text-align: center;
+                height: auto;
+            }
+            .mobile-button-container {
+                display: block;
+                margin-top: 1rem;
+
+                button {
+                    background-color: transparent;
+                    color: @white;
+                    height: 2.7rem;
+                    line-height: 2.6rem;
+                    border: 2px solid @white;
+                    border-radius: 0.1rem;
+                    font-weight: 300;
+                    padding: 0 2.6rem;
+                }
+            }
         }
     }
 
