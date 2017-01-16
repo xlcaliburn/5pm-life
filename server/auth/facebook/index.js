@@ -5,6 +5,7 @@ import passport from 'passport';
 import config from '../../config/environment';
 import {setTokenCookie} from '../auth.service';
 import {setMobileTokenCookie} from '../auth.service';
+import {getTokenCookie} from '../auth.service';
 
 var router = express.Router();
 
@@ -15,6 +16,7 @@ router
     session: false,
     callbackURL: config.facebook.callbackURL
   }))
+  .get('/mobile/:fbid', getTokenCookie)
   .get('/mobileCallback', passport.authenticate('facebook', {
       session: false,
       mobile: true,
