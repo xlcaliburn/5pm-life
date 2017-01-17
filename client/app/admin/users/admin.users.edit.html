@@ -3,10 +3,6 @@
 	<section>
 		<a ui-sref="admin.users">Users</a> > {{vm.user.first_name + " " + vm.user.last_name}}
 	</section>
-	<div class="row right-align">
-		<button class="btn waves-effect waves-light" ng-show="vm.user.event_status != null" ng-click="vm.unqueue()">Unqueue</button>
-		<button class="btn red darken-4" name="Delete" value="Delete" ng-really-message="Are you sure?" ng-really-click="vm.delete_user()">Delete</button>
-	</div>
 	<div class="section">
 		<h3>General</h3>
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
@@ -19,7 +15,7 @@
 					<input ng-model="vm.user.last_name" name="last_name" type="text" class="validate">
 					<label class="active" for="last_name">Last Name</label>
 				</div>
-			</div>1
+			</div>
 			<div class="row">
 				<div class="input-field col s9">
 					<input ng-model="vm.user.email" name="email" type="email" class="validate">
@@ -40,11 +36,14 @@
 					<label class="active" for="birthday">Birthday</label>
 				</div>
 				<div class="input-field col s4">
-					<select
-						ng-model="vm.user.role"
-						ng-options="role for role in vm.allowed_roles">
-					</select>
-					<label>User Role</label>
+					<input ng-model ="vm.user.ethnicity" name="ethnicity">
+					<label class="active" for="ethnicity">Ethnicity</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<input ng-model="vm.user.role" name="role">
+					<label class="active" for="role">User Role</label>
 				</div>
 			</div>
 			<div class="row right-align">
@@ -57,9 +56,8 @@
 	<div class="section">
 		<h3>Queue/Event Status</h3>
 		<div class="row">
-			<div class="col s3">
-				<button class="btn waves-effect waves-light" ng-disabled ="vm.user.event_status != null" ng-click="vm.create_queue()" name="action">Quick Create</button>
-			</div>
+			<button class="btn waves-effect waves-light" ng-disabled ="vm.user.event_status != null" ng-click="vm.create_queue()" name="action">Quick Create</button>
+			<button class="btn red darken-4" ng-show="vm.user.event_status != null" ng-click="vm.unqueue()">Unqueue</button>
 		</div>
 		<div class="row">
 			<div class="input-field col s3">
@@ -67,7 +65,7 @@
 				<label class="active" for="event_status">Event Status</label>
 			</div>
 		</div>
-		<div class="row" ng-hide="vm.user.event_status != Pending">
+		<div class="row" ng-hide="vm.user.event_status != 'Pending'">
 			<div class="col s12" >
 				<h4>Search Parameters</h4>
 				<table class="table">
@@ -82,17 +80,21 @@
 						</tr>
 						<tr>
 							<td>Target Start Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+							<td>{{vm.date_format(vm.queue.search_parameters.event_search_dt_start)}}</td>
 						</tr>
 						<tr>
 							<td>Target End Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+							<td>{{vm.date_format(vm.queue.search_parameters.event_search_dt_end)}}</td>
+						</tr>
+						<tr>
+							<td>Tags</td>
+							<td>{{vm.queue.search_parameters.tags}}</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="row" ng-hide="vm.user.event_status == Confirmed">
+		<div class="row" ng-show="vm.user.event_status == 'Confirmed'">
 			<div class="col s12" >
 				<h4><a ui-sref="admin.events.edit({ event_id: vm.user.current_event })">Event Details</a></h4>
 				<table class="table">
@@ -102,16 +104,16 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>City</td>
-							<td>{{vm.queue.search_parameters.city}}</td>
+							<td>Activity</td>
+							<td>{{vm.user.current_event.activity.activity_name}}</td>
 						</tr>
 						<tr>
-							<td>Target Start Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_start}}</td>
+							<td>Event Start Time</td>
+							<td>{{vm.date_format(vm.user.current_event.dt_start)}}</td>
 						</tr>
 						<tr>
-							<td>Target End Time</td>
-							<td>{{vm.queue.search_parameters.event_search_dt_end}}</td>
+							<td>Event End Time</td>
+							<td>{{vm.date_format(vm.user.current_event.dt_end)}}</td>
 						</tr>
 					</tbody>
 				</table>

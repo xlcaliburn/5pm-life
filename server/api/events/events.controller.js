@@ -86,12 +86,15 @@ export function index(req, res) {
 // Gets a single event from the DB
 export function show(req, res) {
 	var response = {};
-	return Promise.resolve(Events.findById(req.params.id)
-		.populate({
+	return Events.findById(req.params.id)
+		.populate([{
 				path:'users',
 				select: 'first_name last_name profile_picture status adjectives event_status'
-			})
-		.exec())
+			}, {
+				path:'queue',
+				select: 'users status'
+			}])
+		.exec()
 	.then(function(event) {
 		if (!event) {
 			throw('No event found');
@@ -195,7 +198,7 @@ export function confirmEvent(req, res) {
 
 		})
 		.then(() => {
-			return Events.findByIdAndUpdate(email_data.id, { $pull : {'queue' : q._id} }).exec();
+			return Events.findByIdAndUpdate(email_data._id, { $pull : {'queue' : q._id} }).exec();
 		})
 		.then(event => {
 			ev_id = event._id;
@@ -248,16 +251,14 @@ export function confirmEvent(req, res) {
 // user declines an event inside event confirmation
 export function declineEvent(req, res) {
 	var response = {};
-	var event_id = req.body.id;
+	var event_id = req.body._id;
 	var token = req.cookies.token;
 	var token_result = userController.getDecodedToken(token);
 	var queue_id;
-
-	// Queue table - change user status to 'Pending'
-	var user_id = new mongoose.Types.ObjectId(token_result._id);
+	var user_id = req.user._id;
 
 	return Queue.findOne({ users: user_id }).exec()
-	.then((queue) => {
+	.then(queue => {
 		if (!queue) {
 			throw('Unauthorized');
 		}
@@ -265,20 +266,15 @@ export function declineEvent(req, res) {
 		queue.status = 'Searching';
 		queue.save();
 	})
-	.then(function() {
-		return Promise.resolve(Events.findById(event_id).exec());
-	})
-	.then((event) => {
+	.then(() => Events.findById(event_id).exec())
+	.then(event => {
 		// Event table - remove user and queue from event
 		event.users.remove(user_id);
 		event.queue.remove(queue_id);
 		event.save();
+		return User.findById(user_id).exec();
 	})
-	.then(() => {
-		// User table - Change event_status and current_event to null
-		return Promise.resolve(User.findById(token_result._id).exec());
-	})
-	.then((user) => {
+	.then(user => {
 		user.event_status = 'Pending';
 		user.current_event = null;
 

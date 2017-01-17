@@ -120,7 +120,9 @@ export function create(req, res, next) {
 export function show(req, res, next) {
 	var userId = req.params.id;
 
-	return User.findById(userId).exec()
+	return User.findById(userId)
+		.populate('current_event')
+		.exec()
 		.then(user => {
 			return res.status(200).json(user);
 		})
@@ -209,8 +211,8 @@ export function getUserVerification(req, res) {
 
 export function getQueueByUserid(req, res) {
 	var user_id= req.params.id;
-	Queue.findOne({ user: user_id }).exec()
-	.then(queue => { // don't ever give out the password or salt
+	Queue.findOne({ users: user_id }).exec()
+	.then(queue => {
 		if (!queue) {
 			// TODO: Fix 401 error loops
 			return res.status(200);

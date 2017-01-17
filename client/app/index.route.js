@@ -107,23 +107,6 @@
 
 						return res.data.response.event_model;
 					});
-				},
-				attendees: function($q, $state, $stateParams, EventService) {
-					var event_id = $stateParams.id;
-
-					return EventService.getEventAttendees(event_id).then(function(res) {
-						if (res.data.response.status === 'ok') {
-							return res.data.response.attendees;
-						} else {
-							return $q.reject().catch(function() {
-								$state.go('home');
-							});
-						}
-					}).catch(function() {
-						return $q.reject().catch(function() {
-							$state.go('home');
-						});
-					});
 				}
 			}
 		})

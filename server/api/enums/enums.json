@@ -51,6 +51,12 @@
         "FEMALE": {"order": 2, "value": "Female"},
         "UNDISCLOSED": {"order": 3, "value": "Prefer not to disclose"}
     },
+    "role": {
+        "SUPERADMIN": {"order": 1, "value": "Superadmin"},
+        "ADMIN": {"order": 2, "value": "Admin"},
+        "MODERATOR": {"order": 3, "value" :"Moderator"},
+        "USER": {"order": 4, "value": "User"}
+    },
     "feedback_type": {
         "BUG": {"order": 1, "value": "Bug"},
         "FEATURE": {"order": 2, "value": "Feature"},

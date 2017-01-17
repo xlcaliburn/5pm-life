@@ -5,12 +5,11 @@
     .module('fivepmApp')
     .controller('EventController', EventController);
 
-    function EventController($cookies, $rootScope, $scope, $state, $stateParams, $timeout, $window, attendees, event_data, EventService, socket) {
+    function EventController($cookies, $rootScope, $scope, $state, $stateParams, $timeout, $window, event_data, EventService, socket) {
         var vm = this;
 
-        // model
-        vm.attendees = attendees;
         vm.event_data = event_data;
+<<<<<<< HEAD
         vm.tooltipPerson = {};
 
         // variables
@@ -24,45 +23,51 @@
         var focus_timeout;
 
         // view
+=======
+        vm.attendees = null;
+>>>>>>> 954485f1fb2f0198cab7fe4aaca08316442bcf2b
         vm.chat_messages = [];
         vm.message_input = '';
-        vm.profile_picture = getProfileImg(selfInfo.profile_picture);
-
-        // functions
         vm.confirm_event = confirmEvent;
         vm.decline_event = declineEvent;
         //vm.get_confirmed_attendees = getConfirmedAttendees;
         vm.confirmed = [];
-        vm.get_event_date = getEventDate;
-        vm.get_event_time = getEventTime;
-        vm.get_googlemaps_link = getGoogleMapsLink;
+        vm.get_event_date = function(date) { return moment(date).format('dddd, MMMM D, YYYY'); };
+        vm.get_event_time = function() { return moment(vm.event_data.dt_start).format('h:mmA') + ' to ' + moment(vm.event_data.dt_end).format('h:mmA'); };
+        vm.get_googlemaps_link = function() { return 'http://maps.google.com/?q=' + vm.event_data.venue.venue_name + ',' + vm.event_data.venue.address.city; };
         vm.hide_navbar = hideNavbar;
         vm.leave_event = leaveEvent;
-        vm.get_profile_img = getProfileImg;
-        vm.open_leave_modal = openLeaveModal;
+        vm.get_profile_img = function(image_name) { return image_name; };
+        vm.open_leave_modal = function() { angular.element('#leave-modal').openModal(); };
         vm.resize_map = resizeMap;
         vm.scroll_chatbox = scrollChatbox;
         vm.send_message = sendMessage;
-        vm.view_attendees = viewAttendees;
+        vm.view_attendees = function() { event.currentTarget.click(); };
         vm.setTooltipPerson = setTooltipPerson;
 
-        init();
+        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow;
+        var eventSocket;
+        var eventRoom = $stateParams.id;
+        var chatbox, chatbox_mobile;
+        var textarea;
+        var just_confirmed = false;
+        var focus_timeout;
 
         $scope.$on('$destroy', destroy);
 
+        init();
+
         function init() {
-            // set page title
             $rootScope.title = vm.event_data.activity.activity_name + ' at ' + vm.event_data.venue.venue_name;
 
+            console.log(vm.event_data);
             // remove bg
             angular.element('body').addClass('event');
             angular.element('.wrap').addClass('event');
             angular.element('body').addClass('gmap');
 
             // leave modal
-            $timeout(function() {
-                angular.element('.modal-trigger').leanModal();
-            });
+            $timeout(function() { angular.element('.modal-trigger').leanModal(); });
 
             setConfirmedAttendees();
             getLatLng();
@@ -106,21 +111,7 @@
 
         // confirm event confirmation
         function confirmEvent() {
-            var event_details = {
-                id: vm.event_data._id,
-                activity: vm.event_data.activity.activity_name,
-                venue: vm.event_data.venue.venue_name,
-                date: getEventDate(),
-                time: getEventTime(),
-                street: vm.event_data.venue.address.street,
-                city: vm.event_data.venue.address.city,
-                province: vm.event_data.venue.address.province,
-                postal_code: vm.event_data.venue.address.postal_code,
-                gmaps_link: getGoogleMapsLink(),
-                attendees: vm.confirmed
-            };
-
-            EventService.confirmEvent(event_details)
+            EventService.confirmEvent(vm.event_data)
                 .then(() => {
                     just_confirmed = true;
                     getSelfStatus(true);
@@ -138,23 +129,20 @@
 
         // decline event confirmation
         function declineEvent() {
-            var event_details = {
-                id: vm.event_data._id
-            };
-
-            EventService.declineEvent(event_details)
-            .then(()=> {
-                $state.go('home');
-                new PNotify({
-                    title: 'Decline Event',
-                    text: 'You have declined the event and will be placed back into queue.',
-                    type: 'info',
-                    delay: 8000
-                });
-            })
-            .catch(function() {
-                $state.go('home');
-            });
+            EventService.declineEvent(vm.event_data)
+                .then(()=> {
+                    $state.go('home');
+                    new PNotify({
+                        title: 'Decline Event',
+                        text: 'You have declined the event and will be placed back into queue.',
+                        type: 'info',
+                        delay: 8000
+                    });
+                })
+                .catch(function() {
+                    $state.go('home');
+                })
+            ;
         }
 
         // revert everything back to before event
@@ -175,17 +163,14 @@
 
             geocoder.geocode({ 'address': address }, function(res, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
-                    lat = res[0].geometry.location.lat();
-                    lng = res[0].geometry.location.lng();
-                    initMap();
+                    initMap(res[0].geometry.location.lat(), res[0].geometry.location.lng());
                 }
             });
         }
 
         // init google maps using coordinates from address
-        function initMap() {
+        function initMap(lat, lng) {
             var draggable = ($window.innerWidth > 768);
-
             var myOptions = {
                 zoom: 14,
                 center: {lat: lat, lng: lng},
@@ -205,10 +190,7 @@
                     options: myOptions
                 });
 
-                infowindow = new google.maps.InfoWindow({
-                    content: vm.event_data.venue.venue_name
-                });
-
+                infowindow = new google.maps.InfoWindow({ content : vm.event_data.venue.venue_name });
                 marker = new google.maps.Marker({
                     position: {lat: lat, lng: lng},
                     map: map,
@@ -227,10 +209,7 @@
                     options: myOptions
                 });
 
-                mobile_infowindow = new google.maps.InfoWindow({
-                    content: vm.event_data.venue.venue_name
-                });
-
+                mobile_infowindow = new google.maps.InfoWindow({ content: vm.event_data.venue.venue_name });
                 mobile_marker = new google.maps.Marker({
                     position: {lat: lat, lng: lng},
                     map: mobile_gmap,
@@ -282,18 +261,6 @@
             }
         }
 
-        // get self info
-        function getSelfInfo() {
-            for (var i = 0; i < vm.attendees.length;i++) {
-                if (vm.attendees[i].status) {
-                    return {
-                        name: vm.attendees[i].name,
-                        profile_picture: vm.attendees[i].profile_picture
-                    };
-                }
-            }
-        }
-
         // gets list of confirmed attendees
         function setConfirmedAttendees() {
             var attendees_array = [];
@@ -309,26 +276,6 @@
             vm.confirmed = attendees_array;
         }
 
-        // return user profile image
-        function getProfileImg(image_name) {
-            return image_name;
-        }
-
-        // extract date from event date
-        function getEventDate() {
-            var date = new Date(vm.event_data.dt_start);
-            return moment(date).format('dddd, MMMM D, YYYY');
-        }
-
-        // extract event start and end time
-        function getEventTime() {
-            var start_date = new Date(vm.event_data.dt_start);
-            var end_date = new Date(vm.event_data.dt_end);
-            var start_time = moment(start_date).format('h:mmA');
-            var end_time = moment(end_date).format('h:mmA');
-            return start_time + ' to ' + end_time;
-        }
-
         // init materialize plugins
         function initPlugins() {
             // tooltips
@@ -338,10 +285,6 @@
                 angular.element('ul.tabs').tabs();
                 angular.element('.footer').css('display', 'none');
             }, 500);
-        }
-
-        function getGoogleMapsLink() {
-            return 'http://maps.google.com/?q=' + vm.event_data.venue.venue_name + ',' + vm.event_data.venue.address.city;
         }
 
         // leave event because they cannot make it
@@ -424,11 +367,6 @@
             }
         }
 
-        // open leave modal
-        function openLeaveModal() {
-            angular.element('#leave-modal').openModal();
-        }
-
         // receive message from server
         function receiveMessage(message) {
             var message_text = message.message.trim().replace(/ +/g, ' ');
@@ -451,10 +389,6 @@
             }
 
             scrollChatbox();
-        }
-
-        function viewAttendees(event) {
-            event.currentTarget.click();
         }
 
         // resize google maps on details page
@@ -485,19 +419,16 @@
             };
 
             eventSocket.emit('send_message', data);
-
             vm.message_input = '';
         }
 
         // toggle navbar based on if chat input is focused
         function hideNavbar(hide) {
-            if (hide) {
-                // ngFocus
+            if (hide) { // ngFocus
                 angular.element('.mobile-navbar').addClass('focus');('display', 'none');
                 angular.element('.wrap').addClass('focus');
                 angular.element('.mobile-chat-area').css('max-height', '100%');
-            } else {
-                //ngBlur
+            } else { //ngBlur
                 focus_timeout = $timeout(function() {
                     if (angular.element('.mobile-event-tabs').is(':visible')) {
                         angular.element('.mobile-navbar').removeClass('focus');
@@ -533,5 +464,4 @@
             console.log(vm.tooltipPerson);
         }
     }
-
 })();

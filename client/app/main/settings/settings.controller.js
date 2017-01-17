@@ -6,10 +6,13 @@
     function SettingsController($scope, enumsData, SettingsService, userData, Users, $uibModal) {
         var vm = this;
         vm.user = userData;
+        vm.ethnicity = vm.user.ethnicity;
+        vm.gender = vm.user.gender;
         vm.enums = enumsData;
         vm.getAge = () => moment().diff(vm.user.birthday, 'years');
         vm.getEthnicity = () => typeof vm.enums.ethnicity[vm.user.ethnicity] === 'undefined' ? vm.user.ethnicity : vm.enums.ethnicity[vm.user.ethnicity].value;
         vm.getGender = () => vm.enums.gender[vm.user.gender].value;
+        vm.formatted_birthday = null;
         vm.selectImage = selectImage;
         vm.uploadImage = uploadImage;
         vm.submit = submit;
@@ -20,8 +23,15 @@
         init();
 
         function init() {
+            if (enumsData.gender[vm.user.gender] !== null && enumsData.ethnicity[vm.user.ethnicity])
+            {
+                vm.gender = enumsData.gender[vm.user.gender].value;
+                vm.ethnicity = enumsData.ethnicity[vm.user.ethnicity].value;
+            }
+            vm.formatted_birthday = moment(vm.user.birthday).local().format('MMMM DD, YYYY');
             $(document).ready(function(){
                 $('ul.tabs').tabs();
+                materialize_select();
             });
         }
 

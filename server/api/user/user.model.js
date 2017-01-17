@@ -55,7 +55,11 @@ var UserSchema = new Schema({
 		past : [String]
 	},
 	description : String,
-	adjectives : [String],
+	adjectives : {
+		first : String,
+		second : String,
+		third : String
+	},
 	languages : {
 		primary : String,
 		secondary : String

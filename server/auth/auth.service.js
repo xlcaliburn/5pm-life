@@ -94,3 +94,12 @@ export function setMobileTokenCookie(req, res) {
         return res.status(200).json({token: token});
     }
 }
+
+export function getTokenCookie(req, res) {
+    return User.findOne({'facebook.id': req.params.fbid})
+        .then((user) => {
+            var token = signToken(req.user._id, req.user.role);
+            res.cookie('token', token);
+            return res.status(200).json({token: token});
+        });
+}
