@@ -9,23 +9,10 @@
         var vm = this;
 
         vm.event_data = event_data;
-<<<<<<< HEAD
         vm.tooltipPerson = {};
 
-        // variables
-        var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow, lat, lng;
-        var eventSocket;
-        var eventRoom = $stateParams.id;
-        var chatbox, chatbox_mobile;
-        var selfInfo = getSelfInfo();
-        var textarea;
-        var just_confirmed = false;
-        var focus_timeout;
-
         // view
-=======
         vm.attendees = null;
->>>>>>> 954485f1fb2f0198cab7fe4aaca08316442bcf2b
         vm.chat_messages = [];
         vm.message_input = '';
         vm.confirm_event = confirmEvent;
