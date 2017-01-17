@@ -9,9 +9,6 @@
         var vm = this;
 
         vm.event_data = event_data;
-        vm.tooltipPerson = {};
-
-        // view
         vm.attendees = null;
         vm.chat_messages = [];
         vm.message_input = '';
@@ -30,7 +27,6 @@
         vm.scroll_chatbox = scrollChatbox;
         vm.send_message = sendMessage;
         vm.view_attendees = function() { event.currentTarget.click(); };
-        vm.setTooltipPerson = setTooltipPerson;
 
         var map, mobile_gmap, marker, mobile_marker, infowindow, mobile_infowindow;
         var eventSocket;
@@ -446,11 +442,6 @@
                 chatbox.scrollTop(chatbox.prop('scrollHeight'));
                 chatbox_mobile.scrollTop(chatbox_mobile.prop('scrollHeight'));
             }, delay);
-        }
-
-        function setTooltipPerson(person) {
-          vm.tooltipPerson = person;
-            console.log(vm.tooltipPerson);
         }
     }
 })();
