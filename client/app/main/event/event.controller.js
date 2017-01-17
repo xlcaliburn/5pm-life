@@ -408,9 +408,10 @@
         // toggle navbar based on if chat input is focused
         function hideNavbar(hide) {
             if (hide) { // ngFocus
-                angular.element('.mobile-navbar').addClass('focus');('display', 'none');
+                angular.element('.mobile-navbar').addClass('focus');
                 angular.element('.wrap').addClass('focus');
-                angular.element('.mobile-chat-area').css('max-height', '100%');
+                //angular.element('.mobile-chat-area').css('max-height', '100%');
+                scrollChatbox(400);
             } else { //ngBlur
                 focus_timeout = $timeout(function() {
                     if (angular.element('.mobile-event-tabs').is(':visible')) {
@@ -428,7 +429,8 @@
         }
 
         // scroll chatbox to bottom
-        function scrollChatbox() {
+        function scrollChatbox(time) {
+            var delay = time || 0;
             $timeout(function() {
                 if (!chatbox) {
                     chatbox = angular.element('.chat-area');
@@ -439,7 +441,7 @@
                 }
                 chatbox.scrollTop(chatbox.prop('scrollHeight'));
                 chatbox_mobile.scrollTop(chatbox_mobile.prop('scrollHeight'));
-            });
+            }, delay);
         }
     }
 })();
