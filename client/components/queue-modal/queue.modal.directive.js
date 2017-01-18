@@ -39,7 +39,8 @@
                 active: false,
                 social: false
             },
-            location: null
+            location: null,
+            email: null
         };
 
         // variables
@@ -47,6 +48,7 @@
         vm.event = null;
         vm.current_stage = 1;
         vm.current_state;
+        vm.num_stages = 5;
         vm.queue_status = null;
         var eventSocket;
 
@@ -112,8 +114,11 @@
                         angular.element('#queueModal').modal('hide');
                         resetQueueForm();
                     } else {
-                        vm.current_stage = vm.error.stage;
-                        goToStage(vm.error.stage);
+                        new PNotify({
+                            title: 'Queue Error',
+                            text: 'Error processing queue. Please check your fields.',
+                            type: 'error'
+                        });
                     }
                 }
             })
@@ -211,7 +216,7 @@
 
         // Go to next queue stage
         function nextStage() {
-            if (vm.current_stage === 4) { confirmQueue(); return; }
+            if (vm.current_stage === vm.num_stages) { confirmQueue(); return; }
             // quick validator check
             vm.error = QueueService.validateStage(vm.current_stage, vm.queue);
             if (vm.error) { goToStage(vm.error.stage); }

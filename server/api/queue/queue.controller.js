@@ -220,7 +220,8 @@ var queue = {
 	event_start: Date,
 	event_end: Date,
 	tags: [],
-	city: string
+	city: string,
+	email: string || false
 };
 */
 export function create(req, res) {

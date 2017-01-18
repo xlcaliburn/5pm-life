@@ -2,15 +2,15 @@
 <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModal" ng-if="qm.mode == 'desktop'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header" ng-class="{'confirm': qm.current_stage == 4}">
+            <div class="modal-header" ng-class="{'confirm': qm.current_stage == qm.num_stages}">
                 <!-- Close button -->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
 
                 <!-- Title -->
-                <h4 class="modal-title" ng-show="qm.current_stage < 4">Queue for Event</h4>
-                <h4 class="modal-title" ng-show="qm.current_stage == 4">Confirm Event Preferences</h4>
+                <h4 class="modal-title" ng-show="qm.current_stage < qm.num_stages">Queue for Event</h4>
+                <h4 class="modal-title" ng-show="qm.current_stage == qm.num_stages">Confirm Event Preferences</h4>
             </div>
 
             <!-- Queue stage tabs -->
@@ -21,7 +21,8 @@
                         <li class="active"><a href="#stage1" aria-controls="stage1" role="tab" data-toggle="tab" onclick="return false;">Datetime</a></li>
                         <li><a href="#stage2" aria-controls="stage2" role="tab" data-toggle="tab" onclick="return false;">Activity</a></li>
                         <li><a href="#stage3" aria-controls="stage3" role="tab" data-toggle="tab" onclick="return false;">Location</a></li>
-                        <li><a href="#stage4" aria-controls="stage4" role="tab" data-toggle="tab" onclick="return false;">Confirmation</a></li>
+                        <li><a href="#stage4" aria-controls="stage4" role="tab" data-toggle="tab" onclick="return false;">Invite</a></li>
+                        <li><a href="#stage5" aria-controls="stage5" role="tab" data-toggle="tab" onclick="return false;">Confirmation</a></li>
                     </ul>
                 </div>
 
@@ -99,8 +100,22 @@
                         </select>
                     </div>
 
-                    <!-- Confirmation tab -->
+                    <!-- Invite friend tab -->
                     <div role="tabpanel" class="tab-pane fade stage4" id="stage4">
+                        <div class="queue-modal-title">QUEUE WITH A FRIEND</div>
+                        <div class="queue-modal-subtitle">
+                            If you want to invite a friend to queue with you, enter their email below.
+                        </div>
+
+                        <!-- Errors -->
+                        <div class="queue-errors" ng-show="qm.error">{{ qm.error.message }}</div>
+
+                        <i class="material-icons queue-icons">email</i>
+                        <input ng-model="qm.queue.email" placeholder="Enter email">
+                    </div>
+
+                    <!-- Confirmation tab -->
+                    <div role="tabpanel" class="tab-pane fade stage5" id="stage5">
                         <div class="confirm-instructions">
                             Please confirm the following information. If it all looks correct, confirm your queue!
                         </div>
@@ -158,6 +173,20 @@
                                 <span pinkfat>{{ qm.queue.location }}</span>.
                             </div>
                         </div>
+
+                        <hr>
+
+                        <!-- Invite -->
+                        <div class="title" ng-show="qm.queue.email">INVITE FRIEND</div>
+                        <div class="row" ng-show="qm.queue.email">
+                            <div class="col-sm-1 col-xs-2">
+                                <i class="material-icons queue-icons">email</i>
+                            </div>
+                            <div class="col-sm-11 col-xs-10">
+                                Send a queue invite to
+                                <span pinkfat>{{ qm.queue.email }}</span>.
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -170,9 +199,9 @@
                 </button>
 
                 <!-- next/confirm button -->
-                <button class="next-button right" ng-click="qm.nextStage()" ng-class="{'confirm': qm.current_stage == 4}">
-                    <span ng-show="qm.current_stage < 4">NEXT</span>
-                    <span ng-show="qm.current_stage == 4">CONFIRM</span>
+                <button class="next-button right" ng-click="qm.nextStage()" ng-class="{'confirm': qm.current_stage == qm.num_stages}">
+                    <span ng-show="qm.current_stage < qm.num_stages">NEXT</span>
+                    <span ng-show="qm.current_stage == qm.num_stages">CONFIRM</span>
                     <i class="material-icons">chevron_right</i>
                 </button>
                 <div class="clear"></div>
