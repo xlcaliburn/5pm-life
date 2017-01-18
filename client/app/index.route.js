@@ -42,7 +42,7 @@
 						banner: {
 							url: 'assets/images/home/default-banner.jpg',
 							title: 'Explore 5PM',
-							subtitle: '5PM Skating events on January 21st and 27th! View below for details.'
+							subtitle: '5PM Skating events on January 21st and 27th! Click <a data-target="#queueModal" data-toggle="modal"><b>HERE</b></a> to get started!</p>'
 						},
 						sections: {
 							news: {
@@ -51,7 +51,7 @@
 									{
 										title: 'It\'s time to skate!',
 										date: 'Jan 10, 2016',
-										content: '<img src="assets/images/home-2.jpg" width="100%"> <p>For the month of December and January, we will be hosting a number of skating events. Two events have now been confirmed, <b>January 21st will be at Markham Civic Centre</b> and <b>January 27th will be at Nathan Philips Square</b>. Sign up now for any of the available dates using the Explore button to participate in one of our skating events!</p>'
+										content: '<a data-target="#queueModal" data-toggle="modal"><img src="assets/images/home-2.jpg" width="100%"></a><p>For the month of December and January, we will be hosting a number of skating events. Two events have now been confirmed, <b>January 21st will be at Markham Civic Centre</b> and <b>January 27th will be at Nathan Philips Square</b>. Sign up now for any of the available dates using the Explore button to participate in one of our skating events! <br />Click <a data-target="#queueModal" data-toggle="modal"><b>HERE</b></a> to get started!</p>'
 									},
 									{
 										title: 'BETA Test Launching on Nov 4/5!',
