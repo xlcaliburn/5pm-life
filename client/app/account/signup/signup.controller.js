@@ -64,6 +64,20 @@
             {
                 stage: 3,
                 order_id: 6,
+                key: 'primary_language',
+                value: 'primary language',
+                type: 'input'
+            },
+            {
+                stage: 3,
+                order_id: 7,
+                key: 'secondary_language',
+                value: 'secondary language',
+                type: 'input'
+            },
+            {
+                stage: 4,
+                order_id: 8,
                 key: 'email_address',
                 value: 'email address',
                 type: 'input'
@@ -75,6 +89,7 @@
         // variables
         vm.timeout = null;
         vm.current_stage = 1;
+        vm.num_steps = 4;
         vm.completed_stages = [];
 
         // functions
@@ -169,6 +184,16 @@
             }
 
             if (vm.current_stage === 3 || full_validation) {
+                // blank input
+                if (!vm.primary_language) { vm.error_message = 'Please enter your primary language'; }
+                // return if there are any errors
+                if (vm.error_message) {
+                    vm.go_to_stage(3, true);
+                    return;
+                }
+            }
+
+            if (vm.current_stage === vm.num_steps || full_validation) {
                 // blank inputs
                 if (!vm.email_address) { vm.error_message = 'Please enter an email address'; }
 
@@ -182,20 +207,21 @@
 
                 // return if there are any errors
                 if (vm.error_message) {
-                    vm.go_to_stage(3, true);
+                    vm.go_to_stage(vm.num_steps, true);
                     return;
                 }
             }
 
             // proceed to next stage
             if (!full_validation) {
-                if (vm.current_stage < 3) {
+                console.log(vm.current_stage, vm.num_steps);
+                if (vm.current_stage < vm.num_steps) {
                     if (vm.completed_stages.indexOf(vm.current_stage) < 0) {
                         vm.completed_stages.push(vm.current_stage);
                     }
                     vm.current_stage++;
                     vm.go_to_stage(vm.current_stage);
-                } else if (vm.current_stage === 3) {
+                } else if (vm.current_stage === vm.num_steps - 1) {
                     // final front-end-validation
                     vm.validate(true);
                 }
@@ -221,7 +247,7 @@
                             angular.element('.fade-me-hard').addClass('invis');
                             $timeout(function() {
                                 angular.element('a[href="#register-success"]').tab('show');
-                                vm.current_stage = 4;
+                                vm.current_stage = 5;
                             }, 500);
                             $timeout(function() {
                                 angular.element('.fade-me-hard').removeClass('invis');
@@ -244,11 +270,12 @@
         };
 
         vm.go_to_stage = function(stage, allow_error) {
-            if (stage < 1 || stage > 3) { return; }
+            if (stage < 1 || stage > 4) { return; }
 
             if (!allow_error) { vm.error_message = ''; }
 
             vm.current_stage = stage;
+            console.log(vm.current_stage);
             var tab_button;
 
             if (stage === 1) {
@@ -256,6 +283,9 @@
             } else if (stage === 2) {
                 tab_button = angular.element('a[href="#personal-details"]');
             } else if (stage === 3) {
+                console.log(vm.current_stage);
+                tab_button = angular.element('a[href="#language-preference"]');
+            } else if (stage === 4) {
                 tab_button = angular.element('a[href="#account-settings"]');
             }
             if (tab_button) {
@@ -263,7 +293,7 @@
                 tab_button.tab('show');
             }
 
-            for (var i = 3; i > stage; i--) {
+            for (var i = 4; i > stage; i--) {
                 angular.element('.step-' + i).addClass('disabled');
             }
         };
