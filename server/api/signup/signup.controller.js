@@ -93,7 +93,7 @@ function validate_user(data) {
     if (error_message) {
         response.status = 'error';
         response.error_message = error_message;
-        response.stage = 3;
+        response.stage = 4;
         return response;
     }
 
@@ -128,6 +128,8 @@ export function validate_save(req, res) {
             user.ethnicity = req.body.ethnicity;
             user.gender = req.body.gender;
             user.birthday = new Date(req.body.birthday.year + '/' + req.body.birthday.month + '/' + req.body.birthday.day);
+			user.language.primary = req.body.primary_language;
+			user.language.secondary = req.body.secondary_language;
             user.verified = true;
             return user.save();
         })

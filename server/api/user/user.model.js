@@ -25,6 +25,10 @@ var UserSchema = new Schema({
 	},
 	ethnicity: String,
 	gender: String,
+	language: {
+		primary: String,
+		secondary: String
+	},
 	role: {
 		type: String,
 		default: 'user'

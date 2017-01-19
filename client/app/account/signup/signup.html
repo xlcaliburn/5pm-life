@@ -30,7 +30,7 @@
 
         <div class="fade-me-hard">
             <!-- stepper -->
-            <div class="signup-stepper" ng-class="{'hidden': signup.current_stage > 3, 'current-2': signup.current_stage == 2, 'current-3': signup.current_stage == 3}">
+            <div class="signup-stepper hidden">
                 <div class="stepper-line"></div>
                 <div class="step-1">
                     <a href="#personal-information" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(1)">
@@ -43,8 +43,13 @@
                     </a>
                 </div>
                 <div class="step-3 disabled">
-                    <a href="#account-settings" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(3)">
+                    <a href="#language-preference" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(3)">
                         <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 3]">3</span>
+                    </a>
+                </div>
+                <div class="step-4 disabled">
+                    <a href="#account-settings" data-toggle="tab" role="tab" ng-click="signup.go_to_stage(4)">
+                        <span class="steps" ng-class="{true: 'step-pending'}[signup.current_stage < 4]">4</span>
                     </a>
                 </div>
                 <div class="disabled hidden">
@@ -53,7 +58,7 @@
             </div>
 
             <!-- instructions -->
-            <div class="signup-instructions" ng-if="signup.current_stage < 4">
+            <div class="signup-instructions" ng-if="signup.current_stage < signup.num_steps + 1">
                 <div class="signup-instructions-title">Confirm your details.</div>
                 <div class="signup-instructions-subtitle">Just a few more questions before you can start using 5PM!</div>
 
@@ -122,18 +127,27 @@
                     </div>
                 </div>
 
+                <!-- language settings -->
+                <div id="language-preference" class="tab-pane fade in">
+                    <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 3">
+                        <div class="col l2 m3 s12 offset-l2 offset-m3 align-right signup-label valign">{{ stage.value }}</div>
+                        <div class="col l4 m6 s12 valign signup-inputs">
+
+                            <!-- language inputs -->
+                            <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]" stage="{{stage.key}}">
+
+                        </div>
+                    </div>
+                </div>
+
                 <!-- account settings -->
                 <div id="account-settings" class="tab-pane fade in">
-                    <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 3">
+                    <div class="row signup-field-row valign-wrapper" ng-repeat="stage in signup.steps" ng-if="stage.stage == 4">
                         <div class="col l2 m3 s12 offset-l2 offset-m3 align-right signup-label valign">{{ stage.value }}</div>
                         <div class="col l4 m6 s12 valign signup-inputs">
 
                             <!-- email -->
                             <input ng-if="stage.type == 'input'" type="text" class="signup-input" ng-model="signup[stage.key]" stage="{{stage.key}}">
-
-                            <p>
-
-                            </p>
 
                         </div>
                     </div>
@@ -156,12 +170,12 @@
             </div>
 
             <!-- prev/next buttons -->
-            <div class="prev-next-buttons" ng-if="signup.current_stage < 4">
+            <div class="prev-next-buttons" ng-if="signup.current_stage < signup.num_steps + 1">
                 <div class="row">
                     <!--next button -->
                     <div class="col push-l6 l4 m5 push-m6 s12 align-right">
-                        <a class="signup-next-button babyblue-bg rect-button" ng-click="signup.validate()" ng-if="signup.current_stage != 3">NEXT</a>
-                        <a class="signup-submit-button pink-bg rect-button" ng-click="signup.validate('true')" ng-if="signup.current_stage == 3">SIGN UP</a>
+                        <a class="signup-next-button babyblue-bg rect-button" ng-click="signup.validate()" ng-if="signup.current_stage != signup.num_steps">NEXT</a>
+                        <a class="signup-submit-button pink-bg rect-button" ng-click="signup.validate('true')" ng-if="signup.current_stage == signup.num_steps">SIGN UP</a>
                     </div>
 
                     <!-- previous button -->
@@ -171,6 +185,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
