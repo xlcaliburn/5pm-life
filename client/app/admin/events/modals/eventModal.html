@@ -6,14 +6,12 @@
 		<form class="col s12" name="createForm" ng-submit="vm.submit()">
 			<div class="row">
 				<div class="input-field col s12">
-				<select
-					ng-model="vm.selected_event.activity"
-					ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name"
-					ng-change="vm.selectChanged()">
-				</select>
-				<tt>Selected: {{vm.selected_event.activity.tags}}</tt>
-
-					<label>Activity</label>
+					<select
+						ng-model="vm.selected_event.activity"
+						ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name"
+						ng-change="vm.filter_venues()">
+					</select>
+					<label class="active">Activity</label>
 				</div>
 			</div>
 
@@ -23,7 +21,7 @@
 						ng-model="vm.selected_event.venue"
 						ng-options="venue as venue.venue_name for venue in vm.allowed_venues track by venue.venue_name">
 					</select>
-					<label>Venue</label>
+					<label class="active">Venue</label>
 				</div>
 			</div>
 			<div class="row right-align">
