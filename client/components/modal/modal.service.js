@@ -68,6 +68,45 @@ angular.module('fivepmApp')
               del.apply(event, args);
             });
           };
+        },
+
+        trigger(del = angular.noop) {
+          /**
+           * Open a delete confirmation modal
+           * @param  {String} name   - name or info to show on modal
+           * @param  {All}           - any additional args are passed straight to del callback
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+              name = args.shift(),
+              triggerModal;
+
+            triggerModal = openModal({
+              modal: {
+                dismissable: true,
+                title: 'Confirm Trigger',
+                html: '<p>Are you sure you want to trigger <strong>' + name +
+                  '</strong> ?</p>',
+                buttons: [{
+                  classes: 'btn-danger',
+                  text: 'Trigger',
+                  click: function(e) {
+                    triggerModal.close(e);
+                  }
+                }, {
+                  classes: 'btn-default',
+                  text: 'Cancel',
+                  click: function(e) {
+                    triggerModal.dismiss(e);
+                  }
+                }]
+              }
+            }, 'modal-danger');
+
+            triggerModal.result.then(function(event) {
+              del.apply(event, args);
+            });
+          };
         }
       }
     };

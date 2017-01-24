@@ -3,10 +3,10 @@
 		.module('fivepmApp.admin')
 		.controller('EditVenueModalController', EditVenueModalController);
 
-	function EditVenueModalController ($uibModalInstance, Venues, Activities, venueId) {
+	function EditVenueModalController ($uibModalInstance, Venues, Activities, venueId, Modal) {
 		var vm = this;
 		vm.submit = submit;
-		vm.deleteVenue = deleteVenue;
+		vm.deleteVenue = Modal.confirm.delete(deleteVenue);
 
 		init();
 
