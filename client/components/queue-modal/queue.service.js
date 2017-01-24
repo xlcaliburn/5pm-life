@@ -29,6 +29,11 @@
                     case 3:
                         error = validateLocation(queue['3'].location);
                         break;
+                    case 4:
+                        if (queue['4'].email) {
+                            error = validateEmail(queue['4'].email);
+                        }
+                        break;
                 }
                 return error;
             }
@@ -40,7 +45,8 @@
         var queue = {
             1: { date: opts.date, start_time: opts.time.start, end_time: opts.time.end },
             2: { activity: [] },
-            3: { location: opts.location }
+            3: { location: opts.location },
+            4: { email: opts.email }
         };
         if (opts.activity.active) { queue['2'].activity.push('active'); }
         if (opts.activity.social) { queue['2'].activity.push('social'); }
@@ -54,7 +60,8 @@
             event_start: new Date(opts.date + ' ' + moment(opts.time.start, ['h:mmA']).format('HH:mm:ss')),
             event_end: new Date(opts.date + ' ' + moment(opts.time.end, ['h:mmA']).format('HH:mm:ss')),
             tags: [],
-            city: opts.location
+            city: opts.location,
+            email: opts.email
         };
         if (opts.activity.active) { queue.tags.push('active'); }
         if (opts.activity.social) { queue.tags.push('social'); }
@@ -117,5 +124,17 @@
             };
         }
         return false;
+    }
+
+    // validate email
+    function validateEmail (email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(email)) {
+            return false;
+        }
+        return {
+            stage: 4,
+            message: 'Please enter a valid email address'
+        };
     }
 })();

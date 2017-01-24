@@ -130,7 +130,6 @@
         }
 
         .modal-body {
-            padding: 2rem 2rem 1rem 2rem;
             .confirm-instructions {
                 font-size: 1.1rem;
                 margin-bottom: 1.5rem;
@@ -247,6 +246,11 @@
     }
 
     #stage4 {
+        .queue-modal-subtitle { margin-bottom: 1rem; }
+        input { display: inline-block; width: 70%; }
+    }
+
+    #stage5 {
         .title {
             font-weight: 700;
             font-size: 1.3rem;
@@ -469,10 +473,10 @@
         }
 
         @media screen and (max-width: 767px) {
-            background-color: @white;
+            background-color: transparent;
             border: 2px solid @white;
             line-height: 2.9rem;
-            color: @green;
+            color: @white;
         }
     }
 }

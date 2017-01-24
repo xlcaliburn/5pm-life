@@ -142,7 +142,7 @@
 
                     <!-- message box -->
                     <div class="message-box valign-wrapper">
-                        <img class="event-profile-pic" src="{{ vm.profile_picture }}">
+                        <img class="event-profile-pic" src="{{ navbar.user.profile_picture.current }}">
                         <textarea ng-keydown="$event.keyCode == 13 && vm.send_message($event)"  rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
                         <button type="button" ng-click="vm.send_message($event)" class="btn-floating waves-effect waves-light event-chat-send-button"><i class="material-icons">arrow_forward</i></button>
                     </div>
@@ -317,7 +317,7 @@
 
             <!-- message box -->
             <div class="message-box valign-wrapper">
-                <img class="event-profile-pic" src="{{ vm.profile_picture }}">
+                <img class="event-profile-pic" ng-src="{{ navbar.user.profile_picture.current }}">
                 <textarea ng-focus="vm.hide_navbar(true); vm.scroll_chatbox()" ng-blur="vm.hide_navbar(false, $event); vm.scroll_chatbox()" ng-keydown="$event.keyCode == 13 && vm.send_message($event)" id="message-input" rows="1" class="message-input" placeholder="Type your message..." ng-model="vm.message_input"></textarea>
                 <button type="button" ng-click="vm.send_message($event)" class="btn-floating waves-effect waves-light event-chat-send-button"><i class="material-icons">arrow_forward</i></button>
             </div>
