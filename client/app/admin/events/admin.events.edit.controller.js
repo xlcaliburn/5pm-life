@@ -3,14 +3,14 @@
 		.module('fivepmApp.admin')
 		.controller('EditEventController', EditEventController);
 
-	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues) {
+	function EditEventController ($scope, $q, $state, $uibModal, $stateParams, $timeout, Activities, Enums, Events, Queue, Users, Venues, Modal) {
 		var vm = this;
 		vm.event_id = $stateParams.event_id;
 		vm.add_users = addUsersModal;
-		vm.delete_event = deleteEvent;
+		vm.delete_event = Modal.confirm.delete(deleteEvent);
 		vm.end_event = endEvent;
 		vm.remove_queue_from_event = removeQueueFromEvent;
-		vm.trigger_event = triggerEvent;
+		vm.trigger_event = Modal.confirm.trigger(triggerEvent);
 		vm.submit = submit;
 		vm.get_age = function(date){ return moment().diff(date, 'years');};
 		vm.get_formatted_date = function(date) { return moment(date).format('MMM DD, YY | h:mm a');};

@@ -4,13 +4,13 @@
 		.module('fivepmApp.admin')
 		.controller('EditActivityModalController', ActivityModalController);
 
-	function ActivityModalController ($timeout, $uibModalInstance, Activities, Enums, activityId) {
+	function ActivityModalController ($timeout, $uibModalInstance, Activities, Enums, activityId, Modal) {
 		var vm = this;
 		vm.create_form = {};
 		vm.validTags = [];
 		vm.submit = submit;
 		vm.deleteButtonShow = false;
-		vm.deleteActivity = deleteActivity;
+		vm.deleteActivity = Modal.confirm.delete(deleteActivity);
 		vm.removeRequiredEquipment = removeRequiredEquipment;
 		vm.addRequiredEquipment = addRequiredEquipment;
 		vm.addReqEquipText = '';
