@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
 	<div class="row right-align">
-		<button ng-show="vm.deleteButtonShow" ng-click="vm.deleteActivity()" class="btn red darken-4">Delete</button>
+		<button ng-show="vm.deleteButtonShow" ng-click="vm.deleteActivity(vm.create_form.activity_name)" class="btn red darken-4">Delete</button>
 	</div>
 	<div class="row">
 		<form class="col s12" name="create_form" ng-submit="vm.submit()">
