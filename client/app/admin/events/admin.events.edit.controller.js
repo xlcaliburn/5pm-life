@@ -141,11 +141,12 @@
 		}
 
 		function submit() {
+			vm.selected_event.dt_start = new Date(vm.form_date + ' ' + moment(vm.form_start_time, 'hh:mmA').format('HH:mm:00'));
+			vm.selected_event.dt_end =  new Date(vm.form_date + ' ' + moment(vm.form_end_time, 'hh:mmA').format('HH:mm:00'));
+
 			if (vm.selected_event.status === vm.enums.event_status.NEW.value)
 			{
 				updateQueueStatus(vm.enums.queue_status.PENDING.value);
-				vm.selected_event.dt_start = new Date(vm.form_date + ' ' + moment(vm.form_start_time, 'hh:mmA').format('HH:mm:00'));
-				vm.selected_event.dt_end =  new Date(vm.form_date + ' ' + moment(vm.form_end_time, 'hh:mmA').format('HH:mm:00'));
 			}
 			else if (vm.selected_event.status === vm.enums.event_status.PENDING_USER_CONFIRM.value)
 			{
