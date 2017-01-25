@@ -16,7 +16,7 @@
         vm.decline_event = declineEvent;
         //vm.get_confirmed_attendees = getConfirmedAttendees;
         vm.confirmed = [];
-        vm.get_event_date = function(date) { return moment(date).format('dddd, MMMM D, YYYY'); };
+        vm.get_event_date = function() { return moment(vm.event_data.dt_start).format('dddd, MMMM D, YYYY'); };
         vm.get_event_time = function() { return moment(vm.event_data.dt_start).format('h:mmA') + ' to ' + moment(vm.event_data.dt_end).format('h:mmA'); };
         vm.get_googlemaps_link = function() { return 'http://maps.google.com/?q=' + vm.event_data.venue.venue_name + ',' + vm.event_data.venue.address.city; };
         vm.hide_navbar = hideNavbar;
