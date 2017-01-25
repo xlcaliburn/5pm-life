@@ -121,6 +121,7 @@
                         type: 'info',
                         delay: 8000
                     });
+                    $rootScope.$emit('update_queue');
                 })
                 .catch(function() {
                     $state.go('home');
