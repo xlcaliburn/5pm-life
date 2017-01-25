@@ -21,8 +21,8 @@
                         <li class="active"><a href="#stage1" aria-controls="stage1" role="tab" data-toggle="tab" onclick="return false;">Datetime</a></li>
                         <li><a href="#stage2" aria-controls="stage2" role="tab" data-toggle="tab" onclick="return false;">Activity</a></li>
                         <li><a href="#stage3" aria-controls="stage3" role="tab" data-toggle="tab" onclick="return false;">Location</a></li>
-                        <li><a href="#stage4" aria-controls="stage4" role="tab" data-toggle="tab" onclick="return false;">Invite</a></li>
-                        <li><a href="#stage5" aria-controls="stage5" role="tab" data-toggle="tab" onclick="return false;">Confirmation</a></li>
+                        <!--<li><a href="#stage4" aria-controls="stage4" role="tab" data-toggle="tab" onclick="return false;">Invite</a></li>-->
+                        <li><a href="#stage4" aria-controls="stage4" role="tab" data-toggle="tab" onclick="return false;">Confirmation</a></li>
                     </ul>
                 </div>
 
@@ -100,22 +100,22 @@
                         </select>
                     </div>
 
-                    <!-- Invite friend tab -->
+                    <!-- Invite friend tab
                     <div role="tabpanel" class="tab-pane fade stage4" id="stage4">
                         <div class="queue-modal-title">QUEUE WITH A FRIEND</div>
                         <div class="queue-modal-subtitle">
                             If you want to invite a friend to queue with you, enter their email below.
                         </div>
 
-                        <!-- Errors -->
+                        Errors
                         <div class="queue-errors" ng-show="qm.error">{{ qm.error.message }}</div>
 
                         <i class="material-icons queue-icons">email</i>
                         <input ng-model="qm.queue.email" placeholder="Enter email">
-                    </div>
+                    </div>-->
 
                     <!-- Confirmation tab -->
-                    <div role="tabpanel" class="tab-pane fade stage5" id="stage5">
+                    <div role="tabpanel" class="tab-pane fade stage4" id="stage4">
                         <div class="confirm-instructions">
                             Please confirm the following information. If it all looks correct, confirm your queue!
                         </div>
@@ -176,7 +176,7 @@
 
                         <hr>
 
-                        <!-- Invite -->
+                        <!-- Invite
                         <div class="title" ng-show="qm.queue.email">INVITE FRIEND</div>
                         <div class="row" ng-show="qm.queue.email">
                             <div class="col-sm-1 col-xs-2">
@@ -186,7 +186,7 @@
                                 Send a queue invite to
                                 <span pinkfat>{{ qm.queue.email }}</span>.
                             </div>
-                        </div>
+                        </div>-->
                     </div>
 
                 </div>

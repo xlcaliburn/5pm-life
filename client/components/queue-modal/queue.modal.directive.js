@@ -48,7 +48,7 @@
         vm.event = null;
         vm.current_stage = 1;
         vm.current_state;
-        vm.num_stages = 5;
+        vm.num_stages = 4;
         vm.queue_status = null;
         var eventSocket;
 
