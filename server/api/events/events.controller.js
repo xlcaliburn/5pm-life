@@ -198,7 +198,7 @@ export function confirmEvent(req, res) {
 
 		})
 		.then(() => {
-			return Events.findByIdAndUpdate(email_data._id, { $pull : {'queue' : q._id} }).exec();
+			return Events.findByIdAndUpdate(email_data.id, { $pull : {'queue' : q._id} }).exec();
 		})
 		.then(event => {
 			ev_id = event._id;
@@ -231,6 +231,11 @@ export function confirmEvent(req, res) {
 			email_data.template = 'event-confirmation-accept';
 			email_data.first_name = user.first_name;
 			email_data.event_link = url_origin + '/home/event/' + email_data.id;
+			email_data.street = email_data.address.street;
+			email_data.city = email_data.address.city;
+			email_data.province = email_data.address.province;
+			email_data.postal_code = email_data.address.postal_code;
+			email_data.gmaps_link = 'https://google.ca/maps?q=' + email_data.street + ',' + email_data.province;
 
 			var text_version = EmailTemplate.get_text_version(email_data);
 			var html_version = EmailTemplate.get_html_version(email_data);

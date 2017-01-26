@@ -94,7 +94,15 @@
 
         // confirm event confirmation
         function confirmEvent() {
-            EventService.confirmEvent(vm.event_data)
+            vm.confirm_event_data = {
+                id: vm.event_data._id,
+                activity: vm.event_data.activity.activity_name,
+                venue: vm.event_data.venue.venue_name,
+                date: moment(vm.event_data.dt_start).format('dddd, MMM DD, YYYY'),
+                time: moment(vm.event_data.dt_start).format('LT'),
+                address: vm.event_data.venue.address
+            };
+            EventService.confirmEvent(vm.confirm_event_data)
                 .then(() => {
                     just_confirmed = true;
                     getSelfStatus(true);

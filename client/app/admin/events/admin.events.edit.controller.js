@@ -10,7 +10,8 @@
 		vm.delete_event = Modal.confirm.delete(deleteEvent);
 		vm.end_event = endEvent;
 		vm.remove_queue_from_event = removeQueueFromEvent;
-		vm.trigger_event = Modal.confirm.trigger(triggerEvent);
+		//vm.trigger_event = Modal.confirm.trigger(triggerEvent);
+		vm.trigger_event = triggerEvent;
 		vm.submit = submit;
 		vm.get_age = function(date){ return moment().diff(date, 'years');};
 		vm.get_formatted_date = function(date) { return moment(date).format('MMM DD, YY | h:mm a');};
