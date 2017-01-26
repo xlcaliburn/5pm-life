@@ -9,6 +9,7 @@
 					<select
 						ng-model="vm.selected_event.activity"
 						ng-options="activity as activity.activity_name for activity in vm.allowed_activities track by activity.activity_name"
+						ng-change="vm.filterVenues()">
 					</select>
 					<label class="active">Activity</label>
 				</div>
