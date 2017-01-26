@@ -5,12 +5,12 @@
 
 	function EventModalController ($q, $timeout, $uibModalInstance, Events, Venues, Activities) {
 		var vm = this;
-		vm.filterVenues = filterVenues;
+		vm.filter_venues = filterVenues;
 		vm.submit = submit;
-		vm.selected_event = {};
-		vm.allowed_activities = {};
-		vm.allowed_venues = {};
-		vm.all_venues = {};
+		vm.selected_event = [];
+		vm.allowed_activities = [];
+		vm.allowed_venues = [];
+		vm.all_venues = [];
 		vm.title = 'Create Event';
 
 		init();
@@ -34,21 +34,22 @@
 		}
 		//This Fn ensures that only the appropriate venues are displayed when an
 		//activity is selected
-		function filterVenues($scope) {
+		function filterVenues()
+		{
 			vm.allowed_venues = [];
-			var venue_array = $.map(vm.all_venues, function(value, index) {
-				return [value];
-			});
 			var current_activity = vm.selected_event.activity.activity_name;
-			for (var k=0; k<venue_array.length; k++) {
-				for (var i=0; i<venue_array[k].allowed_activities.length; i++) {
-					if (current_activity == venue_array[k].allowed_activities[i].activity_name) {
-						vm.allowed_venues.push(venue_array[k]);
-					}//End if
-				};//End inside loop
-			};//End outside loop
+			for (var k=0; k < vm.all_venues.length; k++)
+			{
+				for (var i=0; i < vm.all_venues[k].allowed_activities.length; i++)
+				{
+					if (current_activity == vm.all_venues[k].allowed_activities[i].activity_name)
+					{
+						vm.allowed_venues.push(vm.all_venues[k]);
+					}
+				}
+			}
 			$timeout(function() {materialize_select();});
-	}//End fn
+	}
 
 		function submit() {
 			vm.selected_event.dt_search_start = new Date().getTime();
