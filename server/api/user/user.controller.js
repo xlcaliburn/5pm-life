@@ -181,10 +181,12 @@ export function updateById(req, res, next) {
 	}
 
 	// Only save 3 adjectives for the user
-	var adjectiveLimit = 3;
-	var adjectivesLength = req.body.adjectives.length;
-	if (adjectivesLength > adjectiveLimit){
-		req.body.adjectives.splice(adjectiveLimit, adjectivesLength - adjectiveLimit);
+	if (req.body.adjectives) {
+		var adjectiveLimit = 3;
+		var adjectivesLength = req.body.adjectives.length;
+		if (adjectivesLength > adjectiveLimit){
+			req.body.adjectives.splice(adjectiveLimit, adjectivesLength - adjectiveLimit);
+		}
 	}
 
 	return User.findByIdAndUpdate(req.params.id, req.body).exec()
